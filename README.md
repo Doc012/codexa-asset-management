@@ -1,5 +1,5 @@
 # Asset IQ
-## 📋 Overview
+## Overview
 **Asset IQ** is a web-based IT Equipment Asset Management System built by **Codexa**, a software solution provider. The system helps organizations track, manage, and loan out IT assets such as laptops, monitors, desktops, and peripherals.
 
 ### Problem We Solve
@@ -64,4 +64,4 @@ Codexa creates custom software solutions for businesses. Asset IQ is our ready-t
 ---
 
 ## Project Structure
-Pending...
+Pending....
