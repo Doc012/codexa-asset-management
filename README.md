@@ -63,5 +63,10 @@ Codexa creates custom software solutions for businesses. Asset IQ is our ready-t
 
 ---
 
+## ERD
+https://mermaid.ai/d/a0907455-7043-4a2e-a47f-705960935803
+
+---
+
 ## Project Structure
 Pending....
