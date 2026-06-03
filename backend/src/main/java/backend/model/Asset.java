@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity // marks the class as a JPA Entity, tells Spring that this class should be mapped to a db
+@Table(name = "assests")
 public class Asset {
 
     @Id // identifies the PK of the entity
