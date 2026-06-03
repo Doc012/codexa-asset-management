@@ -1,4 +1,4 @@
 package backend.repository;
 
-public class UserRepo {
+public class UserRepository {
 }
