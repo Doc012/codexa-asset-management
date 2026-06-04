@@ -32,7 +32,7 @@ public class Asset {
     public Asset() {
     }
 
-    public Asset(String title, String category, String serialNumber, Date acquisitionDate,
+    public Asset(String title, String category, String serialNumber, LocalDate acquisitionDate,
                  Double cost, String location, String condition, String photoPath) {
         this.title = title;
         this.category = category;
@@ -72,11 +72,11 @@ public class Asset {
         this.serialNumber = serialNumber;
     }
 
-    public Date getAcquisitionDate() {
+    public LocalDate getAcquisitionDate() {
         return acquisitionDate;
     }
 
-    public void setAcquisitionDate(Date acquisitionDate) {
+    public void setAcquisitionDate(LocalDate acquisitionDate) {
         this.acquisitionDate = acquisitionDate;
     }
 

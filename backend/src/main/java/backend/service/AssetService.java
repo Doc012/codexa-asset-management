@@ -24,7 +24,7 @@ public class AssetService {
         return assetRepo.findById(id).orElseThrow(() -> new RuntimeException("Asset Not Found"));
     }
 
-    public Asset saveAsset(Asset asset){
+    public Asset createAsset(Asset asset){
         return assetRepo.save(asset);
     }
 
