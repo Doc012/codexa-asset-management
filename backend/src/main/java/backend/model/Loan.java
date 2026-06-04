@@ -15,16 +15,17 @@ import java.time.LocalDate;
 @Builder
 public class Loan {
 
+    // Primary Key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
 
-    // MANY loans belong to ONE user
+    // Many loans belong to One user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // MANY loans belong to ONE asset
+    // Many loans belong to One asset
     @ManyToOne
     @JoinColumn(name = "asset_id", nullable = false)
     private Asset asset;
