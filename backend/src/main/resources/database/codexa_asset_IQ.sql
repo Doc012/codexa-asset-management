@@ -7,7 +7,6 @@ INSERT INTO assets (title, category, serial_number, acquisition_date, cost, loca
 ('4K Monitor LG 32UP550', 'Electronics', 'LG-32UP550-001', '2023-12-12', 699.99, 'Office Building A, Floor 3', 'Excellent', '/photos/monitor_001.jpg'),
 ('Conference Table Mahogany', 'Furniture', 'CONF-TABLE-001-2024', '2024-01-22', 2499.00, 'Meeting Room Suite B', 'Good', '/photos/conference_table_001.jpg');
 
-
 INSERT INTO users (full_name, email, role, password, department) VALUES
 ('John Smith', 'john.smith@company.com', 'ADMIN', 'hashed_password_001', 'IT Department'),
 ('Sarah Johnson', 'sarah.johnson@company.com', 'STAFF', 'hashed_password_002', 'Marketing'),
