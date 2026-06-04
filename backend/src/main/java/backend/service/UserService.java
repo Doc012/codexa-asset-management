@@ -48,7 +48,7 @@ public class UserService {
      * @param role role of a user
      * @return a list of users by their roles
      */
-    public List<User> getAllMembers(Role role){
+    public List<User> getAllUsersByRole(Role role){
         return userRepo.findByRole(role);
     }
 

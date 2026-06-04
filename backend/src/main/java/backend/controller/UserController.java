@@ -1,12 +1,10 @@
 package backend.controller;
 
+import backend.enums.Role;
 import backend.model.User;
 import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,32 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id){
-        return userService.getUser(id);
+        return userService.getUserById(id);
     }
+
+    @GetMapping("/{email}")
+    public User getUserByEmail(@PathVariable String email){
+        return userService.getUserByEmail(email);
+    }
+
+    @GetMapping("/{role}")
+    public List<User> getUsersByRole(@PathVariable Role role){
+        return userService.getAllUsersByRole(role);
+    }
+
+    @PostMapping
+    public User addUser(@RequestBody User user){
+        return userService.addUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUserDetails(@RequestBody User user, @PathVariable Long id){
+        userService.updateUser(user, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public User deleteUser(@PathVariable Long id){
+        return userService.deleteUser(id);
+    }
+
 }
