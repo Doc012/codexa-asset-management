@@ -28,7 +28,7 @@ public class UserService {
      * @param id user id
      * @return a user
      */
-    public User getUser(Long id){
+    public User getUserById(Long id){
         return userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + "not found!"));
