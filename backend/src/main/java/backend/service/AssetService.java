@@ -18,17 +18,18 @@ public class AssetService {
     }
 
     /**
-     * this method returns all the assets from the table
-     * @return list of assets
+     * this method returns all the assets from the database
+     * @return a list of assets
      */
     public List<Asset> getAllAssets(){
         return assetRepo.findAll();
     }
 
     /**
-     * this method returns an asset with the given Id
-     * @param id - asset ID
-     * @return a single asset, with the provided Id
+     * this method returns a single asset with the given Id
+     * @param id - the ID of the asset
+     * @return a single asset, matching the provided Id
+     * @throws RuntimeException if the asset is not found
      */
     public Asset getAssetById(Long id){
         return assetRepo.findById(id)
@@ -38,8 +39,8 @@ public class AssetService {
     }
 
     /**
-     * This method creates a new asset
-     * @param asset - the newly created asset -> user input
+     * This method creates and saves a new asset
+     * @param asset - the asset to be created -> user input
      * @return the details of the newly created asset
      */
     public Asset createAsset(Asset asset){
@@ -48,12 +49,19 @@ public class AssetService {
 
     /**
      * this method deletes an asset with the id provided by the user
-     * @param id - asset ID
+     * @param id - ID of the asset to be deleted
      */
     public void deleteAsset(Long id){
         assetRepo.deleteById(id);
     }
 
+    /**
+     * this method updates an existing asset with the new values
+     * @param id the ID of the asset that is being updated
+     * @param updatedAsset the new asset data
+     * @return the updated asset
+     * @throws RuntimeException if the asset is not found
+     */
     public Asset updateAsset(Long id, Asset updatedAsset){
         Optional<Asset> existingAssetOptional = assetRepo.findById(id);
 
@@ -76,12 +84,24 @@ public class AssetService {
     }
 
     // Added new implementation methods:
+
+    /**
+     * this method gets an asset by its serial number (unique)
+     * @param serialNumber the serial number of the asset
+     * @return the asset with the matching serial number
+     * @throws RuntimeException if the asset with the serial number is not found
+     */
     public Asset getAssetBySerialNumber(String serialNumber) {
         return assetRepo.findBySerialNumber(serialNumber)
                 .orElseThrow(() -> new RuntimeException
                         ("Asset not found with Serial Number: " + serialNumber));
     }
 
+    /**
+     * this method gets a list of assets in a specific category
+     * @param category is the category of the asset
+     * @return a list of assets by the specified category
+     */
     public List<Asset> getAssetsByCategory(String category) {
         return assetRepo.findByCategory(category);
     }
