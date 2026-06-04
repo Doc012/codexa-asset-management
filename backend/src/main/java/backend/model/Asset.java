@@ -2,6 +2,7 @@ package backend.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity // marks the class as a JPA Entity, tells Spring that this class should be mapped to a db
@@ -20,7 +21,7 @@ public class Asset {
 
     @Temporal(TemporalType.DATE)
     // specifies how the data should be stored in the db (DATE = date only, no time)
-    private Date acquisitionDate;
+    private LocalDate acquisitionDate;
 
     private Double cost;
     private String location;
