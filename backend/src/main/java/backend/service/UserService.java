@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
     /**
      * Getting all users of the system

@@ -12,24 +12,24 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public User getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public User getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping("/{role}")
+    @GetMapping("/role/{role}")
     public List<User> getUsersByRole(@PathVariable Role role){
         return userService.getAllUsersByRole(role);
     }
@@ -44,7 +44,7 @@ public class UserController {
         userService.updateUser(user, id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/remove/{id}")
     public User deleteUser(@PathVariable Long id){
         return userService.deleteUser(id);
     }
