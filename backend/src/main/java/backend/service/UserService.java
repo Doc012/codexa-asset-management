@@ -82,8 +82,6 @@ public class UserService {
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-
-        user.setUserId(newUserDetails.getUserId());
         user.setDepartment(newUserDetails.getDepartment());
         user.setEmail(newUserDetails.getEmail());
         user.setFullName(newUserDetails.getFullName());
