@@ -1,6 +1,7 @@
 package backend.user.service;
 
 import backend.user.dto.CreateUserRequest;
+import backend.user.dto.UserResponse;
 import backend.user.enums.Role;
 import backend.user.model.User;
 import backend.user.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,8 +22,15 @@ public class UserService {
      * Getting all users of the system
      * @return a list of all users
      */
-    public List<User> getAllUsers(){
-        return userRepo.findAll();
+    public List<UserResponse> getAllUsers(){
+        List<User> allUsers = userRepo.findAll();
+
+        return allUsers.stream()
+                .map(user -> new UserResponse(user.getFullName(),
+                        user.getEmail(),
+                        user.getDepartment(),
+                        user.getRole()))
+                .toList();
     }
 
     /**
@@ -29,10 +38,17 @@ public class UserService {
      * @param id user id
      * @return a user
      */
-    public User getUserById(Long id){
-        return userRepo.findById(id).orElseThrow(() ->
+    public UserResponse getUserById(Long id){
+        User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + "not found!"));
+
+        return UserResponse.builder()
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .department(user.getDepartment())
+                .role(user.getRole())
+                .build();
     }
 
     /**
@@ -40,8 +56,14 @@ public class UserService {
      * @param email email address of a user
      * @return a user
      */
-    public User getUserByEmail(String email){
-        return userRepo.findByEmail(email);
+    public UserResponse getUserByEmail(String email){
+        User user = userRepo.findByEmail(email);
+        return UserResponse.builder()
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .department(user.getDepartment())
+                .role(user.getRole())
+                .build();
     }
 
     /**
@@ -49,8 +71,19 @@ public class UserService {
      * @param role role of a user
      * @return a list of users by their roles
      */
-    public List<User> getAllUsersByRole(Role role){
-        return userRepo.findByRole(role);
+    public List<UserResponse> getAllUsersByRole(Role role){
+        List<User> users = userRepo.findByRole(role);
+
+        List<UserResponse> userResponse = users.stream()
+                .map(user -> UserResponse.builder()
+                        .fullName(user.getFullName())
+                        .email(user.getEmail())
+                        .department(user.getDepartment())
+                        .role(user.getRole())
+                        .build())
+                .toList();
+
+        return userResponse;
     }
 
     /**

@@ -1,6 +1,7 @@
 package backend.user.controller;
 
 import backend.user.dto.CreateUserRequest;
+import backend.user.dto.UserResponse;
 import backend.user.enums.Role;
 import backend.user.model.User;
 import backend.user.service.UserService;
@@ -16,22 +17,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<UserResponse> getAllUsers(){
         return userService.getAllUsers();
     }
 
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable Long id){
+    public UserResponse getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable String email){
+    public UserResponse getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }
 
     @GetMapping("/role/{role}")
-    public List<User> getUsersByRole(@PathVariable Role role){
+    public List<UserResponse> getUsersByRole(@PathVariable Role role){
         return userService.getAllUsersByRole(role);
     }
 

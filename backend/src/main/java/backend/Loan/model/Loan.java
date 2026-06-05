@@ -2,7 +2,7 @@ package backend.Loan.model;
 
 import backend.Asset.model.Asset;
 import backend.Loan.enums.LoanStatus;
-import backend.User.model.User;
+import backend.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
