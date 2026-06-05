@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,12 +42,7 @@ public class UserService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + "not found!"));
 
-        return UserResponse.builder()
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .department(user.getDepartment())
-                .role(user.getRole())
-                .build();
+        return buildUser(user);
     }
 
     /**
@@ -58,6 +52,10 @@ public class UserService {
      */
     public UserResponse getUserByEmail(String email){
         User user = userRepo.findByEmail(email);
+        return buildUser(user);
+    }
+
+    public UserResponse buildUser(User user){
         return UserResponse.builder()
                 .fullName(user.getFullName())
                 .email(user.getEmail())
@@ -74,7 +72,7 @@ public class UserService {
     public List<UserResponse> getAllUsersByRole(Role role){
         List<User> users = userRepo.findByRole(role);
 
-        List<UserResponse> userResponse = users.stream()
+        return users.stream()
                 .map(user -> UserResponse.builder()
                         .fullName(user.getFullName())
                         .email(user.getEmail())
@@ -82,8 +80,6 @@ public class UserService {
                         .role(user.getRole())
                         .build())
                 .toList();
-
-        return userResponse;
     }
 
     /**
@@ -100,7 +96,6 @@ public class UserService {
                 .role(Role.STAFF)
                 .build();
 
-
         return userRepo.save(user);
     }
 
@@ -109,27 +104,32 @@ public class UserService {
      * @param id user id
      * @return details of the deleted user
      */
-    public User deleteUser(Long id){
+    public UserResponse deleteUser(Long id){
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
         userRepo.delete(user);
-        return user;
+
+
+        return UserResponse.builder()
+                .fullName(user.getFullName())
+                .build();
     }
 
     /**
      * Updates user details
-     * @param newUserDetails new user details
+     * @param newUserDetails new user details from a DTO
      * @param id the user id
      */
-    public void updateUser(User newUserDetails, Long id){
+    public User updateUser(CreateUserRequest newUserDetails, Long id){
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        user.setDepartment(newUserDetails.getDepartment());
-        user.setEmail(newUserDetails.getEmail());
-        user.setFullName(newUserDetails.getFullName());
-        user.setPassword(newUserDetails.getPassword());
+        user.setDepartment(newUserDetails.department());
+        user.setEmail(newUserDetails.email());
+        user.setFullName(newUserDetails.fullName());
+        user.setPassword(newUserDetails.password());
 
+        return userRepo.save(user);
     }
 
 
