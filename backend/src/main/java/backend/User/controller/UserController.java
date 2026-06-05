@@ -1,8 +1,9 @@
-package backend.User.controller;
+package backend.user.controller;
 
-import backend.User.service.UserService;
-import backend.User.enums.Role;
-import backend.User.model.User;
+import backend.dto.CreateUserRequest;
+import backend.user.enums.Role;
+import backend.user.model.User;
+import backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user){
-        return userService.addUser(user);
+    public User createUser(@RequestBody CreateUserRequest request){
+        return userService.createUser(request);
     }
 
     @PutMapping("/{id}")
