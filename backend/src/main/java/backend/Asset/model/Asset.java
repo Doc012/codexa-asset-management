@@ -1,9 +1,15 @@
 package backend.Asset.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity // marks the class as a JPA Entity, tells Spring that this class should be mapped to a db
 @Table(name = "assets")
 public class Asset {
@@ -26,22 +32,6 @@ public class Asset {
     private String location;
     private String condition;
     private String photoPath;
-
-    // Default constructor required by JPA:
-    public Asset() {
-    }
-
-    public Asset(String title, String category, String serialNumber, LocalDate acquisitionDate,
-                 Double cost, String location, String condition, String photoPath) {
-        this.title = title;
-        this.category = category;
-        this.serialNumber = serialNumber;
-        this.acquisitionDate = acquisitionDate;
-        this.cost = cost;
-        this.location = location;
-        this.condition = condition;
-        this.photoPath = photoPath;
-    }
 
     public Long getAssetId() {
         return assetId;

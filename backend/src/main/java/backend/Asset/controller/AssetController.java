@@ -1,7 +1,7 @@
 package backend.Asset.controller;
 
+import backend.Asset.dto.AssetDto;
 import backend.Asset.service.AssetService;
-import backend.Asset.model.Asset;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,22 +17,22 @@ public class AssetController {
     }
 
     @GetMapping
-    public List<Asset> getAllAssets(){
+    public List<AssetDto> getAllAssets(){
         return assetService.getAllAssets();
     }
 
     @GetMapping("/{id}")
-    public Asset getAssetById(@PathVariable Long id) {
+    public AssetDto getAssetById(@PathVariable Long id) {
         return assetService.getAssetById(id);
     }
 
     @PostMapping
-    public Asset createAsset(@RequestBody Asset newAsset){
+    public AssetDto createAsset(@RequestBody AssetDto newAsset){
         return assetService.createAsset(newAsset);
     }
 
     @PutMapping("/{id}")
-    public Asset updateAsset(@PathVariable Long id, @RequestBody Asset asset){
+    public AssetDto updateAsset(@PathVariable Long id, @RequestBody AssetDto asset){
         return assetService.updateAsset(id, asset);
     }
 
@@ -43,12 +43,12 @@ public class AssetController {
 
     // custom methods:
     @GetMapping("serial/{serialNumber}")
-    public Asset getAssetBySerialNumber(@PathVariable String serialNumber){
+    public AssetDto getAssetBySerialNumber(@PathVariable String serialNumber){
         return assetService.getAssetBySerialNumber(serialNumber);
     }
 
     @GetMapping("category/{category}")
-    public List<Asset> getAssetsByCategory(@PathVariable String category){
+    public List<AssetDto> getAssetsByCategory(@PathVariable String category){
         return assetService.getAssetsByCategory(category);
     }
 }

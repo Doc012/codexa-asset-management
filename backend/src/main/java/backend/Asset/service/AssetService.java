@@ -1,11 +1,12 @@
 package backend.Asset.service;
 
+import backend.Asset.dto.AssetDto;
 import backend.Asset.model.Asset;
 import backend.Asset.repository.AssetRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service // Marks the class as a Spring service
 public class AssetService {
@@ -21,8 +22,20 @@ public class AssetService {
      * this method returns all the assets from the database
      * @return a list of assets
      */
-    public List<Asset> getAllAssets(){
-        return assetRepo.findAll();
+    public List<AssetDto> getAllAssets(){
+//        return assetRepo.findAll();
+        return assetRepo.findAll().stream()
+                .map(asset -> new AssetDto(
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getAcquisitionDate(),
+                        asset.getCost(),
+                        asset.getLocation(),
+                        asset.getCondition(),
+                        asset.getPhotoPath()
+                ))
+                .toList();
     }
 
     /**
@@ -31,20 +44,53 @@ public class AssetService {
      * @return a single asset, matching the provided Id
      * @throws RuntimeException if the asset is not found
      */
-    public Asset getAssetById(Long id){
-        return assetRepo.findById(id)
+    public AssetDto getAssetById(Long id){
+        Asset asset = assetRepo.findById(id)
                 .orElseThrow(
                         () -> new RuntimeException("Asset Not Found with ID: " + id)
                 );
+
+        return new AssetDto(
+                asset.getTitle(),
+                asset.getCategory(),
+                asset.getSerialNumber(),
+                asset.getAcquisitionDate(),
+                asset.getCost(),
+                asset.getLocation(),
+                asset.getCondition(),
+                asset.getPhotoPath()
+        );
     }
 
     /**
      * This method creates and saves a new asset
-     * @param asset - the asset to be created -> user input
+     * @param assetDto - the asset to be created -> user input
      * @return the details of the newly created asset
      */
-    public Asset createAsset(Asset asset){
-        return assetRepo.save(asset);
+    public AssetDto createAsset(AssetDto assetDto){
+        Asset asset = Asset.builder()
+                .title(assetDto.title())
+                .category(assetDto.category())
+                .serialNumber(assetDto.serialNumber())
+                .acquisitionDate(assetDto.acquisitionDate())
+                .cost(assetDto.cost())
+                .location(assetDto.location())
+                .condition(assetDto.condition())
+                .photoPath(assetDto.photoPath())
+                .build();
+
+        Asset savedAsset = assetRepo.save(asset);
+
+        return new AssetDto(
+                savedAsset.getTitle(),
+                savedAsset.getCategory(),
+                savedAsset.getSerialNumber(),
+                savedAsset.getAcquisitionDate(),
+                savedAsset.getCost(),
+                savedAsset.getLocation(),
+                savedAsset.getCondition(),
+                savedAsset.getPhotoPath()
+        );
     }
 
     /**
@@ -52,35 +98,46 @@ public class AssetService {
      * @param id - ID of the asset to be deleted
      */
     public void deleteAsset(Long id){
+//        assetRepo.deleteById(id);
+        if(!assetRepo.existsById(id)) {
+            throw new RuntimeException("Asset Not Found");
+        }
         assetRepo.deleteById(id);
     }
 
     /**
      * this method updates an existing asset with the new values
      * @param id the ID of the asset that is being updated
-     * @param updatedAsset the new asset data
+     * @param updatedAssetDto the new asset data
      * @return the updated asset
      * @throws RuntimeException if the asset is not found
      */
-    public Asset updateAsset(Long id, Asset updatedAsset){
-        Optional<Asset> existingAssetOptional = assetRepo.findById(id);
+    @Transactional
+    public AssetDto updateAsset(Long id, AssetDto updatedAssetDto){
+        Asset existingAsset = assetRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Asset not found"));
 
-        if(existingAssetOptional.isPresent()){
-            Asset existingAsset = existingAssetOptional.get();
-            existingAsset.setTitle(updatedAsset.getTitle());
-            existingAsset.setCategory(updatedAsset.getCategory());
-            existingAsset.setSerialNumber(updatedAsset.getSerialNumber());
-            existingAsset.setAcquisitionDate(updatedAsset.getAcquisitionDate());
-            existingAsset.setCost(updatedAsset.getCost());
-            existingAsset.setLocation(updatedAsset.getLocation());
-            existingAsset.setCondition(updatedAsset.getCondition());
-            existingAsset.setPhotoPath(updatedAsset.getPhotoPath());
+        existingAsset.setTitle(updatedAssetDto.title());
+        existingAsset.setCategory(updatedAssetDto.category());
+        existingAsset.setSerialNumber(updatedAssetDto.serialNumber());
+        existingAsset.setAcquisitionDate(updatedAssetDto.acquisitionDate());
+        existingAsset.setCost(updatedAssetDto.cost());
+        existingAsset.setLocation(updatedAssetDto.location());
+        existingAsset.setCondition(updatedAssetDto.condition());
+        existingAsset.setPhotoPath(updatedAssetDto.photoPath());
 
-            return assetRepo.save(existingAsset);
+        Asset updated = assetRepo.save(existingAsset);
 
-        } else {
-            throw new RuntimeException("Asset Not Found");
-        }
+        return new AssetDto(
+                updated.getTitle(),
+                updated.getCategory(),
+                updated.getSerialNumber(),
+                updated.getAcquisitionDate(),
+                updated.getCost(),
+                updated.getLocation(),
+                updated.getCondition(),
+                updated.getPhotoPath()
+        );
     }
 
     // Added new implementation methods:
@@ -91,10 +148,22 @@ public class AssetService {
      * @return the asset with the matching serial number
      * @throws RuntimeException if the asset with the serial number is not found
      */
-    public Asset getAssetBySerialNumber(String serialNumber) {
-        return assetRepo.findBySerialNumber(serialNumber)
+    public AssetDto getAssetBySerialNumber(String serialNumber) {
+        Asset serialNumberAsset = assetRepo.findBySerialNumber(serialNumber)
                 .orElseThrow(() -> new RuntimeException
                         ("Asset not found with Serial Number: " + serialNumber));
+
+        return new AssetDto(
+                serialNumberAsset.getTitle(),
+                serialNumberAsset.getCategory(),
+                serialNumberAsset.getSerialNumber(),
+                serialNumberAsset.getAcquisitionDate(),
+                serialNumberAsset.getCost(),
+                serialNumberAsset.getLocation(),
+                serialNumberAsset.getCondition(),
+                serialNumberAsset.getPhotoPath()
+        );
+
     }
 
     /**
@@ -102,7 +171,55 @@ public class AssetService {
      * @param category is the category of the asset
      * @return a list of assets by the specified category
      */
-    public List<Asset> getAssetsByCategory(String category) {
-        return assetRepo.findByCategory(category);
+    public List<AssetDto> getAssetsByCategory(String category) {
+        return assetRepo.findByCategory(category)
+                .stream().map(asset -> new AssetDto(
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getAcquisitionDate(),
+                        asset.getCost(),
+                        asset.getLocation(),
+                        asset.getCondition(),
+                        asset.getPhotoPath()
+                ))
+                .toList();
+    }
+
+
+    /**
+     * reduce boiler-plate code
+     * @param assetDto
+     * @return
+     */
+    private Asset mapToEntity(AssetDto assetDto){
+        return Asset.builder()
+                .title(assetDto.title())
+                .category(assetDto.category())
+                .serialNumber(assetDto.serialNumber())
+                .acquisitionDate(assetDto.acquisitionDate())
+                .cost(assetDto.cost())
+                .location(assetDto.location())
+                .condition(assetDto.condition())
+                .photoPath(assetDto.photoPath())
+                .build();
+    }
+
+    /**
+     * Reduce boiler - plate code
+     * @param asset
+     * @return
+     */
+    private AssetDto maptToDto(Asset asset){
+        return new AssetDto(
+                asset.getTitle(),
+                asset.getCategory(),
+                asset.getSerialNumber(),
+                asset.getAcquisitionDate(),
+                asset.getCost(),
+                asset.getLocation(),
+                asset.getCondition(),
+                asset.getPhotoPath()
+        );
     }
 }
