@@ -1,4 +1,4 @@
-package backend.Asset.dto;
+package backend.asset.dto;
 
 import lombok.Builder;
 

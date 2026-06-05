@@ -1,6 +1,6 @@
-package backend.Asset.repository;
+package backend.asset.repository;
 
-import backend.Asset.model.Asset;
+import backend.asset.model.Asset;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

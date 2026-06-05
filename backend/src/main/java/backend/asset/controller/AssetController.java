@@ -1,7 +1,7 @@
-package backend.Asset.controller;
+package backend.asset.controller;
 
-import backend.Asset.dto.AssetDto;
-import backend.Asset.service.AssetService;
+import backend.asset.dto.AssetDto;
+import backend.asset.service.AssetService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("api/v1/assets")
 public class AssetController {
 
-    private AssetService assetService;
+    private final AssetService assetService;
 
     public AssetController(AssetService assetService) {
         this.assetService = assetService;
@@ -41,7 +41,6 @@ public class AssetController {
         assetService.deleteAsset(id);
     }
 
-    // custom methods:
     @GetMapping("serial/{serialNumber}")
     public AssetDto getAssetBySerialNumber(@PathVariable String serialNumber){
         return assetService.getAssetBySerialNumber(serialNumber);

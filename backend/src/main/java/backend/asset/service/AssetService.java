@@ -1,19 +1,19 @@
-package backend.Asset.service;
+package backend.asset.service;
 
-import backend.Asset.dto.AssetDto;
-import backend.Asset.model.Asset;
-import backend.Asset.repository.AssetRepo;
+import backend.asset.dto.AssetDto;
+import backend.asset.model.Asset;
+import backend.asset.repository.AssetRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // Marks the class as a Spring service
+@Service
 public class AssetService {
 
-    private AssetRepo assetRepo;
+    private final AssetRepo assetRepo;
 
-    // Constructor injection
+
     public AssetService(AssetRepo assetRepo) {
         this.assetRepo = assetRepo;
     }
@@ -140,7 +140,9 @@ public class AssetService {
         );
     }
 
-    // Added new implementation methods:
+    /**
+     * new implementation methods
+     */
 
     /**
      * this method gets an asset by its serial number (unique)
@@ -188,7 +190,7 @@ public class AssetService {
 
 
     /**
-     * reduce boiler-plate code
+     * method to reduce boiler-plate code (converting from DTO - Entity
      * @param assetDto
      * @return
      */
@@ -206,7 +208,7 @@ public class AssetService {
     }
 
     /**
-     * Reduce boiler - plate code
+     * Reduce boiler-plate code (converting from Entity -> DTO)
      * @param asset
      * @return
      */

@@ -1,4 +1,4 @@
-package backend.Asset.enums;
+package backend.asset.enums;
 
 public enum AssetCondition {
 }

@@ -33,7 +33,7 @@ public class LoanService {
     }
 
     public List<Loan> getLoanByUser(Long userId) {
-        return loanRepo.findByUserId(userId);
+        return loanRepo.findByUser_UserId(userId);
     }
 
     public List<Loan> getAllLoans() {
