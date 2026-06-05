@@ -1,4 +1,4 @@
-package backend.Loan.enums;
+package backend.loan.enums;
 
 public enum LoanStatus {
     PENDING,

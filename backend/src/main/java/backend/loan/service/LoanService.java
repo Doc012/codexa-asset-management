@@ -1,8 +1,8 @@
-package backend.Loan.service;
+package backend.loan.service;
 
-import backend.Loan.enums.LoanStatus;
-import backend.Loan.model.Loan;
-import backend.Loan.repository.LoanRepo;
+import backend.loan.enums.LoanStatus;
+import backend.loan.model.Loan;
+import backend.loan.repository.LoanRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,15 @@ public class LoanService {
         );
     }
 
+    public List<Loan> getLoanByUser(Long userId) {
+        return loanRepo.findByUserId(userId);
+    }
+
     public List<Loan> getAllLoans() {
         return loanRepo.findAll();
     }
 
-    public List<Loan> findByStatus(LoanStatus status) {
+    public List<Loan> getLoanByStatus(LoanStatus status) {
         return loanRepo.findByStatus(status);
     }
 

@@ -1,8 +1,8 @@
-package backend.Loan.controller;
+package backend.loan.controller;
 
-import backend.Loan.service.LoanService;
-import backend.Loan.enums.LoanStatus;
-import backend.Loan.model.Loan;
+import backend.loan.service.LoanService;
+import backend.loan.enums.LoanStatus;
+import backend.loan.model.Loan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,13 @@ public class LoanController {
     }
 
     @GetMapping("/{id}")
-    public Loan getLoanById(@PathVariable Long id) {
+    public Loan getLoansById(@PathVariable Long id) {
         return loanService.getLoanById(id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<Loan> getLoansByUserId(@PathVariable Long userId) {
+        return loanService.getLoanByUser(userId);
     }
 
     @GetMapping
@@ -37,24 +42,24 @@ public class LoanController {
     }
 
     @GetMapping("/status")
-    public List<Loan> getLoanByStatus(@RequestParam LoanStatus status) {
-        return loanService.findByStatus(status);
+    public List<Loan> getLoansByStatus(@RequestParam LoanStatus status) {
+        return loanService.getLoanByStatus(status);
     }
 
     // APPROVE loan
-    @PutMapping("/approve/{id}/")
+    @PutMapping("/{id}/approve")
     public Loan approveLoan(@PathVariable Long id) {
         return loanService.approveLoan(id);
     }
 
     // REJECT loan
-    @PutMapping("reject/{id}/")
+    @PutMapping("/{id}/reject")
     public Loan rejectLoan(@PathVariable Long id) {
         return loanService.rejectLoan(id);
     }
 
     // RETURN loan
-    @PutMapping("/return/{id}/")
+    @PutMapping("/{id}/return")
     public Loan returnLoan(@PathVariable Long id) {
         return loanService.returnLoan(id);
     }
@@ -66,4 +71,4 @@ public class LoanController {
     }
 
 
-    }
+}
