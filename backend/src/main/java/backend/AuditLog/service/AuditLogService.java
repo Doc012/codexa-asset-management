@@ -1,7 +1,6 @@
 package backend.AuditLog.service;
 
 import backend.AuditLog.model.AuditLog;
-import backend.AuditLog.repository.AuditLogRepo;
 import backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
