@@ -1,4 +1,4 @@
-package backend.dto;
+package backend.user.dto;
 
 public record CreateUserRequest(
         String fullName,

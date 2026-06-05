@@ -1,6 +1,6 @@
 package backend.user.controller;
 
-import backend.dto.CreateUserRequest;
+import backend.user.dto.CreateUserRequest;
 import backend.user.enums.Role;
 import backend.user.model.User;
 import backend.user.service.UserService;

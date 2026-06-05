@@ -1,7 +1,7 @@
-package backend.User.repository;
+package backend.user.repository;
 
-import backend.User.enums.Role;
-import backend.User.model.User;
+import backend.user.enums.Role;
+import backend.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

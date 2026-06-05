@@ -1,4 +1,4 @@
-package backend.User.dto;
+package backend.user.dto;
 
 public record UserDto() {
 }

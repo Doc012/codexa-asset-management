@@ -1,4 +1,4 @@
-package backend.User.enums;
+package backend.user.enums;
 
 public enum Role {
     ADMIN,

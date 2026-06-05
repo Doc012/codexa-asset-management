@@ -1,6 +1,6 @@
-package backend.User.model;
+package backend.user.model;
 
-import backend.User.enums.Role;
+import backend.user.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
