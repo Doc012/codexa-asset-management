@@ -1,5 +1,6 @@
 package backend.asset.dto;
 
+import backend.asset.enums.AssetCondition;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public record AssetDto(
         LocalDate acquisitionDate,
         Double cost,
         String location,
-        String condition,
+        AssetCondition condition,
         String photoPath
 ) {}
 
