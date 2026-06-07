@@ -1,7 +1,9 @@
 package backend.asset.model;
 
+import backend.asset.enums.AssetCondition;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -27,16 +29,18 @@ public class Asset {
     @Column(unique = true, nullable = false)
     private String serialNumber;
 
-    @NotBlank
+    @NotNull
     private LocalDate acquisitionDate;
 
-    @NotBlank
+    @NotNull
     private Double cost;
     @NotBlank
     private String location;
 
-    @NotBlank
-    private String condition;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AssetCondition condition;
+
     @NotBlank
     private String photoPath;
 

@@ -2,6 +2,7 @@ package backend.asset.controller;
 
 import backend.asset.dto.AssetDto;
 import backend.asset.service.AssetService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class AssetController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public AssetDto createAsset(@RequestBody AssetDto newAsset){
         return assetService.createAsset(newAsset);
     }
@@ -37,6 +39,7 @@ public class AssetController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAsset(@PathVariable Long id) {
         assetService.deleteAsset(id);
     }
