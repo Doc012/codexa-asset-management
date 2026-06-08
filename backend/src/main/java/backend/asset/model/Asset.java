@@ -37,9 +37,9 @@ public class Asset {
     @NotBlank
     private String location;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AssetCondition condition;
+    private String condition;
 
     @NotBlank
     private String photoPath;
