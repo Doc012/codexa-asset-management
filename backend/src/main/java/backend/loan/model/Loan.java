@@ -1,6 +1,6 @@
 package backend.loan.model;
 
-import backend.Asset.model.Asset;
+import backend.asset.model.Asset;
 import backend.loan.enums.LoanStatus;
 import backend.user.model.User;
 import jakarta.persistence.*;
