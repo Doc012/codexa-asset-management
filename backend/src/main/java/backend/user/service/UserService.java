@@ -1,5 +1,9 @@
 package backend.user.service;
 
+import backend.auditLog.enums.ActionType;
+import backend.auditLog.enums.EntityType;
+import backend.auditLog.model.AuditLog;
+import backend.auditLog.service.AuditLogService;
 import backend.user.dto.CreateUserRequest;
 import backend.user.dto.UserResponse;
 import backend.user.enums.Role;
@@ -15,7 +19,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepo;
+    private final AuditLogService auditLogService;
 
     /**
      * Getting all users of the system
@@ -25,7 +31,9 @@ public class UserService {
         List<User> allUsers = userRepo.findAll();
 
         return allUsers.stream()
-                .map(user -> new UserResponse(user.getFullName(),
+                .map(user -> new UserResponse(
+                        user.getUserId(),
+                        user.getFullName(),
                         user.getEmail(),
                         user.getDepartment(),
                         user.getRole()))
@@ -87,7 +95,7 @@ public class UserService {
      * @param createUserDto the new user to be added
      * @return the details of the added user
      */
-    public User createUser(CreateUserRequest createUserDto){
+    public UserResponse createUser(CreateUserRequest createUserDto){
         User user = User.builder()
                 .fullName(createUserDto.fullName())
                 .email(createUserDto.email())
@@ -96,7 +104,30 @@ public class UserService {
                 .role(Role.STAFF)
                 .build();
 
-        return userRepo.save(user);
+        User savedUser = userRepo.save(user);
+
+        AuditLog auditLog = new AuditLog().builder()
+                .entityType(EntityType.USER)
+                .entityId(savedUser.getUserId())
+                .userId(savedUser.getUserId()) // Logged in  user ID
+                .actionType(ActionType.CREATE)
+                .oldValue("N/A")
+                .newValue("Created User ID: " + savedUser.getUserId())
+                .build();
+
+        auditLogService.createLog(auditLog);
+
+        UserResponse userResponse = UserResponse.builder()
+                .id(savedUser.getUserId())
+                .fullName(savedUser.getFullName())
+                .email(savedUser.getEmail())
+                .department(savedUser.getDepartment())
+                .role(savedUser.getRole())
+                .build();
+
+
+        return userResponse;
+
     }
 
     /**
@@ -104,15 +135,27 @@ public class UserService {
      * @param id user id
      * @return details of the deleted user
      */
-    public UserResponse deleteUser(Long id){
+    public String deleteUser(Long id){
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+
+        AuditLog auditLog = new AuditLog().builder()
+                .entityType(EntityType.USER)
+                .entityId(user.getUserId())
+                .userId(user.getUserId()) // Logged in  user ID
+                .actionType(ActionType.DELETE)
+                .oldValue("N/A")
+                .newValue("Deleted User ID: " + user.getUserId())
+                .build();
+
+        auditLogService.createLog(auditLog);
+
         userRepo.delete(user);
 
 
-        return UserResponse.builder()
-                .fullName(user.getFullName())
-                .build();
+
+
+        return "User deleted successfully!";
     }
 
     /**

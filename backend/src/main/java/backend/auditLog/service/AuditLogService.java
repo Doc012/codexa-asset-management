@@ -1,7 +1,7 @@
-package backend.AuditLog.service;
+package backend.auditLog.service;
 
-import backend.AuditLog.model.AuditLog;
-import backend.AuditLog.repository.AuditLogRepo;
+import backend.auditLog.model.AuditLog;
+import backend.auditLog.repository.AuditLogRepo;
 import backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,6 @@ import java.util.List;
 public class AuditLogService {
 
     private final AuditLogRepo repository;
-    private final UserService userService;
 
     /**
      *

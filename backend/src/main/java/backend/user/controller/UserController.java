@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody CreateUserRequest request){
+    public UserResponse createUser(@RequestBody CreateUserRequest request){
         return userService.createUser(request);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public UserResponse deleteUser(@PathVariable Long id){
+    public String deleteUser(@PathVariable Long id){
         return userService.deleteUser(id);
     }
 

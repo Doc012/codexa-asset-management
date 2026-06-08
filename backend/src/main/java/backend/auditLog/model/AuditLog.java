@@ -1,7 +1,7 @@
-package backend.AuditLog.model;
+package backend.auditLog.model;
 
-import backend.AuditLog.enums.EntityType;
-import backend.AuditLog.enums.ActionType;
+import backend.auditLog.enums.EntityType;
+import backend.auditLog.enums.ActionType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
