@@ -1,7 +1,7 @@
-package backend.AuditLog.controller;
+package backend.auditLog.controller;
 
-import backend.AuditLog.service.AuditLogService;
-import backend.AuditLog.model.AuditLog;
+import backend.auditLog.service.AuditLogService;
+import backend.auditLog.model.AuditLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

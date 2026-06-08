@@ -1,4 +1,4 @@
-package backend.AuditLog.enums;
+package backend.auditLog.enums;
 
 public enum ActionType {
     CREATE,

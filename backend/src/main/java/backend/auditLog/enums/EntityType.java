@@ -1,6 +1,7 @@
-package backend.AuditLog.enums;
+package backend.auditLog.enums;
 
 public enum EntityType {
     ASSET,
-    LOAN
+    LOAN,
+    USER
 }
