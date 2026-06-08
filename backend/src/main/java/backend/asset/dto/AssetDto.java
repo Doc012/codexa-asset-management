@@ -13,7 +13,7 @@ public record AssetDto(
         LocalDate acquisitionDate,
         Double cost,
         String location,
-        AssetCondition condition,
+        String condition,
         String photoPath
 ) {}
 
