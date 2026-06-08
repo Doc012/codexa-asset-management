@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/logs")
+@RequestMapping("/api/v1/logs")
 public class AuditLogController {
 
     private final AuditLogService service;
