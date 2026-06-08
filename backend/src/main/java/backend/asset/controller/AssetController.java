@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/assets")
+@RequestMapping("/api/v1/assets")
 public class AssetController {
 
     private final AssetService assetService;
@@ -44,12 +44,12 @@ public class AssetController {
         assetService.deleteAsset(id);
     }
 
-    @GetMapping("serial/{serialNumber}")
+    @GetMapping("/serial/{serialNumber}")
     public AssetDto getAssetBySerialNumber(@PathVariable String serialNumber){
         return assetService.getAssetBySerialNumber(serialNumber);
     }
 
-    @GetMapping("category/{category}")
+    @GetMapping("/category/{category}")
     public List<AssetDto> getAssetsByCategory(@PathVariable String category){
         return assetService.getAssetsByCategory(category);
     }
