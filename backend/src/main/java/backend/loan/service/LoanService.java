@@ -1,7 +1,7 @@
 package backend.loan.service;
 
-import backend.Asset.model.Asset;
-import backend.Asset.repository.AssetRepo;
+import backend.asset.model.Asset;
+import backend.asset.repository.AssetRepo;
 import backend.loan.dto.LoanRequestDTO;
 import backend.loan.dto.LoanResponseDTO;
 import backend.loan.enums.LoanStatus;
@@ -138,56 +138,4 @@ public class LoanService {
                 )
         );
     }
-<<<<<<< Updated upstream
-
-    public List<Loan> getLoanByUser(Long userId) {
-        return loanRepo.findByUser_UserId(userId);
-    }
-
-    public List<Loan> getAllLoans() {
-        return loanRepo.findAll();
-    }
-
-    public List<Loan> getLoanByStatus(LoanStatus status) {
-        return loanRepo.findByStatus(status);
-    }
-
-    // APPROVE loan
-    public Loan approveLoan(Long loanId) {
-        Loan loan = getLoanById(loanId);
-
-        loan.setStatus(LoanStatus.APPROVED);
-        loan.setCheckoutDate(LocalDate.now());
-        loan.setDueDate(LocalDate.now().plusDays(7));
-
-        return loanRepo.save(loan);
-    }
-
-    // REJECT loan
-    public Loan rejectLoan(Long loanId) {
-        Loan loan = getLoanById(loanId);
-        loan.setStatus(LoanStatus.REJECTED);
-        return loanRepo.save(loan);
-    }
-
-    // RETURN loan
-    public Loan returnLoan(Long loanId) {
-        Loan loan = getLoanById(loanId);
-
-        loan.setStatus(LoanStatus.RETURNED);
-        loan.setReturnDate(LocalDate.now());
-
-        return loanRepo.save(loan);
-    }
-
-    // DELETE loan
-    public void deleteLoan(Long loanId) {
-        loanRepo.deleteById(loanId);
-    }
 }
-
-
-
-=======
-}
->>>>>>> Stashed changes
