@@ -1,0 +1,296 @@
+/* LOGIN */
+/* Reset */
+html,
+body {
+    font-family: 'Open Sans', sans-serif;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+}
+
+/* Center container */
+.container-sm {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Card styling */
+.card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    padding: 2rem 3rem;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+/* Headings */
+.card h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    margin-top: unset;
+}
+
+.card p {
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.login-form input {
+    /* width: 100%; */
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Button */
+.login-form .btn {
+    width: 100%;
+    padding: 0.8rem;
+
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Button hover */
+.login-form .btn:hover {
+    background: #0056b3;
+}
+
+/* Link styling */
+.card a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+
+/* Logo container */
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+/* Logo image */
+.logo-wrapper img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-wrapper img:hover {
+    transform: scale(1.05) ;
+}
+
+
+/* REGISTER */
+
+/* Container */
+.register-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* height: 100vh; */
+    overflow: hidden;
+}
+
+/* Card */
+.register-card {
+    width: 100%;
+    /* max-width: 380px; */
+    max-width: 700px;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    background: #ffffff;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.register-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-left {
+    text-align: left;
+}
+
+/* Headings */
+.register-card h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    margin-top: unset;
+}
+
+.register-card p {
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.register-card input {
+    /* width: 100%; */
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Button */
+.register-btn {
+    width: 100%;
+    padding: 0.8rem;
+
+    background: #007bff; /* SAME blue */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Hover */
+.register-btn:hover {
+    background: #0056b3;
+}
+
+/* Links */
+.register-card a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.register-card a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .card {
+        padding: 2rem;
+        max-width: 90%;
+    }
+
+    .card h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-sm {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    .card p {
+        font-size: 13px;
+    }
+
+    .login-form input {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+
+    .login-form .btn {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .register-card {
+        padding: 2rem;
+        max-width: 90%;
+    }
+
+    .register-card h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media(max-width: 576px){
+    .register-header .logo-wrapper {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        padding: 1rem;
+    }
+
+    .register-card {
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+
+    .register-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .register-card p {
+        font-size: 13px;
+    }
+
+    .register-card input {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+
+    .register-btn {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+}
