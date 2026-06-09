@@ -1,6 +1,7 @@
 // ─── Audit Log Service ────────────────────────────────────────────────────────
+import { API_BASE_URL } from "../assets/js/config.js";
 
-async function getAllLogs() {
+export async function getAllLogs() {
     const response = await fetch(`${API_BASE_URL}/logs`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();

@@ -1,6 +1,7 @@
 // ─── Asset Service ────────────────────────────────────────────────────────────
+import { API_BASE_URL } from "../assets/js/config.js";
 
-async function getAllAssets() {
+export async function getAllAssets() {
     const response = await fetch(`${API_BASE_URL}/assets`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
