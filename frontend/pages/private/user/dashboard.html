@@ -1,11 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeXa Asset Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/loans.css">
 </head>
 <body>
-    
+
+<header class="topbar">
+  <div class="left-nav">
+    <button id="menuBtn" class="menu-btn">☰</button>
+    <span class="logo">Asset IQ</span>
+  </div>
+
+  <!-- Single Search Bar -->
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search assets, loans, reports...">
+    </div>
+  </div>
+
+  <div class="right-nav">
+    <!-- AI Icon -->
+    <button id="aiBtn" class="ai-btn">
+      <img src="../../../assets/images/icons/ai-icon.png" alt="AI" class="icon ai-icon">
+    </button>
+
+    <!-- Profile Icon -->
+    <div class="profile-card" id="profileMenu">
+      <img src="../../../assets/images/icons/GLE Merc.jpg" alt="Profile" class="icon profile-pic">
+      <div class="dropdown">
+        <button>Profile</button>
+        <button id="editProfile">Edit Profile</button>
+        <button>Preferences</button>
+        <button>Logout</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Sliding AI Panel -->
+<div id="aiPanel">
+  <span id="closeAi" class="close-btn">✖</span>
+  <div id="chatBox"></div>
+  <div class="chat-controls">
+    <div class="chat-input-wrapper">
+      <input type="text" id="chatInput" placeholder="Ask me anything...">
+      <button class="attach-btn"><img src="../../../assets/images/icons/attachment-icon.png" alt="Attach" class="icon"></button>
+      <button class="dictate-btn"><img src="../../../assets/images/icons/dictate-icon.png" alt="Dictate" class="icon"></button>
+      <button class="submit-btn"><img src="../../../assets/images/icons/submit-icon.png" alt="Submit" class="icon"></button>
+    </div>
+  </div>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <ul>
+    <li class="active">🏠 Dashboard</li>
+    <li>💻 My Assets</li>
+    <li>📋 Request Asset</li>
+    <li>🔄 My Loans</li>
+    <li>📦 Returns</li>
+    <li>📊 Reports</li>
+    <li>⚙ Settings</li>
+  </ul>
+</aside>
+
+<main class="content" id="mainContent">
+  <section class="welcome-banner">
+    <h1>Welcome Back, Steve 👋</h1>
+    <p>Manage assets, requests and loans from one place.</p>
+  </section>
+
+  <section class="stats-tabs">
+    <button class="tab">Assets</button>
+    <button class="tab">Loans</button>
+    <button class="tab">Requests</button>
+    <button class="tab">Overdue</button>
+  </section>
+
+ <section class="dashboard-grid">
+  <!-- My Assets -->
+  <div class="panel">
+      <tbody id="assetTable"></tbody>
+    </table>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="panel">
+    <div class="panel-header"><h2>Recent Activity</h2></div>
+    <ul class="activity-list">
+      <li>Asset request submitted</li>
+      <li>Laptop approved</li>
+      <li>Return reminder sent</li>
+    </ul>
+  </div>
+</section>
+
+
+</main>
+
+<script src="../../../assets/js/loans.js"></script>
 </body>
 </html>
