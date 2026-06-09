@@ -1,0 +1,105 @@
+@import url("managerDashboard.css");
+
+
+.profile_container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+
+.profile_card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #F2F2F2;
+    border: 1px solid rgba(120, 160, 255, 0.25);
+    border: 1px solid rgba(120, 160, 255, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.profile_card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #02A7E8;
+}
+
+.profile_info h2 {
+    margin: 0;
+}
+
+.profile_info p {
+    margin: 5px 0;
+    color: #444;
+}
+
+.profile_actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.sidebar a.active {
+    background: rgba(2, 167, 232, 0.2);
+    border-left: 3px solid #02A7E8;
+}
+
+@media (max-width: 768px) {
+
+    .profile_card {
+        background-color: #F2F2F2;
+    }
+
+    .profile_card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile_actions {
+        flex-direction: column;
+    }
+}
+
+
+@media (prefers-color-scheme: dark) {
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #0B1026;
+    }
+
+    .profile_card {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(120, 160, 255, 0.2);
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .profile_info p {
+        color: #ffffff;
+    }
+
+    .footer {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.10);
+        width: 100%;
+        text-align: center;
+        margin-top: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .profile_container {
+        margin-left: 270px;
+        width: 77%;
+    }
+}
