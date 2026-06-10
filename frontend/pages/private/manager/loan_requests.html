@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Requests</title>
+    <link rel="stylesheet" href="../../../assets/css/loan_requests.css">
+</head>
+
+<body>
+
+    <input type="checkbox" id="toggle">
+
+    <nav class="nav_bar">
+        <label for="toggle" class="hamburger">☰</label>
+
+        <div class="nav_right">
+            <a href="#" class="profile">
+                <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic">
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <section class="image">
+            <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assetIq" width="100px" height="140px">
+        </section>
+
+        <a href="managerDashboard.html">Home</a>
+        <a href="managerDashboard.html">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="loanRequests.html" class="active">Loan Requests</a>
+        <a href="#">Assets</a>
+        <a href="#">Reports</a>
+    </div>
+
+    <label for="toggle" class="overlay"></label>
+
+    <section class="page_header">
+        <h2>Loan Requests</h2>
+        <p>Approve or reject asset borrowing requests</p>
+    </section>
+
+    <section class="card">
+
+        <h3>Pending Requests</h3>
+
+        <table class="loan_table">
+            <thead>
+                <tr>
+                    <th>Asset</th>
+                    <th>Requested By</th>
+                    <th>Date</th>
+                    <th>Department</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Laptop Dell XPS</td>
+                    <td>John Doe</td>
+                    <td>2026-06-10</td>
+                    <td>IT</td>
+                    <td>
+                        <button class="approve_btn">Approve</button>
+                        <button class="reject_btn">Reject</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Projector Epson</td>
+                    <td>Mary Jane</td>
+                    <td>2026-06-09</td>
+                    <td>Marketing</td>
+                    <td>
+                        <button class="approve_btn">Approve</button>
+                        <button class="reject_btn">Reject</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Codexa Asset IQ</p>
+    </footer>
+
+</body>
+
+</html>
