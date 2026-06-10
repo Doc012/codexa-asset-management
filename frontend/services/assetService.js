@@ -25,7 +25,7 @@ async function getAssetsByCategory(category) {
     return await response.json();
 }
 
-async function createAsset(assetData) {
+export async function createAsset(assetData) {
     const response = await fetch(`${API_BASE_URL}/assets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

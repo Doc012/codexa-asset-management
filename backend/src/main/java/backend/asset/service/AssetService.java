@@ -10,10 +10,7 @@ import java.util.List;
 
 @Service
 public class AssetService {
-
     private final AssetRepo assetRepo;
-
-
     public AssetService(AssetRepo assetRepo) {
         this.assetRepo = assetRepo;
     }
