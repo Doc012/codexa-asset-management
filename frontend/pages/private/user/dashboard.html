@@ -14,614 +14,222 @@
 
 <body>
 
-
 <!-- ================= TOP NAVBAR ================= -->
-
 <header class="topbar">
 
     <div class="left-nav">
-
-        <button id="menuBtn" class="menu-btn">
-            ☰
-        </button>
-
-        <h2 class="logo">
-            Asset IQ
-        </h2>
-
+        <button id="menuBtn" class="menu-btn">☰</button>
+        <h2 class="logo">Asset IQ</h2>
     </div>
-
-
 
     <!-- Search Bar -->
-
     <div class="search-container">
-
         <div class="search-box">
+            <span class="search-icon">🔍</span>
 
-            <span class="search-icon">
-                🔍
-            </span>
-
-            <input 
-                type="text"
-                placeholder="Search assets, loans, reports..."
-                id="searchInput">
-
+            <input type="text" placeholder="Search assets, loans, reports..." id="searchInput">
         </div>
-
     </div>
 
-
-
     <!-- Right Navigation -->
-
     <div class="right-nav">
-
-
         <!-- AI Button -->
-
         <button id="aiBtn" class="ai-btn">
-
-            <img 
-            src="../../../assets/images/icons/ai-icon.png"
-            alt="AI">
-
+            <img src="../../../assets/images/icons/ai-icon.png" alt="AI">
         </button>
 
-
-
         <!-- Profile -->
-
         <div class="profile-container">
-
-
             <!-- Default Initial -->
-            <div id="profileInitial" class="profile-initial">
-                S
-            </div>
+            <div id="profileInitial" class="profile-initial">S</div>
 
 
             <!-- Uploaded Image -->
-            <img 
-                id="profileImage"
-                class="profile-image">
+            <img  id="profileImage" class="profile-image">
 
-
-            <input 
-                type="file"
-                id="profileUpload"
-                hidden>
+            <input type="file" id="profileUpload" hidden>
 
 
             <!-- Dropdown -->
-
             <div class="profile-dropdown">
-
-                <button id="uploadBtn">
-                    Upload Photo
-                </button>
-
-                <button>
-                    Profile
-                </button>
-
-
-                <button>
-                    Edit Profile
-                </button>
-
-
-                <button>
-                    Preferences
-                </button>
-
-
-                <button>
-                    Logout
-                </button>
-
-
+                <button id="uploadBtn">Upload Photo</button>
+                <button>Profile</button>
+                <button> Edit Profile </button>
+                <button>Preferences</button>
+                <button>Logout</button>
             </div>
-
-
         </div>
-
-
     </div>
-
 </header>
 
-
-
-
-
-
 <!-- ================= SIDEBAR ================= -->
-
 <aside id="sidebar" class="sidebar">
-
-
     <ul>
-
-
-        <li 
-        class="nav-item active"
-        data-page="dashboard">
-
-        🏠 Dashboard
-
-        </li>
-
-
-
-        <li 
-        class="nav-item"
-        data-page="assets">
-
-        💻 My Assets
-
-        </li>
-
-
-
-        <li 
-        class="nav-item"
-        data-page="request">
-
-        📋 Request Asset
-
-        </li>
-
-
-
-        <li 
-        class="nav-item"
-        data-page="loans">
-
-        🔄 My Loans
-
-        </li>
-
-
-        <li 
-        class="nav-item"
-        data-page="returns">
-
-        📦 Returns
-
-        </li>
-
-
-
-        <li 
-        class="nav-item"
-        data-page="reports">
-
-        📊 Reports
-
-        </li>
-
-
-        <li 
-        class="nav-item"
-        data-page="settings">
-
-        ⚙ Settings
-
-        </li>
-
-
+        <li class="nav-item active" data-page="dashboard">🏠 Dashboard</li>
+        <li  class="nav-item" data-page="assets"> 💻 My Assets</li>
+        <li class="nav-item" data-page="request"> 📋 Request Asset</li>
+        <li class="nav-item" data-page="loans"> 🔄 My Loans</li>
+        <li class="nav-item"data-page="returns">📦 Returns</li>
+        <li class="nav-item" data-page="reports">📊 Reports</li>
+        <li class="nav-item" data-page="settings">⚙ Settings</li>
     </ul>
-
-
 </aside>
 
 
-
-
-
 <!-- ================= MAIN CONTENT ================= -->
-
-
 <main id="mainContent" class="content">
-
 
 <!-- Dashboard -->
 <section id="dashboardPage" class="page active">
 
-
     <!-- Welcome -->
-
     <div class="welcome-card">
-
-        <h1>
-            Welcome Back, Steve 👋
-        </h1>
-
-        <p>
-            Manage assets, requests and loans from one place.
-        </p>
-
+        <h1>Welcome Back, Steve 👋</h1>
+        <p>Manage assets, requests and loans from one place.</p>
     </div>
 
 
     <!-- KPI Cards -->
-
-
     <div class="stats-grid">
-
-
         <div class="stat-card">
-
             <h3>Assets</h3>
-
-            <h2 id="totalAssets">
-                0
-            </h2>
-
+            <h2 id="totalAssets">0</h2>
         </div>
 
-
-
         <div class="stat-card">
-
             <h3>Loans</h3>
-
-            <h2>
-                0
-            </h2>
-
+            <h2>0</h2>
         </div>
-
 
         <div class="stat-card">
-
             <h3>Requests</h3>
-
-            <h2>
-                0
-            </h2>
-
+            <h2>0</h2>
         </div>
-
-
 
         <div class="stat-card danger">
-
             <h3>Overdue</h3>
-
-            <h2>
-                0
-            </h2>
-
+            <h2>0</h2>
         </div>
-
-
     </div>
 
 
 
     <!-- Recent Activity -->
-
-
     <div class="panel">
-
-
-        <h2>
-            Recent Activity
-        </h2>
-
-
+        <h2>Recent Activity</h2>
         <ul class="activity-list">
-
             <li>
                 Asset request submitted
             </li>
-
-
             <li>
                 Dell laptop approved
             </li>
-
-
             <li>
                 Return reminder sent
             </li>
-
-
         </ul>
-
-
     </div>
-
-
-
 </section>
-
-
-
-
 
 
 <!-- My Assets -->
-
-
 <section id="assetsPage" class="page">
-
-
     <div class="panel">
-
-
         <div class="page-header">
-
-            <h2>
-                My Assets
-            </h2>
-
-
-            <input 
-            class="table-search"
-            placeholder="Search my assets">
-
-
+            <h2>My Assets</h2>
+            <input class="table-search" placeholder="Search my assets">
         </div>
 
-
         <table class="asset-table">
-
-
             <thead>
-
             <tr>
-
                 <th>Asset</th>
-
                 <th>Category</th>
-
                 <th>Status</th>
-
                 <th>Due Date</th>
-
             </tr>
-
-
             </thead>
 
-
             <tbody id="assetTable">
-
-
             </tbody>
-
-
         </table>
-
-
     </div>
-
-
 </section>
-
-
-
-
-
 
 
 <!-- Request Asset -->
-
-
 <section id="requestPage" class="page">
-
-
     <div class="panel">
+        <h2>Request Asset</h2>
 
-        <h2>
-            Request Asset
-        </h2>
-
-
-        <input 
-        class="input-field"
-        placeholder="Asset Name">
-
-
-        <input 
-        class="input-field"
-        placeholder="Category">
-
-
-        <textarea 
-        class="input-field"
-        placeholder="Reason for request">
-        </textarea>
+        <input class="input-field" placeholder="Asset Name">
+        <input class="input-field" placeholder="Category">
+        <textarea class="input-field" placeholder="Reason for request"></textarea>
 
 
         <button class="primary-btn">
-
             Submit Request
-
         </button>
-
-
     </div>
-
-
 </section>
-
-
-
-
 
 <!-- My Loans -->
-
-
 <section id="loansPage" class="page">
-
-<div class="panel">
-
-<h2>My Loans</h2>
-
-
-<p>
-Your active loans will appear here.
-</p>
-
-
-</div>
-
-
+    <div class="panel">
+        <h2>My Loans</h2>
+        <p> Your active loans will appear here.</p>
+    </div>
 </section>
-
-
-
 
 
 <!-- Returns -->
-
-
 <section id="returnsPage" class="page">
-
-
-<div class="panel">
-
-
-<h2>
-Returns
-</h2>
-
-
-<p>
-Return your company assets here.
-</p>
-
-
-</div>
-
-
+    <div class="panel">
+        <h2>Returns</h2>
+        <p>Return your company assets here.</p>
+    </div>
 </section>
-
-
-
-
 
 <!-- Reports -->
-
-
 <section id="reportsPage" class="page">
-
-
-<div class="panel">
-
-
-<h2>
-Reports & Analytics
-</h2>
-
-
-<p>
-Enterprise reports will appear here.
-</p>
-
-
-</div>
-
-
+    <div class="panel">
+        <h2>Reports & Analytics</h2>
+        <p>Enterprise reports will appear here.</p>
+    </div>
 </section>
-
-
-
-
 
 <!-- Settings -->
-
-
 <section id="settingsPage" class="page">
-
-
-<div class="panel">
-
-
-<h2>
-Settings
-</h2>
-
-
-<p>
-Manage your profile and preferences.
-</p>
-
-
-</div>
-
-
+    <div class="panel">
+        <h2>Settings</h2>
+        <p>Manage your profile and preferences.</p>
+    </div>
 </section>
-
-
 </main>
 
 
 
-
-
 <!-- AI ASSISTANT -->
-
-
 <div id="aiPanel">
+    <div class="ai-header">
+        Asset IQ AI
+        <button id="closeAI">✖</button>
+    </div>
+
+    <div id="chatBox">
+
+        <div class="ai-message">
+            Hello Steve 👋<br>
+            How can I help you manage your assets today?
+        </div>
+    </div>
 
 
-<div class="ai-header">
-
-    Asset IQ AI
-
-    <button id="closeAI">
-        ✖
-    </button>
-
+    <div class="chat-input">
+        <input type="text" placeholder="Ask Asset IQ AI...">
+        <button>Send</button>
+    </div>
 </div>
-
-
-<div id="chatBox">
-
-
-<div class="ai-message">
-
-Hello Steve 👋<br>
-How can I help you manage your assets today?
-
-
-</div>
-
-
-</div>
-
-
-
-<div class="chat-input">
-
-
-<input 
-type="text"
-placeholder="Ask Asset IQ AI...">
-
-
-<button>
-Send
-</button>
-
-
-</div>
-
-
-</div>
-
-
-
-
 <script src="../../../assets/js/loans.js"></script>
-
-
 </body>
-
 </html>
