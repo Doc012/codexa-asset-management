@@ -65,6 +65,7 @@ public class UserService {
 
     public UserResponse buildUser(User user){
         return UserResponse.builder()
+                .id(user.getUserId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .department(user.getDepartment())

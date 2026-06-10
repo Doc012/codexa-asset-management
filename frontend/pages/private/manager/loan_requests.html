@@ -28,8 +28,8 @@
             <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assetIq" width="100px" height="140px">
         </section>
 
-        <a href="managerDashboard.html">Home</a>
-        <a href="managerDashboard.html">Dashboard</a>
+        <a href="#">Home</a>
+        <a href="dashboard.html">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="loanRequests.html" class="active">Loan Requests</a>
         <a href="#">Assets</a>
@@ -82,7 +82,37 @@
                 </tr>
             </tbody>
         </table>
+    </section>
 
+    <section class="card history_card">
+        <h3>Request History</h3>
+        <table class="loan_table">
+            <thead>
+                <tr>
+                    <th>Asset</th>
+                    <th>Requested By</th>
+                    <th>Date</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Asset">MacBook Pro</td>
+                    <td data-label="Requested By">Thabo Modise</td>
+                    <td data-label="Date">2026-06-05</td>
+                    <td data-label="Department">Engineering</td>
+                    <td data-label="Status"><span class="status-badge approved">Approved</span></td>
+                </tr>
+                <tr>
+                    <td data-label="Asset">Projector Epson</td>
+                    <td data-label="Requested By">Mary Jane</td>
+                    <td data-label="Date">2026-06-01</td>
+                    <td data-label="Department">Marketing</td>
+                    <td data-label="Status"><span class="status-badge rejected">Rejected</span></td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
     <footer class="footer">
