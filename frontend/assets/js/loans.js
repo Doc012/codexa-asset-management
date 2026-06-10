@@ -47,6 +47,9 @@ const totalAssets =
 const assetSearch =
     document.querySelector(".table-search");
 
+const totalLoans = 
+    document.getElementById("totalLoans");
+
 
 
 /* ===============================
@@ -140,6 +143,18 @@ navItems.forEach(item => {
 
             loadAssets();
 
+        }
+
+        //Load loan when user opens loans
+        if (pageName === "loans") {
+
+          loadLoans();
+
+        }
+
+        if (pageName === "settings") {
+
+          loadUserProfile();
         }
 
 
@@ -293,7 +308,73 @@ closeAI.addEventListener("click", () => {
 
 });
 
+/* ===============================
+   INITIAL LOAD
+================================ */
+window.addEventListener("load", async () => {
+    await loadUserProfile(); // Fetch profile details right away
+    await loadAssets();
+    await loadLoans(); 
+});
 
+
+/* ===============================
+   PROFILE API INTEGRATION
+================================ */
+
+const PROFILE_API_URL = "http://localhost:8080/api/v1/users/profile"; // Adjust to match your endpoint
+let currentUser = null;
+
+async function loadUserProfile() {
+    try {
+        const response = await fetch(PROFILE_API_URL);
+        if(!response.ok) {
+            throw new Error("Could not load user profile data");
+        }
+        currentUser = await response.json();
+        renderUserProfile(currentUser);
+    }
+    catch(error) {
+        console.error("Backend error:", error);
+        // Fallback error messaging inside the profile panel fields
+        document.getElementById("profileFullName").textContent = "Error loading data";
+        document.getElementById("profileEmail").textContent = "Error loading data";
+    }
+}
+
+function renderUserProfile(user) {
+    if (!user) return;
+
+    // 1. Update the settings page panel fields
+    const fullNameElem = document.getElementById("profileFullName");
+    const emailElem = document.getElementById("profileEmail");
+    const deptElem = document.getElementById("profileDepartment");
+    const roleElem = document.getElementById("profileRole");
+
+    if (fullNameElem) fullNameElem.textContent = user.fullName;
+    if (emailElem) emailElem.textContent = user.email;
+    if (deptElem) deptElem.textContent = user.department;
+    
+    if (roleElem) {
+        roleElem.textContent = user.role;
+        // Apply styling based on role (ADMIN gets a primary green badge, USER gets a gray badge)
+        roleElem.className = `status-badge ${user.role.toLowerCase() === 'admin' ? 'approved' : 'unknown'}`;
+    }
+
+    // 2. DYNAMIC BONUS: Update the Navbar Topbar layout components!
+    const navInitial = document.getElementById("profileInitial");
+    const welcomeHeader = document.querySelector(".welcome-card h1");
+
+    // Extract the first letter of their name (e.g., "John Smith" -> "J")
+    if (navInitial && user.fullName) {
+        navInitial.textContent = user.fullName.charAt(0).toUpperCase();
+    }
+
+    // Change "Welcome Back, Steve" dynamically to match your true backend user
+    if (welcomeHeader && user.fullName) {
+        welcomeHeader.innerHTML = `Welcome Back, ${user.fullName.split(' ')[0]} 👋`;
+    }
+}
 
 
 
@@ -374,53 +455,142 @@ async function loadAssets() {
 
 }
 
+/* ===============================
+   LOANS API INTEGRATION
+================================ */
 
+const LOANS_API_URL = "http://localhost:8080/api/v1/loans"; // Adjust path matching your Spring Boot routes
+let loans = [];
+
+// 1. Fetch data from backend
+async function loadLoans() {
+    try {
+        const response = await fetch(LOANS_API_URL);
+        if(!response.ok) {
+            throw new Error("Could not load tracking logs");
+        }
+        loans = await response.json();
+        renderLoans(loans);
+    }
+    catch(error) {
+        console.error("Backend error:", error);
+        const loanTable = document.getElementById("loanTable");
+        if(loanTable) {
+            loanTable.innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; color: var(--danger);">
+                        Failed to connect to Loan Allocation API
+                    </td>
+                </tr>`;
+        }
+    }
+}
+
+// 2. Render Loans Table Rows
+function renderLoans(loanList) {
+    const loanTable = document.getElementById("loanTable");
+    if(!loanTable) return;
+
+    loanTable.innerHTML = "";
+
+    if (loanList.length === 0) {
+        loanTable.innerHTML = `<tr><td colspan="7" style="text-align:center;">No loans on file.</td></tr>`;
+        return;
+    }
+
+    loanList.forEach(loan => {
+        // Handle fallback parsing for null values gracefully
+        const checkout = loan.checkoutDate ? loan.checkoutDate : `<span style="color:var(--muted); font-style:italic;">Pending Out</span>`;
+        const returned = loan.returnDate ? loan.returnDate : `<span style="color:var(--muted);">—</span>`;
+
+        loanTable.innerHTML += `
+        <tr>
+            <td><strong>#LN-${loan.loanId}</strong></td>
+            <td><code>AST-${loan.assetId}</code></td>
+            <td>${loan.requestDate}</td>
+            <td>${checkout}</td>
+            <td>${loan.dueDate}</td>
+            <td>${returned}</td>
+            <td>
+                <span class="status-badge ${loan.status.toLowerCase()}">
+                    ${loan.status}
+                </span>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+// 3. Independent Deep Filter for Loans
+const loanSearch = document.getElementById("loanSearch");
+if(loanSearch) {
+    loanSearch.addEventListener("input", (event) => {
+        const searchText = event.target.value.toLowerCase().trim();
+        
+        const filtered = loans.filter(loan => {
+            return (
+                loan.loanId.toString().includes(searchText) ||
+                loan.assetId.toString().includes(searchText) ||
+                loan.status.toLowerCase().includes(searchText) ||
+                (loan.requestDate && loan.requestDate.includes(searchText)) ||
+                (loan.dueDate && loan.dueDate.includes(searchText))
+            );
+        });
+        renderLoans(filtered);
+    });
+}
 
 
 /* ===============================
-   RENDER ASSET TABLE
+   RENDER ASSET TABLE (ALL FIELDS)
 ================================ */
-
-
 function renderAssets(assetList) {
-
 
     if(!assetTable) return;
 
-
     assetTable.innerHTML = "";
 
+    // If backend returns empty array, display a nice notice
+    if (assetList.length === 0) {
+        assetTable.innerHTML = `<tr><td colspan="8" style="text-align:center;">No assets found.</td></tr>`;
+        return;
+    }
 
     assetList.forEach(asset => {
-
+        // Format cost safely (e.g., 1299.99 -> $1,299.99)
+        const formattedCost = asset.cost 
+            ? new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(asset.cost)
+            : 'N/A';
 
         assetTable.innerHTML +=
         `
         <tr>
-
             <td>
-                ${asset.name || "Unknown"}
+                <img src="${asset.photoPath || ''}" alt="${asset.title || 'Asset'}" 
+                     style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;" 
+                     onerror="this.src='https://placehold.co/40?text=💻'">
             </td>
 
-            <td>
-                ${asset.category || "N/A"}
-            </td>
+            <td><strong>${asset.title || "Unknown"}</strong></td>
+
+            <td>${asset.category || "N/A"}</td>
+
+            <td><code style="background: #f4f4f4; padding: 2px 6px; border-radius: 4px;">${asset.serialNumber || "N/A"}</code></td>
+
+            <td>${asset.acquisitionDate || "-"}</td>
+
+            <td>${formattedCost}</td>
+
+            <td><small>📍 ${asset.location || "N/A"}</small></td>
 
             <td>
-                ${asset.status || "Unknown"}
+                <span class="status-badge ${(asset.condition || 'unknown').toLowerCase()}">
+                    ${asset.condition || "Unknown"}
+                </span>
             </td>
-
-            <td>
-                ${asset.dueDate || "-"}
-            </td>
-
         </tr>
         `;
-
-
     });
-
-
 }
 
 
@@ -429,66 +599,51 @@ function renderAssets(assetList) {
 /* ===============================
    UPDATE DASHBOARD STATS
 ================================ */
-
-
 function updateDashboard() {
+    // Update Asset Counter
+    if (totalAssets) {
+        totalAssets.textContent = assets.length;
+    }
 
-
-    totalAssets.textContent =
-        assets.length;
-
-
+    // NEW: Update Loan Counter dynamically
+    if (totalLoans) {
+        totalLoans.textContent = loans.length;
+    }
 }
 
 
-
-
-
 /* ===============================
-   ASSET SEARCH
+   ASSET SEARCH (ALL FIELDS)
 ================================ */
 
+if (assetSearch) {
 
-if(assetSearch) {
+    assetSearch.addEventListener("input", (event) => {
 
+        const searchText = event.target.value.toLowerCase().trim();
 
-    assetSearch.addEventListener(
-        "input",
+        const filtered = assets.filter(asset => {
+            
+            // 1. Convert cost to string so it can be searched (e.g., "1299.99")
+            const assetCost = asset.cost ? asset.cost.toString() : "";
 
-        (event) => {
-
-
-        const searchText =
-            event.target.value
-            .toLowerCase();
-
-
-        const filtered =
-            assets.filter(asset => {
-
-
+            // 2. Check if the search text matches ANY of the backend fields
             return (
-                asset.name
-                ?.toLowerCase()
-                .includes(searchText)
-
-                ||
-
-                asset.category
-                ?.toLowerCase()
-                .includes(searchText)
-
+                (asset.title && asset.title.toLowerCase().includes(searchText)) ||
+                (asset.category && asset.category.toLowerCase().includes(searchText)) ||
+                (asset.serialNumber && asset.serialNumber.toLowerCase().includes(searchText)) ||
+                (asset.location && asset.location.toLowerCase().includes(searchText)) ||
+                (asset.condition && asset.condition.toLowerCase().includes(searchText)) ||
+                (asset.acquisitionDate && asset.acquisitionDate.toLowerCase().includes(searchText)) ||
+                assetCost.includes(searchText)
             );
-
 
         });
 
-
+        // 3. Re-render the table with only the matching rows
         renderAssets(filtered);
 
-
     });
-
 
 }
 

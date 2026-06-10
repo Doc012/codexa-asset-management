@@ -98,7 +98,7 @@
 
         <div class="stat-card">
             <h3>Loans</h3>
-            <h2>0</h2>
+            <h2 id="totalLoans">0</h2>
         </div>
 
         <div class="stat-card">
@@ -139,20 +139,25 @@
             <h2>My Assets</h2>
             <input class="table-search" placeholder="Search my assets">
         </div>
-
+        <div class="panel-table-container">
         <table class="asset-table">
             <thead>
-            <tr>
-                <th>Asset</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Due Date</th>
-            </tr>
+                <tr>
+                    <th>Photo</th>
+                    <th>Asset Name</th>
+                    <th>Category</th>
+                    <th>Serial Number</th>
+                    <th>Acquisition Date</th>
+                    <th>Cost</th>
+                    <th>Location</th>
+                    <th>Condition</th>
+                </tr>
             </thead>
 
             <tbody id="assetTable">
-            </tbody>
+                </tbody>
         </table>
+        </div>
     </div>
 </section>
 
@@ -176,8 +181,28 @@
 <!-- My Loans -->
 <section id="loansPage" class="page">
     <div class="panel">
-        <h2>My Loans</h2>
-        <p> Your active loans will appear here.</p>
+        <div class="page-header">
+            <h2>My Loans</h2>
+            <input class="table-search" id="loanSearch" placeholder="Search my loans">
+        </div>
+
+        <div class="panel-table-container">
+            <table class="asset-table">
+                <thead>
+                    <tr>
+                        <th>Loan ID</th>
+                        <th>Asset ID</th>
+                        <th>Request Date</th>
+                        <th>Checkout Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="loanTable">
+                    </tbody>
+            </table>
+        </div>
     </div>
 </section>
 
@@ -201,8 +226,32 @@
 <!-- Settings -->
 <section id="settingsPage" class="page">
     <div class="panel">
-        <h2>Settings</h2>
-        <p>Manage your profile and preferences.</p>
+        <h2>User Profile</h2>
+        <p style="color: var(--muted); margin-bottom: 20px;">Your enterprise account details from the backend.</p>
+        
+        <div class="profile-details-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 600px;">
+            <div>
+                <label style="font-weight: 600; color: var(--muted); font-size: 14px;">Full Name</label>
+                <div id="profileFullName" class="input-field" style="background: #F9FAFB; font-weight: 500;">Loading...</div>
+            </div>
+            
+            <div>
+                <label style="font-weight: 600; color: var(--muted); font-size: 14px;">Email Address</label>
+                <div id="profileEmail" class="input-field" style="background: #F9FAFB; font-weight: 500;">Loading...</div>
+            </div>
+            
+            <div>
+                <label style="font-weight: 600; color: var(--muted); font-size: 14px;">Department</label>
+                <div id="profileDepartment" class="input-field" style="background: #F9FAFB; font-weight: 500;">Loading...</div>
+            </div>
+            
+            <div>
+                <label style="font-weight: 600; color: var(--muted); font-size: 14px;">System Role</label>
+                <div>
+                    <span id="profileRole" class="status-badge unknown" style="margin-top: 15px;">LOADING</span>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 </main>

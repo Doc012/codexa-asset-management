@@ -797,6 +797,101 @@ textarea.input-field {
 
 }
 
+/* ==============================
+   TABLE RESPONSIVE WRAPPER & REFINEMENTS
+================================ */
+
+/* Wrap the panel structure to allow safe scrolling without breaking layout */
+.panel {
+    position: relative;
+    overflow: hidden; /* Keeps the panel card curves clean */
+}
+
+/* Target containers holding tables. 
+   Apply this specifically to let the table expand naturally 
+   while giving the user a sleek scrollbar on smaller screens.
+*/
+.panel-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.asset-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap; /* Prevents text elements like dates and tags from wrapping awkwardly */
+}
+
+/* Image styling for asset pictures */
+.asset-table img {
+    border: 1px solid var(--border);
+    background-color: #F9FAFB;
+}
+
+/* Code block styling for Serial Numbers */
+.asset-table code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* ==============================
+   STATUS BADGES
+================================ */
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+/* Green theme for 'Good' condition assets */
+.status-badge.good {
+    background-color: #E8F5E9;
+    color: var(--primary);
+}
+
+/* Yellow theme for assets needing attention/maintenance */
+.status-badge.fair,
+.status-badge.warning {
+    background-color: #FEF3C7;
+    color: #D97706;
+}
+
+/* Red theme for broken or missing elements */
+.status-badge.poor,
+.status-badge.damaged {
+    background-color: #FEE2E2;
+    color: var(--danger);
+}
+
+/* Gray theme fallback */
+.status-badge.unknown {
+    background-color: #F3F4F6;
+    color: var(--muted);
+}
+
+/* Custom workflow states for items out on loan */
+.status-badge.approved {
+    background-color: #E8F5E9;
+    color: var(--primary);
+}
+
+.status-badge.pending {
+    background-color: #FEF3C7;
+    color: #D97706;
+}
+
+.status-badge.rejected,
+.status-badge.overdue {
+    background-color: #FEE2E2;
+    color: var(--danger);
+}
 
 
 /* ==============================
@@ -920,8 +1015,8 @@ textarea.input-field {
     }
     /* Tables scroll instead of breaking */
     .asset-table {
-        display: block;
-        overflow-x: auto;
+        /* display: block;
+        overflow-x: auto; */
         white-space: nowrap;
     }
     #aiPanel {
