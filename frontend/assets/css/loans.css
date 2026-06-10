@@ -874,5 +874,130 @@ textarea.input-field {
         width:100%;
 
     }
+}
 
+/* ---------------------------------------------------------------- */
+/* ===== TABLET (≤ 1024px) ===== */
+@media (max-width: 1024px) {
+    /* Slightly smaller search */
+    .search-box {
+        width: 400px;
+    }
+    /* Cards adjust */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===== SMALL TABLET (≤ 768px) ===== */
+@media (max-width: 768px) {
+
+    /* Sidebar hidden by default */
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    /* Mobile open state */
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    /* Content takes full width */
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    /* Logo smaller */
+    .logo {
+        font-size: 22px;
+    }
+    /* Search smaller */
+    .search-box {
+        width: 280px;
+        height: 42px;
+    }
+    /* Welcome text smaller */
+    .welcome-card h1 {
+        font-size: 30px;
+    }
+    /* Tables scroll instead of breaking */
+    .asset-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    #aiPanel {
+        width: 100%;
+        right: -100%; /* FULLY hidden */
+    }
+    #aiPanel.open {
+        right: 0;
+    }
+}
+
+/* ===== MOBILE (≤ 576px) ===== */
+@media (max-width: 576px) {
+    /* Hide search for clean UI */
+    .search-container {
+        display: none;
+    }
+    /* Topbar tighter */
+    .topbar {
+        padding: 0 15px;
+    }
+    /* Logo smaller */
+    .logo {
+        font-size: 18px;
+    }
+    /* Profile image smaller */
+    .profile-initial,
+    .profile-image {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    /* One column layout */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    /* Welcome card */
+    .welcome-card {
+        padding: 20px;
+    }
+    .welcome-card h1 {
+        font-size: 24px;
+    }
+    .welcome-card p {
+        font-size: 15px;
+    }
+    /* Panels tighter */
+    .panel {
+        padding: 18px;
+    }
+    /* Inputs */
+    .input-field {
+        padding: 12px;
+        font-size: 14px;
+    }
+    /* Buttons full width */
+    .primary-btn {
+        width: 100%;
+        padding: 14px;
+    }
+    /* AI panel full screen */
+    #aiPanel {
+        width: 100%;
+        right: -100;
+    }
+}
+
+/* ===== EXTRA SMALL (≤ 400px) ===== */
+@media (max-width: 400px) {
+    .logo {
+        font-size: 16px;
+    }
+    .menu-btn {
+        font-size: 20px;
+    }
+    .welcome-card h1 {
+        font-size: 20px;
+    }
 }

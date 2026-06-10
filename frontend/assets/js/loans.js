@@ -61,8 +61,37 @@ menuBtn.addEventListener("click", () => {
 
 });
 
+// smaller screens
+document.addEventListener("DOMContentLoaded", () => {
 
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const navItems = document.querySelectorAll(".nav-item");
 
+    // Toggle sidebar
+    menuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        sidebar.classList.toggle("mobile-open");
+    });
+
+    // Close when clicking menu items
+    navItems.forEach(item => {
+        item.addEventListener("click", () => {
+            sidebar.classList.remove("mobile-open");
+        });
+    });
+
+    // Prevent closing when clicking sidebar
+    sidebar.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", () => {
+        sidebar.classList.remove("mobile-open");
+    });
+
+});
 
 /* ===============================
    PAGE NAVIGATION
