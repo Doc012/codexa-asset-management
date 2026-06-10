@@ -1,174 +1,656 @@
-// === Sidebar toggle ===
-document.getElementById("menuBtn").addEventListener("click", () => {
-  document.getElementById("sidebar").classList.toggle("open");
+/* ======================================
+   ASSET IQ ENTERPRISE DASHBOARD
+   JavaScript Controller
+====================================== */
+
+
+/* ===============================
+   ELEMENT REFERENCES
+================================ */
+
+const sidebar = document.getElementById("sidebar");
+const menuBtn = document.getElementById("menuBtn");
+const content = document.getElementById("mainContent");
+
+const navItems = document.querySelectorAll(".nav-item");
+
+const profileContainer =
+    document.querySelector(".profile-container");
+
+const profileDropdown =
+    document.querySelector(".profile-dropdown");
+
+const profileUpload =
+    document.getElementById("profileUpload");
+
+const profileImage =
+    document.getElementById("profileImage");
+
+const profileInitial =
+    document.getElementById("profileInitial");
+
+const aiBtn =
+    document.getElementById("aiBtn");
+
+const aiPanel =
+    document.getElementById("aiPanel");
+
+const closeAI =
+    document.getElementById("closeAI");
+
+const assetTable =
+    document.getElementById("assetTable");
+
+const totalAssets =
+    document.getElementById("totalAssets");
+
+const assetSearch =
+    document.querySelector(".table-search");
+
+
+
+/* ===============================
+   SIDEBAR TOGGLE
+================================ */
+
+menuBtn.addEventListener("click", () => {
+
+    sidebar.classList.toggle("closed");
+
+    content.classList.toggle("expanded");
+
 });
 
-// === Sidebar navigation ===
-document.querySelectorAll(".sidebar li").forEach(item => {
-  item.addEventListener("click", () => {
-    document.querySelector(".sidebar .active")?.classList.remove("active");
-    item.classList.add("active");
-    loadContent(item.textContent.trim());
-  });
+
+
+
+/* ===============================
+   PAGE NAVIGATION
+================================ */
+
+navItems.forEach(item => {
+
+
+    item.addEventListener("click", () => {
+
+
+        // remove old active menu
+        document
+            .querySelector(".nav-item.active")
+            .classList.remove("active");
+
+
+        // activate new menu
+        item.classList.add("active");
+
+
+        // hide all pages
+        document
+            .querySelectorAll(".page")
+            .forEach(page => {
+
+                page.classList.remove("active");
+
+            });
+
+
+        // show selected page
+        const pageName =
+            item.dataset.page;
+
+
+        document
+            .getElementById(
+                pageName + "Page"
+            )
+            .classList.add("active");
+
+
+        // Load assets only when user opens assets
+        if(pageName === "assets") {
+
+            loadAssets();
+
+        }
+
+
+    });
+
+
 });
 
-// === Load content dynamically ===
-function loadContent(section) {
-  const content = document.getElementById("mainContent");
-  switch(section) {
-    case "💻 My Assets":
-      content.innerHTML = `
-        <section class="dashboard-grid">
-          <div class="panel">
-            <div class="panel-header"><h2>My Assets</h2></div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Category</th>
-                  <th>Status</th>
-                  <th>Due Date</th>
-                </tr>
-              </thead>
-              <tbody id="assetTable"></tbody>
-            </table>
-          </div>
-          <div class="panel">
-            <div class="panel-header"><h2>Recent Activity</h2></div>
-            <div class="activity-list">
-              <div class="activity-item">Asset request submitted</div>
-              <div class="activity-item">Laptop approved</div>
-              <div class="activity-item">Return reminder sent</div>
-            </div>
-          </div>
-        </section>`;
-      loadAssets();
-      break;
-    case "📋 Request Asset":
-      content.innerHTML = "<h2>Request Asset Page</h2><p>Form to request assets.</p>";
-      break;
-    case "🔄 My Loans":
-      content.innerHTML = "<h2>Loans Page</h2><p>Loan details here.</p>";
-      break;
-    case "📦 Returns":
-      content.innerHTML = "<h2>Returns Page</h2><p>Return items here.</p>";
-      break;
-    case "📊 Reports":
-      content.innerHTML = "<h2>Reports Page</h2><p>Reports and analytics.</p>";
-      break;
-    case "⚙ Settings":
-      content.innerHTML = "<h2>Settings Page</h2><p>User preferences here.</p>";
-      break;
-    default:
-      content.innerHTML = "<h2>Dashboard</h2><p>Overview of system.</p>";
-  }
+
+
+
+
+/* ===============================
+   PROFILE DROPDOWN
+================================ */
+
+profileContainer.addEventListener("click", (e) => {
+
+
+    profileContainer.classList.toggle("open");
+
+
+    e.stopPropagation();
+
+
+});
+
+
+document.addEventListener("click", () => {
+
+
+    profileContainer.classList.remove("open");
+
+
+});
+
+
+
+
+
+/* ===============================
+   PROFILE IMAGE UPLOAD
+================================ */
+
+
+profileUpload.addEventListener("change", (event) => {
+
+
+    const file =
+        event.target.files[0];
+
+
+    if(!file) return;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+
+        profileImage.src =
+            e.target.result;
+
+
+        profileImage.style.display =
+            "block";
+
+
+        profileInitial.style.display =
+            "none";
+
+
+        localStorage.setItem(
+            "profilePicture",
+            e.target.result
+        );
+
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+
+});
+
+
+
+
+// Upload button inside dropdown
+document
+.getElementById("uploadBtn")
+.addEventListener("click", () => {
+
+
+    profileUpload.click();
+
+
+});
+
+
+
+
+// Load saved profile image
+const savedImage =
+    localStorage.getItem("profilePicture");
+
+
+if(savedImage) {
+
+
+    profileImage.src =
+        savedImage;
+
+
+    profileImage.style.display =
+        "block";
+
+
+    profileInitial.style.display =
+        "none";
+
+
 }
 
-// === Profile dropdown opens on click ===
-// Profile dropdown toggle
-const profileMenu = document.getElementById("profileMenu");
-profileMenu.addEventListener("click", () => {
-  profileMenu.classList.toggle("open");
-});
 
 
-// === AI panel slide in/out ===
-const aiBtn = document.getElementById("aiBtn");
-const aiPanel = document.getElementById("aiPanel");
-const closeBtn = document.getElementById("closeAi");
-const mainContent = document.getElementById("mainContent");
+
+
+/* ===============================
+   AI PANEL
+================================ */
+
 
 aiBtn.addEventListener("click", () => {
-  aiPanel.classList.add("open");
-  mainContent.classList.add("shifted");
+
+
+    aiPanel.classList.add("open");
+
+
 });
 
-closeBtn.addEventListener("click", () => {
-  aiPanel.classList.remove("open");
-  mainContent.classList.remove("shifted");
+
+closeAI.addEventListener("click", () => {
+
+
+    aiPanel.classList.remove("open");
+
+
 });
 
-// === AI chat functionality ===
-document.querySelector(".submit-btn").addEventListener("click", () => {
-  const input = document.getElementById("chatInput");
-  const chatBox = document.getElementById("chatBox");
-  const userMsg = input.value.trim();
-  if(userMsg) {
-    chatBox.innerHTML += `<div><strong>You:</strong> ${userMsg}</div>`;
-    chatBox.innerHTML += `<div><strong>AI:</strong> Let me help you with "${userMsg}"...</div>`;
-    input.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-});
 
-// Dictate button placeholder
-document.querySelector(".dictate-btn").addEventListener("click", () => {
-  alert("Voice dictation feature coming soon!");
-});
 
-// Attach button placeholder
-document.querySelector(".attach-btn").addEventListener("click", () => {
-  alert("Attachment upload feature coming soon!");
-});
 
-// === Load assets from database ===
-const API = "http://localhost:8080/api/v1/loans"; // Example DB API endpoint
-const API_URL = "http://localhost:8080/api/v1/assets";
 
-async function loadAssets(){
-  try {
-    const response = await fetch(API);
-    if(!response.ok) throw new Error("Failed to load assets");
+/* ===============================
+   ASSET API INTEGRATION
+================================ */
 
-    const assets = await response.json();
-    const table = document.getElementById("assetTable");
-    if(!table) return;
 
-    table.innerHTML = "";
-    assets.forEach(asset => {
-      table.innerHTML += `
-        <tr>
-          <td>${asset.name || "undefined"}</td>
-          <td>${asset.category || "undefined"}</td>
-          <td>${asset.status}</td>
-          <td>${asset.dueDate || "-"}</td>
-        </tr>`;
-    });
-  } catch(error) {
-    console.error(error);
-  }
+/*
+ Make sure your Spring Boot backend
+ is running on port 8080
+*/
+
+const API_URL =
+    "http://localhost:8080/api/v1/assets";
+
+
+let assets = [];
+
+
+
+async function loadAssets() {
+
+
+    try {
+
+
+        const response =
+            await fetch(API_URL);
+
+
+        if(!response.ok) {
+
+
+            throw new Error(
+                "Could not load assets"
+            );
+
+
+        }
+
+
+        assets =
+            await response.json();
+
+
+        renderAssets(assets);
+
+
+        updateDashboard();
+
+
+    }
+
+
+    catch(error) {
+
+
+        console.error(
+            "Backend error:",
+            error
+        );
+
+
+        assetTable.innerHTML =
+        `
+            <tr>
+                <td colspan="4">
+                    Failed to connect
+                    to Asset API
+                </td>
+            </tr>
+        `;
+
+
+    }
+
+
 }
 
-// // === Load assets from database ===
-// const API = "http://localhost:8080/api/v1/assets"; // Adjust endpoint if needed
 
-async function loadAssets(){
-  try {
-    const response = await fetch(API);
-    if(!response.ok) throw new Error("Failed to load assets");
 
-    const assets = await response.json();
-    const table = document.getElementById("assetTable");
-    if(!table) return;
 
-    table.innerHTML = "";
-    assets.forEach(asset => {
-      table.innerHTML += `
+/* ===============================
+   RENDER ASSET TABLE
+================================ */
+
+
+function renderAssets(assetList) {
+
+
+    if(!assetTable) return;
+
+
+    assetTable.innerHTML = "";
+
+
+    assetList.forEach(asset => {
+
+
+        assetTable.innerHTML +=
+        `
         <tr>
-          <td>${asset.name || "—"}</td>
-          <td>${asset.category || "—"}</td>
-          <td><span class="status ${asset.status.toLowerCase()}">${asset.status}</span></td>
-          <td>${asset.dueDate || "—"}</td>
-        </tr>`;
+
+            <td>
+                ${asset.name || "Unknown"}
+            </td>
+
+            <td>
+                ${asset.category || "N/A"}
+            </td>
+
+            <td>
+                ${asset.status || "Unknown"}
+            </td>
+
+            <td>
+                ${asset.dueDate || "-"}
+            </td>
+
+        </tr>
+        `;
+
+
     });
-  } catch(error) {
-    console.error(error);
-  }
+
+
 }
 
 
-// === Prevent full page reload on refresh ===
-window.addEventListener("beforeunload", function (e) {
-  e.preventDefault();
-  e.returnValue = '';
+
+
+/* ===============================
+   UPDATE DASHBOARD STATS
+================================ */
+
+
+function updateDashboard() {
+
+
+    totalAssets.textContent =
+        assets.length;
+
+
+}
+
+
+
+
+
+/* ===============================
+   ASSET SEARCH
+================================ */
+
+
+if(assetSearch) {
+
+
+    assetSearch.addEventListener(
+        "input",
+
+        (event) => {
+
+
+        const searchText =
+            event.target.value
+            .toLowerCase();
+
+
+        const filtered =
+            assets.filter(asset => {
+
+
+            return (
+                asset.name
+                ?.toLowerCase()
+                .includes(searchText)
+
+                ||
+
+                asset.category
+                ?.toLowerCase()
+                .includes(searchText)
+
+            );
+
+
+        });
+
+
+        renderAssets(filtered);
+
+
+    });
+
+
+}
+
+
+
+
+
+/* ===============================
+   AI CHAT DEMO
+================================ */
+
+
+const chatBox =
+    document.getElementById("chatBox");
+
+
+const chatInput =
+    document.querySelector(
+        ".chat-input input"
+    );
+
+
+const sendBtn =
+    document.querySelector(
+        ".chat-input button"
+    );
+
+
+sendBtn.addEventListener("click", sendMessage);
+
+
+chatInput.addEventListener(
+    "keypress",
+    (event) => {
+
+
+    if(event.key === "Enter") {
+
+
+        sendMessage();
+
+
+    }
+
+
+});
+
+
+
+
+function sendMessage() {
+
+
+    const message =
+        chatInput.value.trim();
+
+
+    if(!message) return;
+
+
+    addMessage(
+        "You",
+        message
+    );
+
+
+    chatInput.value = "";
+
+
+    setTimeout(() => {
+
+
+        addMessage(
+            "Asset IQ AI",
+            generateAIResponse(message)
+        );
+
+
+    }, 700);
+
+
+}
+
+
+
+
+
+function addMessage(sender, text) {
+
+
+    chatBox.innerHTML +=
+    `
+    <div class="ai-message">
+
+        <strong>
+        ${sender}
+        </strong>
+
+        <br>
+
+        ${text}
+
+    </div>
+    `;
+
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+
+}
+
+
+
+
+function generateAIResponse(message) {
+
+
+    message =
+        message.toLowerCase();
+
+
+
+    if(
+        message.includes("laptop")
+        ||
+        message.includes("phone")
+    ) {
+
+
+        return `
+        Consider requesting a company device,
+        buying refurbished equipment,
+        or prioritizing the device you need most.
+        `;
+
+
+    }
+
+
+    if(
+        message.includes("loan")
+    ) {
+
+
+        return `
+        You can check your active loans
+        under the My Loans section.
+        `;
+
+
+    }
+
+
+    if(
+        message.includes("asset")
+    ) {
+
+
+        return `
+        Asset IQ helps you track assets,
+        requests, returns, and reports.
+        `;
+
+
+    }
+
+
+    return `
+    I understand your request.
+    A more advanced AI model can be
+    connected later using an API.
+    `;
+
+
+}
+
+
+
+
+
+/* ===============================
+   INITIAL LOAD
+================================ */
+
+
+window.addEventListener("load", () => {
+
+
+    // load dashboard data
+    loadAssets();
+
+
 });
