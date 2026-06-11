@@ -49,17 +49,16 @@ const profileEmailElement = document.querySelector(".user_email");
 const loadManagerDashboard = async () => {
     try {
         const managerId = 1;
-
         const managerData = await getUserById(managerId);
 
         if (managerData) {
 
             if (managerElement) {
-                managerElement.textContent = `Welcome ${managerData.fullName}`;
+                managerElement.textContent = `Welcome back, ${managerData.firstName}`;
             }
 
             if (profileNameElement) {
-                profileNameElement.textContent = managerData.fullName;
+                profileNameElement.textContent = `${managerData.firstName} ${managerData.lastName}`;
             }
 
             if (profileRoleElement) {
@@ -75,6 +74,8 @@ const loadManagerDashboard = async () => {
         console.error("Error:", error);
     }
 };
+
+
 
 loadManagerDashboard();
 

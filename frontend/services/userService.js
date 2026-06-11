@@ -26,7 +26,7 @@ export const getUserById = (async (id) => {
  * @returns user details in a json object
  */
 
-const getUserByEmail = (async (email) => {
+export const getUserByEmail = (async (email) => {
     const res = await fetch(`${API_BASE_URL}/user/email/${email}`);
     return await res.json();
 });
@@ -36,7 +36,7 @@ const getUserByEmail = (async (email) => {
  * @param {*} role 
  * @returns all users by their roles in a json object
  */
-const getAllUsersByRole = (async (role) => {
+export const getAllUsersByRole = (async (role) => {
     const res = await fetch(`${API_BASE_URL}/role/${role}`);
     return await res.json();
 })
@@ -47,7 +47,7 @@ const getAllUsersByRole = (async (role) => {
  * @returns 
  */
 
-const createUser = (async (userData) => {
+export const createUser = (async (userData) => {
     const res = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
@@ -65,7 +65,7 @@ const createUser = (async (userData) => {
  * @param {*} id 
  * @param {*} userData 
  */
-const updateAllUserDetails = (async (id, userData) => {
+export const updateAllUserDetails = (async (id, userData) => {
     const res = await fetch(`${API_BASE_URL}/users/user/${id}`, {
         method: "PUT",
         headers: {
@@ -74,4 +74,5 @@ const updateAllUserDetails = (async (id, userData) => {
         body: JSON.stringify(userData)
     });
 });
+
 

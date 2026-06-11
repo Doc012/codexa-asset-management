@@ -159,7 +159,6 @@ button:hover {
     backdrop-filter: blur(6px);
 }
 
-/* -----------assets ------- */
 .assets_table-container {
     width: 90%;
     margin: 20px auto;
@@ -189,10 +188,9 @@ button:hover {
     background-color: rgba(2, 167, 232, 0.1);
 }
 
-/* ------------------------------------------------------------ */
 .table_card {
-    width: 100% !important; /* Forces the table card to use full row width on desktop */
-    overflow-x: auto;       /* Adds smooth horizontal scrolling on small mobile screens */
+    width: 100% !important;
+    overflow-x: auto;    
 }
 
 .assets_table-container {
@@ -200,7 +198,6 @@ button:hover {
     margin: 0;
 }
 
-/* --- Status Badges --- */
 .status {
     padding: 4px 8px;
     border-radius: 4px;
@@ -220,17 +217,16 @@ button:hover {
     color: #dc3545;
 }
 
-/* --------------------------------------------- */
 .assets_table-container {
     width: 100%;
-    overflow-x: auto;                   /* Enables horizontal scrolling when content overflows */
-    -webkit-overflow-scrolling: touch;  /* Smooth inertial scrolling on iOS devices */
+    overflow-x: auto;                   
+    -webkit-overflow-scrolling: touch;  
     margin: 10px 0;
 }
 
-/* Optional: Style the scrollbar to make it subtle and blend with your dark/light themes */
+
 .assets_table-container::-webkit-scrollbar {
-    height: 6px;                        /* Thinner scrollbar so it looks sleek */
+    height: 6px;                        
 }
 
 .assets_table-container::-webkit-scrollbar-track {
@@ -238,16 +234,15 @@ button:hover {
 }
 
 .assets_table-container::-webkit-scrollbar-thumb {
-    background: rgba(2, 167, 232, 0.3); /* Uses your dashboard's signature blue color */
+    background: rgba(2, 167, 232, 0.3); 
     border-radius: 4px;
 }
 
-/* 2. The Table: Forces the minimum readable width on mobile */
 .assets_table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    white-space: nowrap; /* Prevents text like asset IDs or dates from wrapping into ugly double lines */
+    white-space: nowrap;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -298,7 +293,6 @@ button:hover {
             backdrop-filter: blur(10px);
         }
 
-        /* assets */ 
         .assets_table th {
             background-color: rgba(2, 167, 232, 0.3);
         }
@@ -353,15 +347,14 @@ button:hover {
         margin-left: 0;
     }
 
-    /*  */
     .dashboard_cards .asset_controls {
-        width: 100%; /* Spans across the grid header */
+        width: 100%;
     }
 
 }
 
 @media (max-width: 767px) {
     .assets_table {
-        min-width: 600px;        /* Forces a comfortable width on mobile so data doesn't squish */
+        min-width: 600px; 
     }
 }

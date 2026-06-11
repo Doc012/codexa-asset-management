@@ -1,6 +1,7 @@
 // ─── Loan Service ─────────────────────────────────────────────────────────────
+import { API_BASE_URL } from "../assets/js/config.js";
 
-async function getAllLoans() {
+export async function getAllLoans() {
     const response = await fetch(`${API_BASE_URL}/loans`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
@@ -18,8 +19,8 @@ async function getLoansByUser(userId) {
     return await response.json();
 }
 
-async function getLoansByStatus() {
-    const response = await fetch(`${API_BASE_URL}/loans/status`);
+export async function getLoansByStatus(statusValue) {
+    const response = await fetch(`${API_BASE_URL}/loans/status?status=${statusValue}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
