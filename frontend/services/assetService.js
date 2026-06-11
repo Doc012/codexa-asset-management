@@ -35,7 +35,7 @@ export async function createAsset(assetData) {
     return await response.json();
 }
 
-async function updateAsset(id, assetData) {
+export async function updateAsset(id, assetData) {
     const response = await fetch(`${API_BASE_URL}/assets/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +45,7 @@ async function updateAsset(id, assetData) {
     return await response.json();
 }
 
-async function deleteAsset(id) {
+export async function deleteAsset(id) {
     const response = await fetch(`${API_BASE_URL}/assets/${id}`, {
         method: 'DELETE'
     });

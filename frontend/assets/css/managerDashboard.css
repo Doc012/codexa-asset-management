@@ -244,6 +244,27 @@ button:hover {
     margin-top: 10px;
     white-space: nowrap;
 }
+/* assets table buttons for update/delete */
+.edit-btn {
+    display: inline-block;
+    background-color: #02A7E8;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    display: inline-block;
+    background-color: crimson;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
 @media (prefers-color-scheme: dark) {
 
