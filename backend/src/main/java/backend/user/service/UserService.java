@@ -33,8 +33,10 @@ public class UserService {
         return allUsers.stream()
                 .map(user -> new UserResponse(
                         user.getUserId(),
-                        user.getFullName(),
+                        user.getFirstName(),
+                        user.getLastName(),
                         user.getEmail(),
+                        user.getPicUrl(),
                         user.getDepartment(),
                         user.getRole()))
                 .toList();
@@ -52,8 +54,10 @@ public class UserService {
 
         return new UserResponse(
                 user.getUserId(),
-                user.getFullName(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
+                user.getPicUrl(),
                 user.getDepartment(),
                 user.getRole()
         );
@@ -74,8 +78,10 @@ public class UserService {
 
         return new UserResponse(
                 user.getUserId(),
-                user.getFullName(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getEmail(),
+                user.getPicUrl(),
                 user.getDepartment(),
                 user.getRole());
 
@@ -92,7 +98,7 @@ public class UserService {
         return users.stream()
                 .map(user -> UserResponse.builder()
                         .id(user.getUserId())
-                        .fullName(user.getFullName())
+                        .firstName(user.getFirstName())
                         .email(user.getEmail())
                         .department(user.getDepartment())
                         .role(user.getRole())
@@ -113,9 +119,11 @@ public class UserService {
             );
         }
         User user = User.builder()
-                .fullName(createUserDto.fullName())
+                .firstName(createUserDto.firstName())
+                .lastName(createUserDto.lastName())
                 .email(createUserDto.email())
                 .password(createUserDto.password())
+                .picUrl(createUserDto.picUrl())
                 .department(createUserDto.email())
                 .role(Role.STAFF)
                 .build();
@@ -135,8 +143,10 @@ public class UserService {
 
         UserResponse userResponse = UserResponse.builder()
                 .id(savedUser.getUserId())
-                .fullName(savedUser.getFullName())
+                .firstName(savedUser.getFirstName())
+                .lastName(savedUser.getLastName())
                 .email(savedUser.getEmail())
+                .picUrl(savedUser.getFirstName())
                 .department(savedUser.getDepartment())
                 .role(savedUser.getRole())
                 .build();
@@ -185,8 +195,10 @@ public class UserService {
 
         user.setDepartment(newUserDetails.department());
         user.setEmail(newUserDetails.email());
-        user.setFullName(newUserDetails.fullName());
+        user.setFirstName(newUserDetails.firstName());
+        user.setLastName(newUserDetails.lastName());
         user.setPassword(newUserDetails.password());
+        user.setPicUrl(newUserDetails.picUrl());
 
         return userRepo.save(user);
     }

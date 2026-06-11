@@ -7,14 +7,14 @@ INSERT INTO assets (title, category, serial_number, acquisition_date, cost, loca
 ('4K Monitor LG 32UP550', 'Electronics', 'LG-32UP550-001', '2023-12-12', 699.99, 'Office Building A, Floor 3', 'Excellent', '/photos/monitor_001.jpg'),
 ('Conference Table Mahogany', 'Furniture', 'CONF-TABLE-001-2024', '2024-01-22', 2499.00, 'Meeting Room Suite B', 'Good', '/photos/conference_table_001.jpg');
 
-INSERT INTO users (full_name, email, role, password, department) VALUES
-('John Smith', 'john.smith@company.com', 'ADMIN', 'hashed_password_001', 'IT Department'),
-('Sarah Johnson', 'sarah.johnson@company.com', 'STAFF', 'hashed_password_002', 'Marketing'),
-('Michael Chen', 'michael.chen@company.com', 'STAFF', 'hashed_password_003', 'Finance'),
-('Emily Rodriguez', 'emily.rodriguez@company.com', 'MANAGER', 'hashed_password_004', 'Operations'),
-('David Brown', 'david.brown@company.com', 'STAFF', 'hashed_password_005', 'Sales'),
-('Lisa Anderson', 'lisa.anderson@company.com', 'STAFF', 'hashed_password_006', 'HR'),
-('James Wilson', 'james.wilson@company.com', 'MANAGER', 'hashed_password_007', 'IT Department');
+INSERT INTO users (first_name, last_name, email, role, password, department, profile_picture_url) VALUES
+('John', 'Smith', 'john.smith@company.com', 'ADMIN', 'hashed_password_001', 'IT Department', 'https://example.com/profiles/john_smith.jpg'),
+('Sarah', 'Johnson', 'sarah.johnson@company.com', 'STAFF', 'hashed_password_002', 'Marketing', 'https://example.com/profiles/sarah_johnson.jpg'),
+('Michael', 'Chen', 'michael.chen@company.com', 'STAFF', 'hashed_password_003', 'Finance', 'https://example.com/profiles/michael_chen.jpg'),
+('Emily', 'Rodriguez', 'emily.rodriguez@company.com', 'MANAGER', 'hashed_password_004', 'Operations', 'https://example.com/profiles/emily_rodriguez.jpg'),
+('David', 'Brown', 'david.brown@company.com', 'STAFF', 'hashed_password_005', 'Sales', 'https://example.com/profiles/david_brown.jpg'),
+('Lisa', 'Anderson', 'lisa.anderson@company.com', 'STAFF', 'hashed_password_006', 'HR', 'https://example.com/profiles/lisa_anderson.jpg'),
+('James', 'Wilson', 'james.wilson@company.com', 'MANAGER', 'hashed_password_007', 'IT Department', 'https://example.com/profiles/james_wilson.jpg');
 
 INSERT INTO loans (user_id, asset_id, request_date, status, checkout_date, due_date, return_date) VALUES
 (1, 1, '2026-05-20', 'APPROVED', '2026-05-22', '2026-06-22', NULL),

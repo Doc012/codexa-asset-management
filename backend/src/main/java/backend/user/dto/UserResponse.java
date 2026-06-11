@@ -6,8 +6,10 @@ import lombok.*;
 @Builder
 public record UserResponse(
         Long id,
-        String fullName,
+        String firstName,
+        String lastName,
         String email,
+        String picUrl,
         String department,
         Role role) {
 }

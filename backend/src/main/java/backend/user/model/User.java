@@ -22,7 +22,11 @@ public class User {
    private Long userId;
 
    @NotBlank
-   private String fullName;
+   @Column(name = "first_name", nullable = false)
+   private String firstName;
+
+   @Column(name = "last_name", nullable = false)
+   private String lastName;
 
    @NotBlank(message = "Email cannot be blank")
    @Email(message = "Invalid email")
@@ -31,6 +35,9 @@ public class User {
 
    @Enumerated(EnumType.STRING)
    private Role role;
+
+   @Column(name = "profile_picture_url")
+   private String picUrl;
 
    @NotBlank
    private String password;
