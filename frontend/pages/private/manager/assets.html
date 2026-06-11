@@ -36,7 +36,7 @@
 
     <main class="dashboard_cards">
         <section class="card asset_controls">
-            <button><a href="create_asset.html">+ Register New Asset</a></button>
+            <a href="create_asset.html"><button id="create-asset-btn">+ Register New Asset</button></a>
             <button style="background-color: transparent; color: #02A7E8; border: 1px solid #02A7E8; margin-left: 8px;">Export CSV</button>
         </section>
 
@@ -45,6 +45,7 @@
                 <table class="assets_table">
                     <thead>
                         <tr>
+                            <th>Asset ID</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Serial Number</th>

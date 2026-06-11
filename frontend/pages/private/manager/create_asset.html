@@ -10,19 +10,20 @@
     <h2>Create new asset:</h2>
 
     <form action="" id="create-asset-form">
-        
-        <input type="text" name="title" placeholder="Title" required>
-        <input type="text" name="category" placeholder="Category" required>
-        <input type="text" name="serialNumber" placeholder="Serial Number" required>
-        <input type="date" name="acquisitionDate" required>
-        <input type="number" name="cost" placeholder="Cost" required>
-        <input type="text" name="location" placeholder="Location" required>
-        <input type="text" name="condition" placeholder="Condition" required>
-        <input type="text" name="photoPath" placeholder="Photo URL">
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="text" id="category" placeholder="Category" required>
+        <input type="text" id="serialNumber" placeholder="Serial Number" required>
+        <input type="date" id="acquisitionDate" required>
+        <input type="number" id="cost" placeholder="Cost" required>
+        <input type="text" id="location" placeholder="Location" required>
+        <input type="text" id="condition" placeholder="Condition" required>
+        <input type="text" id="photoPath" placeholder="Photo URL">
 
         <button type="submit">Create Asset</button>
     </form>
 
-    <script type="module" src="../../../assets/js/assets.js"></script>
+    <p id="message"></p>
+
+    <script type="module" src="../../../assets/js/createAsset.js"></script>
 </body>
 </html>
