@@ -68,7 +68,7 @@ body {
     background: #0B1026;
     padding-bottom: 3px;
     margin-top: auto;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .hamburger {
@@ -280,7 +280,7 @@ button:hover {
             background: rgba(255, 255, 255, 0.10);
             width: 100%;
             text-align: center;
-            margin-top: auto;
+            margin-top: 20px;
         }
 
         .hamburger {
@@ -329,7 +329,7 @@ button:hover {
 
     .footer {
         height: 40px;
-        margin-top: auto;
+        margin-top: 20px;
         width: 100%;
     }
 
