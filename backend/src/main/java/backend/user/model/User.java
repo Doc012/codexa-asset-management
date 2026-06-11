@@ -24,8 +24,8 @@ public class User {
    @NotBlank
    private String fullName;
 
-   @NotBlank
-   @Email
+   @NotBlank(message = "Email cannot be blank")
+   @Email(message = "Invalid email")
    @Column(name = "email", nullable = false, unique = true)
    private String email;
 

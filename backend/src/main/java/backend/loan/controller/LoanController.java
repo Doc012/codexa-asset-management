@@ -45,17 +45,17 @@ public class LoanController {
         return loanService.getLoanByStatus(status);
     }
 
-    @PutMapping("/{id}/approve")
+    @PutMapping("/approve/{id}")
     public LoanResponseDTO approve(@PathVariable Long id) {
         return loanService.approveLoan(id);
     }
 
-    @PutMapping("/{id}/reject")
+    @PutMapping("/reject/{id}")
     public LoanResponseDTO reject(@PathVariable Long id) {
         return loanService.rejectLoan(id);
     }
 
-    @PutMapping("/{id}/return")
+    @PutMapping("/return/{id}")
     public LoanResponseDTO returnLoan(@PathVariable Long id) {
         return loanService.returnLoan(id);
     }

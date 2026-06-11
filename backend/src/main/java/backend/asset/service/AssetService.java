@@ -4,7 +4,9 @@ import backend.asset.dto.AssetDto;
 import backend.asset.model.Asset;
 import backend.asset.repository.AssetRepo;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class AssetService {
 //        return assetRepo.findAll();
         return assetRepo.findAll().stream()
                 .map(asset -> new AssetDto(
+                        asset.getAssetId(),
                         asset.getTitle(),
                         asset.getCategory(),
                         asset.getSerialNumber(),
@@ -43,11 +46,13 @@ public class AssetService {
      */
     public AssetDto getAssetById(Long id){
         Asset asset = assetRepo.findById(id)
-                .orElseThrow(
-                        () -> new RuntimeException("Asset Not Found with ID: " + id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Asset Not Found with ID: " + id)
                 );
 
         return new AssetDto(
+                asset.getAssetId(),
                 asset.getTitle(),
                 asset.getCategory(),
                 asset.getSerialNumber(),
@@ -79,6 +84,7 @@ public class AssetService {
         Asset savedAsset = assetRepo.save(asset);
 
         return new AssetDto(
+                savedAsset.getAssetId(),
                 savedAsset.getTitle(),
                 savedAsset.getCategory(),
                 savedAsset.getSerialNumber(),
@@ -126,6 +132,7 @@ public class AssetService {
         Asset updated = assetRepo.save(existingAsset);
 
         return new AssetDto(
+                updated.getAssetId(),
                 updated.getTitle(),
                 updated.getCategory(),
                 updated.getSerialNumber(),
@@ -153,6 +160,7 @@ public class AssetService {
                         ("Asset not found with Serial Number: " + serialNumber));
 
         return new AssetDto(
+                serialNumberAsset.getAssetId(),
                 serialNumberAsset.getTitle(),
                 serialNumberAsset.getCategory(),
                 serialNumberAsset.getSerialNumber(),
@@ -173,6 +181,7 @@ public class AssetService {
     public List<AssetDto> getAssetsByCategory(String category) {
         return assetRepo.findByCategory(category)
                 .stream().map(asset -> new AssetDto(
+                        asset.getAssetId(),
                         asset.getTitle(),
                         asset.getCategory(),
                         asset.getSerialNumber(),
@@ -209,8 +218,9 @@ public class AssetService {
      * @param asset
      * @return
      */
-    private AssetDto maptToDto(Asset asset){
+    private AssetDto mapToDto(Asset asset){
         return new AssetDto(
+                asset.getAssetId(),
                 asset.getTitle(),
                 asset.getCategory(),
                 asset.getSerialNumber(),

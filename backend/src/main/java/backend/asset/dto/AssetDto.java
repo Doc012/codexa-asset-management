@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 public record AssetDto(
+        Long assetId,
         String title,
         String category,
         String serialNumber,
