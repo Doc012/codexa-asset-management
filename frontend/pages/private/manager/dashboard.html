@@ -16,7 +16,7 @@
 
         <div class="nav_right">
 
-            <a href="#" class="profile"><img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic"></a>
+            <a href="profile.html" class="profile"><img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic"></a>
         </div>
     </nav>
 
@@ -29,9 +29,9 @@
         <a href="#" class="active">Dashboard</a>
         <a href="profile.html">Profile</a>
         <a href="loan_requests.html">Loan Requests</a>
-        <a href="#">Assets</a>
-        <a href="#">Loan Requests</a>
         <a href="assets.html">Assets</a>
+        <a href="#">Loan Requests</a>
+        
         <a href="#">Reports</a>
     </div>
 
@@ -44,24 +44,24 @@
 
     <section class="dashboard_cards">
         <section class="card loan_requests">
-            <h3>Pending Loan Requests</h3>
+            <h3>Loan Requests</h3>
             <p>12 requests awaiting approval.</p>
 
-            <button>Review Requests</button>
+            <a href="loan_requests.html"><button>Review Requests</button></a>
         </section>
 
         <section class="card assets">
-            <h3>Assets Due For Retirement</h3>
+            <h3>Company Assets</h3>
             <p>8 assets require retirement approval.</p>
 
-            <button><a href="assets.html">View Assets</a></button>
+            <a href="assets.html"><button>View Assets</button></a>
         </section>
 
         <section class="card reports">
             <h3>Reports</h3>
             <p>Generate and view management reports.</p>
 
-            <button>View Reports</button>
+            <a href="#"><button>View Reports</button></a>
         </section>
 
         <section class="card calendar">
@@ -83,6 +83,7 @@
 
 
     <script src="../../../assets/js/users.js" type="module"></script>
+    <script src="../../../assets/js/config.js" type="module"></script>
 </body>
 
 </html>
