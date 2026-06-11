@@ -33,6 +33,11 @@ body {
     color: var(--text);
 }
 
+/* When the AI state is open, seamlessly squeeze the content layout */
+body.ai-layout-open .main-content {
+    margin-right: 380px; /* Shifts content left by the exact width of the panel */
+}
+
 
 
 /* ==============================
@@ -403,15 +408,12 @@ body {
 
 
 .welcome-card {
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:22px;
-
-    box-shadow:var(--shadow);
-
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    /* Add an elegant corporate left accent line */
+    border-left: 6px solid var(--sidebar);
 }
 
 
@@ -667,38 +669,69 @@ textarea.input-field {
 }
 
 
-
 /* ==============================
-   AI PANEL
-============================== */
-
-
+   UPDATED AI PANEL MECHANICS
+================================ */
 #aiPanel {
-
-    position:fixed;
-
-    top:72px;
-    right:-400px;
-
-    width:380px;
-    height:100%;
-
-    background:white;
-
-    box-shadow:
-        -10px 0 30px rgba(0,0,0,0.12);
-
-    transition:0.3s;
-
-    z-index:1200;
-
+    position: fixed;
+    top: 72px;
+    right: 0;
+    width: 380px;
+    height: calc(100vh - 72px);
+    background: white;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.03);
+    border-left: 1px solid var(--border);
+    
+    /* Hardware accelerated sliding transition alignment */
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
 }
 
-
+/* Slide perfectly into view */
 #aiPanel.open {
+    transform: translateX(0);
+}
 
-    right:0;
+/* Professional Chat UI Message Styling bubbles */
+.chat-msg {
+    margin-bottom: 15px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 85%;
+}
 
+.chat-msg.user {
+    background-color: #F3F4F6;
+    color: var(--text);
+    margin-left: auto;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-msg.system {
+    background-color: #E8F5E9;
+    color: #1B5E20;
+    margin-right: auto;
+    border-bottom-left-radius: 2px;
+    border-left: 3px solid var(--primary);
+}
+
+#chatBox {
+    height: calc(100% - 135px); /* Adjusted to make room for actions bar */
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Hover effects for actionable interaction items */
+.chat-action-btn:hover {
+    background-color: #E5E7EB !important;
+    color: var(--text) !important;
+}
+
+#sendAiMessageBtn:hover {
+    filter: brightness(0.95);
 }
 
 
@@ -726,17 +759,6 @@ textarea.input-field {
     background:none;
     font-size:18px;
     cursor:pointer;
-
-}
-
-
-#chatBox {
-
-    height:calc(100% - 140px);
-
-    overflow:auto;
-
-    padding:20px;
 
 }
 
@@ -1095,4 +1117,26 @@ textarea.input-field {
     .welcome-card h1 {
         font-size: 20px;
     }
+}
+
+
+/* ==============================
+   DYNAMIC LAYOUT CONTEXT
+================================ */
+
+/* The main outer shell container holding the sidebar + main view */
+.main-wrapper {
+    display: flex;
+    width: 100%;
+    transition: padding-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Update your main content area styling to allow a dynamic shift margin */
+.main-content {
+    flex: 1;
+    transition: margin-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 72px; /* Accommodate topbar */
+    padding: 20px;
+    background-color: #F9FAFB;
+    min-height: calc(100vh - 72px);
 }
