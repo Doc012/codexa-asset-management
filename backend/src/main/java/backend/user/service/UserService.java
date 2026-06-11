@@ -50,7 +50,14 @@ public class UserService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + "not found!"));
 
-        return buildUser(user);
+        return new UserResponse(
+                user.getUserId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getDepartment(),
+                user.getRole()
+        );
+
     }
 
     /**
@@ -59,18 +66,19 @@ public class UserService {
      * @return a user
      */
     public UserResponse getUserByEmail(String email){
-        User user = userRepo.findByEmail(email);
-        return buildUser(user);
-    }
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Email does not exist"
+                ));
 
-    public UserResponse buildUser(User user){
-        return UserResponse.builder()
-                .id(user.getUserId())
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .department(user.getDepartment())
-                .role(user.getRole())
-                .build();
+        return new UserResponse(
+                user.getUserId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getDepartment(),
+                user.getRole());
+
     }
 
     /**
@@ -83,6 +91,7 @@ public class UserService {
 
         return users.stream()
                 .map(user -> UserResponse.builder()
+                        .id(user.getUserId())
                         .fullName(user.getFullName())
                         .email(user.getEmail())
                         .department(user.getDepartment())
@@ -97,6 +106,12 @@ public class UserService {
      * @return the details of the added user
      */
     public UserResponse createUser(CreateUserRequest createUserDto){
+        if (userRepo.findByEmail(createUserDto.email()).isPresent()){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Email " + createUserDto.email() + " already exists"
+            );
+        }
         User user = User.builder()
                 .fullName(createUserDto.fullName())
                 .email(createUserDto.email())

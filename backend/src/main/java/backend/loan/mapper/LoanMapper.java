@@ -14,8 +14,7 @@ public class LoanMapper {
                 loan.getStatus(),
                 loan.getRequestDate(),
                 loan.getCheckoutDate(),
-                loan.getDueDate(),
-                loan.getReturnDate()
+                loan.getDueDate()
         );
     }
 }
