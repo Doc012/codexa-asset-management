@@ -28,22 +28,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <button class="delete-btn" data-id="${asset.assetId}">Delete</button>
                 </td>
             `;
-
             
             // Attach event listener PER button
             const deleteBtn = row.querySelector(".delete-btn");
-
             deleteBtn.addEventListener("click", async () => {
                 const id = deleteBtn.dataset.id;
-
                 const confirmDelete = confirm("Are you sure you want to delete this asset?");
                 if (!confirmDelete) return;
-
                 try {
                     await deleteAsset(id); // use your service
-
                     alert("Asset deleted successfully");
-
                     // Remove row instantly instead of reload
                     row.remove();
 
@@ -51,8 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     alert("Failed to delete asset");
                 }
             });
-
-
             tableBody.appendChild(row);
         });
 
@@ -63,3 +55,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
+
+/**
+ * This is for The User viewing assets
+ */
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("user-asset-table-body");
+
+    try {
+        const assets = await getAllAssets();
+        tableBody.innerHTML = "";
+
+        assets.forEach(asset => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${asset.title}</td>
+                <td>${asset.category}</td>
+                <td>${asset.condition}</td>
+                <td>${asset.photoPath}</td>
+            `;
+
+            tableBody.appendChild(row);
+
+             });
+
+    } catch(error) {
+        console.error("Failed to render ASSETS", error);
+        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+    
+})
