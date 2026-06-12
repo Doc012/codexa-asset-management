@@ -21,7 +21,8 @@ public class AuditLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
 
-    @JoinColumn(name = "user_id", nullable = false)
+//    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long userId;
 
     @Enumerated(EnumType.STRING)
