@@ -7,6 +7,12 @@ export async function getAllAssets() {
     return await response.json();
 }
 
+export async function getAssetById(id) {
+    const response = await fetch(`${API_BASE_URL}/assets/${id}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}
+
 async function getAssetById(id) {
     const response = await fetch(`${API_BASE_URL}/assets/${id}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);

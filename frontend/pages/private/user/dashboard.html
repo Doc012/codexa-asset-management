@@ -192,15 +192,39 @@
 <section id="requestPage" class="page">
     <div class="panel">
         <h2>Request Asset</h2>
+        <p style="color: var(--muted); margin-bottom: 20px; font-size: 15px;">
+            Browse the inventory below. Click anywhere on an asset row to select it, then submit your allocation request.
+        </p>
 
-        <input class="input-field" placeholder="Asset Name">
-        <input class="input-field" placeholder="Category">
-        <textarea class="input-field" placeholder="Reason for request"></textarea>
+        <form id="loanRequestForm">
+            <input type="hidden" id="selectedAssetId" required>
 
+            <div class="panel-table-container" style="margin-bottom: 20px; border: 1px solid var(--border); border-radius: 12px; max-height: 400px; overflow-y: auto;">
+                <table class="asset-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Asset Name</th>
+                            <th>Category</th>
+                            <th>Serial Number</th>
+                            <th>Location</th>
+                            <th>Condition</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestAssetTableBody">
+                        </tbody>
+                </table>
+            </div>
 
-        <button class="primary-btn">
-            Submit Request
-        </button>
+            <textarea class="input-field" id="requestReason" placeholder="Reason for request (e.g., Remote work project, on-site client audit)..." style="margin-top: 0; margin-bottom: 20px;"></textarea>
+
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <span id="selectionStatusText" style="font-weight: 600; color: var(--muted); font-size: 15px;">
+                    No asset selected
+                </span>
+                <button type="submit" class="primary-btn" style="margin-top: 0;">Submit Request</button>
+            </div>
+        </form>
     </div>
 </section>
 
@@ -214,20 +238,20 @@
 
         <div class="panel-table-container">
             <table class="asset-table">
-                <thead>
-                    <tr>
-                        <th>Loan ID</th>
-                        <th>Asset ID</th>
-                        <th>Request Date</th>
-                        <th>Checkout Date</th>
-                        <th>Due Date</th>
-                        <th>Return Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="loanTable">
-                    </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>Loan ID</th>
+            <th>Asset Requested</th>
+            <th>Request Date</th>
+            <th>Checkout Date</th>
+            <th>Due Date</th>
+            <th>Return Date</th>
+            <th>Status State</th>
+            <th>User Actions</th> </tr>
+    </thead>
+    <tbody id="loanTable">
+        </tbody>
+</table>
         </div>
     </div>
 </section>
@@ -323,6 +347,7 @@
         </div>
     </div>
 </div>
+<script type="module" src="../../../assets/js/controllers/userDashboard.js"></script>
 <script src="../../../assets/js/loans.js"></script>
 </body>
 </html>
