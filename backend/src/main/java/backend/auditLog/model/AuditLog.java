@@ -44,6 +44,9 @@ public class AuditLog {
     @Column(name = "new_value", nullable = false)
     private String newValue;
 
+    @Column(name = "message")
+    private String message;
+
 
 
 
