@@ -24,7 +24,7 @@ public class AssetController {
         return assetService.getAllAssets();
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public List<ResponseAssetsForUsersDto> getAllAssetsForUsers(){
         return assetService.getAllUserAssets();
     }
