@@ -2,6 +2,8 @@ package backend.asset.service;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.dto.ResponseAssetsForUsersDto;
+import backend.asset.dto.ResponseUserAssetDto;
 import backend.asset.model.Asset;
 import backend.asset.repository.AssetRepo;
 import jakarta.transaction.Transactional;
@@ -64,6 +66,19 @@ public class AssetService {
                 asset.getPhotoPath()
         );
     }
+
+    public List<ResponseAssetsForUsersDto> getAllUserAssets(){
+        return assetRepo.findAll().stream()
+                .map(asset -> new ResponseAssetsForUsersDto(
+                        asset.getAssetId(),
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getPhotoPath()
+                ))
+                .toList();
+    }
+
 
     /**
      * This method creates and saves a new asset

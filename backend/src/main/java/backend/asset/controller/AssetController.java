@@ -2,6 +2,7 @@ package backend.asset.controller;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.dto.ResponseAssetsForUsersDto;
 import backend.asset.service.AssetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,11 @@ public class AssetController {
     @GetMapping
     public List<ResponseAssetDto> getAllAssets(){
         return assetService.getAllAssets();
+    }
+
+    @GetMapping
+    public List<ResponseAssetsForUsersDto> getAllAssetsForUsers(){
+        return assetService.getAllUserAssets();
     }
 
     @GetMapping("/{id}")
