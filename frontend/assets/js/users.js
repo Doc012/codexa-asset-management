@@ -36,8 +36,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-
-
 /**
  * GetUser by ID
  */
@@ -45,11 +43,14 @@ const managerElement = document.querySelector(".card.welcome h2");
 const profileNameElement = document.querySelector(".profile_info h2");
 const profileRoleElement = document.querySelector(".role");
 const profileEmailElement = document.querySelector(".user_email");
+const userName = document.querySelector(".welcome-card h1")
 
 const loadManagerDashboard = async () => {
     try {
         const managerId = 1;
+        const userId = 2;
         const managerData = await getUserById(managerId);
+        const userData = await getUserById(userId);
 
         if (managerData) {
 
@@ -69,6 +70,10 @@ const loadManagerDashboard = async () => {
                 profileEmailElement.textContent = `Email: ${managerData.email}`;
             }
 
+        }
+
+        if(userData && userName){
+            userName.textContent = `Welcome back, ${userData.firstName}`
         }
     } catch (error) {
         console.error("Error:", error);
