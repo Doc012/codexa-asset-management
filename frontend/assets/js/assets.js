@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("asset-table-body");
 
     try {
-        // const { getAllAssets } = await import("../../services/assetService.js")
         const assets = await getAllAssets();
         tableBody.innerHTML = "";
 
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
 
             
-            // Attach event listener PER button (safe option)
+            // Attach event listener PER button
             const deleteBtn = row.querySelector(".delete-btn");
 
             deleteBtn.addEventListener("click", async () => {
@@ -49,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     row.remove();
 
                 } catch (error) {
-                    console.error("Delete failed:", error);
                     alert("Failed to delete asset");
                 }
             });
