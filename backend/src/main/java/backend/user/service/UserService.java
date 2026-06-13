@@ -11,6 +11,7 @@ import backend.user.model.User;
 import backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -59,7 +60,8 @@ public class UserService {
      * @return a user
      */
     public UserResponse getUserByEmail(String email){
-        User user = userRepo.findByEmail(email);
+        User user = userRepo.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException("User not found"));
         return buildUser(user);
     }
 
