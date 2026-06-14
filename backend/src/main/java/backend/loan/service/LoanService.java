@@ -49,6 +49,8 @@ public class LoanService {
         loan.setUser(user);
         loan.setAsset(asset);
         loan.setRequestDate(LocalDate.now());
+        loan.setCheckoutDate(dto.checkoutDate());
+        loan.setDueDate(dto.dueDate());
         loan.setStatus(LoanStatus.PENDING);
 
         return LoanMapper.toDTO(loanRepo.save(loan));
@@ -105,8 +107,14 @@ public class LoanService {
 
     // REJECT Loan
     public LoanResponseDTO rejectLoan(Long loanId) {
-
         Loan loan = getEntity(loanId);
+
+        if (loan.getStatus() != LoanStatus.PENDING){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Only pending loans can be rejected"
+            );
+        }
 
         loan.setStatus(LoanStatus.REJECTED);
 

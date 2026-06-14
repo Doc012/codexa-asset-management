@@ -1,6 +1,8 @@
 package backend.asset.controller;
 
-import backend.asset.dto.AssetDto;
+import backend.asset.dto.RequestAssetDto;
+import backend.asset.dto.ResponseAssetDto;
+import backend.asset.dto.ResponseAssetsForUsersDto;
 import backend.asset.service.AssetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,23 +20,28 @@ public class AssetController {
     }
 
     @GetMapping
-    public List<AssetDto> getAllAssets(){
+    public List<ResponseAssetDto> getAllAssets(){
         return assetService.getAllAssets();
     }
 
+    @GetMapping("/users")
+    public List<ResponseAssetsForUsersDto> getAllAssetsForUsers(){
+        return assetService.getAllUserAssets();
+    }
+
     @GetMapping("/{id}")
-    public AssetDto getAssetById(@PathVariable Long id) {
+    public ResponseAssetDto getAssetById(@PathVariable Long id) {
         return assetService.getAssetById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AssetDto createAsset(@RequestBody AssetDto newAsset){
+    public ResponseAssetDto createAsset(@RequestBody RequestAssetDto newAsset){
         return assetService.createAsset(newAsset);
     }
 
     @PutMapping("/{id}")
-    public AssetDto updateAsset(@PathVariable Long id, @RequestBody AssetDto asset){
+    public ResponseAssetDto updateAsset(@PathVariable Long id, @RequestBody RequestAssetDto asset){
         return assetService.updateAsset(id, asset);
     }
 
@@ -45,12 +52,12 @@ public class AssetController {
     }
 
     @GetMapping("/serial/{serialNumber}")
-    public AssetDto getAssetBySerialNumber(@PathVariable String serialNumber){
+    public ResponseAssetDto getAssetBySerialNumber(@PathVariable String serialNumber){
         return assetService.getAssetBySerialNumber(serialNumber);
     }
 
     @GetMapping("/category/{category}")
-    public List<AssetDto> getAssetsByCategory(@PathVariable String category){
+    public List<ResponseAssetDto> getAssetsByCategory(@PathVariable String category){
         return assetService.getAssetsByCategory(category);
     }
 }

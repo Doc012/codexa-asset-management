@@ -1,0 +1,150 @@
+@import url("managerDashboard.css");
+
+.page_header, .card {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #F2F2F2;
+    border: 1px solid rgba(120, 160, 255, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.loan_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.loan_table thead {
+    display: none;
+}
+
+.loan_table tbody, 
+.loan_table tr, 
+.loan_table td {
+    display: block;
+    width: 100%;
+}
+
+.loan_table tr {
+    margin-bottom: 15px;
+    border: 1px solid rgba(120, 160, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.loan_table td {
+    text-align: right;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    font-size: 14px;
+}
+
+.loan_table td:last-child {
+    border-bottom: none;
+    text-align: center;
+    padding-top: 12px;
+}
+
+.loan_table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.approve_btn {
+    background-color: #02A7E8;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.reject_btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+    .page_header, .card {
+        background: rgba(255, 255, 255, 0.10);
+        color: white;
+        border: 1px solid rgba(120, 160, 255, 0.2);
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .loan_table tr {
+        background: rgba(0, 0, 0, 0.2);
+        border-color: rgba(120, 160, 255, 0.1);
+    }
+
+    .loan_table td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .loan_table td::before {
+        color: #bbb;
+    }
+}
+
+@media (min-width: 764px) {
+    .page_header, .card {
+        margin-left: 270px;
+        width: calc(100% - 290px);
+    }
+
+    .loan_table thead {
+        display: table-header-group;
+    }
+
+    .loan_table tbody {
+        display: table-row-group;
+    }
+
+    .loan_table tr {
+        display: table-row;
+        background: transparent;
+        border: none;
+    }
+
+    .loan_table th, .loan_table td {
+        display: table-cell;
+        width: auto;
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid rgba(120, 160, 255, 0.2);
+    }
+
+    .loan_table th {
+        background: rgba(2, 167, 232, 0.1);
+        font-weight: bold;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .loan_table th {
+            background: rgba(255, 255, 255, 0.08);
+        }
+    }
+
+    .loan_table td::before {
+        content: "";
+        display: none;
+    }
+
+    .loan_table td:last-child {
+        text-align: left;
+    }
+}

@@ -12,6 +12,7 @@ import backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepo;
     private final AuditLogService auditLogService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Getting all users of the system
@@ -34,8 +36,10 @@ public class UserService {
         return allUsers.stream()
                 .map(user -> new UserResponse(
                         user.getUserId(),
-                        user.getFullName(),
+                        user.getFirstName(),
+                        user.getLastName(),
                         user.getEmail(),
+                        user.getPicUrl(),
                         user.getDepartment(),
                         user.getRole()))
                 .toList();
@@ -51,7 +55,16 @@ public class UserService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + "not found!"));
 
-        return buildUser(user);
+        return new UserResponse(
+                user.getUserId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPicUrl(),
+                user.getDepartment(),
+                user.getRole()
+        );
+
     }
 
     /**
@@ -60,18 +73,21 @@ public class UserService {
      * @return a user
      */
     public UserResponse getUserByEmail(String email){
-        User user = userRepo.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException("User not found"));
-        return buildUser(user);
-    }
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Email does not exist"
+                ));
 
-    public UserResponse buildUser(User user){
-        return UserResponse.builder()
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .department(user.getDepartment())
-                .role(user.getRole())
-                .build();
+        return new UserResponse(
+                user.getUserId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPicUrl(),
+                user.getDepartment(),
+                user.getRole());
+
     }
 
     /**
@@ -84,7 +100,8 @@ public class UserService {
 
         return users.stream()
                 .map(user -> UserResponse.builder()
-                        .fullName(user.getFullName())
+                        .id(user.getUserId())
+                        .firstName(user.getFirstName())
                         .email(user.getEmail())
                         .department(user.getDepartment())
                         .role(user.getRole())
@@ -98,10 +115,17 @@ public class UserService {
      * @return the details of the added user
      */
     public UserResponse createUser(CreateUserRequest createUserDto){
+        if (userRepo.findByEmail(createUserDto.email()).isPresent()){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Email " + createUserDto.email() + " already exists"
+            );
+        }
         User user = User.builder()
-                .fullName(createUserDto.fullName())
+                .firstName(createUserDto.firstName())
+                .lastName(createUserDto.lastName())
                 .email(createUserDto.email())
-                .password(createUserDto.password())
+                .password(passwordEncoder.encode(createUserDto.password()))
                 .department(createUserDto.email())
                 .role(Role.STAFF)
                 .build();
@@ -115,14 +139,18 @@ public class UserService {
                 .actionType(ActionType.CREATE)
                 .oldValue("N/A")
                 .newValue("Created User ID: " + savedUser.getUserId())
+                .message("Created " + user.getFirstName() + " " + user.getLastName())
+
                 .build();
 
         auditLogService.createLog(auditLog);
 
         UserResponse userResponse = UserResponse.builder()
                 .id(savedUser.getUserId())
-                .fullName(savedUser.getFullName())
+                .firstName(savedUser.getFirstName())
+                .lastName(savedUser.getLastName())
                 .email(savedUser.getEmail())
+                .picUrl(savedUser.getFirstName())
                 .department(savedUser.getDepartment())
                 .role(savedUser.getRole())
                 .build();
@@ -148,6 +176,7 @@ public class UserService {
                 .actionType(ActionType.DELETE)
                 .oldValue("N/A")
                 .newValue("Deleted User ID: " + user.getUserId())
+                .message("Deleted " + user.getFirstName() + " " + user.getLastName())
                 .build();
 
         auditLogService.createLog(auditLog);
@@ -171,8 +200,10 @@ public class UserService {
 
         user.setDepartment(newUserDetails.department());
         user.setEmail(newUserDetails.email());
-        user.setFullName(newUserDetails.fullName());
+        user.setFirstName(newUserDetails.firstName());
+        user.setLastName(newUserDetails.lastName());
         user.setPassword(newUserDetails.password());
+        user.setPicUrl(newUserDetails.picUrl());
 
         return userRepo.save(user);
     }

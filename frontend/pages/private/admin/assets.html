@@ -1,32 +1,763 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Assets</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset IQ — Manage Assets</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── Reset & Variables ─────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Serial Number</th>
-                <th>Acquisition Date</th>
-                <th>Cost</th>
-                <th>Location</th>
-                <th>Condition</th>
-                <th>Photo Path</th>
-            </tr>
-        </thead>
-        <tbody id="asset-table-body">
+      :root {
+        --bg-base: #0f1117;
+        --bg-surface: #171b26;
+        --bg-elevated: #1e2333;
+        --bg-hover: #252b3b;
+        --border: #2a3045;
+        --border-light: #323a52;
 
-        </tbody>
-    </table>
+        --blue-bright: #3b9eff;
+        --blue-mid: #2878d6;
+        --blue-dim: #1a4e8f;
+        --green-bright: #4cde6e;
+        --green-mid: #2cb84a;
+        --green-dim: #1a7030;
 
-    <script src="../../../assets/js/assets.js"></script>
-    <script src="../../../assets/js/config.js"></script>
-</body>
+        --amber: #f59e0b;
+        --amber-dim: #78490a;
+        --red: #f43f5e;
+        --red-dim: #7f1d2e;
+        --purple: #a78bfa;
+        --purple-dim: #4c1d95;
+
+        --text-primary: #e8eaf2;
+        --text-secondary: #8892a4;
+        --text-muted: #4e596e;
+
+        --font-ui: "Inter", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+
+        --radius-sm: 6px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --radius-xl: 20px;
+
+        --sidebar-w: 240px;
+        --topbar-h: 64px;
+
+        --transition: 0.18s ease;
+      }
+
+      body {
+        font-family: var(--font-ui);
+        background: var(--bg-base);
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+      }
+
+      /* ─── Sidebar ───────────────────────────────────────────────────────── */
+      .sidebar {
+        width: var(--sidebar-w);
+        min-height: 100vh;
+        background: var(--bg-surface);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        transition: transform var(--transition);
+      }
+
+      .sidebar-logo {
+        padding: 20px 20px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--blue-bright), var(--green-bright));
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .logo-text {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+      }
+
+      .logo-text span {
+        color: var(--green-bright);
+      }
+
+      .logo-sub {
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        display: block;
+        margin-top: 1px;
+      }
+
+      .sidebar-section-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 20px 20px 6px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 16px;
+        margin: 1px 8px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all var(--transition);
+        color: var(--text-secondary);
+        font-size: 13.5px;
+        font-weight: 500;
+        border: none;
+        background: none;
+        width: calc(100% - 16px);
+        text-align: left;
+        text-decoration: none;
+      }
+
+      .nav-item:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+      }
+
+      .nav-item.active {
+        background: linear-gradient(135deg, rgba(59, 158, 255, 0.15), rgba(76, 222, 110, 0.08));
+        color: var(--blue-bright);
+        border: 1px solid rgba(59, 158, 255, 0.2);
+      }
+
+      .nav-item .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .nav-badge {
+        margin-left: auto;
+        background: var(--red);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 20px;
+        min-width: 18px;
+        text-align: center;
+      }
+
+      .nav-badge.blue {
+        background: var(--blue-mid);
+      }
+
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .admin-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--bg-elevated);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: background var(--transition);
+      }
+
+      .admin-pill:hover {
+        background: var(--bg-hover);
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--blue-mid), var(--green-mid));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .admin-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .admin-name {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .admin-role {
+        font-size: 10px;
+        color: var(--green-bright);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      /* ─── Main Layout ───────────────────────────────────────────────────── */
+      .main {
+        margin-left: var(--sidebar-w);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* ─── Topbar ────────────────────────────────────────────────────────── */
+      .topbar {
+        height: var(--topbar-h);
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        padding: 0 28px;
+        gap: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+      .topbar-title {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+      }
+
+      .topbar-sub {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 1px;
+      }
+
+      .topbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .topbar-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all var(--transition);
+        font-family: var(--font-ui);
+      }
+
+      .topbar-btn:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+        border-color: var(--border-light);
+      }
+
+      .topbar-btn.primary {
+        background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+        border-color: transparent;
+        color: #fff;
+      }
+
+      .topbar-btn.primary:hover {
+        background: linear-gradient(135deg, #5aadff, var(--blue-bright));
+      }
+
+      /* ─── Content ───────────────────────────────────────────────────────── */
+      .content {
+        padding: 28px;
+        flex: 1;
+      }
+
+      /* ─── Toolbar ─────────────────────────────────────────────────────────────── */
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .search-wrap .icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 14px;
+        pointer-events: none;
+      }
+
+      .search-input,
+      .filter-select {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-primary);
+        font-family: var(--font-ui);
+        font-size: 13.5px;
+        transition: border-color var(--transition);
+        outline: none;
+      }
+
+      .search-input {
+        padding: 8px 12px 8px 36px;
+        width: 100%;
+      }
+
+      .filter-select {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      .search-input:focus,
+      .filter-select:focus {
+        border-color: var(--blue-bright);
+      }
+
+      .filter-select option {
+        background: var(--bg-elevated);
+      }
+
+      /* ─── Card ─────────────────────────────────────────────────────────── */
+      .card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+
+      .card-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .card-meta {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* ─── Tables ────────────────────────────────────────────────────────── */
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead th {
+        background: var(--bg-elevated);
+        padding: 10px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+
+      tbody tr {
+        border-top: 1px solid var(--border);
+        transition: background var(--transition);
+      }
+
+      tbody tr:hover {
+        background: var(--bg-elevated);
+      }
+
+      tbody td {
+        padding: 12px 16px;
+        font-size: 13.5px;
+        vertical-align: middle;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* ─── Badges ─────────────────────────────────────────────────────── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .badge.available {
+        background: rgba(76, 222, 110, 0.12);
+        color: var(--green-bright);
+        border: 1px solid rgba(76, 222, 110, 0.2);
+      }
+
+      .badge.loaned {
+        background: rgba(59, 158, 255, 0.12);
+        color: var(--blue-bright);
+        border: 1px solid rgba(59, 158, 255, 0.2);
+      }
+
+      .badge.maintenance {
+        background: rgba(245, 158, 11, 0.12);
+        color: var(--amber);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+      }
+
+      .badge.retired {
+        background: rgba(78, 89, 110, 0.2);
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+      }
+
+      /* ─── Action Buttons ─────────────────────────────────────────────── */
+      .action-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 11px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all var(--transition);
+        font-family: var(--font-ui);
+      }
+
+      .btn-ghost {
+        background: var(--bg-elevated);
+        border-color: var(--border);
+        color: var(--text-secondary);
+      }
+
+      .btn-ghost:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+        border-color: var(--border-light);
+      }
+
+      .btn-blue {
+        background: rgba(59, 158, 255, 0.12);
+        border-color: rgba(59, 158, 255, 0.25);
+        color: var(--blue-bright);
+      }
+
+      .btn-blue:hover {
+        background: rgba(59, 158, 255, 0.22);
+      }
+
+      .btn-green {
+        background: rgba(76, 222, 110, 0.12);
+        border-color: rgba(76, 222, 110, 0.25);
+        color: var(--green-bright);
+      }
+
+      .btn-green:hover {
+        background: rgba(76, 222, 110, 0.22);
+      }
+
+      .btn-red {
+        background: rgba(244, 63, 94, 0.1);
+        border-color: rgba(244, 63, 94, 0.2);
+        color: var(--red);
+      }
+
+      .btn-red:hover {
+        background: rgba(244, 63, 94, 0.2);
+      }
+
+      /* ─── Empty state ────────────────────────────────────────────────────── */
+      .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-muted);
+      }
+
+      .empty-state .icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+      }
+
+      .empty-state p {
+        font-size: 14px;
+      }
+
+      /* ─── Scrollbar ──────────────────────────────────────────────────────── */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--border-light);
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+      }
+
+      .mb-6 {
+        margin-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Sidebar ───────────────────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">💡</div>
+        <div>
+          <div class="logo-text">ASSET <span>IQ</span></div>
+          <span class="logo-sub">Know More. Manage Better.</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section-label">Overview</div>
+      <a href="dashboard.html" class="nav-item">
+        <span class="nav-icon">⬛</span> Dashboard
+      </a>
+
+      <div class="sidebar-section-label">Management</div>
+      <a href="assets.html" class="nav-item active">
+        <span class="nav-icon">🖥</span> Assets
+      </a>
+      <a href="loans.html" class="nav-item">
+        <span class="nav-icon">📋</span> Loans
+      </a>
+      <a href="users.html" class="nav-item">
+        <span class="nav-icon">👤</span> Users
+      </a>
+
+      <div class="sidebar-section-label">System</div>
+      <a href="audit-logs.html" class="nav-item">
+        <span class="nav-icon">🔍</span> Audit Logs
+      </a>
+
+      <div class="sidebar-footer">
+        <div class="admin-pill">
+          <div class="avatar">A</div>
+          <div class="admin-info">
+            <div class="admin-name">Administrator</div>
+            <div class="admin-role">Admin</div>
+          </div>
+          <span style="color: var(--text-muted); font-size: 14px">⋮</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ─── Main ──────────────────────────────────────────────────────────────── -->
+    <div class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div>
+          <div class="topbar-title">Assets</div>
+          <div class="topbar-sub">Manage all registered equipment and devices</div>
+        </div>
+        <div class="topbar-right">
+          <button class="topbar-btn">🔄 Refresh</button>
+          <button class="topbar-btn primary">＋ Add Asset</button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="content">
+        <!-- Toolbar -->
+        <div class="toolbar mb-6">
+          <div class="search-wrap">
+            <span class="icon">🔍</span>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search by asset ID, name, or location..."
+            />
+          </div>
+          <select class="filter-select">
+            <option>All Status</option>
+            <option>Available</option>
+            <option>Loaned</option>
+            <option>Maintenance</option>
+            <option>Retired</option>
+          </select>
+          <select class="filter-select">
+            <option>All Categories</option>
+            <option>Laptop</option>
+            <option>Monitor</option>
+            <option>Phone</option>
+            <option>Peripherals</option>
+          </select>
+        </div>
+
+        <!-- Assets Table -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Asset Inventory</div>
+              <div class="card-meta">Complete list of all assets in the system</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Asset ID</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Serial Number</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Assigned To</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">AST-001</td>
+                  <td>MacBook Pro 16"</td>
+                  <td>Laptop</td>
+                  <td class="mono">SN-2024-001</td>
+                  <td>Office A</td>
+                  <td><span class="badge available">Available</span></td>
+                  <td>—</td>
+                  <td>
+                    <div class="action-group">
+                      <button class="btn btn-blue">Edit</button>
+                      <button class="btn btn-red">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="mono">AST-002</td>
+                  <td>iPhone 15</td>
+                  <td>Phone</td>
+                  <td class="mono">SN-2024-002</td>
+                  <td>Office B</td>
+                  <td><span class="badge loaned">Loaned</span></td>
+                  <td>John Doe</td>
+                  <td>
+                    <div class="action-group">
+                      <button class="btn btn-blue">Edit</button>
+                      <button class="btn btn-red">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="mono">AST-003</td>
+                  <td>27" Monitor</td>
+                  <td>Monitor</td>
+                  <td class="mono">SN-2024-003</td>
+                  <td>Office A</td>
+                  <td><span class="badge maintenance">Maintenance</span></td>
+                  <td>—</td>
+                  <td>
+                    <div class="action-group">
+                      <button class="btn btn-blue">Edit</button>
+                      <button class="btn btn-red">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="mono">AST-004</td>
+                  <td>Wireless Keyboard</td>
+                  <td>Peripherals</td>
+                  <td class="mono">SN-2024-004</td>
+                  <td>Storage</td>
+                  <td><span class="badge retired">Retired</span></td>
+                  <td>—</td>
+                  <td>
+                    <div class="action-group">
+                      <button class="btn btn-blue">Edit</button>
+                      <button class="btn btn-red">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
 </html>

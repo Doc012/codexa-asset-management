@@ -6,7 +6,8 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record AssetDto(
+public record ResponseAssetDto(
+        Long assetId,
         String title,
         String category,
         String serialNumber,

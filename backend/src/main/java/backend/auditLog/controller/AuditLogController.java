@@ -29,4 +29,10 @@ public class AuditLogController {
         return service.createLog(log);
     }
 
+
+    @GetMapping("/user/{id}")
+    public List<AuditLog> getLogsByUserId(@PathVariable Long id){
+        return service.getAuditLogsByUserId(id);
+    }
+
 }

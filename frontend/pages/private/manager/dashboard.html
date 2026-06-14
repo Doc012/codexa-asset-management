@@ -1,11 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Manager dashboard</title>
+    <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
 </head>
+
 <body>
-    
+    <input type="checkbox" id="toggle">
+
+    <nav class="nav_bar">
+        <label for="toggle" class="hamburger">☰</label>
+
+        <h2 class="page_title">Manager Dashboard</h2>
+
+        <div class="nav_right">
+            <a href="profile.html" class="profile">
+                <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic">
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <section class="image">
+            <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assertIq" width="100px" height="140px">
+        </section>
+
+        <a href="#">Home</a>
+        <a href="#" class="active">Dashboard</a>
+        <a href="profile.html">Profile</a>
+        <a href="loan_requests.html">Loan Requests</a>
+        <a href="assets.html">Assets</a>
+        <a href="report.html">Reports</a>
+    </div>
+
+    <label for="toggle" class="overlay"></label>
+
+    <section class="card welcome">
+        <h2>Welcome Tumelo</h2>
+        <p>Manager Dashboard</p>
+    </section>
+
+    <section class="dashboard_cards">
+        <section class="card loan_requests">
+            <h3>Loan Requests</h3>
+            <p>12 requests awaiting approval.</p>
+
+            <a href="loan_requests.html"><button>Review Requests</button></a>
+        </section>
+
+        <section class="card assets">
+            <h3>Company Assets</h3>
+            <p>8 assets require retirement approval.</p>
+
+            <a href="assets.html"><button>View Assets</button></a>
+        </section>
+
+        <section class="card reports">
+            <h3>Reports</h3>
+            <p>Generate and view management reports.</p>
+
+            <a href="report.html"><button>View Reports</button></a>
+        </section>
+
+        <section class="card calendar">
+            <h3>Upcoming Events</h3>
+
+            <ul>
+                <li>Asset Audit - 15 June</li>
+                <li>Monthly Review - 30 June</li>
+                <li>Inventory Check - 5 July</li>
+            </ul>
+        </section>
+    </section>
+
+
+    <footer class="footer">
+        <p>&copy; 2026 Codexa Asset IQ. All rights reserved.</p>
+    </footer>
+
+
+
+    <script src="../../../assets/js/users.js" type="module"></script>
+    <script src="../../../assets/js/config.js" type="module"></script>
 </body>
+
 </html>

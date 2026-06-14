@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management</title>
+    <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
+</head>
+<body>
+    <input type="checkbox" id="toggle">
+    
+    <nav class="nav_bar">
+        <label for="toggle" class="hamburger">☰</label>
+        <div class="nav_right">
+            <a href="#" class="profile"><img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic"></a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <section class="image">
+            <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assertIq" width="100px" height="140px">
+        </section>
+        <a href="dashboard.html">Home</a>
+        <a href="dashboard.html">Dashboard</a> <a href="profile.html">Profile</a>
+        <a href="loan_requests.html">Loan Requests</a>
+        <a href="assets.html">Assets</a>
+        <a href="report.html" class="active">Reports</a>
+    </div>
+    
+    <label for="toggle" class="overlay"></label>
+
+    <section class="card welcome">
+        <h2>Report</h2>
+        <p>track corporate assets</p>
+    </section>
+
+    <main class="dashboard_cards">
+        <!-- <section class="card asset_controls">
+            <a href="create_asset.html"><button id="create-asset-btn">+ Register New Asset</button></a>
+            <button style="background-color: transparent; color: #02A7E8; border: 1px solid #02A7E8; margin-left: 8px;">Export CSV</button>
+        </section> -->
+
+        <section class="card table_card">
+            <div class="assets_table-container">
+                <table class="assets_table">
+                    <thead>
+                        <tr>
+                            <th>Log ID</th>
+                            <th>User ID</th>
+                            <th>Entity Type</th>
+                            <th>Entity ID</th>
+                            <th>Action Type</th>
+                            <th>Timestamp</th>
+                            <th>Old Value</th>
+                            <th>New Value</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="log-table-body">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Codexa Asset IQ. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="../../../assets/js/auditLogs.js"></script>
+</body>
+</html>

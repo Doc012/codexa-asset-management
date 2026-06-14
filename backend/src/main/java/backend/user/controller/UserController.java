@@ -26,7 +26,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/user/email/{email}")
     public UserResponse getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
     }
@@ -41,7 +41,7 @@ public class UserController {
         return userService.createUser(request);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public User updateUserDetails(@RequestBody CreateUserRequest request, @PathVariable Long id){
         return userService.updateUser(request, id);
     }

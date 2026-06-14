@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Asset Management System</h1>
+
+    <!-- ✅ SECTION 1: VIEW ALL -->
+    <section>
+      <h2>All Assets</h2>
+      <div id="assetList"></div>
+    </section>
+
+    <!-- ✅ SECTION 2: CREATE / UPDATE -->
+    <section>
+      <h2>Create / Update Asset</h2>
+
+      <input type="hidden" id="assetId" />
+
+      <input id="title" placeholder="Title" />
+      <input id="category" placeholder="Category" />
+      <input id="serialNumber" placeholder="Serial Number" />
+      <input id="acquisitionDate" type="date" />
+      <input id="cost" type="number" placeholder="Cost" />
+      <input id="location" placeholder="Location" />
+      <input id="condition" placeholder="Condition" />
+      <input id="photoPath" placeholder="Photo Path" />
+
+      <button onclick="saveAsset()">Save Asset</button>
+    </section>
+
+    <script type="module" src="../../../assets/js/assets.js"></script>
+  </body>
+</html>

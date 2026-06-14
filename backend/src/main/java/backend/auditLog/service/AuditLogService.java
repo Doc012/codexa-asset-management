@@ -6,6 +6,7 @@ import backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -48,9 +49,14 @@ public class AuditLogService {
                 .timestamp(LocalDateTime.now())
                 .oldValue(log.getOldValue())
                 .newValue(log.getNewValue())
+                .message(log.getMessage())
                 .build();
 
         return repository.save(newLog);
+    }
+
+    public List<AuditLog> getAuditLogsByUserId(Long userId){
+        return repository.findByUserId(userId);
     }
 
 }
