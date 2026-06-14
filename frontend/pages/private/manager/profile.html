@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Profile</title>
+    <link rel="stylesheet" href="../../../assets/css/profile.css">
+</head>
+
+<body>
+
+    <input type="checkbox" id="toggle">
+
+    <nav class="nav_bar">
+        <label for="toggle" class="hamburger">☰</label>
+
+        <div class="nav_right">
+            <a href="profile.html" class="profile">
+                <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic">
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <section class="image">
+            <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assetIq" width="100px" height="140px">
+        </section>
+
+        <a href="">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="profile.html" class="active">Profile</a>
+        <a href="loan_requests.html">Loan Requests</a>
+        <a href="#">Assets</a>
+        <a href="#">Reports</a>
+    </div>
+
+    <label for="toggle" class="overlay"></label>
+
+    <section class="profile_container">
+
+        <div class="profile_card">
+            <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="Profile Picture">
+
+            <div class="profile_info">
+                <h2>Tumelo Ntsilo</h2>
+                <p class="role"><strong>Role:</strong> Manager</p>
+                <p class="user_email"><strong>Email:</strong> tumelo@example.com</p>
+                <p class="user_department"><strong>Department:</strong> Asset Management</p>
+            </div>
+        </div>
+
+        <div class="profile_actions">
+            <button>Edit Profile</button>
+            <button>Change Password</button>
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Codexa Asset IQ. All rights reserved.</p>
+    </footer>
+
+    <script src="../../../assets/js/users.js" type="module"></script>
+</body>
+
+</html>

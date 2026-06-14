@@ -1,5 +1,7 @@
 package backend.loan.controller;
 
+import backend.loan.dto.LoanRequestDTO;
+import backend.loan.dto.LoanResponseDTO;
 import backend.loan.service.LoanService;
 import backend.loan.enums.LoanStatus;
 import backend.loan.model.Loan;
@@ -9,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/loans")
 @RequiredArgsConstructor
@@ -18,57 +19,49 @@ public class LoanController {
     private final LoanService loanService;
 
     @PostMapping
-    public ResponseEntity<Loan> createLoan(@RequestBody Loan loan) {
-        Loan createdLoan = loanService.createLoan(loan);
-
+    public ResponseEntity<LoanResponseDTO> createLoan(@RequestBody LoanRequestDTO dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(createdLoan);
+                .body(loanService.createLoan(dto));
     }
 
     @GetMapping("/{id}")
-    public Loan getLoansById(@PathVariable Long id) {
+    public LoanResponseDTO getById(@PathVariable Long id) {
         return loanService.getLoanById(id);
     }
 
     @GetMapping("/user/{userId}")
-    public List<Loan> getLoansByUserId(@PathVariable Long userId) {
+    public List<LoanResponseDTO> getByUser(@PathVariable Long userId) {
         return loanService.getLoanByUser(userId);
     }
 
     @GetMapping
-    public List<Loan> getAllLoans() {
+    public List<LoanResponseDTO> getAll() {
         return loanService.getAllLoans();
     }
 
     @GetMapping("/status")
-    public List<Loan> getLoansByStatus(@RequestParam LoanStatus status) {
+    public List<LoanResponseDTO> getByStatus(@RequestParam LoanStatus status) {
         return loanService.getLoanByStatus(status);
     }
 
-    // APPROVE loan
-    @PutMapping("/{id}/approve")
-    public Loan approveLoan(@PathVariable Long id) {
+    @PutMapping("/approve/{id}")
+    public LoanResponseDTO approve(@PathVariable Long id) {
         return loanService.approveLoan(id);
     }
 
-    // REJECT loan
-    @PutMapping("/{id}/reject")
-    public Loan rejectLoan(@PathVariable Long id) {
+    @PutMapping("/reject/{id}")
+    public LoanResponseDTO reject(@PathVariable Long id) {
         return loanService.rejectLoan(id);
     }
 
-    // RETURN loan
-    @PutMapping("/{id}/return")
-    public Loan returnLoan(@PathVariable Long id) {
+    @PutMapping("/return/{id}")
+    public LoanResponseDTO returnLoan(@PathVariable Long id) {
         return loanService.returnLoan(id);
     }
 
-    // DELETE loan
     @DeleteMapping("/{id}")
-    public void deleteLoan(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         loanService.deleteLoan(id);
     }
-
-
 }
