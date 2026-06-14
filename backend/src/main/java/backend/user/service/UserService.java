@@ -11,7 +11,6 @@ import backend.user.model.User;
 import backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -126,7 +125,7 @@ public class UserService {
                 .lastName(createUserDto.lastName())
                 .email(createUserDto.email())
                 .password(passwordEncoder.encode(createUserDto.password()))
-                .department(createUserDto.email())
+                .department(createUserDto.department())
                 .role(Role.STAFF)
                 .build();
 
