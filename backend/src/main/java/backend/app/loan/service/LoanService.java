@@ -1,0 +1,149 @@
+package backend.app.loan.service;
+
+import backend.app.asset.model.Asset;
+import backend.app.asset.repository.AssetRepo;
+import backend.app.loan.dto.LoanRequestDTO;
+import backend.app.loan.dto.LoanResponseDTO;
+import backend.app.loan.enums.LoanStatus;
+import backend.app.loan.mapper.LoanMapper;
+import backend.app.loan.model.Loan;
+import backend.app.loan.repository.LoanRepo;
+import backend.app.user.model.User;
+import backend.app.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class LoanService {
+
+    private final LoanRepo loanRepo;
+    private final UserRepository userRepo;
+    private final AssetRepo assetRepo;
+
+    // CREATE Loan Request
+    public LoanResponseDTO createLoan(LoanRequestDTO dto) {
+
+        User user = userRepo.findById(dto.userId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "User not found"
+                        )
+                );
+
+        Asset asset = assetRepo.findById(dto.assetId())
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Asset not found"
+                        )
+                );
+
+        Loan loan = new Loan();
+        loan.setUser(user);
+        loan.setAsset(asset);
+        loan.setRequestDate(LocalDate.now());
+        loan.setCheckoutDate(dto.checkoutDate());
+        loan.setDueDate(dto.dueDate());
+        loan.setStatus(LoanStatus.PENDING);
+
+        return LoanMapper.toDTO(loanRepo.save(loan));
+    }
+
+    // GET Loan by ID
+    public LoanResponseDTO getLoanById(Long id) {
+
+        Loan loan = loanRepo.findById(id).orElseThrow(() ->
+                new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Loan with ID " + id + " not found"
+                )
+        );
+
+        return LoanMapper.toDTO(loan);
+    }
+
+    // GET Loans by User
+    public List<LoanResponseDTO> getLoanByUser(Long userId) {
+        return loanRepo.findByUser_UserId(userId)
+                .stream()
+                .map(LoanMapper::toDTO)
+                .toList();
+    }
+
+    // GET All Loans
+    public List<LoanResponseDTO> getAllLoans() {
+        return loanRepo.findAll()
+                .stream()
+                .map(LoanMapper::toDTO)
+                .toList();
+    }
+
+    // GET Loans by Status
+    public List<LoanResponseDTO> getLoanByStatus(LoanStatus status) {
+        return loanRepo.findByStatus(status)
+                .stream()
+                .map(LoanMapper::toDTO)
+                .toList();
+    }
+
+    // APPROVE Loan
+    public LoanResponseDTO approveLoan(Long loanId) {
+
+        Loan loan = getEntity(loanId);
+
+        loan.setStatus(LoanStatus.APPROVED);
+        loan.setCheckoutDate(LocalDate.now());
+        loan.setDueDate(LocalDate.now().plusDays(7));
+
+        return LoanMapper.toDTO(loanRepo.save(loan));
+    }
+
+    // REJECT Loan
+    public LoanResponseDTO rejectLoan(Long loanId) {
+        Loan loan = getEntity(loanId);
+
+        if (loan.getStatus() != LoanStatus.PENDING){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Only pending loans can be rejected"
+            );
+        }
+
+        loan.setStatus(LoanStatus.REJECTED);
+
+        return LoanMapper.toDTO(loanRepo.save(loan));
+    }
+
+    // RETURN Loan
+    public LoanResponseDTO returnLoan(Long loanId) {
+
+        Loan loan = getEntity(loanId);
+
+        loan.setStatus(LoanStatus.RETURNED);
+        loan.setReturnDate(LocalDate.now());
+
+        return LoanMapper.toDTO(loanRepo.save(loan));
+    }
+
+    // DELETE Loan
+    public void deleteLoan(Long loanId) {
+        loanRepo.deleteById(loanId);
+    }
+
+    // Helper Method
+    private Loan getEntity(Long id) {
+        return loanRepo.findById(id).orElseThrow(() ->
+                new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Loan with ID " + id + " not found"
+                )
+        );
+    }
+}
