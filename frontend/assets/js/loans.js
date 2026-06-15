@@ -17,11 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         tableBody.innerHTML = "";
 
-        // const loanCounter = loansByUser.length;
-        // if(allUserLoansCard){
-        //     allUserLoansCard.textContent = loanCounter;
-        // }
-
         totalLoans.forEach(allLoans => {
             const row = document.createElement("tr");
 

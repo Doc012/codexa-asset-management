@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
-  <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
 </head>
 
 <body>
@@ -21,8 +20,9 @@
     <div class="right-nav">
       <div class="profile-container">
 
+        <!--Add the functionality for the id="profileInital" when u don't have a picture, it takes your Intitial-->
         <div id="profileInitial" class="profile-initial">S</div>
-        <img id="profileImage" class="profile-image" src="" alt="profile_picture">
+        <img id="profileImage" class="profile-image">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
@@ -32,6 +32,7 @@
       </div>
     </div>
   </header>
+
 
   <aside id="sidebar" class="sidebar">
     <ul>
@@ -82,8 +83,8 @@
     </ul>
   </aside>
 
+
   <main id="mainContent" class="content">
-    
     <section id="dashboardPage" class="page active">
 
       <div class="welcome-card">
@@ -115,21 +116,14 @@
 
       <div class="panel">
         <h2>Recent Activity</h2>
-        <ul class="activity-list">
-          <li>
-            Asset request submitted
-          </li>
-          <li>
-            Dell laptop approved
-          </li>
-          <li>
-          </li>
+        <ul class="activity-list" id="user_log">
         </ul>
+        <a href="#"><button>view all</button></a>
       </div>
 
       <div class="assets">
         <h2>Assets</h2>
-        <table>
+        <table border="1">
           <thead>
             <tr>
               <th>
@@ -146,12 +140,17 @@
               </th>
             </tr>
           </thead>
+          <tbody id="user-asset-table-body"></tbody>
         </table>
       </div>
     </section>
   </main>
 
 
+  <script src="../../../assets/js/users.js" type="module"></script>
+  <script src="../../../assets/js/assets.js" type="module"></script>
+  <script src="../../../assets/js/auditLogs.js" type="module"></script>
+  <script type="module" src="../../../assets/js/loans.js"></script>
   <script src="../../../assets/js/user/script.js" type="module"></script>
 </body>
 
