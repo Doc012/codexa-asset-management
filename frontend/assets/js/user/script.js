@@ -83,10 +83,11 @@ const confirmBtn = document.getElementById("confirmBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const successMessage = document.getElementById("successMessage");
 
-// Show modal
+if (deleteBtn && modal) {
 deleteBtn.addEventListener("click", () => {
   modal.style.display = "flex";
 });
+}
 
 // Confirm action
 confirmBtn.addEventListener("click", () => {
@@ -115,28 +116,28 @@ cancelBtn.addEventListener("click", () => {
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const tabButtons = document.querySelectorAll('.tab-menu .tab-btn');
+// document.addEventListener('DOMContentLoaded', () => {
+//     const tabButtons = document.querySelectorAll('.tab-menu .tab-btn');
     
-    if (tabButtons.length > 0) {
-        tabButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                const targetTabId = event.currentTarget.getAttribute('data-tab');
+//     if (tabButtons.length > 0) {
+//         tabButtons.forEach(button => {
+//             button.addEventListener('click', (event) => {
+//                 const targetTabId = event.currentTarget.getAttribute('data-tab');
                 
-                // Clear active-content display flag assignments from all views
-                const contents = document.querySelectorAll('.tab-content');
-                contents.forEach(content => content.classList.remove('active-content'));
+//                 // Clear active-content display flag assignments from all views
+//                 const contents = document.querySelectorAll('.tab-content');
+//                 contents.forEach(content => content.classList.remove('active-content'));
 
-                // Clear structural visual highlight selections from navigation row
-                tabButtons.forEach(btn => btn.classList.remove('active'));
+//                 // Clear structural visual highlight selections from navigation row
+//                 tabButtons.forEach(btn => btn.classList.remove('active'));
 
-                // Render current requested targets visible
-                document.getElementById(targetTabId).classList.add('active-content');
-                event.currentTarget.classList.add('active');
-            });
-        });
-    }
-});
+//                 // Render current requested targets visible
+//                 document.getElementById(targetTabId).classList.add('active-content');
+//                 event.currentTarget.classList.add('active');
+//             });
+//         });
+//     }
+// });
 
 function switchTab(event, tabId) {
     // 1. Prevent default anchor actions if applicable
