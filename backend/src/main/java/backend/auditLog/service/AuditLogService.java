@@ -10,6 +10,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -37,7 +38,9 @@ public class AuditLogService {
      * @return
      */
     public List<AuditLog> getAllAuditLogs(){
-        return repository.findAll();
+        List<AuditLog> logs = repository.findAll();
+        Collections.reverse(logs);
+        return logs;
     }
 
     public AuditLog createLog(AuditLog log){
@@ -56,7 +59,9 @@ public class AuditLogService {
     }
 
     public List<AuditLog> getAuditLogsByUserId(Long userId){
-        return repository.findByUserId(userId);
+        List<AuditLog> logs = repository.findByUserId(userId);
+        Collections.reverse(logs);
+        return logs;
     }
 
 }

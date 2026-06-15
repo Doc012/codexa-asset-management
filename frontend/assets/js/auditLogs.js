@@ -1,8 +1,11 @@
+import { getUserLogsById } from "../../services/auditService.js";
+import { getAllUsersByRole } from "../../services/userService.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("log-table-body");
 
     try {
-        const { getAllLogs } = await import ("../../services/auditService.js")
+        const { getAllLogs } = await import("../../services/auditService.js")
         const logs = await getAllLogs();
         tableBody.innerHTML = "";
 
@@ -22,9 +25,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             tableBody.appendChild(row);
         });
-        
-    } catch(error){
+
+    } catch (error) {
         console.error("Failed to render ASSETS", error);
         tableBody.innerHTML = `<tr><td colspan = "8" style="color: red";> Error: ${error.message}</td></tr>`;
     }
-})
+});
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const userLogContainer = document.getElementById("user_log");
+    const userId = 3;
+
+    try {
+        const usersLogs = await getUserLogsById(userId);
+        const newUserLogs = usersLogs.slice(0, 4);
+        userLogContainer.innerHTML = "";
+
+        newUserLogs.forEach((obj) => {
+            if (userLogContainer && obj) {
+                const li = document.createElement("li");
+                li.textContent = `${obj.message} - ${obj.timestamp}`
+                userLogContainer.appendChild(li);
+            }
+
+        });
+
+
+    } catch (error) {
+        console.log("Error: " + error);
+    }
+});

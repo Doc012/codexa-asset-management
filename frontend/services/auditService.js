@@ -13,6 +13,12 @@ async function getLogById(id) {
     return await response.json();
 }
 
+export async function getUserLogsById(id) {
+    const response = await fetch(`${API_BASE_URL}/logs/user/${id}`);
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}
+
 async function createLog(logData) {
     const response = await fetch(`${API_BASE_URL}/logs`, {
         method: 'POST',

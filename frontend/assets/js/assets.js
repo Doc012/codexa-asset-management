@@ -66,9 +66,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const assets = await getAllAssets();
+        const slicedAssets = assets.slice(0, 4);
         tableBody.innerHTML = "";
 
-        assets.forEach(asset => {
+        slicedAssets.forEach(asset => {
             const row = document.createElement("tr");
 
             row.innerHTML = `
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
     }
     
-})
+});
 
 
 /**
