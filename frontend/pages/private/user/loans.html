@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings Page</title>
+  <title>Loans Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/user/loans.css">
 </head>
 
 <body>
@@ -85,6 +86,117 @@
   <main id="mainContent" class="content">
     
     <section id="dashboardPage" class="page active">
+
+      <div class="loans">
+  <h2>Loan Management</h2>
+
+  <div class="tab-menu">
+    <button class="tab-btn active" onclick="switchTab(event, 'availableLoans')">Available Assets</button>
+    <button class="tab-btn" onclick="switchTab(event, 'pendingLoans')">Pending Returns</button>
+    <button class="tab-btn" onclick="switchTab(event, 'loanHistory')">Loan History</button>
+  </div>
+
+  <div id="availableLoans" class="tab-content active-content">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Condition</th>
+          <th>Picture</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="assetsTableBody">
+        <tr>
+          <td>Projector</td>
+          <td>Electronics</td>
+          <td>Good</td>
+          <td><img src="https://m.media-amazon.com/images/I/61FeT3hvIRL.jpg" alt="Projector" width="100"></td>
+          <td>
+            <button class="request-btn" id="request">Request Loan</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="pendingLoans" class="tab-content">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Loan Date</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="pendingTableBody">
+        <tr>
+          <td>Laptop Dell</td>
+          <td>Electronics</td>
+          <td>2026-06-10</td>
+          <td>2026-06-17</td>
+          <td>
+            <button class="return-btn" style="background-color: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Return Asset</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="loanHistory" class="tab-content">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Borrowed Date</th>
+          <th>Returned Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="historyTableBody">
+        <tr>
+          <td>iPad Pro</td>
+          <td>Electronics</td>
+          <td>2026-05-01</td>
+          <td>2026-05-08</td>
+          <td><span style="color: #27ae60; font-weight: bold;">Returned</span></td>
+        </tr>
+        <tr>
+          <td>Projector</td>
+          <td>Electronics</td>
+          <td>2026-06-15</td>
+          <td>—</td>
+          <td><span style="color: #f1c40f; font-weight: bold;">Pending</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+<!-- Trigger button ------------------------------------------------>
+
+<!-- Confirmation Modal -->
+<div id="btnConfirmation" class="modal">
+  <div class="modal-content">
+    <h2>Are you sure?</h2>
+    <p>You won't be able to go back once you confirm.</p>
+    <div class="modal-actions">
+      <button id="confirmBtn" class="confirm">Yes, Confirm</button>
+      <button id="cancelBtn" class="cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+<div id="successMessage" class="success"></div>
+
+<!-- End of Modal ------------------------------------------------------->
+
+
 
     </section>
   </main>

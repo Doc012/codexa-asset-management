@@ -1,7 +1,3 @@
-/* ==============================
-   ASSET IQ ENTERPRISE THEME
-============================== */
-
 :root {
     --background: #F4F6F9;
     --surface: #FFFFFF;
@@ -19,13 +15,11 @@
         0 8px 25px rgba(0,0,0,0.08);
 }
 
-
 * {
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
 
 body {
     font-family:'Inter', sans-serif;
@@ -34,17 +28,9 @@ body {
     
 }
 
-/* When the AI state is open, seamlessly squeeze the content layout */
 body.ai-layout-open .main-content {
-    margin-right: 380px; /* Shifts content left by the exact width of the panel */
+    margin-right: 380px;
 }
-
-
-
-/* ==============================
-   TOPBAR
-============================== */
-
 
 .topbar {
     height:72px;
@@ -65,13 +51,11 @@ body.ai-layout-open .main-content {
     z-index:1000;
 }
 
-
 .left-nav {
     display:flex;
     align-items:center;
     gap:15px;
 }
-
 
 .menu-btn {
     border:none;
@@ -87,19 +71,12 @@ body.ai-layout-open .main-content {
     font-weight:700;
 }
 
-
-/* ==============================
-   SEARCH BAR
-============================== */
-
-
 .search-container {
     flex:1;
 
     display:flex;
     justify-content:center;
 }
-
 
 .search-box {
 
@@ -118,14 +95,12 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .search-icon {
     font-size:18px;
     color:var(--muted);
 
     margin-right:10px;
 }
-
 
 .search-box input {
 
@@ -138,13 +113,6 @@ body.ai-layout-open .main-content {
     font-size:16px;
 }
 
-
-
-/* ==============================
-   RIGHT NAVIGATION
-============================== */
-
-
 .right-nav {
 
     display:flex;
@@ -152,7 +120,6 @@ body.ai-layout-open .main-content {
     gap:18px;
 
 }
-
 
 .ai-btn {
 
@@ -169,7 +136,6 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .ai-btn img {
 
     width:22px;
@@ -177,19 +143,12 @@ body.ai-layout-open .main-content {
 
 }
 
-
-/* ==============================
-   PROFILE
-============================== */
-
-
 .profile-container {
 
     position:relative;
     cursor:pointer;
 
 }
-
 
 .profile-initial,
 .profile-image {
@@ -211,14 +170,12 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .profile-image {
 
     object-fit:cover;
     display:none;
 
 }
-
 
 .profile-dropdown {
 
@@ -240,13 +197,11 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .profile-container.open .profile-dropdown {
 
     display:block;
 
 }
-
 
 .profile-dropdown button {
 
@@ -265,19 +220,11 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .profile-dropdown button:hover {
 
     background:#F3F4F6;
 
 }
-
-
-
-/* ==============================
-   SIDEBAR
-============================== */
-
 
 .sidebar {
 
@@ -299,22 +246,17 @@ body.ai-layout-open .main-content {
 
 }
 
-
-/* hidden state */
-
 .sidebar.closed {
 
     transform:translateX(-100%);
 
 }
 
-
 .sidebar ul {
 
     list-style:none;
 
 }
-
 
 .nav-item {
 
@@ -333,7 +275,6 @@ body.ai-layout-open .main-content {
     font-size:17px;
 
 }
-
 
 .nav-item:hover {
 
@@ -354,13 +295,6 @@ body.ai-layout-open .main-content {
 
 }
 
-
-
-/* ==============================
-   MAIN CONTENT
-============================== */
-
-
 .content {
 
     margin-top:72px;
@@ -372,21 +306,11 @@ body.ai-layout-open .main-content {
 
 }
 
-
-/* when sidebar closes */
-
 .content.expanded {
 
     margin-left:0;
 
 }
-
-
-
-/* ==============================
-   PAGES
-============================== */
-
 
 .page {
 
@@ -394,129 +318,12 @@ body.ai-layout-open .main-content {
 
 }
 
-
 .page.active {
 
     display:block;
 
 }
 
-
-
-/* ==============================
-   WELCOME CARD
-============================== */
-
-
-.welcome-card {
-    background: white;
-    padding: 30px;
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    /* Add an elegant corporate left accent line */
-    border-left: 6px solid var(--sidebar);
-}
-
-
-.welcome-card h1 {
-
-    font-size:45px;
-
-}
-
-
-.welcome-card p {
-
-    margin-top:10px;
-
-    color:var(--muted);
-
-    font-size:18px;
-
-}
-
-
-
-/* ==============================
-   KPI CARDS
-============================== */
-
-
-.stats-grid {
-
-    margin-top:25px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:20px;
-
-}
-
-
-.stat-card {
-
-    background:white;
-
-    border-left:5px solid var(--primary);
-
-    border-radius:20px;
-
-    padding:25px;
-
-    box-shadow:var(--shadow);
-
-}
-
-
-.stat-card h3 {
-
-    color:var(--muted);
-
-    font-weight:600;
-
-}
-
-
-.stat-card h2 {
-
-    margin-top:12px;
-
-    font-size:34px;
-
-}
-
-
-.stat-card.danger {
-
-    border-color:var(--danger);
-
-}
-
-
-
-/* ==============================
-   PANELS
-============================== */
-
-
-.panel {
-
-    margin-top:25px;
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:25px;
-
-    box-shadow:var(--shadow);
-
-}
-
-/* Styles for dashboard `.assets` block */
 .assets {
     margin-top:25px;
     background: white;
@@ -548,80 +355,6 @@ body.ai-layout-open .main-content {
     padding: 12px 0;
 }
 
-#request{
-    
-
-}
-
-.panel h2 {
-
-    margin-bottom:15px;
-
-}
-
-
-/* ==============================
-   RECENT ACTIVITY
-============================== */
-
-
-.activity-list {
-
-    list-style:none;
-
-}
-
-
-.activity-list li {
-
-    padding:16px 0;
-
-    border-bottom:1px solid var(--border);
-
-}
-
-
-.activity-list li:last-child {
-
-    border:none;
-
-}
-
-
-
-/* ==============================
-   TABLES
-============================== */
-
-
-.page-header {
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
-}
-
-
-.table-search {
-
-    width:260px;
-
-    padding:12px 15px;
-
-    border-radius:12px;
-
-    border:1px solid var(--border);
-
-    outline:none;
-
-}
-
-
 .asset-table {
 
     width:100%;
@@ -629,7 +362,6 @@ body.ai-layout-open .main-content {
     border-collapse:collapse;
 
 }
-
 
 .asset-table th {
 
@@ -652,13 +384,6 @@ body.ai-layout-open .main-content {
 
 }
 
-
-
-/* ==============================
-   FORMS
-============================== */
-
-
 .input-field {
 
     width:100%;
@@ -675,7 +400,6 @@ body.ai-layout-open .main-content {
 
 }
 
-
 textarea.input-field {
 
     height:140px;
@@ -683,7 +407,6 @@ textarea.input-field {
     resize:none;
 
 }
-
 
 .primary-btn {
 
@@ -705,10 +428,6 @@ textarea.input-field {
 
 }
 
-
-/* ==============================
-   UPDATED AI PANEL MECHANICS
-================================ */
 #aiPanel {
     position: fixed;
     top: 72px;
@@ -719,18 +438,15 @@ textarea.input-field {
     box-shadow: -4px 0 20px rgba(0,0,0,0.03);
     border-left: 1px solid var(--border);
     
-    /* Hardware accelerated sliding transition alignment */
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 100;
 }
 
-/* Slide perfectly into view */
 #aiPanel.open {
     transform: translateX(0);
 }
 
-/* Professional Chat UI Message Styling bubbles */
 .chat-msg {
     margin-bottom: 15px;
     padding: 10px 14px;
@@ -756,12 +472,11 @@ textarea.input-field {
 }
 
 #chatBox {
-    height: calc(100% - 135px); /* Adjusted to make room for actions bar */
+    height: calc(100% - 135px);
     overflow-y: auto;
     padding: 20px;
 }
 
-/* Hover effects for actionable interaction items */
 .chat-action-btn:hover {
     background-color: #E5E7EB !important;
     color: var(--text) !important;
@@ -826,7 +541,6 @@ textarea.input-field {
 
 }
 
-
 .chat-input input {
 
     flex:1;
@@ -838,7 +552,6 @@ textarea.input-field {
     border:1px solid var(--border);
 
 }
-
 
 .chat-input button {
 
@@ -856,20 +569,11 @@ textarea.input-field {
 
 }
 
-/* ==============================
-   TABLE RESPONSIVE WRAPPER & REFINEMENTS
-================================ */
-
-/* Wrap the panel structure to allow safe scrolling without breaking layout */
 .panel {
     position: relative;
-    overflow: hidden; /* Keeps the panel card curves clean */
+    overflow: hidden; 
 }
 
-/* Target containers holding tables. 
-   Apply this specifically to let the table expand naturally 
-   while giving the user a sleek scrollbar on smaller screens.
-*/
 .panel-table-container {
     width: 100%;
     overflow-x: auto;
@@ -879,26 +583,21 @@ textarea.input-field {
 .asset-table {
     width: 100%;
     border-collapse: collapse;
-    white-space: nowrap; /* Prevents text elements like dates and tags from wrapping awkwardly */
+    white-space: nowrap; 
 }
 
-/* Image styling for asset pictures */
 .asset-table img {
     border: 1px solid var(--border);
     background-color: #F9FAFB;
 }
 
-/* Code block styling for Serial Numbers */
+
 .asset-table code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
     font-weight: 600;
     color: #374151;
 }
-
-/* ==============================
-   STATUS BADGES
-================================ */
 
 .status-badge {
     padding: 6px 12px;
@@ -909,33 +608,29 @@ textarea.input-field {
     text-transform: capitalize;
 }
 
-/* Green theme for 'Good' condition assets */
 .status-badge.good {
     background-color: #E8F5E9;
     color: var(--primary);
 }
 
-/* Yellow theme for assets needing attention/maintenance */
 .status-badge.fair,
 .status-badge.warning {
     background-color: #FEF3C7;
     color: #D97706;
 }
 
-/* Red theme for broken or missing elements */
+
 .status-badge.poor,
 .status-badge.damaged {
     background-color: #FEE2E2;
     color: var(--danger);
 }
 
-/* Gray theme fallback */
 .status-badge.unknown {
     background-color: #F3F4F6;
     color: var(--muted);
 }
 
-/* Custom workflow states for items out on loan */
 .status-badge.approved {
     background-color: #E8F5E9;
     color: var(--primary);
@@ -951,12 +646,6 @@ textarea.input-field {
     background-color: #FEE2E2;
     color: var(--danger);
 }
-
-
-/* ==============================
-   RESPONSIVE
-============================== */
-
 
 @media(max-width:900px) {
 
@@ -1030,89 +719,83 @@ textarea.input-field {
     }
 }
 
-/* ---------------------------------------------------------------- */
-/* ===== TABLET (≤ 1024px) ===== */
 @media (max-width: 1024px) {
-    /* Slightly smaller search */
+  
     .search-box {
         width: 400px;
     }
-    /* Cards adjust */
+  
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* ===== SMALL TABLET (≤ 768px) ===== */
 @media (max-width: 768px) {
 
-    /* Sidebar hidden by default */
     .sidebar {
         transform: translateX(-100%);
     }
-    /* Mobile open state */
+    
     .sidebar.mobile-open {
         transform: translateX(0);
     }
-    /* Content takes full width */
+    
     .content {
         margin-left: 0;
         padding: 20px;
     }
-    /* Logo smaller */
+   
     .logo {
         font-size: 22px;
     }
-    /* Search smaller */
+  
     .search-box {
         width: 280px;
         height: 42px;
     }
-    /* Welcome text smaller */
+   
     .welcome-card h1 {
         font-size: 30px;
     }
-    /* Tables scroll instead of breaking */
+    
     .asset-table {
-        /* display: block;
-        overflow-x: auto; */
         white-space: nowrap;
     }
     #aiPanel {
         width: 100%;
-        right: -100%; /* FULLY hidden */
+        right: -100%; 
     }
     #aiPanel.open {
         right: 0;
     }
 }
 
-/* ===== MOBILE (≤ 576px) ===== */
+
 @media (max-width: 576px) {
-    /* Hide search for clean UI */
+   
     .search-container {
         display: none;
     }
-    /* Topbar tighter */
+   
     .topbar {
         padding: 0 15px;
     }
-    /* Logo smaller */
+   
     .logo {
         font-size: 18px;
     }
-    /* Profile image smaller */
+    
     .profile-initial,
     .profile-image {
         width: 36px;
         height: 36px;
         font-size: 14px;
     }
-    /* One column layout */
+    
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    /* Welcome card */
+    
     .welcome-card {
         padding: 20px;
     }
@@ -1122,28 +805,28 @@ textarea.input-field {
     .welcome-card p {
         font-size: 15px;
     }
-    /* Panels tighter */
+    
     .panel {
         padding: 18px;
     }
-    /* Inputs */
+    
     .input-field {
         padding: 12px;
         font-size: 14px;
     }
-    /* Buttons full width */
+   
     .primary-btn {
         width: 100%;
         padding: 14px;
     }
-    /* AI panel full screen */
+    
     #aiPanel {
         width: 100%;
         right: -100;
     }
 }
 
-/* ===== EXTRA SMALL (≤ 400px) ===== */
+
 @media (max-width: 400px) {
     .logo {
         font-size: 16px;
@@ -1156,35 +839,23 @@ textarea.input-field {
     }
 }
 
-
-/* ==============================
-   DYNAMIC LAYOUT CONTEXT
-================================ */
-
-/* The main outer shell container holding the sidebar + main view */
 .main-wrapper {
     display: flex;
     width: 100%;
     transition: padding-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Update your main content area styling to allow a dynamic shift margin */
 .main-content {
     flex: 1;
     transition: margin-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    margin-top: 72px; /* Accommodate topbar */
+    margin-top: 72px; 
     padding: 20px;
     background-color: #F9FAFB;
     min-height: calc(100vh - 72px);
 }
 
-
-
-
-/* /////////////////////////////////////////////////////////// */
-/* Modal background */
 .modal {
-  display: none; /* hidden by default */
+  display: none;
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -1193,7 +864,7 @@ textarea.input-field {
   align-items: center;
 }
 
-/* Modal box */
+
 .modal-content {
   background: #fff;
   padding: 20px;
@@ -1203,7 +874,7 @@ textarea.input-field {
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
-/* Buttons */
+
 .modal-actions {
   margin-top: 20px;
   display: flex;
@@ -1240,7 +911,6 @@ button.cancel {
 button.confirm:hover { background: #2563eb; }
 button.cancel:hover { background: #b91c1c; }
 
-/* Success message */
 .success {
   display: none;
   margin-top: 20px;
@@ -1251,4 +921,3 @@ button.cancel:hover { background: #b91c1c; }
   text-align: center;
    transition: opacity 0.5s ease;
 }
-/* /////////////////////////////////////////////////////////////////*/

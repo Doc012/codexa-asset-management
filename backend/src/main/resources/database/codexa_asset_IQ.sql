@@ -33,3 +33,12 @@ INSERT INTO audit_logs (user_id, entity_type, entity_id, action_type, timestamp,
 (4, 'LOAN', 2, 'CHECK_OUT', '2026-04-18 14:20:00', 'status: PENDING', 'status: APPROVED'),
 (6, 'ASSET', 5, 'UPDATE', '2026-06-03 13:45:00', 'location: Warehouse C', 'location: Office Building A'),
 (5, 'LOAN', 3, 'CHECK_IN', '2026-06-04 15:30:00', 'status: APPROVED', 'status: COMPLETED');
+
+-- Update asset photos with actual image URLs
+UPDATE assets SET photo_path = 'https://www.laptopsatcost.co.za/wp-content/uploads/2022/09/dell-xps-9510.png.webp' WHERE title = 'Dell Laptop XPS 15';
+UPDATE assets SET photo_path = 'https://www.fotodiscountworld.co.za/wp-content/uploads/2022/12/canon-r5-kit.jpg' WHERE title = 'Canon EOS R5 Camera';
+UPDATE assets SET photo_path = 'https://oakywood.shop/cdn/shop/files/standingdeskpro-walnutveneer-black-02-szare.jpg?crop=center&height=450&v=1720004032&width=600' WHERE title = 'Standing Desk Pro';
+UPDATE assets SET photo_path = 'https://www.gothermal.co.za/cdn/shop/products/FLIR_E96_720x.jpg?v=1646145377' WHERE title = 'Thermal Imaging Camera';
+UPDATE assets SET photo_path = 'https://www.mfpgroup.co.za/images/cmsimages/big/product-297-44-elegantecompatta.jpg' WHERE title = 'HP LaserJet Pro M404n Printer';
+UPDATE assets SET photo_path = 'https://www.pbtech.co.nz/fileslib/_20220831125902_080.png' WHERE title = '4K Monitor LG 32UP550';
+UPDATE assets SET photo_path = 'https://creativeofficefurniture.co.za/wp-content/uploads/2024/11/BR00120Barrel20Boardroom20table20dark.jpg' WHERE title = 'Conference Table Mahogany';

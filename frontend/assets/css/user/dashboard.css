@@ -1,0 +1,115 @@
+.welcome-card {
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    /* Add an elegant corporate left accent line */
+    border-left: 6px solid var(--sidebar);
+}
+
+
+.welcome-card h1 {
+
+    font-size:45px;
+
+}
+
+
+.welcome-card p {
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:18px;
+
+}
+
+.stats-grid {
+
+    margin-top:25px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+
+.stat-card {
+
+    background:white;
+
+    border-left:5px solid var(--primary);
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.stat-card h3 {
+
+    color:var(--muted);
+
+    font-weight:600;
+
+}
+
+
+.stat-card h2 {
+
+    margin-top:12px;
+
+    font-size:34px;
+
+}
+
+
+.stat-card.danger {
+
+    border-color:var(--danger);
+
+}
+
+.panel {
+
+    margin-top:25px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.activity-list {
+
+    list-style:none;
+
+}
+
+
+.activity-list li {
+
+    padding:16px 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+
+.activity-list li:last-child {
+
+    border:none;
+
+}
