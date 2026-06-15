@@ -137,6 +137,8 @@ public class UserService {
                 .actionType(ActionType.CREATE)
                 .oldValue("N/A")
                 .newValue("Created User ID: " + savedUser.getUserId())
+                .message("Created " + user.getFirstName() + " " + user.getLastName())
+
                 .build();
 
         auditLogService.createLog(auditLog);
@@ -172,6 +174,7 @@ public class UserService {
                 .actionType(ActionType.DELETE)
                 .oldValue("N/A")
                 .newValue("Deleted User ID: " + user.getUserId())
+                .message("Deleted " + user.getFirstName() + " " + user.getLastName())
                 .build();
 
         auditLogService.createLog(auditLog);

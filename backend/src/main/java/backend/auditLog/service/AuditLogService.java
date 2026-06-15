@@ -49,6 +49,7 @@ public class AuditLogService {
                 .timestamp(LocalDateTime.now())
                 .oldValue(log.getOldValue())
                 .newValue(log.getNewValue())
+                .message(log.getMessage())
                 .build();
 
         return repository.save(newLog);
