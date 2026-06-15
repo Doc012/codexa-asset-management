@@ -13,7 +13,7 @@ async function getLoanById(id) {
     return await response.json();
 }
 
-async function getLoansByUser(userId) {
+export async function getLoansByUser(userId) {
     const response = await fetch(`${API_BASE_URL}/loans/user/${userId}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();

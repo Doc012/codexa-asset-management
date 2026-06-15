@@ -1,11 +1,50 @@
 import { getLoansByStatus } from "../../services/loanService.js";
 import { getAllLoans } from "../../services/loanService.js";
+import { getLoansByUser } from "../../services/loanService.js";
+
+/**
+ * get the numeric value of all user loans
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("all-loans-table");
+    const allLoans = document.getElementById("totalLoans");
+
+    try {
+        const allLoans = await getAllLoans();
+        const loansByUser = await getLoansByUser();
+
+        tableBody.innerHTML = "";
+
+        const loanCounter = loansByUser.length;
+        if(allLoans){
+            allLoans.textContent = loanCounter;
+        }
+
+        allLoans.forEach(allLoans => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${loanId}</td>
+                <td>${userId}</td>
+                <td>${assetId}</td>
+                <td>${status}</td>
+                <td>${requestDate}</td>
+                <td>${checkoutDate}</td>
+                <td>${dueDate}</td>
+            `;
+        })
+
+        tableBody.appendChild(row);
+
+    } catch (error) {
+        console.error("Failed to render loans", error);
+        tableBody.innerHTML = `<tr><td colspan = "7" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+});
 
 /**
  * Displaying Pending loans on the loan requests
  */
-
-
 const loadPendingLoans = (async (status) => {
     const tableBody = document.querySelector("#pendingLoansTable tbody");
     try {
