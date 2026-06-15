@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
 </head>
 
 <body>
@@ -20,9 +21,8 @@
     <div class="right-nav">
       <div class="profile-container">
 
-        <!--Add the functionality for the id="profileInital" when u don't have a picture, it takes your Intitial-->
         <div id="profileInitial" class="profile-initial">S</div>
-        <img id="profileImage" class="profile-image">
+        <img id="profileImage" class="profile-image" src="" alt="profile_picture">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
@@ -32,7 +32,6 @@
       </div>
     </div>
   </header>
-
 
   <aside id="sidebar" class="sidebar">
     <ul>
@@ -83,7 +82,6 @@
     </ul>
   </aside>
 
-
   <main id="mainContent" class="content">
     <section id="dashboardPage" class="page active">
 
@@ -103,14 +101,14 @@
           <h2 id="totalLoans">0</h2>
         </div>
 
-        <div class="stat-card">
-          <h3>Requests</h3>
-          <h2>0</h2>
+        <div class="stat-card" id="due">
+          <h3>Due soon</h3>
+          <h2 id="total_requests">0</h2>
         </div>
 
         <div class="stat-card danger">
           <h3>Overdue</h3>
-          <h2>0</h2>
+          <h2 id="overdue">0</h2>
         </div>
       </div>
 
@@ -150,8 +148,7 @@
   <script src="../../../assets/js/users.js" type="module"></script>
   <script src="../../../assets/js/assets.js" type="module"></script>
   <script src="../../../assets/js/auditLogs.js" type="module"></script>
-  <script type="module" src="../../../assets/js/loans.js"></script>
-  <script src="../../../assets/js/user/script.js" type="module"></script>
+  <script src="../../../assets/js/loans.js" type="module"></script>
 </body>
 
 </html>

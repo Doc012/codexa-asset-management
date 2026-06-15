@@ -1,8 +1,8 @@
-import { 
+import {
     getAllAssets,
     deleteAsset,
     createAsset
- } from "../../services/assetService.js";
+} from "../../services/assetService.js";
 
 // get all assets
 document.addEventListener("DOMContentLoaded", async () => {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <button class="delete-btn" data-id="${asset.assetId}">Delete</button>
                 </td>
             `;
-            
+
             // Attach event listener PER button
             const deleteBtn = row.querySelector(".delete-btn");
             deleteBtn.addEventListener("click", async () => {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             tableBody.appendChild(row);
         });
 
-    } catch(error) {
+    } catch (error) {
         console.error("Failed to render ASSETS", error);
         tableBody.innerHTML = `<tr><td colspan = "10" style="color: red";> Error: ${error.message}</td></tr>`;
     }
@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("user-asset-table-body");
     const assetCounter = document.getElementById("totalAssets");
 
+
     try {
         const assets = await getAllAssets();
         const slicedAssets = assets.slice(0, 4);
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // displaying the amount of assets on the card
         const totalAssets = assets.length;
-        if(assetCounter){
+        if (assetCounter) {
             assetCounter.textContent = totalAssets;
         }
 
@@ -88,15 +89,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             tableBody.appendChild(row);
 
-             });
+        });
 
-    } catch(error) {
+    } catch (error) {
         console.error("Failed to render ASSETS", error);
         tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
     }
-    
-})
 
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("assetsTableBody");
+
+    try {
+        const assets = await getAllAssets();
+        tableBody.innerHTML = "";
+
+        assets.forEach(asset => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${asset.title}</td>
+                <td>${asset.category}</td>
+                <td>${asset.condition}</td>
+                <td>${asset.photoPath}</td>
+                <td>
+                    <button class="request-btn" data-id="${asset.id}">Request Loan</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+
+        });
+
+    } catch (error) {
+        console.error("Failed to render ASSETS", error);
+        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+
+});
 
 /**
  * This is used to create an asset:
