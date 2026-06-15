@@ -112,7 +112,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${asset.title}</td>
                 <td>${asset.category}</td>
                 <td>${asset.condition}</td>
-                <td>${asset.photoPath}</td>
+                <td>
+                    <img src="${asset.photoPath} alt="Asset Image" style="width: 80px; height: auto;"/>
+                </td>
                 <td>
                     <button class="request-btn" data-id="${asset.id}">Request Loan</button>
                 </td>
