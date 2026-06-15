@@ -7,6 +7,7 @@ import backend.app.user.repository.UserRepository;
 import backend.auth.dto.AuthDTO;
 import backend.security.jwt.JwtUtil;
 import backend.security.jwt.TokenStore;
+import jakarta.mail.Message;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -131,10 +133,96 @@ public class AuthService {
     }
 
     //_______// Logout \\_______
-    //_______// Email Verification \\_______
-    //_______// Forgot Password \\_______
-    //_______// Reset Password \\_______
+    public AuthDTO.MessageResponse logout(String accessToken){
+        try {
+            String email = jwtUtil.extractEmail(accessToken);
+            String jti = jwtUtil.extractTokenId(accessToken);
+            Date exp = jwtUtil.extractExpiration(accessToken);
+            long remaining = exp.getTime() - System.currentTimeMillis();
 
+            tokenStore.blacklistAccessToken(jti, remaining);
+            tokenStore.deleteRefreshToken(email);
+
+            log.info("User logged out: {}", email);
+        } catch (Exception e){
+            log.warn("Logout attempted with invalid token: {}", e.getMessage());
+        }
+
+        return new AuthDTO.MessageResponse("Logged out successfully.");
+
+    }
+
+    //_______// Email Verification \\_______
+    @Transactional
+    public AuthDTO.MessageResponse verifyEmail(String token){
+        String email = tokenStore.getEmailForVerificationToken(token);
+        if (email == null) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Verification link is invalid or has expired"
+            );
+        }
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found."
+                ));
+
+        if (user.getStatus() == Status.ACTIVE){
+            return new AuthDTO.MessageResponse("Email is already verified.");
+        }
+
+        user.setStatus(Status.ACTIVE);
+        userRepository.save(user);
+        tokenStore.deleteEmailVerificationToken(token);
+
+        log.info("Email verified for: {}", email);
+        return new AuthDTO.MessageResponse("Email verified successfully. You can now log in.");
+    }
+
+    //_______// Forgot Password \\_______
+    public AuthDTO.MessageResponse forgotPassword(AuthDTO.ForgotPasswordRequest request){
+        userRepository.findByEmail(request.email()).ifPresent(user -> {
+            String resetToken = UUID.randomUUID().toString();
+            tokenStore.savePasswordResetToken(resetToken, user.getEmail());
+            emailService.sendPasswordResetEmail(user.getPassword(), user.getFirstName(), resetToken);
+
+            log.info("Password reset email sent to: {}", user.getEmail());
+        });
+
+        return new AuthDTO.MessageResponse("If an account with that email exists, a password reset link has been sent.");
+    }
+
+
+    //_______// Reset Password \\_______
+    @Transactional
+    public AuthDTO.MessageResponse resetPassword(AuthDTO.ResetPasswordRequest request){
+        String email = tokenStore.getEmailForPasswordRestToken(request.token());
+
+        if (email == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Reset link os invalid or has expired (15 min window)."
+            );
+        }
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found."
+                ));
+
+        user.setPassword(passwordEncoder.encode(request.newPassword()));
+        userRepository.save(user);
+
+        tokenStore.deletePasswordResetToken(request.token());
+        tokenStore.deleteRefreshToken(email);
+
+        log.info("Password reset for: {}", email);
+        return new AuthDTO.MessageResponse("Password has been reset successfully. Please log in.");
+    }
 
     //_______// Private Helpers \\_______
     private AuthDTO.AuthResponse buildAuthResponse(User user){
