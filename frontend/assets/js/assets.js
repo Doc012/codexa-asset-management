@@ -63,11 +63,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("user-asset-table-body");
+    const assetCounter = document.getElementById("totalAssets");
 
     try {
         const assets = await getAllAssets();
         const slicedAssets = assets.slice(0, 4);
         tableBody.innerHTML = "";
+
+        // displaying the amount of assets on the card
+        const totalAssets = assets.length;
+        if(assetCounter){
+            assetCounter.textContent = totalAssets;
+        }
 
         slicedAssets.forEach(asset => {
             const row = document.createElement("tr");
@@ -88,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
     }
     
-});
+})
 
 
 /**

@@ -20,27 +20,26 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            // ✅ Call API
+            // Call API
             const result = await createAsset(assetData);
 
             console.log("Asset created:", result);
 
             message.style.color = "green";
-            message.textContent = "✅ Asset created successfully!";
+            message.textContent = "Asset created successfully!";
 
-            // ✅ Reset form
+            // Reset form
             form.reset();
 
-            // ✅ Optional: Redirect back to assets list
+            // Optional: Redirect back to assets list
             setTimeout(() => {
                 window.location.href = "assets.html";
             }, 1500);
 
         } catch (error) {
             console.error("Error creating asset:", error);
-
             message.style.color = "red";
-            message.textContent = `❌ Error: ${error.message}`;
+            message.textContent = `Error: ${error.message}`;
         }
     });
 });
