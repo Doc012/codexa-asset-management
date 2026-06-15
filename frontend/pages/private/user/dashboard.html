@@ -33,6 +33,7 @@
     </div>
   </header>
 
+
   <aside id="sidebar" class="sidebar">
     <ul>
       <li class="nav-item">
@@ -82,8 +83,8 @@
     </ul>
   </aside>
 
+
   <main id="mainContent" class="content">
-    
     <section id="dashboardPage" class="page active">
 
       <div class="welcome-card">
@@ -102,34 +103,27 @@
           <h2 id="totalLoans">0</h2>
         </div>
 
-        <div class="stat-card">
-          <h3>Requests</h3>
-          <h2>0</h2>
+        <div class="stat-card" id="due">
+          <h3>Due soon</h3>
+          <h2 id="total_requests">0</h2>
         </div>
 
         <div class="stat-card danger">
           <h3>Overdue</h3>
-          <h2>0</h2>
+          <h2 id="overdue">0</h2>
         </div>
       </div>
 
       <div class="panel">
         <h2>Recent Activity</h2>
-        <ul class="activity-list">
-          <li>
-            Asset request submitted
-          </li>
-          <li>
-            Dell laptop approved
-          </li>
-          <li>
-          </li>
+        <ul class="activity-list" id="user_log">
         </ul>
+        <a href="#"><button>view all</button></a>
       </div>
 
       <div class="assets">
         <h2>Assets</h2>
-        <table>
+        <table border="1">
           <thead>
             <tr>
               <th>
@@ -146,13 +140,17 @@
               </th>
             </tr>
           </thead>
+          <tbody id="user-asset-table-body"></tbody>
         </table>
       </div>
     </section>
   </main>
 
 
-  <script src="../../../assets/js/user/script.js" type="module"></script>
+  <script src="../../../assets/js/users.js" type="module"></script>
+  <script src="../../../assets/js/assets.js" type="module"></script>
+  <script src="../../../assets/js/auditLogs.js" type="module"></script>
+  <script src="../../../assets/js/loans.js" type="module"></script>
 </body>
 
 </html>
