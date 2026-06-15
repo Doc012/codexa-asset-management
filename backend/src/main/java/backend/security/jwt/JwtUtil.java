@@ -58,7 +58,7 @@ public class JwtUtil {
     //_______// Token Validation \\_______
     public boolean isTokenValid(String token, String email){
         try {
-            final String extractedEmail = extractEmail(email);
+            final String extractedEmail = extractEmail(token);
             return extractedEmail.equals(email) && !isTokenExpired(token);
         } catch (JwtException e){
             log.warn("JWT validation failed: {}", e.getMessage());

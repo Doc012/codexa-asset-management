@@ -58,7 +58,7 @@ public class AuthService {
         userRepository.save(user);
 
         String verifyToken = UUID.randomUUID().toString();
-        tokenStore.saveEmailVerificationToken(verifyToken, user.getFirstName());
+        tokenStore.saveEmailVerificationToken(verifyToken, user.getEmail());
 
         emailService.sendVerificationEmail(user.getEmail(), user.getFirstName(), verifyToken);
 
