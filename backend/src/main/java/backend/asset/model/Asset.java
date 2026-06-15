@@ -26,10 +26,11 @@ public class Asset {
     @NotBlank
     private String category;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "serial_number", unique = true, nullable = false)
     private String serialNumber;
 
     @NotNull
+    @Column(name = "acquisition_date")
     private LocalDate acquisitionDate;
 
     @NotNull
@@ -42,6 +43,7 @@ public class Asset {
     private String condition;
 
     @NotBlank
+    @Column(name = "photo_path")
     private String photoPath;
 
 }
