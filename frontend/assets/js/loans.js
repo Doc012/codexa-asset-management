@@ -3,24 +3,26 @@ import { getAllLoans } from "../../services/loanService.js";
 import { getLoansByUser } from "../../services/loanService.js";
 
 /**
- * get the numeric value of all user loans
+ * get all loans and the numeric value of all loans belonging to a user
  */
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("all-loans-table");
-    const allLoans = document.getElementById("totalLoans");
+    const allUserLoansCard = document.getElementById("totalLoans");
 
     try {
-        const allLoans = await getAllLoans();
-        const loansByUser = await getLoansByUser();
+        const totalLoans = await getAllLoans();
+        const loansByUser = await getLoansByUser(1);
+        console.log(loansByUser.length);
+        allUserLoansCard.textContent = loansByUser.length;
 
         tableBody.innerHTML = "";
 
-        const loanCounter = loansByUser.length;
-        if(allLoans){
-            allLoans.textContent = loanCounter;
-        }
+        // const loanCounter = loansByUser.length;
+        // if(allUserLoansCard){
+        //     allUserLoansCard.textContent = loanCounter;
+        // }
 
-        allLoans.forEach(allLoans => {
+        totalLoans.forEach(allLoans => {
             const row = document.createElement("tr");
 
             row.innerHTML = `
