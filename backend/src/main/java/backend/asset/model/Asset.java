@@ -19,6 +19,7 @@ public class Asset {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "asset_id")
     private Long assetId;
 
     @NotBlank
@@ -39,7 +40,7 @@ public class Asset {
     private String location;
 
 //    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "asset_condition", nullable = false)
     private String condition;
 
     @NotBlank

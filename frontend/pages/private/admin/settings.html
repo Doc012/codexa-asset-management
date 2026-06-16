@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="../../../assets/css/admin/assets.css" />
+  <script src="https://kit.fontawesome.com/384885d02f.js" crossorigin="anonymous"></script>
+
+<body>
+  <header>
+    <div id="header-profile">
+      <span>Asset Management System</span>
+
+      <div id="profile">
+        <i class="fa-regular fa-bell"></i>
+        <img src="https://i.pinimg.com/564x/20/5f/a9/205fa9fd919ddc9a52de9807098f9232.jpg" alt="profile">
+      </div>
+    </div>
+
+    <div id="sidebar">
+      <div id="logo">
+        <img src="../../../assets/images/assetIq-removebg-preview.png" alt="asset iq logo">
+      </div>
+
+      <div id="navbar">
+        <div id="nav-tems">
+          <ul>
+            <!-- FIXED: <li> is the direct child of <ul>, and <a> wraps inside it -->
+            <li>
+              <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+
+            <li>
+              <a href="assets.html">
+                <i class="fa-solid fa-bezier-curve"></i>
+                <span>Assets</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+
+            <li>
+              <a href="loans.html">
+                <i class="fa-solid fa-hand-holding"></i>
+                <span>Loans</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+
+            <li>
+              <a href="users.html">
+                <i class="fa-solid fa-users"></i>
+                <span>Users</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+
+            <li>
+              <a href="logs.html">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Logs</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+
+            <li>
+              <a href="settings.html" id="selected">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span> <!-- FIXED: Wrapped text in a span -->
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+
+      <div id="logout-btn">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Sign out</span>
+      </div>
+    </div>
+
+    <div id="nav-button">
+      <i class="fa-solid fa-angle-left"></i>
+    </div>
+  </header>
+
+  <main>
+    <section id="first-section">
+      <h1>Settings Page</h1>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 <strong>Asset IQ</strong>. Asset Management System. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">System Docs</a>
+        <span class="divider">&bull;</span>
+        <a href="#">Support Desk</a>
+        <span class="divider">&bull;</span>
+        <span class="version-tag">v1.0.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../../assets/js/admin/script.js"></script>
+</body>
+
+</html>

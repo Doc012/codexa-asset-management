@@ -5,7 +5,7 @@ import lombok.*;
 
 @Builder
 public record UserResponse(
-        Long id,
+        Long userId,
         String firstName,
         String lastName,
         String email,

@@ -20,6 +20,7 @@ public class Loan {
     // Primary Key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "loan_id")
     private Long loanId;
 
     // Many loans belong to One user

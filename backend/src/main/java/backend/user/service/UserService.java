@@ -97,7 +97,7 @@ public class UserService {
 
         return users.stream()
                 .map(user -> UserResponse.builder()
-                        .id(user.getUserId())
+                        .userId(user.getUserId())
                         .firstName(user.getFirstName())
                         .email(user.getEmail())
                         .department(user.getDepartment())
@@ -144,7 +144,7 @@ public class UserService {
         auditLogService.createLog(auditLog);
 
         UserResponse userResponse = UserResponse.builder()
-                .id(savedUser.getUserId())
+                .userId(savedUser.getUserId())
                 .firstName(savedUser.getFirstName())
                 .lastName(savedUser.getLastName())
                 .email(savedUser.getEmail())

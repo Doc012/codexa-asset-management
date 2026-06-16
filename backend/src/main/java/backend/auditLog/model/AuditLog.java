@@ -19,6 +19,7 @@ public class AuditLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "log_id")
     private Long logId;
 
 //    @JoinColumn(name = "user_id", nullable = false)
