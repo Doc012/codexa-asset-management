@@ -1,4 +1,3 @@
-
 const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 const content = document.getElementById("mainContent");

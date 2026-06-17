@@ -4,22 +4,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fb8fac5-e966-42ef-9a71-a64a50ce0322" name="Changes" comment="" />
+    <list default="true" id="0fb8fac5-e966-42ef-9a71-a64a50ce0322" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/user/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/user/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/private/user/assets.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/private/user/assets.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/private/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/private/user/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/private/user/loans.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/private/user/loans.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/private/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/pages/private/user/settings.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/STUDIO 19-20/Documents/JavaLab/codexa-asset-management/frontend" value="3FFwV55QrzHkIUAljGzOrWyrT3T" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="3FFwV55QrzHkIUAljGzOrWyrT3T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "RunOnceActivity.MCP Project settings loaded": "true"
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/STUDIO 19-20/Documents/JavaLab/codexa-asset-management/frontend",
+    "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0fb8fac5-e966-42ef-9a71-a64a50ce0322" name="Changes" comment="" />
+      <created>1781684145780</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781684145780</updated>
+    </task>
     <servers />
   </component>
 </project>
