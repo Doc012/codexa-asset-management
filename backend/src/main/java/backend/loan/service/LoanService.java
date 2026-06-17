@@ -26,7 +26,6 @@ public class LoanService {
     private final UserRepository userRepo;
     private final AssetRepo assetRepo;
 
-    // CREATE Loan Request
     public LoanResponseDTO createLoan(LoanRequestDTO dto) {
 
         User user = userRepo.findById(dto.userId())
@@ -49,14 +48,11 @@ public class LoanService {
         loan.setUser(user);
         loan.setAsset(asset);
         loan.setRequestDate(LocalDate.now());
-        loan.setCheckoutDate(dto.checkoutDate());
-        loan.setDueDate(dto.dueDate());
         loan.setStatus(LoanStatus.PENDING);
 
         return LoanMapper.toDTO(loanRepo.save(loan));
     }
 
-    // GET Loan by ID
     public LoanResponseDTO getLoanById(Long id) {
 
         Loan loan = loanRepo.findById(id).orElseThrow(() ->
@@ -69,7 +65,6 @@ public class LoanService {
         return LoanMapper.toDTO(loan);
     }
 
-    // GET Loans by User
     public List<LoanResponseDTO> getLoanByUser(Long userId) {
         return loanRepo.findByUser_UserId(userId)
                 .stream()
@@ -77,7 +72,6 @@ public class LoanService {
                 .toList();
     }
 
-    // GET All Loans
     public List<LoanResponseDTO> getAllLoans() {
         return loanRepo.findAll()
                 .stream()
@@ -85,7 +79,6 @@ public class LoanService {
                 .toList();
     }
 
-    // GET Loans by Status
     public List<LoanResponseDTO> getLoanByStatus(LoanStatus status) {
         return loanRepo.findByStatus(status)
                 .stream()
@@ -93,19 +86,17 @@ public class LoanService {
                 .toList();
     }
 
-    // APPROVE Loan
     public LoanResponseDTO approveLoan(Long loanId) {
 
         Loan loan = getEntity(loanId);
 
         loan.setStatus(LoanStatus.APPROVED);
         loan.setCheckoutDate(LocalDate.now());
-        loan.setDueDate(LocalDate.now().plusDays(7));
+        loan.setDueDate(LocalDate.now().plusDays(62));
 
         return LoanMapper.toDTO(loanRepo.save(loan));
     }
 
-    // REJECT Loan
     public LoanResponseDTO rejectLoan(Long loanId) {
         Loan loan = getEntity(loanId);
 
@@ -121,7 +112,6 @@ public class LoanService {
         return LoanMapper.toDTO(loanRepo.save(loan));
     }
 
-    // RETURN Loan
     public LoanResponseDTO returnLoan(Long loanId) {
 
         Loan loan = getEntity(loanId);
@@ -132,12 +122,10 @@ public class LoanService {
         return LoanMapper.toDTO(loanRepo.save(loan));
     }
 
-    // DELETE Loan
     public void deleteLoan(Long loanId) {
         loanRepo.deleteById(loanId);
     }
 
-    // Helper Method
     private Loan getEntity(Long id) {
         return loanRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(
