@@ -40,7 +40,7 @@ public class Asset {
     private String location;
 
 //    @Enumerated(EnumType.STRING)
-    @Column(name = "asset_condition", nullable = false)
+    @Column(name = "condition", nullable = false)
     private String condition;
 
     @NotBlank

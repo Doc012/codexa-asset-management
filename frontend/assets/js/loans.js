@@ -3,7 +3,7 @@ import { getAllLoans } from "../../services/loanService.js";
 import { getLoansByUser } from "../../services/loanService.js";
 
 /**
- * get all loans and the numeric value of all loans belonging to a user
+ * get all loans and the numeric value of all loans belonging to a MANAGER
  */
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("all-loans-table");
@@ -35,6 +35,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("Failed to render loans", error);
         tableBody.innerHTML = `<tr><td colspan = "7" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+});
+
+/**
+ * VIEW ALL STAFF's loan when logged in
+ */
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("pendingTableBody");
+
+    try {
+        const loansByUser = await getLoansByUser(1);
+
+
+        tableBody.innerHTML = "";
+
+        loansByUser.forEach(loan => {
+            if (loan.status !== "APPROVED") {
+                return false;
+            }
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${loan.loanId}</td>
+                <td>${loan.status}</td>
+                <td>${loan.requestDate}</td>
+                <td>${loan.dueDate}</td>
+                <td>
+                    <button class="return-btn" style="background-color: #e67e22; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Return Asset</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        })
+
+
+
+    } catch (error) {
+        console.error("Failed to render loans", error);
+        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
 });
 
@@ -101,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const totalOverDue = total.length;
 
-        if(getUserLoans && overdueElement){
+        if (getUserLoans && overdueElement) {
             overdueElement.textContent = totalOverDue;
         }
 

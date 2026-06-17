@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userName = document.querySelector(".welcome-card h1")
     const profileImage = document.querySelector(".profile-image")
     const profileInitial = document.querySelector(".profile-initial")
+    
 
     try {
         const managerId = 1;
