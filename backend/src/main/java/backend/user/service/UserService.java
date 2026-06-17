@@ -196,6 +196,28 @@ public class UserService {
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
+//        User oldUser = userRepo.findById(id)
+//                        .orElseThrow(() -> new ResponseStatusException(
+//                                HttpStatus.NOT_FOUND,
+//                                "User not found"
+//                        ));
+
+        User theUpdater = userRepo.findById(1L)
+                        .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "User not found"
+                        ));
+
+        /**
+         * Storing the current values in variables, before updating
+         */
+        String oldDepartment = user.getDepartment();
+        String oldEmail = user.getEmail();
+        String oldFirstName = user.getFirstName();
+        String oldLastName = user.getLastName();
+        String oldPassword = user.getPassword();
+        String oldPicURL = user.getPicUrl();
+
         user.setDepartment(newUserDetails.department());
         user.setEmail(newUserDetails.email());
         user.setFirstName(newUserDetails.firstName());
@@ -203,8 +225,86 @@ public class UserService {
         user.setPassword(newUserDetails.password());
         user.setPicUrl(newUserDetails.picUrl());
 
+
+        if (theUpdater.getRole() == Role.ADMIN){
+            if (!java.util.Objects.equals(user.getDepartment(), oldDepartment)){
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.USER)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldDepartment)
+                        .newValue(user.getDepartment())
+                        .message(theUpdater.getFirstName() + " updated the department of " + user.getFirstName())
+                        .build();
+
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN){
+            if(!java.util.Objects.equals(user.getEmail(), oldEmail)) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.USER)
+                        .entityId(id)
+                        .userId(user.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldEmail)
+                        .newValue(user.getEmail())
+                        .message(theUpdater.getFirstName() + " updated the email address of: " + user.getFirstName())
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN){
+            if(!java.util.Objects.equals(user.getFirstName(), oldFirstName)) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.USER)
+                        .entityId(id)
+                        .userId(user.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldFirstName)
+                        .newValue(user.getFirstName())
+                        .message(theUpdater.getFirstName() + " updated the first name of: " + oldFirstName)
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN){
+            if(!java.util.Objects.equals(user.getLastName(), oldLastName)) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.USER)
+                        .entityId(id)
+                        .userId(user.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldLastName)
+                        .newValue(user.getFirstName())
+                        .message(theUpdater.getFirstName() + " updated the last name of: " + oldLastName)
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+
+
+
+
+
+
+
+
         return userRepo.save(user);
     }
 
 
+    public String getRole(){
+        User theUpdater = userRepo.findById(1L)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
+        return theUpdater.getRole().name();
+    }
 }

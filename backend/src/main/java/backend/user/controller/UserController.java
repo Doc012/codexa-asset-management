@@ -16,6 +16,15 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * debugging purposes:
+     * @return
+     */
+    @GetMapping("/thee")
+    public String getRole(){
+        return userService.getRole();
+    }
+
     @GetMapping
     public List<UserResponse> getAllUsers(){
         return userService.getAllUsers();
