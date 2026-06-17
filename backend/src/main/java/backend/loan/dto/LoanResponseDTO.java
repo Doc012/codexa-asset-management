@@ -8,6 +8,8 @@ public record LoanResponseDTO(
         Long loanId,
         Long userId,
         Long assetId,
+        String title,
+        String category,
         LoanStatus status,
         LocalDate requestDate,
         LocalDate checkoutDate,

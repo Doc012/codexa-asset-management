@@ -11,6 +11,8 @@ public class LoanMapper {
                 loan.getLoanId(),
                 loan.getUser().getUserId(),
                 loan.getAsset().getAssetId(),
+                loan.getAsset().getTitle(),
+                loan.getAsset().getCategory(),
                 loan.getStatus(),
                 loan.getRequestDate(),
                 loan.getCheckoutDate(),
