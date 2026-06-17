@@ -139,42 +139,23 @@ cancelBtn.addEventListener("click", () => {
 //     }
 // });
 
+
 function switchTab(event, tabId) {
-    // 1. Prevent default anchor actions if applicable
     if (event) event.preventDefault();
+    
+    // 1. Hide all tab contents and remove active class
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => content.classList.remove('active-content'));
 
-    // 2. Normalize alignment mismatch ('availableAssets' from HTML -> 'availableLoans' in DOM)
-    if (tabId === 'availableAssets') {
-        tabId = 'availableLoans';
-    }
+    // 2. Remove the active styling class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => btn.classList.remove('active'));
 
-    // 3. Hide all tab content panes safely
-    const contents = document.querySelectorAll('.tab-content');
-    contents.forEach(content => {
-        content.classList.remove('active-content');
-        // Fallback styling check to ensure the panels hidden states persist
-        content.style.display = 'none'; 
-    });
+    // 3. Show the targeted tab content panel
+    document.getElementById(tabId).classList.add('active-content');
 
-    // 4. Remove the active color classes from all tab menu buttons
-    const buttons = document.querySelectorAll('.tab-btn');
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-    });
-
-    // 5. Reveal the targeted content layout safely
-    const targetTargetPanel = document.getElementById(tabId);
-    if (targetTargetPanel) {
-        targetTargetPanel.classList.add('active-content');
-        targetTargetPanel.style.display = 'block'; // Ensures visibility reset
-    } else {
-        console.warn(`Asset IQ UI Engine: Container element ID '#${tabId}' was not found in document.`);
-    }
-
-    // 6. Highlight the clicked tab menu button
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
-    }
+    // 4. Highlight the currently clicked button with your blue CSS profile
+    event.currentTarget.classList.add('active');
 }
 
 

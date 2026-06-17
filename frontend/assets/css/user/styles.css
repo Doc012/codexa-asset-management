@@ -252,10 +252,64 @@ body.ai-layout-open .main-content {
 
 }
 
+
+/* Make the entire row line clickable */
 .sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-    list-style:none;
+.sidebar .nav-item {
+  padding: 0 !important; /* Remove inner item padding to let anchor stretch */
+}
 
+.sidebar .nav-link {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  color: whitesmoke !important;
+  padding: 12px 20px !important; /* Entire row padding goes here now */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: background 0.2s ease;
+}
+
+/* Optional hover state for full rows */
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Ensure icons remain stable during collapses */
+.sidebar .nav-icon {
+  margin-right: 12px !important;
+  flex-shrink: 0 !important;
+  transition: margin 0.2s ease;
+}
+
+/* ==========================================
+   WHEN SIDEBAR IS CLOSED/COLLAPSED
+   ========================================== */
+/* Shrink width to only show the icons */
+.sidebar.closed {
+  width: 55px !important; /* Adjust this to fit your mini-sidebar design */
+  transform: translateX(0) !important;
+  padding: 25px 0 !important; /* Reduce horizontal padding when collapsed */
+}
+
+/* Instantly hide the text strings */
+.sidebar.closed .nav-text {
+  display: none !important;
+}
+
+/* Center the icons on the collapsed row line */
+.sidebar.closed .nav-link {
+  justify-content: center !important;
+  padding: 12px 0 !important;
+}
+
+.sidebar.closed .nav-icon {
+  margin-right: 0 !important;
 }
 
 .nav-item {
