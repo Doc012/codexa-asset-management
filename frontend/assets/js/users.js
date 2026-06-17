@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const managerId = 1;
-        const userId = 8;
+        const userId = 1;
         const managerData = await getUserById(managerId);
         const userData = await getUserById(userId);
 
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 userName.textContent = `Welcome back, ${userData.firstName}`
             }
             if (profileImage && profileInitial) {
-                if (userData.picUrl != null) {
+                if (userData.picUrl !== null) {
                     profileImage.src = userData.picUrl;
                     profileInitial.style.display = "none";
                 } else {

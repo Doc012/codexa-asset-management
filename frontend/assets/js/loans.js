@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const row = document.createElement("tr");
 
             row.innerHTML = `
-                <td>${loan.loanId}</td>
-                <td>${loan.status}</td>
+                <td>${loan.title}</td>
+                <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
                 <td>${loan.dueDate}</td>
                 <td>
@@ -36,6 +36,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
         console.error("Failed to render loans", error);
+        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+});
+
+
+/**
+ * View loan history for user:
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.getElementById("historyTableBody");
+
+    try {
+        const loansByUser = await getLoansByUser(1);
+        tableBody.innerHTML = "";
+
+        loansByUser.forEach(loan => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${loan.title}</td>
+                <td>${loan.category}</td>
+                <td>${loan.requestDate}</td>
+                <td>${loan.dueDate}</td>
+                <td>${loan.status}</td>
+            `
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Failed to render LOANS", error);
         tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
 });
@@ -112,7 +143,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 });
-
+/**
+ * All loans of the user
+ */
 document.addEventListener("DOMContentLoaded", async () => {
     const allUserLoansCard = document.getElementById("totalLoans");
     const userId = 1;
@@ -131,32 +164,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
-/**
- * View loan history for user:
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("historyTableBody");
 
-    try {
-        const loansByUser = await getLoansByUser(1);
-        tableBody.innerHTML = "";
-
-        loansByUser.forEach(loan => {
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${loan.title}</td>
-                <td>${loan.category}</td>
-                <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
-                <td>${loan.status}</td>
-            `
-
-            tableBody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Failed to render LOANS", error);
-        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-})

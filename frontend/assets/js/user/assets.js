@@ -1,8 +1,11 @@
 import {
     getAllAssets,
     deleteAsset,
-    createAsset
+    createAsset,
 } from "../../../services/assetService.js";
+
+import { API_BASE_URL } from "../config.js";
+import { createLoan } from "../../../services/loanService.js";
 
 // get all assets
 document.addEventListener("DOMContentLoaded", async () => {
@@ -120,9 +123,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <img src="${asset.photoPath} alt="Asset Image" style="width: 80px; height: auto;"/>
                 </td>
                 <td>
-                    <button class="request-btn" data-id="${asset.id}">Request Loan</button>
+                    <button class="request-btn" data-id="${asset.assetId}">Request Loan</button>
                 </td>
             `;
+
+            const requestButton = row.querySelector(".request-btn");
+            requestButton.addEventListener("click", async ()=> {
+                await requestLoan(asset.assetId);
+            });
 
             tableBody.appendChild(row);
 
@@ -181,3 +189,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+/**
+ * REQUEST A loan on an asset
+ */
+
+const requestLoan = async (assetId) => {
+    const userData = {
+        userId: 4,
+        assetId: assetId
+    };
+
+    try {
+        createLoan(userData);
+        alert("Loan request submitted successfully!");
+    } catch (error) {
+        console.log("Error: " + error)
+    }
+};

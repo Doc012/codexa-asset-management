@@ -25,7 +25,7 @@ export async function getLoansByStatus(statusValue) {
     return await response.json();
 }
 
-async function createLoan(loanData) {
+export async function createLoan(loanData) {
     const response = await fetch(`${API_BASE_URL}/loans`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
