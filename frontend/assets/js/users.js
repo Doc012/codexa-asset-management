@@ -1,4 +1,4 @@
-import { getUserById } from "../../services/userService.js";
+import { getUserById, updateAllUserDetails } from "../../services/userService.js";
 import { API_BASE_URL } from "./config.js";
 
 async function getAllUsers() {
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userName = document.querySelector(".welcome-card h1")
     const profileImage = document.querySelector(".profile-image")
     const profileInitial = document.querySelector(".profile-initial")
-    
+
 
     try {
         const managerId = 1;
@@ -96,7 +96,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
+/**
+ * UPDATE User details
+ */
 
-// loadManagerDashboard();
+document.addEventListener("DOMContentLoaded", async () => {
+    const userId = 3;
+    try {
 
+        const currentUser = await getUserById(userId);
+        const form = document.querySelector("#profile-form");
+
+        const submitForm = form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const userData = {
+                "firstName": document.querySelector("#firstName").value,
+                "lastName": document.querySelector("#lastName").value,
+                "email": document.querySelector("#email").value,
+                "department": currentUser.department,
+                "picUrl": currentUser.picUrl
+            }
+            try {
+                const updateUserDetails = await updateAllUserDetails(userId, userData);
+                alert("Successfully updated your details")
+            } catch (error) {
+                alert(`Error: ${error.status}`)
+                console.log(error);
+            }
+
+        });
+
+    } catch (error) {
+        alert(`Error: ${error.status}`)
+        console.log(error);
+    }
+
+});
 

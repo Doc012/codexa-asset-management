@@ -222,7 +222,6 @@ public class UserService {
         user.setEmail(newUserDetails.email());
         user.setFirstName(newUserDetails.firstName());
         user.setLastName(newUserDetails.lastName());
-        user.setPassword(newUserDetails.password());
         user.setPicUrl(newUserDetails.picUrl());
 
 
