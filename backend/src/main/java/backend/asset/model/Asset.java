@@ -1,6 +1,7 @@
 package backend.asset.model;
 
 import backend.asset.enums.AssetCondition;
+import backend.asset.enums.AssetStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,7 +37,7 @@ public class Asset {
 
     @NotNull
     private Double cost;
-    @NotBlank
+    @NotBlank(message = "Location must not be blank")
     private String location;
 
 //    @Enumerated(EnumType.STRING)
@@ -46,5 +47,9 @@ public class Asset {
     @NotBlank
     @Column(name = "photo_path")
     private String photoPath;
+
+    @Enumerated(EnumType.STRING)
+    @Column()
+    private AssetStatus assetStatus;
 
 }

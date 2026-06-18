@@ -1,5 +1,7 @@
 package backend.asset.dto;
 
+import backend.asset.enums.AssetStatus;
+
 import java.time.LocalDate;
 
 public record RequestAssetDto(
@@ -10,5 +12,6 @@ public record RequestAssetDto(
         Double cost,
         String location,
         String condition,
-        String photoPath
+        String photoPath,
+        AssetStatus assetStatus
 ) { }

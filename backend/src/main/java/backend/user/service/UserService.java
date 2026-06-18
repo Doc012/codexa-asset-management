@@ -215,8 +215,8 @@ public class UserService {
         String oldEmail = user.getEmail();
         String oldFirstName = user.getFirstName();
         String oldLastName = user.getLastName();
-        String oldPassword = user.getPassword();
-        String oldPicURL = user.getPicUrl();
+//        String oldPassword = user.getPassword();
+//        String oldPicURL = user.getPicUrl();
 
         user.setDepartment(newUserDetails.department());
         user.setEmail(newUserDetails.email());
@@ -286,6 +286,21 @@ public class UserService {
                 auditLogService.createLog(log);
             }
         }
+
+//        if(theUpdater.getRole() == Role.ADMIN){
+//            if(!java.util.Objects.equals(user.getPicUrl(), oldPicURL)) {
+//                AuditLog log = AuditLog.builder()
+//                        .entityType(EntityType.USER)
+//                        .entityId(id)
+//                        .userId(user.getUserId())
+//                        .actionType(ActionType.UPDATE)
+//                        .oldValue(oldLastName)
+//                        .newValue(user.getFirstName())
+//                        .message(theUpdater.getFirstName() + " updated the image of: " + oldLastName)
+//                        .build();
+//                auditLogService.createLog(log);
+//            }
+//        }
 
 
 

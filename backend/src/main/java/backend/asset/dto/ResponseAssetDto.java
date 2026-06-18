@@ -1,6 +1,7 @@
 package backend.asset.dto;
 
 import backend.asset.enums.AssetCondition;
+import backend.asset.enums.AssetStatus;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public record ResponseAssetDto(
         Double cost,
         String location,
         String condition,
-        String photoPath
+        String photoPath,
+        AssetStatus assetStatus
 ) {}
 
