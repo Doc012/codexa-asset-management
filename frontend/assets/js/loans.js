@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
  */
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("historyTableBody");
-
+    
     try {
         const loansByUser = await getLoansByUser(1);
         tableBody.innerHTML = "";

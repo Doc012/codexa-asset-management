@@ -83,10 +83,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (profileImage && profileInitial) {
                 if (userData.picUrl !== null) {
                     profileImage.src = userData.picUrl;
-                    profileInitial.style.display = "none";
                 } else {
                     profileInitial.textContent = `${userData.firstName[0].toUpperCase()}`;
-                    profileImage.style.display = "none";
                 }
             }
         }
@@ -121,14 +119,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const updateUserDetails = await updateAllUserDetails(userId, userData);
                 message.textContent = "Successfully updated your details";
             } catch (error) {
-                message.textContent =`Error: ${error.status}`;
+                message.textContent = `Error: ${error.status}`;
                 console.log(error);
             }
 
         });
 
     } catch (error) {
-        message.textContent =`Error: ${error.status}`;
+        message.textContent = `Error: ${error.status}`;
         console.log(error);
     }
 

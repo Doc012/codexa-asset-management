@@ -20,7 +20,7 @@
     <div class="right-nav">
       <div id="profileContainer" class="profile-container">
         <div id="profileInitial" class="profile-initial">T</div>
-        <img id="profileImage" class="profile-image" src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_picture">
+        <img id="profileImage" class="profile-image" src="../../../assets/images/AssetIq.jpg" alt="profile_picture">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
@@ -74,21 +74,22 @@
       <div class="metric-column border-right">
         <span class="metric-label font-muted">Pending Requests</span>
         <div class="metric-data-row">
-          <span class="metric-number">12</span>
+          <span class="metric-number" id="pending-loans-number">12</span>
+          <span class="metric-subtext">Open Loan Requests</span>
         </div>
       </div>
       
       <div class="metric-column border-right">
         <span class="metric-label font-success">Approved Loans</span>
         <div class="metric-data-row">
-          <span class="metric-number font-success">45</span>
+          <span class="metric-number font-success" id="approved-loans">45</span>
         </div>
       </div>
 
       <div class="metric-column border-right">
         <span class="metric-label font-danger">Rejected Loans</span>
         <div class="metric-data-row">
-          <span class="metric-number font-danger">3</span>
+          <span class="metric-number font-danger" id="rejected-loans">3</span>
           <span class="metric-subtext">Denied</span>
         </div>
       </div>
@@ -96,7 +97,7 @@
       <div class="metric-column">
         <span class="metric-label font-muted">Total Loans</span>
         <div class="metric-data-row">
-          <span class="metric-number">2000</span>
+          <span class="metric-number" id="all-loans">2000</span>
         </div>
       </div>
     </div>
@@ -114,17 +115,17 @@
           </thead>
           <tbody>
             <tr>
-              <td class="row-details">12 Employee loan requests require approval</td>
+              <td class="row-details1">12 Employee loan requests require approval</td>
               <td class="text-right"><a href="loan_requests.html" class="action-link-btn primary-action">Loans &rarr;</a></td>
             </tr>
 
             <tr>
-              <td class="row-details">8 Assets flagged with bad/poor conditions requiring formal retirement status conversion.</td>
+              <td class="row-details2">8 Assets flagged with bad/poor conditions requiring formal retirement status conversion.</td>
               <td class="text-right"><a href="assets.html" class="action-link-btn neutral-action">Asset Lifecycles &rarr;</a></td>
             </tr>
 
             <tr>
-              <td class="row-details">Review real-time system performance data.</td>
+              <td class="row-details3">Review real-time system performance data.</td>
               <td class="text-right"><a href="report.html" class="action-link-btn neutral-action">Access Reports &rarr;</a></td>
             </tr>
           </tbody>
@@ -133,9 +134,10 @@
     </div>
   </main>
 
-  <script src="../../../assets/js/users.js" type="module"></script>
+  <script src="../../../assets/js/manager/users.js" type="module"></script>
   <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
+  <script src="../../../assets/js/manager/loans.js" type="module"></script>
 </body>
 
 </html>
