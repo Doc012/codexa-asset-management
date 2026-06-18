@@ -2,6 +2,7 @@ package backend.asset.controller;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.enums.AssetStatus;
 import backend.asset.service.AssetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +54,16 @@ public class AssetController {
     @GetMapping("/category/{category}")
     public List<ResponseAssetDto> getAssetsByCategory(@PathVariable String category){
         return assetService.getAssetsByCategory(category);
+    }
+
+    @GetMapping("status/{status}")
+    public List<ResponseAssetDto> getAssetByStatus(@PathVariable String status) {
+//        status.toString().toUpperCase();
+        return assetService.getAssetsByStatus(status);
+    }
+
+    @GetMapping("condition/{condition}")
+    public List<ResponseAssetDto> getAssetByCondition(@PathVariable String condition){
+        return assetService.getAssetByCondition(condition);
     }
 }
