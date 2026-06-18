@@ -31,6 +31,8 @@
       </div>
     </div>
   </header>
+
+  <!-- Sidebar Nav Components -->
   <aside id="sidebar" class="sidebar">
     <ul>
       <li class="nav-item">
@@ -60,8 +62,10 @@
     </ul>
   </aside>
 
+  <!-- Main Management Control Workspace -->
   <main id="mainContent" class="content manager-hub-content">
     
+    <!-- Fine-line Executive Header Meta Bar -->
     <div class="executive-header">
       <div class="header-titles">
         <span class="system-tag">Management System</span>
@@ -72,6 +76,7 @@
       </div>
     </div>
 
+    <!-- UPPER SEARCH & FILTER PANEL (Required by MVP Document) -->
     <div class="metrics-strip-container" style="display: flex; padding: 20px 30px; gap: 15px; align-items: center;">
       <div style="flex-grow: 1;">
         <span class="metric-label font-muted" style="margin-bottom: 6px;">Live System Search</span>
@@ -93,6 +98,7 @@
       </div>
     </div>
 
+    <!-- LOWER CONTAINER: Primary Ledger Data Table Box Component -->
     <div class="work-queue-container">
       <h3 class="queue-heading">Asset Master Inventory</h3>
       
@@ -100,7 +106,6 @@
         <table class="asset-table manager-ledger-table">
           <thead>
             <tr>
-              <th>Asset ID</th>
               <th>Title</th>
               <th>Category</th>
               <th>Serial Number</th>
@@ -119,11 +124,19 @@
       </div>
     </div>
 
+    <!-- Inline Timeline Footnote Info Row -->
+    <div class="dashboard-footer-meta">
+      <div class="schedule-note">System Operational Schedule: Next general inventory check-in audit expected on <strong>15 June</strong>.</div>
+      <div class="timeline-note">Project Timeline: Week 2 Pipeline</div>
+    </div>
+
   </main>
 
+  <!-- Core Module Scripts -->
   <script src="../../../assets/js/users.js" type="module"></script>
   <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
+  <script src="../../../assets/js/manager/assets.js" type="module"></script>
 </body>
 
 </html>
