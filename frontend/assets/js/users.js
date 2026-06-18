@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const currentUser = await getUserById(userId);
         const form = document.querySelector("#profile-form");
+        const message = document.querySelector("#form-status-message")
 
         const submitForm = form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -118,16 +119,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             try {
                 const updateUserDetails = await updateAllUserDetails(userId, userData);
-                alert("Successfully updated your details")
+                message.textContent = "Successfully updated your details";
             } catch (error) {
-                alert(`Error: ${error.status}`)
+                message.textContent =`Error: ${error.status}`;
                 console.log(error);
             }
 
         });
 
     } catch (error) {
-        alert(`Error: ${error.status}`)
+        message.textContent =`Error: ${error.status}`;
         console.log(error);
     }
 

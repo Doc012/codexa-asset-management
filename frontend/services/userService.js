@@ -76,7 +76,6 @@ export const updateAllUserDetails = (async (id, userData) => {
 
     if (!res.ok){
         console.log(res)
-        alert("Could not update your details!");
     }
 
     return await res.json();

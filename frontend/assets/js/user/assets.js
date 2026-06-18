@@ -203,7 +203,6 @@ const requestLoan = async (assetId) => {
 
     try {
         createLoan(userData);
-        alert("Loan request submitted successfully!");
     } catch (error) {
         console.log("Error: " + error)
     }
