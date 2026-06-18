@@ -2,6 +2,7 @@ package backend.asset.service;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.enums.AssetCondition;
 import backend.asset.enums.AssetStatus;
 import backend.asset.model.Asset;
 import backend.asset.repository.AssetRepo;
@@ -121,7 +122,6 @@ public class AssetService {
      * @param id - ID of the asset to be deleted
      */
     public void deleteAsset(Long id){
-//        assetRepo.deleteById(id);
         if(!assetRepo.existsById(id)) {
             throw new RuntimeException("Asset Not Found");
         }
@@ -152,7 +152,7 @@ public class AssetService {
         LocalDate oldAcquisitionDate = existingAsset.getAcquisitionDate();
         Double oldCost = existingAsset.getCost();
         String oldLocation = existingAsset.getLocation();
-        String oldCondition = existingAsset.getCondition();
+        String oldCondition = existingAsset.getCondition().name();
         String oldPhotoPath = existingAsset.getPhotoPath();
         AssetStatus oldStatus = existingAsset.getAssetStatus();
 
@@ -272,7 +272,7 @@ public class AssetService {
                         .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(oldCondition)
-                        .newValue(existingAsset.getCondition())
+                        .newValue(existingAsset.getCondition().name())
                         .message(theUpdater.getFirstName() +
                                 " updated condition of asset: " + oldTitle)
                         .build();
@@ -330,13 +330,6 @@ public class AssetService {
         );
     }
 
-
-
-
-    /**
-     * new implementation methods
-     */
-
     /**
      * this method gets an asset by its serial number (unique)
      * @param serialNumber the serial number of the asset
@@ -387,7 +380,7 @@ public class AssetService {
 
     public List<ResponseAssetDto> getAssetsByStatus(String statusInput) {
         AssetStatus status = AssetStatus.valueOf(statusInput.toUpperCase());
-        return assetRepo.findByAssetStatus(status)
+        return assetRepo.findByAssetStatus(status.name())
                 .stream().map(asset -> new ResponseAssetDto(
                         asset.getAssetId(),
                         asset.getTitle(),
@@ -403,61 +396,27 @@ public class AssetService {
                 .toList();
     }
 
+    public List<Asset> getAssetByCondition(AssetCondition condition){
+        return assetRepo.findByCondition(condition);
 
-    public List<ResponseAssetDto> getAssetByCondition(String condition){
-        return assetRepo.findByCondition(condition)
-                .stream()
-                .map(asset -> new ResponseAssetDto (
-                        asset.getAssetId(),
-                        asset.getTitle(),
-                        asset.getCategory(),
-                        asset.getSerialNumber(),
-                        asset.getAcquisitionDate(),
-                        asset.getCost(),
-                        asset.getLocation(),
-                        asset.getCondition(),
-                        asset.getPhotoPath(),
-                        asset.getAssetStatus()
-                ))
-                .toList();
     }
 
+    public List<ResponseAssetDto> getByLocation(String location){
+        return assetRepo.findByLocation(location).stream()
+                .map(asset -> new ResponseAssetDto(
+                                asset.getAssetId(),
+                                asset.getTitle(),
+                                asset.getCategory(),
+                                asset.getSerialNumber(),
+                                asset.getAcquisitionDate(),
+                                asset.getCost(),
+                                asset.getLocation(),
+                                asset.getCondition(),
+                                asset.getPhotoPath(),
+                                asset.getAssetStatus()
+                        )
+                )
+                .toList();
 
-
-    /**
-     * method to reduce boiler-plate code (converting from DTO - Entity
-     * @param assetDto
-     * @return
-     */
-//    private Asset mapToEntity(AssetDto assetDto){
-//        return Asset.builder()
-//                .title(assetDto.title())
-//                .category(assetDto.category())
-//                .serialNumber(assetDto.serialNumber())
-//                .acquisitionDate(assetDto.acquisitionDate())
-//                .cost(assetDto.cost())
-//                .location(assetDto.location())
-//                .condition(assetDto.condition())
-//                .photoPath(assetDto.photoPath())
-//                .build();
-//    }
-
-    /**
-     * Reduce boiler-plate code (converting from Entity -> DTO)
-     * @param asset
-     * @return
-     */
-//    private AssetDto mapToDto(Asset asset){
-//        return new AssetDto(
-//                asset.getAssetId(),
-//                asset.getTitle(),
-//                asset.getCategory(),
-//                asset.getSerialNumber(),
-//                asset.getAcquisitionDate(),
-//                asset.getCost(),
-//                asset.getLocation(),
-//                asset.getCondition(),
-//                asset.getPhotoPath()
-//        );
-//    }
+    }
 }

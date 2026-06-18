@@ -37,19 +37,19 @@ public class Asset {
 
     @NotNull
     private Double cost;
+
     @NotBlank(message = "Location must not be blank")
     private String location;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "condition", nullable = false)
-    private String condition;
+    private AssetCondition condition;
 
-    @NotBlank
     @Column(name = "photo_path")
     private String photoPath;
 
     @Enumerated(EnumType.STRING)
-    @Column()
+    @Column(name = "asset_status")
     private AssetStatus assetStatus;
 
 }

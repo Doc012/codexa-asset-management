@@ -1,5 +1,6 @@
 package backend.auditLog.service;
 
+import backend.auditLog.enums.ActionType;
 import backend.auditLog.model.AuditLog;
 import backend.auditLog.repository.AuditLogRepo;
 import backend.user.service.UserService;
@@ -62,6 +63,10 @@ public class AuditLogService {
         List<AuditLog> logs = repository.findByUserId(userId);
         Collections.reverse(logs);
         return logs;
+    }
+
+    public List<AuditLog> getAuditLogsByActionType(ActionType actionType){
+        return repository.findByActionType(actionType);
     }
 
 }

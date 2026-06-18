@@ -1,5 +1,6 @@
 package backend.loan.service;
 
+import backend.asset.enums.AssetStatus;
 import backend.asset.model.Asset;
 import backend.asset.repository.AssetRepo;
 import backend.loan.dto.LoanRequestDTO;
@@ -44,13 +45,27 @@ public class LoanService {
                         )
                 );
 
-        Loan loan = new Loan();
-        loan.setUser(user);
-        loan.setAsset(asset);
-        loan.setRequestDate(LocalDate.now());
-        loan.setStatus(LoanStatus.PENDING);
+        if (asset.getAssetStatus().equals(AssetStatus.LOANED)){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Asset is already loaned, request another asset.");
+        } else if (asset.getAssetStatus().equals(AssetStatus.RETIRED)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Asset is no longer available");
+        } else if (asset.getAssetStatus().equals(AssetStatus.AVAILABLE)) {
+            Loan loan = new Loan();
+            loan.setUser(user);
+            loan.setAsset(asset);
+            loan.setRequestDate(LocalDate.now());
+            loan.setStatus(LoanStatus.PENDING);
 
-        return LoanMapper.toDTO(loanRepo.save(loan));
+            return LoanMapper.toDTO(loanRepo.save(loan));
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.UNPROCESSABLE_CONTENT,
+                    "Invalid status.");
+        }
     }
 
     public LoanResponseDTO getLoanById(Long id) {

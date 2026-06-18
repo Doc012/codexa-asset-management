@@ -15,7 +15,7 @@ public record ResponseAssetDto(
         LocalDate acquisitionDate,
         Double cost,
         String location,
-        String condition,
+        AssetCondition condition,
         String photoPath,
         AssetStatus assetStatus
 ) {}

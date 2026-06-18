@@ -6,7 +6,10 @@ import backend.user.enums.Role;
 import backend.user.model.User;
 import backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,11 +23,6 @@ public class UserController {
      * debugging purposes:
      * @return
      */
-    @GetMapping("/thee")
-    public String getRole(){
-        return userService.getRole();
-    }
-
     @GetMapping
     public List<UserResponse> getAllUsers(){
         return userService.getAllUsers();
@@ -41,8 +39,16 @@ public class UserController {
     }
 
     @GetMapping("/role/{role}")
-    public List<UserResponse> getUsersByRole(@PathVariable Role role){
-        return userService.getAllUsersByRole(role);
+    public List<UserResponse> getUsersByRole(@PathVariable String role){
+        try {
+            Role roleReq = Role.valueOf(role.toUpperCase());
+            return userService.getAllUsersByRole(roleReq);
+        } catch (IllegalArgumentException ex){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid role. Please enter the correct role." + ex.getMessage()
+            );
+        }
     }
 
     @PostMapping

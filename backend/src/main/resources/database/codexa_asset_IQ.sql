@@ -42,3 +42,16 @@ UPDATE assets SET photo_path = 'https://www.gothermal.co.za/cdn/shop/products/FL
 UPDATE assets SET photo_path = 'https://www.mfpgroup.co.za/images/cmsimages/big/product-297-44-elegantecompatta.jpg' WHERE title = 'HP LaserJet Pro M404n Printer';
 UPDATE assets SET photo_path = 'https://www.pbtech.co.nz/fileslib/_20220831125902_080.png' WHERE title = '4K Monitor LG 32UP550';
 UPDATE assets SET photo_path = 'https://creativeofficefurniture.co.za/wp-content/uploads/2024/11/BR00120Barrel20Boardroom20table20dark.jpg' WHERE title = 'Conference Table Mahogany';
+
+
+-- Update asset condition with actual condition case just like in the AssetCondition enums
+UPDATE assets
+SET condition = CASE
+                    WHEN LOWER(condition) IN ('good','excellent') THEN 'GOOD'
+                    WHEN LOWER(condition) = 'fair' THEN 'FAIR'
+                    WHEN LOWER(condition) = 'damaged' THEN 'DAMAGED'
+                    WHEN LOWER(condition) IN ('retired','disposed') THEN 'RETIRED'
+                    WHEN LOWER(condition) IN ('new','brand new') THEN 'NEW'
+                    ELSE condition
+    END
+WHERE LOWER(condition) IN ('good','excellent','fair','damaged','retired','disposed','new','brand new');

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 @RestController
@@ -41,8 +42,16 @@ public class LoanController {
     }
 
     @GetMapping("/status")
-    public List<LoanResponseDTO> getByStatus(@RequestParam LoanStatus status) {
-        return loanService.getLoanByStatus(status);
+    public List<LoanResponseDTO> getByStatus(@RequestParam String status) {
+        try {
+            LoanStatus statusReq = LoanStatus.valueOf(status.toUpperCase());
+            return loanService.getLoanByStatus(statusReq);
+        } catch (IllegalArgumentException e){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid status. " + e.getMessage()
+            );
+        }
     }
 
     @PutMapping("/approve/{id}")

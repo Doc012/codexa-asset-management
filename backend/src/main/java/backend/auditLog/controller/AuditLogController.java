@@ -1,10 +1,14 @@
 package backend.auditLog.controller;
 
+import backend.auditLog.enums.ActionType;
 import backend.auditLog.service.AuditLogService;
 import backend.auditLog.model.AuditLog;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.*;
 import java.util.List;
 
 @RestController
@@ -33,6 +37,19 @@ public class AuditLogController {
     @GetMapping("/user/{id}")
     public List<AuditLog> getLogsByUserId(@PathVariable Long id){
         return service.getAuditLogsByUserId(id);
+    }
+
+    @GetMapping("/action-type")
+    public List<AuditLog> getLogsByActionType(@RequestParam String action){
+        try {
+            ActionType actionTypeReq = ActionType.valueOf(action.toUpperCase());
+            return service.getAuditLogsByActionType(actionTypeReq);
+        } catch (IllegalArgumentException ex){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid action type. " + ex.getMessage()
+            );
+        }
     }
 
 }
