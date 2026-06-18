@@ -1,6 +1,7 @@
 package backend.auditLog.controller;
 
 import backend.auditLog.enums.ActionType;
+import backend.auditLog.enums.EntityType;
 import backend.auditLog.service.AuditLogService;
 import backend.auditLog.model.AuditLog;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,19 @@ public class AuditLogController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Invalid action type. " + ex.getMessage()
+            );
+        }
+    }
+
+    @GetMapping("/entity-type")
+    public List<AuditLog> getLogsByEntityType(@RequestParam String entity){
+        try {
+            EntityType entityType = EntityType.valueOf(entity.toUpperCase());
+            return service.getAuditLogsByEntityType(entityType);
+        } catch (IllegalArgumentException ex){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid entity type. " + ex.getMessage()
             );
         }
     }

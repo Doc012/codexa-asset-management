@@ -2,6 +2,7 @@ package backend.asset.service;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.enums.AssetCategory;
 import backend.asset.enums.AssetCondition;
 import backend.asset.enums.AssetStatus;
 import backend.asset.model.Asset;
@@ -147,7 +148,7 @@ public class AssetService {
                 ));
 
         String oldTitle = existingAsset.getTitle();
-        String oldCategory = existingAsset.getCategory();
+        String oldCategory = existingAsset.getCategory().name();
         String oldSerialNumber = existingAsset.getSerialNumber();
         LocalDate oldAcquisitionDate = existingAsset.getAcquisitionDate();
         Double oldCost = existingAsset.getCost();
@@ -189,7 +190,7 @@ public class AssetService {
                         .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(oldCategory)
-                        .newValue(existingAsset.getCategory())
+                        .newValue(existingAsset.getCategory().name())
                         .message(theUpdater.getFirstName() +
                                 " updated category of asset: " + oldTitle)
                         .build();
@@ -361,7 +362,7 @@ public class AssetService {
      * @param category is the category of the asset
      * @return a list of assets by the specified category
      */
-    public List<ResponseAssetDto> getAssetsByCategory(String category) {
+    public List<ResponseAssetDto> getAssetsByCategory(AssetCategory category) {
         return assetRepo.findByCategory(category)
                 .stream().map(asset -> new ResponseAssetDto(
                         asset.getAssetId(),
@@ -378,9 +379,8 @@ public class AssetService {
                 .toList();
     }
 
-    public List<ResponseAssetDto> getAssetsByStatus(String statusInput) {
-        AssetStatus status = AssetStatus.valueOf(statusInput.toUpperCase());
-        return assetRepo.findByAssetStatus(status.name())
+    public List<ResponseAssetDto> getAssetsByStatus(AssetStatus status) {
+        return assetRepo.findByAssetStatus(status)
                 .stream().map(asset -> new ResponseAssetDto(
                         asset.getAssetId(),
                         asset.getTitle(),
