@@ -152,7 +152,9 @@ public class AssetService {
         LocalDate oldAcquisitionDate = existingAsset.getAcquisitionDate();
         Double oldCost = existingAsset.getCost();
         String oldLocation = existingAsset.getLocation();
+        String oldCondition = existingAsset.getCondition();
         String oldPhotoPath = existingAsset.getPhotoPath();
+        AssetStatus oldStatus = existingAsset.getAssetStatus();
 
         existingAsset.setTitle(updatedAssetDto.title());
         existingAsset.setCategory(updatedAssetDto.category());
@@ -162,6 +164,7 @@ public class AssetService {
         existingAsset.setLocation(updatedAssetDto.location());
         existingAsset.setCondition(updatedAssetDto.condition());
         existingAsset.setPhotoPath(updatedAssetDto.photoPath());
+        existingAsset.setAssetStatus(updatedAssetDto.assetStatus());
 
         if (theUpdater.getRole() == Role.ADMIN){
             if (!java.util.Objects.equals(existingAsset.getTitle(), oldTitle)){
@@ -174,6 +177,139 @@ public class AssetService {
                         .newValue(existingAsset.getTitle())
                         .message(theUpdater.getFirstName() + " updated asset title")
                         .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN){
+            if (!java.util.Objects.equals(existingAsset.getCategory(), oldCategory)) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldCategory)
+                        .newValue(existingAsset.getCategory())
+                        .message(theUpdater.getFirstName() +
+                                " updated category of asset: " + oldTitle)
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldSerialNumber, existingAsset.getSerialNumber())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue("serial_number: " + oldSerialNumber)
+                        .newValue("serial_number: " + existingAsset.getSerialNumber())
+                        .message(theUpdater.getFirstName() +
+                                " updated serial number of asset: " + oldTitle)
+                        .build();
+
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldAcquisitionDate, existingAsset.getAcquisitionDate())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue("acquisition_date: " + oldAcquisitionDate)
+                        .newValue("acquisition_date: " + existingAsset.getAcquisitionDate())
+                        .message(theUpdater.getFirstName() +
+                                " updated acquisition date of asset: " + oldTitle)
+                        .build();
+
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldCost, existingAsset.getCost())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue("cost: " + oldCost)
+                        .newValue("cost: " + existingAsset.getCost())
+                        .message(theUpdater.getFirstName() +
+                                " updated cost of asset: " + oldTitle)
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN){
+            if (!java.util.Objects.equals(oldLocation, existingAsset.getLocation())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldLocation)
+                        .newValue(existingAsset.getLocation())
+                        .message(theUpdater.getFirstName() +
+                                " updated location of asset: " + oldTitle)
+                        .build();
+
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldCondition, existingAsset.getCondition())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldCondition)
+                        .newValue(existingAsset.getCondition())
+                        .message(theUpdater.getFirstName() +
+                                " updated condition of asset: " + oldTitle)
+                        .build();
+
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldPhotoPath, existingAsset.getPhotoPath())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(oldPhotoPath)
+                        .newValue(existingAsset.getPhotoPath())
+                        .message(theUpdater.getFirstName() +
+                                " updated photo of asset: " + oldTitle)
+                        .build();
+                auditLogService.createLog(log);
+            }
+        }
+
+        if(theUpdater.getRole() == Role.ADMIN) {
+            if (!java.util.Objects.equals(oldStatus, existingAsset.getAssetStatus())) {
+                AuditLog log = AuditLog.builder()
+                        .entityType(EntityType.ASSET)
+                        .entityId(id)
+                        .userId(theUpdater.getUserId())
+                        .actionType(ActionType.UPDATE)
+                        .oldValue(String.valueOf(oldStatus))
+                        .newValue(existingAsset.getPhotoPath())
+                        .message(theUpdater.getFirstName() +
+                                " updated status of asset: " + oldTitle)
+                        .build();
+
                 auditLogService.createLog(log);
             }
         }
@@ -248,6 +384,44 @@ public class AssetService {
                 ))
                 .toList();
     }
+
+    public List<ResponseAssetDto> getAssetsByStatus(String statusInput) {
+        AssetStatus status = AssetStatus.valueOf(statusInput.toUpperCase());
+        return assetRepo.findByAssetStatus(status)
+                .stream().map(asset -> new ResponseAssetDto(
+                        asset.getAssetId(),
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getAcquisitionDate(),
+                        asset.getCost(),
+                        asset.getLocation(),
+                        asset.getCondition(),
+                        asset.getPhotoPath(),
+                        asset.getAssetStatus()
+                ))
+                .toList();
+    }
+
+
+    public List<ResponseAssetDto> getAssetByCondition(String condition){
+        return assetRepo.findByCondition(condition)
+                .stream()
+                .map(asset -> new ResponseAssetDto (
+                        asset.getAssetId(),
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getAcquisitionDate(),
+                        asset.getCost(),
+                        asset.getLocation(),
+                        asset.getCondition(),
+                        asset.getPhotoPath(),
+                        asset.getAssetStatus()
+                ))
+                .toList();
+    }
+
 
 
     /**
