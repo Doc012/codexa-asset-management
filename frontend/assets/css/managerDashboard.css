@@ -49,8 +49,6 @@
   color: var(--text);
 }
 
-/* UPPER CONTAINER: Independent Top Metrics Strip Panel */
-/* UPPER CONTAINER: Independent Top Metrics Strip Panel */
 .metrics-strip-container {
   background: var(--surface, #ffffff);
   border-radius: 12px;
@@ -62,17 +60,14 @@
   margin-bottom: 25px; /* Creates physical separation gap between top and bottom cards */
 }
 
-/* Base Metric Column Spacing */
 .metric-column {
   padding: 5px 35px;
 }
 
-/* Vertical clean-rule dividers */
 .metric-column.border-right {
   border-right: 1px solid var(--border, #e2e8f0);
 }
 
-/* Metric Section Titles */
 .metric-label {
   font-size: 11px;
   text-transform: uppercase;
@@ -81,7 +76,6 @@
   display: block;
 }
 
-/* Metric Data Sub-container */
 .metric-data-row {
   display: flex;
   align-items: baseline;
@@ -89,7 +83,6 @@
   margin-top: 4px;
 }
 
-/* Big Hero Numbers */
 .metric-number {
   font-size: 32px;
   font-weight: 800;
@@ -97,13 +90,11 @@
   line-height: 1;
 }
 
-/* Underlining Context Text Labels */
 .metric-subtext {
   font-size: 13px;
   color: var(--muted, #64748b);
 }
 
-/* Operational Intentional States */
 .font-muted {
   color: var(--muted, #64748b);
 }
@@ -112,7 +103,6 @@
   color: var(--danger, #ef4444);
 }
 
-/* Green Success Tokens for Authorized Loans */
 .font-success {
   color: #10b981;
 }
