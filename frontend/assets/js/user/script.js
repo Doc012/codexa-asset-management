@@ -72,10 +72,6 @@ if (savedImage && profileImage && profileInitial) {
     profileInitial.style.display = "none";
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-// Reusable confirmation function
-// Get elements
 const modal = document.getElementById("btnConfirmation");
 const deleteBtn = document.getElementById("request");
 const confirmBtn = document.getElementById("confirmBtn");
@@ -88,7 +84,6 @@ deleteBtn.addEventListener("click", () => {
 });
 }
 
-// Confirm action
 confirmBtn.addEventListener("click", () => {
   modal.style.display = "none";
   successMessage.textContent = "Your file has been updated successfully.";
@@ -98,11 +93,10 @@ confirmBtn.addEventListener("click", () => {
     successMessage.style.display = "none";
   }, 1000);
 
-  // Add your update/delete logic here
   console.log("File updated in system!");
 });
 
-// Cancel action
+
 cancelBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
@@ -127,47 +121,47 @@ function switchTab(event, tabId) {
 
 
 
-// --- SETTINGS TAB ENGINE MANAGER ---
-function switchSettingsTab(event, targetTabId) {
-    if (event) event.preventDefault();
+// // --- SETTINGS TAB ENGINE MANAGER ---
+// function switchSettingsTab(event, targetTabId) {
+//     if (event) event.preventDefault();
 
-    // Hide all sibling content panes
-    const tabPanels = document.querySelectorAll('#settingsPage .tab-content');
-    tabPanels.forEach(panel => {
-        panel.classList.remove('active-content');
-    });
+//     // Hide all sibling content panes
+//     const tabPanels = document.querySelectorAll('#settingsPage .tab-content');
+//     tabPanels.forEach(panel => {
+//         panel.classList.remove('active-content');
+//     });
 
-    // Strip out active highlight attributes off matching buttons
-    const menuButtons = document.querySelectorAll('#settingsPage .tab-btn');
-    menuButtons.forEach(btn => {
-        btn.classList.remove('active');
-    });
+//     // Strip out active highlight attributes off matching buttons
+//     const menuButtons = document.querySelectorAll('#settingsPage .tab-btn');
+//     menuButtons.forEach(btn => {
+//         btn.classList.remove('active');
+//     });
 
-    // Inject view layout active states back online
-    const targetBlock = document.getElementById(targetTabId);
-    if (targetBlock) {
-        targetBlock.classList.add('active-content');
-    }
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
-    }
-}
+//     // Inject view layout active states back online
+//     const targetBlock = document.getElementById(targetTabId);
+//     if (targetBlock) {
+//         targetBlock.classList.add('active-content');
+//     }
+//     if (event && event.currentTarget) {
+//         event.currentTarget.classList.add('active');
+//     }
+// }
 
-// --- SIMULATED CLIENT SIDE PERSISTENCE HANDLER ---
-function saveSettings(event, messageText) {
-    event.preventDefault(); // Halt document refresh action
+// // --- SIMULATED CLIENT SIDE PERSISTENCE HANDLER ---
+// function saveSettings(event, messageText) {
+//     event.preventDefault(); // Halt document refresh action
     
-    const toast = document.getElementById('successMessage');
-    if (toast) {
-        toast.innerText = messageText;
-        toast.style.display = 'block';
+//     const toast = document.getElementById('successMessage');
+//     if (toast) {
+//         toast.innerText = messageText;
+//         toast.style.display = 'block';
         
-        // Hide notification safely out of viewport after 3 seconds
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 3000);
-    }
-}
+//         // Hide notification safely out of viewport after 3 seconds
+//         setTimeout(() => {
+//             toast.style.display = 'none';
+//         }, 3000);
+//     }
+// }
 
 // --- USER INTERFACE RUNTIME BINDINGS INIT ---
 document.addEventListener('DOMContentLoaded', () => {
