@@ -90,11 +90,6 @@
   line-height: 1;
 }
 
-.metric-subtext {
-  font-size: 13px;
-  color: var(--muted, #64748b);
-}
-
 .font-muted {
   color: var(--muted, #64748b);
 }
