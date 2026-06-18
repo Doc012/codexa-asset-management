@@ -107,38 +107,6 @@ cancelBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const tabButtons = document.querySelectorAll('.tab-menu .tab-btn');
-    
-//     if (tabButtons.length > 0) {
-//         tabButtons.forEach(button => {
-//             button.addEventListener('click', (event) => {
-//                 const targetTabId = event.currentTarget.getAttribute('data-tab');
-                
-//                 // Clear active-content display flag assignments from all views
-//                 const contents = document.querySelectorAll('.tab-content');
-//                 contents.forEach(content => content.classList.remove('active-content'));
-
-//                 // Clear structural visual highlight selections from navigation row
-//                 tabButtons.forEach(btn => btn.classList.remove('active'));
-
-//                 // Render current requested targets visible
-//                 document.getElementById(targetTabId).classList.add('active-content');
-//                 event.currentTarget.classList.add('active');
-//             });
-//         });
-//     }
-// });
-
-
 function switchTab(event, tabId) {
     if (event) event.preventDefault();
     
