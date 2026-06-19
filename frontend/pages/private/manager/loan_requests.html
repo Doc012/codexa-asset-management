@@ -125,10 +125,44 @@
     </div>
 
     <div class="work-queue-container">
+      <h3 class="queue-heading">Active loans</h3>
+      
+      <div class="panel-table-container">
+        <table class="asset-table manager-ledger-table" id="active-loans-body">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Requested By</th>
+              <th>Date</th>
+              <th>Department</th>
+              <th class="text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-details">MacBook Pro</td>
+              <td>Thabo Modise</td>
+              <td>2026-06-05</td>
+              <td>Engineering</td>
+              <td><span class="status-badge approved">Return</span></td>
+            </tr>
+            <tr>
+              <td class="row-details">Projector Epson</td>
+              <td>Mary Jane</td>
+              <td>2026-06-01</td>
+              <td>Marketing</td>
+              <td>Return</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="work-queue-container">
       <h3 class="queue-heading">Historical Requests</h3>
       
       <div class="panel-table-container">
-        <table class="asset-table manager-ledger-table" id="all_loans">
+        <table class="asset-table manager-ledger-table" id="historical-loans">
           <thead>
             <tr>
               <th>Asset</th>
@@ -162,6 +196,6 @@
   <script src="../../../assets/js/users.js" type="module"></script>
   <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
-  <script src="../../../assets/js/loans.js" type="module"></script>
+  <script src="../../../assets/js/manager/loans.js" type="module"></script>
 </body>
 </html>
