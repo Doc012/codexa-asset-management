@@ -31,6 +31,7 @@ public class LoanService {
     private final UserRepository userRepo;
     private final AssetRepo assetRepo;
     private final AuditLogService auditLogService;
+    private final LoanMapper loanMapper;
 
     public LoanResponseDTO createLoan(LoanRequestDTO dto) {
 
@@ -64,8 +65,10 @@ public class LoanService {
             loan.setAsset(asset);
             loan.setRequestDate(LocalDate.now());
             loan.setStatus(LoanStatus.PENDING);
+            
+            loanRepo.save(loan);
 
-            LoanResponseDTO createdLoan = LoanMapper.toDTO(loanRepo.save(loan));
+            LoanResponseDTO createdLoan = loanMapper.toDTO(loanRepo.save(loan));
 
             AuditLog log = AuditLog.builder()
                     .entityType(EntityType.LOAN)
@@ -98,27 +101,30 @@ public class LoanService {
                 )
         );
 
-        return LoanMapper.toDTO(loan);
+        return loanMapper.toDTO(loan);
+
+        
+
     }
 
     public List<LoanResponseDTO> getLoanByUser(Long userId) {
         return loanRepo.findByUser_UserId(userId)
                 .stream()
-                .map(LoanMapper::toDTO)
+                .map(loanMapper::toDTO)
                 .toList();
     }
 
     public List<LoanResponseDTO> getAllLoans() {
         return loanRepo.findAll()
                 .stream()
-                .map(LoanMapper::toDTO)
+                .map(loanMapper::toDTO)
                 .toList();
     }
 
     public List<LoanResponseDTO> getLoanByStatus(LoanStatus status) {
         return loanRepo.findByStatus(status)
                 .stream()
-                .map(LoanMapper::toDTO)
+                .map(loanMapper::toDTO)
                 .toList();
     }
 
@@ -130,7 +136,7 @@ public class LoanService {
         loan.setCheckoutDate(LocalDate.now());
         loan.setDueDate(LocalDate.now().plusDays(62));
 
-        return LoanMapper.toDTO(loanRepo.save(loan));
+        return loanMapper.toDTO(loanRepo.save(loan));
     }
 
     public LoanResponseDTO rejectLoan(Long loanId) {
@@ -145,7 +151,7 @@ public class LoanService {
 
         loan.setStatus(LoanStatus.REJECTED);
 
-        return LoanMapper.toDTO(loanRepo.save(loan));
+        return loanMapper.toDTO(loanRepo.save(loan));
     }
 
     public LoanResponseDTO returnLoan(Long loanId) {
@@ -155,7 +161,7 @@ public class LoanService {
         loan.setStatus(LoanStatus.RETURNED);
         loan.setReturnDate(LocalDate.now());
 
-        return LoanMapper.toDTO(loanRepo.save(loan));
+        return loanMapper.toDTO(loanRepo.save(loan));
     }
 
     public void deleteLoan(Long loanId) {
