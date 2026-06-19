@@ -2,7 +2,7 @@ import { getLoansByStatus } from "../../../services/loanService.js";
 import { getAllLoans } from "../../../services/loanService.js";
 import { approveLoan } from "../../../services/loanService.js";
 import { rejectLoan } from "../../../services/loanService.js";
-
+import { returnLoan } from "../../../services/loanService.js";
 /**
  * get all loans and the numeric value of all loans belonging to a MANAGER
  */
@@ -159,21 +159,6 @@ const loanRejection = async (loanId) => {
     }
 };
 
-function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
-
-    modal.style.display = "flex";
-
-    document.getElementById("confirmBtn").onclick = async () => {
-        await onConfirm();
-        modal.style.display = "none";
-    };
-
-    document.getElementById("cancelBtn").onclick = () => {
-        modal.style.display = "none";
-    };
-}
-
 
 /**
  * All Active loans
@@ -195,8 +180,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             <td>${loan.requestDate}</td>
             <td>${loan.department}</td>
              <td>
-                <button class="approve_btn" data-id="${loan.loanId}">Return</button>
+                <button class="return_btn" data-id="${loan.loanId}">Return</button>
             </td>`;
+
+            const returnBtn = row.querySelector(".return_btn")
+            if (returnBtn) {
+                returnBtn.addEventListener("click", async () => {
+                    showConfirmationModal(async () => {
+                        await loanReturn(loan.loanId);
+                    });
+                });
+            }
 
             tableBody.appendChild(row);
         });
@@ -205,6 +199,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Error: ` + error)
     }
 });
+
+const loanReturn = async (loanId) => {
+    try {
+        await returnLoan(loanId);
+        window.location.reload();
+    } catch (error) {
+        console.log(`Error ${error}`)
+    }
+};
 
 /**
  * Historical loans
@@ -289,4 +292,19 @@ function switchTab(event, tabId) {
     // 3. Mount current configurations active targets
     document.getElementById(tabId).classList.add('active-content');
     event.currentTarget.classList.add('active');
+}
+
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+
+    modal.style.display = "flex";
+
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
+        modal.style.display = "none";
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
 }

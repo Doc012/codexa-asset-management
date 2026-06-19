@@ -51,8 +51,8 @@ export async function rejectLoan(id) {
     return await response.json();
 }
 
-async function returnLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/${id}/return`, {
+export async function returnLoan(id) {
+    const response = await fetch(`${API_BASE_URL}/loans/return/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
