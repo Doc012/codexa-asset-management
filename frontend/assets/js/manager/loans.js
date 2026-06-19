@@ -1,5 +1,7 @@
 import { getLoansByStatus } from "../../../services/loanService.js";
 import { getAllLoans } from "../../../services/loanService.js";
+import { approveLoan } from "../../../services/loanService.js";
+import { rejectLoan } from "../../../services/loanService.js";
 
 /**
  * get all loans and the numeric value of all loans belonging to a MANAGER
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lastRow = document.querySelector(".row-details3")
     try {
         const pendingLoans = await getLoansByStatus("PENDING");
-        
+
         const totalPendingLoans = pendingLoans.length;
         numOfPendingLoans.textContent = totalPendingLoans;
 
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /**
- * Manger can view Pending loans
+ * Manager can view Pending loans
  * Accept or Reject
  */
 
@@ -98,13 +100,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             row.innerHTML = `
             <td>${loan.title}</td>
-            <td>${loan.userId}</td>
+            <td>${loan.requesterEmail}</td>
             <td>${loan.requestDate}</td>
-            <td>${loan.loanId}</td>
+            <td>${loan.department}</td>
              <td>
                 <button class="approve_btn" data-id="${loan.loanId}">Approve</button>
                 <button class="reject_btn" data-id="${loan.loanId}">Reject</button>
             </td>`;
+
+            const approveLoanBtn = row.querySelector(".approve_btn");
+            const rejectBtn = row.querySelector(".reject_btn");
+
+            if (approveLoanBtn) {
+                approveLoanBtn.addEventListener("click", async () => {
+                    await loanApproval(loan.loanId);
+                });
+            }
+
+            if (rejectBtn) {
+                rejectBtn.addEventListener("click", async () => {
+                    await loanRejection(loan.loanId);
+                });
+            }
 
             tableBody.appendChild(row);
         });
@@ -113,6 +130,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Error: ` + error)
     }
 });
+/**
+ * Approve and reject loans
+ */
+
+const loanApproval = async (loanId) => {
+    try {
+        await approveLoan(loanId);
+        alert("Loan approved!")
+        window.location.reload();
+    } catch (error) {
+        alert(`Error: ${error}`)
+    }
+};
+
+/**
+ * Reject loan
+ */
+const loanRejection = async (loanId) => {
+    try {
+        await rejectLoan(loanId);
+        alert("Loan rejected!")
+    } catch (error) {
+        alert(`Error: ${error}`)
+    }
+};
+
 
 /**
  * All Active loans
@@ -130,9 +173,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             row.innerHTML = `
             <td>${loan.title}</td>
-            <td>${loan.userId}</td>
+            <td>${loan.requesterEmail}</td>
             <td>${loan.requestDate}</td>
-            <td>${loan.loanId}</td>
+            <td>${loan.department}</td>
              <td>
                 <button class="approve_btn" data-id="${loan.loanId}">Return</button>
             </td>`;
@@ -158,16 +201,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = "";
 
         allLoans.forEach((loan) => {
-            if(loan.status === "PENDING" || loan.status === "APPROVED") {
+            if (loan.status === "PENDING" || loan.status === "APPROVED") {
                 return false;
             }
             const row = document.createElement("tr");
 
             row.innerHTML = `
             <td>${loan.title}</td>
-            <td>${loan.userId}</td>
+            <td>${loan.requesterEmail}</td>
             <td>${loan.requestDate}</td>
-            <td>${loan.loanId}</td>
+            <td>${loan.department}</td>
              <td>
                 ${loan.status}
             </td>`;
@@ -179,6 +222,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Error: ` + error)
     }
 });
+
 
 /**
  * Displaying loans except the pending ones
@@ -216,15 +260,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 function switchTab(event, tabId) {
-      // 1. Hide all active dashboard tab content containers
-      const tabContents = document.querySelectorAll('.tab-content');
-      tabContents.forEach(content => content.classList.remove('active-content'));
+    // 1. Hide all active dashboard tab content containers
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => content.classList.remove('active-content'));
 
-      // 2. Remove highlighted active navigation button classes
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      tabButtons.forEach(btn => btn.classList.remove('active'));
+    // 2. Remove highlighted active navigation button classes
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => btn.classList.remove('active'));
 
-      // 3. Mount current configurations active targets
-      document.getElementById(tabId).classList.add('active-content');
-      event.currentTarget.classList.add('active');
-    }
+    // 3. Mount current configurations active targets
+    document.getElementById(tabId).classList.add('active-content');
+    event.currentTarget.classList.add('active');
+}

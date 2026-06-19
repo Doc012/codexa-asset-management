@@ -35,16 +35,16 @@ export async function createLoan(loanData) {
     return await response.json();
 }
 
-async function approveLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/${id}/approve`, {
+export async function approveLoan(id) {
+    const response = await fetch(`${API_BASE_URL}/loans/approve/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
 
-async function rejectLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/${id}/reject`, {
+export async function rejectLoan(id) {
+    const response = await fetch(`${API_BASE_URL}/loans/reject/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
