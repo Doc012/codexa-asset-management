@@ -20,11 +20,25 @@ let currentUser = null;
 if (menuBtn && sidebar && content) {
     menuBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        // Desktop toggles
-        sidebar.classList.toggle("closed");
-        if (content) content.classList.toggle("expanded");
-        // Mobile toggle
-        sidebar.classList.toggle("mobile-open");
+        
+        // Check if the user is viewing on a screen narrower than a tablet (768px)
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            // Mobile Mode: Slide the entire sidebar drawer open/close with full text labels
+            sidebar.classList.toggle("mobile-open");
+            
+            // Clean up desktop states so they don't break the mobile layout view
+            sidebar.classList.remove("closed");
+            if (content) content.classList.remove("expanded");
+        } else {
+            // Desktop Mode: Toggle thin icon layout and shift main content margins over
+            sidebar.classList.toggle("closed");
+            if (content) content.classList.toggle("expanded");
+            
+            // Clean up mobile states
+            sidebar.classList.remove("mobile-open");
+        }
     });
 }
 
@@ -119,51 +133,6 @@ function switchTab(event, tabId) {
     event.currentTarget.classList.add('active');
 }
 
-
-
-// // --- SETTINGS TAB ENGINE MANAGER ---
-// function switchSettingsTab(event, targetTabId) {
-//     if (event) event.preventDefault();
-
-//     // Hide all sibling content panes
-//     const tabPanels = document.querySelectorAll('#settingsPage .tab-content');
-//     tabPanels.forEach(panel => {
-//         panel.classList.remove('active-content');
-//     });
-
-//     // Strip out active highlight attributes off matching buttons
-//     const menuButtons = document.querySelectorAll('#settingsPage .tab-btn');
-//     menuButtons.forEach(btn => {
-//         btn.classList.remove('active');
-//     });
-
-//     // Inject view layout active states back online
-//     const targetBlock = document.getElementById(targetTabId);
-//     if (targetBlock) {
-//         targetBlock.classList.add('active-content');
-//     }
-//     if (event && event.currentTarget) {
-//         event.currentTarget.classList.add('active');
-//     }
-// }
-
-// // --- SIMULATED CLIENT SIDE PERSISTENCE HANDLER ---
-// function saveSettings(event, messageText) {
-//     event.preventDefault(); // Halt document refresh action
-    
-//     const toast = document.getElementById('successMessage');
-//     if (toast) {
-//         toast.innerText = messageText;
-//         toast.style.display = 'block';
-        
-//         // Hide notification safely out of viewport after 3 seconds
-//         setTimeout(() => {
-//             toast.style.display = 'none';
-//         }, 3000);
-//     }
-// }
-
-// --- USER INTERFACE RUNTIME BINDINGS INIT ---
 document.addEventListener('DOMContentLoaded', () => {
     const profileContainer = document.getElementById('profileContainer');
     const uploadBtn = document.getElementById('uploadBtn');
@@ -171,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileInitial = document.getElementById('profileInitial');
     const profileImage = document.getElementById('profileImage');
 
-    // Toggle global navigation context header menu open states on click
     if (profileContainer) {
         profileContainer.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -180,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', () => profileContainer.classList.remove('open'));
     }
 
-    // Trigger local photo storage choose pipelines
     if (uploadBtn && uploadInput) {
         uploadBtn.addEventListener('click', (e) => {
             e.stopPropagation();

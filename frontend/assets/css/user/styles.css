@@ -70,9 +70,17 @@ body {
 }
 
 #mainContent {
-    margin-left: 260px;
-    transition: margin-left 0.3s ease;
-    width: calc(100% - 260px);
+    /* margin-left: 260px; */
+    box-sizing: border-box;
+    padding: 24px;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.loans, #dashboardPage {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #sidebar.closed {

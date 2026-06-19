@@ -36,6 +36,11 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+.loans, #dashboardPage {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .loans h2 {
   font-size: 22px;
   font-weight: 700;
@@ -45,7 +50,13 @@
 }
 
 .tab-content {
-  display: none;
+    width: 100%;
+    overflow-x: auto; /* Generates a clean internal scrollbar ONLY if text spills over on tiny phones */
+    background: #ffffff;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 16px;
+    -webkit-overflow-scrolling: touch; /* Smooth scroll track targeting mobile browsers */
 }
 
 .tab-content.active-content {
