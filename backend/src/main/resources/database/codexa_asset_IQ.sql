@@ -55,3 +55,26 @@ SET condition = CASE
                     ELSE condition
     END
 WHERE LOWER(condition) IN ('good','excellent','fair','damaged','retired','disposed','new','brand new');
+
+
+-- Update asset category with actual category case just like in the AssetCategory enums
+UPDATE assets
+SET category = CASE title
+                   WHEN 'Dell Laptop XPS 15' THEN 'LAPTOP'
+                   WHEN 'Canon EOS R5 Camera' THEN 'OTHER'
+                   WHEN 'Standing Desk Pro' THEN 'FURNITURE'
+                   WHEN 'Thermal Imaging Camera' THEN 'OTHER'
+                   WHEN 'HP LaserJet Pro M404n Printer' THEN 'PRINTER'
+                   WHEN '4K Monitor LG 32UP550' THEN 'MONITOR'
+                   WHEN 'Conference Table Mahogany' THEN 'FURNITURE'
+                   ELSE category
+    END
+WHERE title IN (
+                'Dell Laptop XPS 15',
+                'Canon EOS R5 Camera',
+                'Standing Desk Pro',
+                'Thermal Imaging Camera',
+                'HP LaserJet Pro M404n Printer',
+                '4K Monitor LG 32UP550',
+                'Conference Table Mahogany'
+    );
