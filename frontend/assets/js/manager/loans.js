@@ -211,3 +211,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 // };
 
 // requestLoanHistory();
+
+
+
+
+function switchTab(event, tabId) {
+      // 1. Hide all active dashboard tab content containers
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => content.classList.remove('active-content'));
+
+      // 2. Remove highlighted active navigation button classes
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+
+      // 3. Mount current configurations active targets
+      document.getElementById(tabId).classList.add('active-content');
+      event.currentTarget.classList.add('active');
+    }

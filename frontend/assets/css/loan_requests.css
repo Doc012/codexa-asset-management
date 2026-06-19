@@ -1,16 +1,73 @@
 /* ==========================================================================
-   Loan Requests Workspace Specifics
+   Loan Requests Workspace Layout & Components
    ========================================================================== */
 
-/* Status Badges for Historical Audit Logs */
+/* Structural Layout Container & Base Table Rules */
+.panel-table-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.asset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+}
+
+/* Strict Layout Left Alignment Rules for Formatted Content Rows */
+.manager-ledger-table th,
+.manager-ledger-table td {
+  text-align: left !important;
+  padding: 14px 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.manager-ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Explicit Width Rules for a Cohesive Columns Grid Layout */
+.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; } /* Asset Name */
+.manager-ledger-table th:nth-child(2), .manager-ledger-table td:nth-child(2) { width: 20%; } /* Requested By */
+.manager-ledger-table th:nth-child(3), .manager-ledger-table td:nth-child(3) { width: 15%; } /* Date */
+.manager-ledger-table th:nth-child(4), .manager-ledger-table td:nth-child(4) { width: 15%; } /* Department */
+.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; } /* Actions / Status Badges */
+
+/* Formatted Core Record Identifiers */
+.manager-ledger-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.manager-ledger-table .row-details {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ==========================================================================
+   UI Components: Badges & Buttons
+   ========================================================================== */
+
+/* Modern Pill-Shaped Status Badges */
 .status-badge {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 4px 12px;
+  border-radius: 20px; /* Uniform clean pill shape */
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 
 /* State Variant Styles matching system layout conventions */
@@ -21,7 +78,13 @@
 
 .status-badge.rejected {
   background-color: rgba(239, 68, 68, 0.1);
-  color: var(--danger, #ef4444);
+  color: #ef4444;
+}
+
+/* Blue themed badge explicitly for items out on loan / waiting for return */
+.status-badge.return-btn {
+  background-color: rgba(2, 167, 232, 0.1);
+  color: #02a7e8;
 }
 
 /* Authorization Action Control Buttons */
@@ -29,8 +92,11 @@
 .reject_btn {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
   border: 1px solid transparent;
   border-radius: 6px;
+  cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
@@ -38,6 +104,7 @@
 .approve_btn {
   background-color: #10b981;
   color: #ffffff;
+  margin-right: 6px;
 }
 
 .approve_btn:hover {
@@ -47,27 +114,45 @@
 /* Danger State Action */
 .reject_btn {
   background-color: transparent;
-  border-color: var(--border, #e2e8f0);
-  color: var(--danger, #ef4444);
+  border-color: #e2e8f0;
+  color: #ef4444;
 }
 
 .reject_btn:hover {
   background-color: rgba(239, 68, 68, 0.05);
-  border-color: var(--danger, #ef4444);
+  border-color: #ef4444;
 }
 
-/* Strict Layout Left Alignment Rules for Formatted Content Rows */
-.manager-ledger-table th {
-  text-align: left;
+/* ==========================================================================
+   Interactive Dynamic Tab Panels Setup
+   ========================================================================== */
+.tab-content {
+  display: none;
 }
 
-.manager-ledger-table th.text-right,
-.manager-ledger-table td.text-right {
-  text-align: right;
+.tab-content.active-content {
+  display: block !important;
 }
 
-/* Formatted Core Record Identifiers */
-.manager-ledger-table .row-details {
-  font-weight: 500;
-  color: var(--text, #1e293b);
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.tab-btn:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.tab-btn.active {
+  background-color: #4f46e5;
+  color: white;
 }
