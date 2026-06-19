@@ -47,14 +47,4 @@ public class AuditLog {
 
     @Column(name = "message")
     private String message;
-
-
-
-
-
-
-
-
-
-
 }

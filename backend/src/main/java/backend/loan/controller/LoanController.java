@@ -4,7 +4,6 @@ import backend.loan.dto.LoanRequestDTO;
 import backend.loan.dto.LoanResponseDTO;
 import backend.loan.service.LoanService;
 import backend.loan.enums.LoanStatus;
-import backend.loan.model.Loan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 @RestController
-@RequestMapping("api/v1/loans")
+@RequestMapping("/api/v1/loans")
 @RequiredArgsConstructor
 public class LoanController {
 

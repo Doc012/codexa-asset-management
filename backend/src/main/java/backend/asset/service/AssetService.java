@@ -39,7 +39,6 @@ public class AssetService {
      * @return a list of assets
      */
     public List<ResponseAssetDto> getAllAssets(){
-//        return assetRepo.findAll();
         return assetRepo.findAll().stream()
                 .map(asset -> new ResponseAssetDto(
                         asset.getAssetId(),

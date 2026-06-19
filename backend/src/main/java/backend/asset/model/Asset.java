@@ -27,8 +27,8 @@ public class Asset {
     @NotBlank
     private String title;
 
-    @NotBlank
     @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
     private AssetCategory category;
 
     @Column(name = "serial_number", unique = true, nullable = false)

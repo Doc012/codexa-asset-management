@@ -3,6 +3,10 @@ package backend.loan.service;
 import backend.asset.enums.AssetStatus;
 import backend.asset.model.Asset;
 import backend.asset.repository.AssetRepo;
+import backend.auditLog.enums.ActionType;
+import backend.auditLog.enums.EntityType;
+import backend.auditLog.model.AuditLog;
+import backend.auditLog.service.AuditLogService;
 import backend.loan.dto.LoanRequestDTO;
 import backend.loan.dto.LoanResponseDTO;
 import backend.loan.enums.LoanStatus;
@@ -26,6 +30,7 @@ public class LoanService {
     private final LoanRepo loanRepo;
     private final UserRepository userRepo;
     private final AssetRepo assetRepo;
+    private final AuditLogService auditLogService;
 
     public LoanResponseDTO createLoan(LoanRequestDTO dto) {
 
@@ -60,7 +65,23 @@ public class LoanService {
             loan.setRequestDate(LocalDate.now());
             loan.setStatus(LoanStatus.PENDING);
 
-            return LoanMapper.toDTO(loanRepo.save(loan));
+            LoanResponseDTO createdLoan = LoanMapper.toDTO(loanRepo.save(loan));
+
+            AuditLog log = AuditLog.builder()
+                    .entityType(EntityType.LOAN)
+                    .entityId(createdLoan.loanId())
+                    .userId(1L)
+                    .actionType(ActionType.CREATE)
+                    .oldValue("")
+                    .newValue(createdLoan.toString())
+                    .message(user.getFirstName() + "(" + user.getEmail() + "), sent a loan request.")
+                    .build();
+
+            auditLogService.createLog(log);
+
+
+
+            return createdLoan;
         } else {
             throw new ResponseStatusException(
                     HttpStatus.UNPROCESSABLE_CONTENT,
