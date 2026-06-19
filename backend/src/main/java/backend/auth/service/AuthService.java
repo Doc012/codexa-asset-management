@@ -187,7 +187,7 @@ public class AuthService {
         userRepository.findByEmail(request.email()).ifPresent(user -> {
             String resetToken = UUID.randomUUID().toString();
             tokenStore.savePasswordResetToken(resetToken, user.getEmail());
-            emailService.sendPasswordResetEmail(user.getPassword(), user.getFirstName(), resetToken);
+            emailService.sendPasswordResetEmail(user.getEmail(), user.getFirstName(), resetToken);
 
             log.info("Password reset email sent to: {}", user.getEmail());
         });
@@ -253,6 +253,4 @@ public class AuthService {
                 )
         );
     }
-
-
 }

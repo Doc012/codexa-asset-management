@@ -4,11 +4,17 @@ import backend.auth.dto.AuthDTO;
 import backend.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Duration;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -27,14 +33,60 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login", description = "Returns access + refresh tokens. Account must be ACTIVE (email verified")
-    public ResponseEntity<AuthDTO.AuthResponse> login(@Valid @RequestBody AuthDTO.LoginRequest request){
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<AuthDTO.AuthResponse> login(@Valid @RequestBody AuthDTO.LoginRequest request, HttpServletResponse response){
+        AuthDTO.AuthResponse authResponse = authService.login(request);
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/api/v1/auth")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("Strict")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        AuthDTO.AuthResponse bodyWithoutRefreshToken = new AuthDTO.AuthResponse(
+                authResponse.accessToken(),
+                null,
+                authResponse.tokenType(),
+                authResponse.expiresIn(),
+                authResponse.user()
+        );
+
+
+        return ResponseEntity.ok(bodyWithoutRefreshToken);
     }
 
     @PostMapping("/refresh")
     @Operation(summary = "Refresh access token", description = "Exchanges a valid refresh token for anew access token + refresh token pair")
-    public ResponseEntity<AuthDTO.AuthResponse> refresh(@Valid @RequestBody AuthDTO.RefreshTokenRequest request){
-        return ResponseEntity.ok(authService.refreshToken(request));
+    public ResponseEntity<AuthDTO.AuthResponse> refresh(@CookieValue(name = "refreshToken", required = false) String refreshToken, HttpServletResponse response){
+        if (refreshToken == null){
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "No refresh token found."
+            );
+        }
+
+        AuthDTO.AuthResponse authResponse = authService.refreshToken(new AuthDTO.RefreshTokenRequest(refreshToken));
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.refreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/api/v1/auth")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("Strict")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        AuthDTO.AuthResponse bodyWithoutRefreshToken = new AuthDTO.AuthResponse(
+                authResponse.accessToken(),
+                null,
+                authResponse.tokenType(),
+                authResponse.expiresIn(),
+                authResponse.user()
+        );
+        return ResponseEntity.ok(bodyWithoutRefreshToken);
     }
 
     @PostMapping("/logout")
