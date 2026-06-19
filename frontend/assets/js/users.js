@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const managerId = 1;
-        const userId = 1;
+        const userId = 4;
         const managerData = await getUserById(managerId);
         const userData = await getUserById(userId);
 

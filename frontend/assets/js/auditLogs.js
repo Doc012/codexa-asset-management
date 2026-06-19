@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const userLogContainer = document.getElementById("user_log");
-    const userId = 3;
+    const userId = 4;
 
     try {
         const usersLogs = await getUserLogsById(userId);

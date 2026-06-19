@@ -128,8 +128,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
 
             const requestButton = row.querySelector(".request-btn");
-            requestButton.addEventListener("click", async ()=> {
-                await requestLoan(asset.assetId);
+
+            requestButton.addEventListener("click", () => {
+                showConfirmationModal(async () => {
+                    await requestLoan(asset.assetId);
+                });
             });
 
             tableBody.appendChild(row);
@@ -143,52 +146,69 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+
+    modal.style.display = "flex";
+
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
+        modal.style.display = "none";
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
+
+
 /**
  * This is used to create an asset:
  */
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("create-asset-form");
-    const message = document.getElementById("message");
+// document.addEventListener("DOMContentLoaded", () => {
+//     const form = document.getElementById("create-asset-form");
+//     const message = document.getElementById("message");
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // stop page reload
+//     form.addEventListener("submit", async (e) => {
+//         e.preventDefault(); // stop page reload
 
-        // Collect form data
-        const assetData = {
-            title: document.getElementById("title").value,
-            category: document.getElementById("category").value,
-            serialNumber: document.getElementById("serialNumber").value,
-            acquisitionDate: document.getElementById("acquisitionDate").value,
-            cost: parseFloat(document.getElementById("cost").value),
-            location: document.getElementById("location").value,
-            condition: document.getElementById("condition").value,
-            photoPath: document.getElementById("photoPath").value
-        };
+//         // Collect form data
+//         const assetData = {
+//             title: document.getElementById("title").value,
+//             category: document.getElementById("category").value,
+//             serialNumber: document.getElementById("serialNumber").value,
+//             acquisitionDate: document.getElementById("acquisitionDate").value,
+//             cost: parseFloat(document.getElementById("cost").value),
+//             location: document.getElementById("location").value,
+//             condition: document.getElementById("condition").value,
+//             photoPath: document.getElementById("photoPath").value
+//         };
 
-        try {
-            // Call API
-            const result = await createAsset(assetData);
+//         try {
+//             // Call API
+//             const result = await createAsset(assetData);
 
-            console.log("Asset created:", result);
+//             console.log("Asset created:", result);
 
-            message.style.color = "green";
-            message.textContent = "Asset created successfully!";
+//             message.style.color = "green";
+//             message.textContent = "Asset created successfully!";
 
-            // Reset form
-            form.reset();
+//             // Reset form
+//             form.reset();
 
-            // Optional: Redirect back to assets list
-            setTimeout(() => {
-                window.location.href = "assets.html";
-            }, 1500);
+//             // Optional: Redirect back to assets list
+//             setTimeout(() => {
+//                 window.location.href = "assets.html";
+//             }, 1500);
 
-        } catch (error) {
-            console.error("Error creating asset:", error);
-            message.style.color = "red";
-            message.textContent = `Error: ${error.message}`;
-        }
-    });
-});
+//         } catch (error) {
+//             console.error("Error creating asset:", error);
+//             message.style.color = "red";
+//             message.textContent = `Error: ${error.message}`;
+//         }
+//     });
+// });
 
 
 /**
