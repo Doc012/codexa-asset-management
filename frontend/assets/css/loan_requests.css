@@ -5,7 +5,7 @@
 /* Structural Layout Container & Base Table Rules */
 .panel-table-container {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  /* border: 1px solid #e2e8f0; */
   border-radius: 8px;
   overflow: hidden;
   margin-top: 16px;
@@ -17,29 +17,43 @@
   border-collapse: collapse;
   margin: 0;
   padding: 0;
+  border: none !important;
 }
 
-/* Strict Layout Left Alignment Rules for Formatted Content Rows */
 .manager-ledger-table th,
 .manager-ledger-table td {
   text-align: left !important;
   padding: 14px 20px;
   vertical-align: middle;
-  border-bottom: 1px solid #f1f5f9;
+  /* border-bottom: 1px solid #f1f5f9; */
 }
 
 .manager-ledger-table tr:last-child td {
   border-bottom: none;
 }
 
-/* Explicit Width Rules for a Cohesive Columns Grid Layout */
-.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; } /* Asset Name */
+.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; padding-left: 20px;} /* Asset Name */
 .manager-ledger-table th:nth-child(2), .manager-ledger-table td:nth-child(2) { width: 20%; } /* Requested By */
 .manager-ledger-table th:nth-child(3), .manager-ledger-table td:nth-child(3) { width: 15%; } /* Date */
 .manager-ledger-table th:nth-child(4), .manager-ledger-table td:nth-child(4) { width: 15%; } /* Department */
-.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; } /* Actions / Status Badges */
+.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; padding-right: 20px;} /* Actions / Status Badges */
 
-/* Formatted Core Record Identifiers */
+.manager-ledger-table th:first-child,
+.manager-ledger-table td:first-child {
+  border-left: none !important;
+  padding-left: 20px;
+}
+
+.manager-ledger-table th:last-child,
+.manager-ledger-table td:last-child {
+  border-right: none !important;
+  padding-right: 20px;
+}
+
+.manager-ledger-table tr:first-child th {
+  border-top: none !important;
+}
+
 .manager-ledger-table th {
   background-color: #f8fafc;
   color: #475569;
@@ -54,15 +68,10 @@
   color: #1e293b;
 }
 
-/* ==========================================================================
-   UI Components: Badges & Buttons
-   ========================================================================== */
-
-/* Modern Pill-Shaped Status Badges */
 .status-badge {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 20px; /* Uniform clean pill shape */
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -70,7 +79,6 @@
   text-align: center;
 }
 
-/* State Variant Styles matching system layout conventions */
 .status-badge.approved {
   background-color: rgba(16, 185, 129, 0.1);
   color: #10b981;
@@ -81,13 +89,11 @@
   color: #ef4444;
 }
 
-/* Blue themed badge explicitly for items out on loan / waiting for return */
 .status-badge.return-btn {
   background-color: rgba(2, 167, 232, 0.1);
   color: #02a7e8;
 }
 
-/* Authorization Action Control Buttons */
 .approve_btn, 
 .reject_btn {
   font-family: 'Inter', sans-serif;
@@ -100,7 +106,6 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* Success State Action */
 .approve_btn {
   background-color: #10b981;
   color: #ffffff;
@@ -111,7 +116,6 @@
   background-color: #059669;
 }
 
-/* Danger State Action */
 .reject_btn {
   background-color: transparent;
   border-color: #e2e8f0;
@@ -123,9 +127,6 @@
   border-color: #ef4444;
 }
 
-/* ==========================================================================
-   Interactive Dynamic Tab Panels Setup
-   ========================================================================== */
 .tab-content {
   display: none;
 }

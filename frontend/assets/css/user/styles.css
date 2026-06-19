@@ -419,6 +419,20 @@ body {
     border-collapse: collapse;
 }
 
+table {
+    width: 100% !important; /* Forces layout grid to stretch completely to the right margins */
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    min-width: 600px; /* Prevents text columns from squishing together tightly on mobile viewports */
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    white-space: nowrap; /* Keeps records orderly on a single horizontal row line */
+}
+
 .assets table th,
 .assets table td {
     text-align: left;
@@ -433,36 +447,24 @@ body {
 }
 
 .asset-table {
-
     width:100%;
-
     border-collapse:collapse;
-
 }
 
 .asset-table th {
-
     text-align:left;
-
     padding:15px;
-
     color:var(--muted);
-
     border-bottom:2px solid var(--border);
-
 }
 
 
 .asset-table td {
-
     padding:16px;
-
     border-bottom:1px solid var(--border);
-
 }
 
 .input-field {
-
     width:100%;
 
     padding:15px;

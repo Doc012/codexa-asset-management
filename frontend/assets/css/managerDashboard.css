@@ -1,4 +1,3 @@
-/* Custom Hub Branding Elements */
 .logo-accent {
   color: var(--primary);
 }
@@ -114,7 +113,6 @@
   border-radius: 6px !important;
 }
 
-/* LOWER CONTAINER: Separated Work Queue Workspace Box Component */
 .work-queue-container {
   background: var(--surface);
   border-radius: 12px;
@@ -159,6 +157,43 @@
   border-bottom: 1px solid var(--border) !important;
 }
 
+/* Update this container to handle responsive overflow scrolling safely */
+.panel-table-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-top: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  outline: none !important;
+  
+  /* CRITICAL CHANGE: Enables smooth touch and pointer horizontal tracking */
+  overflow-x: auto !important;
+  width: 100%;
+}
+
+/* Ensure the table stays readable and doesn't squish columns */
+.asset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border: none !important; 
+  outline: none !important;
+  min-width: 800px; 
+}
+
+.manager-ledger-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.manager-ledger-table th:nth-child(5), 
+.manager-ledger-table td:nth-child(5) { 
+  width: 180px !important;
+  white-space: nowrap;
+}
+
 .row-details {
   font-weight: 500;
   color: var(--text);
@@ -175,7 +210,6 @@
   font-size: 11px;
 }
 
-/* Dynamic Action Link Buttons */
 .action-link-btn {
   font-size: 13px;
   font-weight: 700;
@@ -200,52 +234,47 @@
   color: var(--muted);
 }
 
-/* ==========================================================================
-   DESKTOP RESPONSIVE GRID (Adjusts main content when sidebar shrinks)
-   ========================================================================== */
-
-/* 1. Default layout when sidebar is wide open */
 #mainContent {
-    margin-left: 260px; /* Match this exactly to your sidebar's default expanded width */
-    transition: margin-left 0.3s ease; /* Smooth sliding animation */
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
     width: calc(100% - 260px);
 }
 
-/* 2. When sidebar is collapsed to icons-only (e.g., 70px wide) */
 #sidebar.closed {
     width: 70px;
 }
 
-/* 3. Shift main content left to occupy the newly freed space */
 #mainContent.expanded {
     margin-left: 70px;
     width: calc(100% - 70px);
 }
 
-
-/* ==========================================================================
-   MOBILE RESPONSIVE BREAKPOINT (Completely hides sidebar and icons)
-   ========================================================================== */
 @media (max-width: 768px) {
-    /* 1. Force the main content to take up full screen space on mobile by default */
     #mainContent {
         margin-left: 0 !important;
         width: 100% !important;
     }
 
-    /* 2. Push the sidebar completely off the left edge of the screen */
     #sidebar {
         position: fixed;
-        left: -100%; /* Hides the icons and text completely out of sight */
-        width: 240px; /* Gives it a nice standard mobile drawer width */
-        height: calc(100vh - 60px); /* Adjust based on your header height */
+        left: -100%;
+        width: 240px;
+        height: calc(100vh - 60px);
         top: 60px;
         transition: left 0.3s ease;
         z-index: 999;
     }
 
-    /* 3. Slide the menu fully into view when toggled on phone */
     #sidebar.mobile-open {
         left: 0 !important;
     }
+}
+
+.tab-menu {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0; 
+  width: 100%;
 }
