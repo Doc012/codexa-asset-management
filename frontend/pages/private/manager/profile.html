@@ -2,66 +2,173 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Profile</title>
-    <link rel="stylesheet" href="../../../assets/css/profile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset IQ - Profile Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/user/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/manager/settings.css">
 </head>
 
 <body>
-
-    <input type="checkbox" id="toggle">
-
-    <nav class="nav_bar">
-        <label for="toggle" class="hamburger">☰</label>
-
-        <div class="nav_right">
-            <a href="profile.html" class="profile">
-                <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_Pic">
-            </a>
+  <header class="topbar">
+    <div class="left-nav">
+      <button id="menuBtn" class="menu-btn">☰</button>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</h2>
+    </div>
+    <div class="right-nav">
+      <div id="profileContainer" class="profile-container">
+        <div id="profileInitial" class="profile-initial">T</div>
+        <img id="profileImage" class="profile-image" src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_picture">
+        <input type="file" id="profileUpload" hidden>
+        <div class="profile-dropdown">
+          <button id="uploadBtn">Upload Photo</button>
+          <a href="./profile.html"><button>Profile</button></a>
+          <button>Logout</button>
         </div>
-    </nav>
+      </div>
+    </div>
+  </header>
 
-    <div class="sidebar">
-        <section class="image">
-            <img src="../../../assets/images/assetIq-removebg-preview.png" alt="assetIq" width="100px" height="140px">
-        </section>
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li class="nav-item">
+        <a href="dashboard.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          <span class="nav-text">Home</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="loan_requests.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span class="nav-text">Loans</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="assets.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <span class="nav-text">Assets</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="report.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span class="nav-text">Reports</span>
+        </a>
+      </li>
 
-        <a href="">Home</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="profile.html" class="active">Profile</a>
-        <a href="loan_requests.html">Loan Requests</a>
-        <a href="#">Assets</a>
-        <a href="#">Reports</a>
+      <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 15px 15px;">
+
+      <li class="nav-item active">
+        <a href="profile.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="nav-text">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <main id="mainContent" class="content manager-hub-content">
+    
+    <div class="executive-header">
+      <div class="header-titles">
+        <span class="system-tag">Management System</span>
+        <h1 class="ledger-title">Account Profiles &amp; Settings</h1>
+      </div>
+      <div class="clearance-tag">
+        Clearance Level: <span class="clearance-level">Manager Account</span>
+      </div>
     </div>
 
-    <label for="toggle" class="overlay"></label>
+    <section id="dashboardPage" class="page active" style="padding: 0; background: transparent; box-shadow: none;">
+      <div class="settings-card" style="margin-top: 0;">
+        <h2>Account Settings</h2>
 
-    <section class="profile_container">
+        <div class="settings-tabs">
+          <button class="settings-tab-btn active" onclick="switchSettingsTab(event, 'profileFormPanel')">Profile Details</button>
+          <button class="settings-tab-btn" onclick="switchSettingsTab(event, 'securityFormPanel')">Security</button>
+          <button class="settings-tab-btn" onclick="switchSettingsTab(event, 'preferencesFormPanel')">Preferences</button>
+        </div>
 
-        <div class="profile_card">
-            <img src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="Profile Picture">
-
-            <div class="profile_info">
-                <h2>Tumelo Ntsilo</h2>
-                <p class="role"><strong>Role:</strong> Manager</p>
-                <p class="user_email"><strong>Email:</strong> tumelo@example.com</p>
-                <p class="user_department"><strong>Department:</strong> Asset Management</p>
+        <div id="profileFormPanel" class="settings-panel active-panel">
+          <form onsubmit="handleSettingsSave(event, 'Profile updated successfully!')" id="profile-form">
+            <div class="settings-grid">
+              <div class="settings-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" value="Tumelo" required>
+              </div>
+              <div class="settings-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" value="Modise" required>
+              </div>
+              <div class="settings-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" value="tumelo.modise@codexa.com" required>
+              </div>
+              <div class="settings-group">
+                <label for="department">Department</label>
+                <input type="text" id="department" name="department" value="Operations Management" class="locked-field" readonly>
+              </div>
             </div>
+            <button type="submit" class="settings-save-btn">Save Profile</button>
+            <div id="form-status-message"></div>
+          </form>
         </div>
 
-        <div class="profile_actions">
-            <button>Edit Profile</button>
-            <button>Change Password</button>
+        <div id="securityFormPanel" class="settings-panel">
+          <form onsubmit="handleSettingsSave(event, 'Password changed securely.')">
+            <div class="settings-group single-column">
+              <label for="sec-current">Current Password</label>
+              <input type="password" id="sec-current" placeholder="••••••••••••" required>
+            </div>
+            <div class="settings-group single-column">
+              <label for="sec-new">New Password</label>
+              <input type="password" id="sec-new" placeholder="Minimum 8 characters" required>
+            </div>
+            <div class="settings-group single-column">
+              <label for="sec-confirm">Confirm Password</label>
+              <input type="password" id="sec-confirm" placeholder="Re-type new password" required>
+            </div>
+            <button type="submit" class="settings-save-btn">Update Password</button>
+          </form>
         </div>
 
+        <div id="preferencesFormPanel" class="settings-panel">
+          <form onsubmit="handleSettingsSave(event, 'System preferences updated.')">
+            <div class="settings-group single-column inline-check">
+              <label class="settings-checkbox">
+                <input type="checkbox" checked>
+                <span>Email me when high-value assets are flagged poor/broken?</span>
+              </label>
+            </div>
+            <div class="settings-group single-column inline-check">
+              <label class="settings-checkbox">
+                <input type="checkbox" checked>
+                <span>Notify me immediately when loan tickets enter the queue?</span>
+              </label>
+            </div>
+            <div class="settings-group single-column">
+              <label for="pref-layout">Default Asset Ledger Density</label>
+              <select id="pref-layout">
+                <option value="grid">Standard Dynamic Table</option>
+                <option value="compact">High Density List</option>
+              </select>
+            </div>
+            <button type="submit" class="settings-save-btn">Save Preferences</button>
+          </form>
+        </div>
+      </div>
     </section>
+  </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 Codexa Asset IQ. All rights reserved.</p>
-    </footer>
-
-    <script src="../../../assets/js/users.js" type="module"></script>
+  <script src="../../../assets/js/users.js" type="module"></script>
+  <script src="../../../assets/js/config.js" type="module"></script>
+  <script src="../../../assets/js/user/script.js"></script>
 </body>
 
 </html>

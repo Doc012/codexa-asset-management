@@ -21,6 +21,10 @@
     box-sizing:border-box;
 }
 
+.logo-accent {
+  color: var(--primary);
+}
+
 body {
     font-family:'Inter', sans-serif;
     background: var(--background);
@@ -28,9 +32,9 @@ body {
     
 }
 
-body.ai-layout-open .main-content {
+/* body.ai-layout-open .main-content {
     margin-right: 380px;
-}
+} */
 
 .topbar {
     height:72px;
@@ -63,6 +67,42 @@ body.ai-layout-open .main-content {
 
     font-size:25px;
     cursor:pointer;
+}
+
+#mainContent {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+    width: calc(100% - 260px);
+}
+
+#sidebar.closed {
+    width: 70px;
+}
+
+#mainContent.expanded {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+@media (max-width: 768px) {
+    #mainContent {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    #sidebar {
+        position: fixed;
+        left: -100%;
+        width: 240px;
+        height: calc(100vh - 60px);
+        top: 60px;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    #sidebar.mobile-open {
+        left: 0 !important;
+    }
 }
 
 
@@ -227,33 +267,17 @@ body.ai-layout-open .main-content {
 }
 
 .sidebar {
-
     position:fixed;
-
     top:72px;
     left:0;
-
     width:260px;
     height:100%;
-
     background:var(--sidebar);
-
     padding:25px 15px;
-
     transition:0.3s;
-
     z-index:900;
-
 }
 
-.sidebar.closed {
-
-    transform:translateX(-100%);
-
-}
-
-
-/* Make the entire row line clickable */
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -261,7 +285,7 @@ body.ai-layout-open .main-content {
 }
 
 .sidebar .nav-item {
-  padding: 0 !important; /* Remove inner item padding to let anchor stretch */
+  padding: 0 !important;
 }
 
 .sidebar .nav-link {
@@ -269,40 +293,32 @@ body.ai-layout-open .main-content {
   align-items: center !important;
   text-decoration: none !important;
   color: whitesmoke !important;
-  padding: 12px 20px !important; /* Entire row padding goes here now */
+  padding: 12px 20px !important;
   width: 100% !important;
   box-sizing: border-box !important;
   transition: background 0.2s ease;
 }
 
-/* Optional hover state for full rows */
 .sidebar .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Ensure icons remain stable during collapses */
 .sidebar .nav-icon {
   margin-right: 12px !important;
   flex-shrink: 0 !important;
   transition: margin 0.2s ease;
 }
 
-/* ==========================================
-   WHEN SIDEBAR IS CLOSED/COLLAPSED
-   ========================================== */
-/* Shrink width to only show the icons */
 .sidebar.closed {
-  width: 55px !important; /* Adjust this to fit your mini-sidebar design */
+  width: 55px !important;
   transform: translateX(0) !important;
-  padding: 25px 0 !important; /* Reduce horizontal padding when collapsed */
+  padding: 25px 0 !important;
 }
 
-/* Instantly hide the text strings */
 .sidebar.closed .nav-text {
   display: none !important;
 }
 
-/* Center the icons on the collapsed row line */
 .sidebar.closed .nav-link {
   justify-content: center !important;
   padding: 12px 0 !important;
@@ -337,7 +353,6 @@ body.ai-layout-open .main-content {
     color:white;
 
 }
-
 
 .nav-item.active {
 
