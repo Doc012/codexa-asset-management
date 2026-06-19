@@ -113,13 +113,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (approveLoanBtn) {
                 approveLoanBtn.addEventListener("click", async () => {
-                    await loanApproval(loan.loanId);
+                    showConfirmationModal(async () => {
+                        await loanApproval(loan.loanId);
+                    })
                 });
             }
 
             if (rejectBtn) {
                 rejectBtn.addEventListener("click", async () => {
-                    await loanRejection(loan.loanId);
+                    showConfirmationModal(async () => {
+                        await loanRejection(loan.loanId)
+                    });
                 });
             }
 
@@ -137,10 +141,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 const loanApproval = async (loanId) => {
     try {
         await approveLoan(loanId);
-        alert("Loan approved!")
         window.location.reload();
     } catch (error) {
-        alert(`Error: ${error}`)
+        console.log(`Error: ${error}`)
     }
 };
 
@@ -150,11 +153,26 @@ const loanApproval = async (loanId) => {
 const loanRejection = async (loanId) => {
     try {
         await rejectLoan(loanId);
-        alert("Loan rejected!")
+        window.location.reload();
     } catch (error) {
-        alert(`Error: ${error}`)
+        console.log(`Error: ${error}`)
     }
 };
+
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+
+    modal.style.display = "flex";
+
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
+        modal.style.display = "none";
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
+}
 
 
 /**
