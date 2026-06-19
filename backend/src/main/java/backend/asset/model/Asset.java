@@ -1,5 +1,6 @@
 package backend.asset.model;
 
+import backend.asset.enums.AssetCategory;
 import backend.asset.enums.AssetCondition;
 import backend.asset.enums.AssetStatus;
 import jakarta.persistence.*;
@@ -25,8 +26,10 @@ public class Asset {
 
     @NotBlank
     private String title;
+
     @NotBlank
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private AssetCategory category;
 
     @Column(name = "serial_number", unique = true, nullable = false)
     private String serialNumber;

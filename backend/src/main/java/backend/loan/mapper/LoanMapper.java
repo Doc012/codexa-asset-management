@@ -12,7 +12,7 @@ public class LoanMapper {
                 loan.getUser().getUserId(),
                 loan.getAsset().getAssetId(),
                 loan.getAsset().getTitle(),
-                loan.getAsset().getCategory(),
+                loan.getAsset().getCategory().name(),
                 loan.getStatus(),
                 loan.getRequestDate(),
                 loan.getCheckoutDate(),

@@ -2,6 +2,7 @@ package backend.asset.controller;
 
 import backend.asset.dto.RequestAssetDto;
 import backend.asset.dto.ResponseAssetDto;
+import backend.asset.enums.AssetCategory;
 import backend.asset.enums.AssetCondition;
 import backend.asset.enums.AssetStatus;
 import backend.asset.model.Asset;
@@ -56,12 +57,28 @@ public class AssetController {
 
     @GetMapping("/category/{category}")
     public List<ResponseAssetDto> getAssetsByCategory(@PathVariable String category){
-        return assetService.getAssetsByCategory(category);
+        try {
+            AssetCategory categoryReq = AssetCategory.valueOf(category.toUpperCase());
+            return assetService.getAssetsByCategory(categoryReq);
+        } catch (IllegalArgumentException ex){
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid asset category. " + ex.getMessage()
+            );
+        }
     }
 
     @GetMapping("/status/{status}")
     public List<ResponseAssetDto> getAssetByStatus(@PathVariable String status) {
-        return assetService.getAssetsByStatus(status);
+        try {
+            AssetStatus statusReq = AssetStatus.valueOf(status.toUpperCase());
+            return assetService.getAssetsByStatus(statusReq);
+        } catch (IllegalArgumentException ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid asset status. " + ex.getMessage()
+            );
+        }
     }
 
     @GetMapping("/condition/{condition}")
