@@ -205,7 +205,15 @@ body {
     text-decoration: underline;
 }
 
+p .forgot-password {
+    margin-bottom: 0;
+}
 
+.forgot-password a {
+    color: grey;
+    text-decoration: underline;
+    margin-bottom: 0;
+}
 
 /* MEDIA QUERIES */
 @media (max-width: 768px) {
