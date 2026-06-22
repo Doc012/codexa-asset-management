@@ -128,6 +128,13 @@ public class LoanService {
                 .toList();
     }
 
+    public LoanResponseDTO cancelLoan(Long loanId){
+        Loan loan = getEntity(loanId);
+        loan.setStatus(LoanStatus.CANCELLED);
+        loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
+        return loanMapper.toDTO(loanRepo.save(loan));
+    }
+
     public LoanResponseDTO approveLoan(Long loanId) {
 
         Loan loan = getEntity(loanId);

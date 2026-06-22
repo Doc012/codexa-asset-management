@@ -1,6 +1,7 @@
 import { getLoansByStatus } from "../../services/loanService.js";
 import { getAllLoans } from "../../services/loanService.js";
 import { getLoansByUser } from "../../services/loanService.js";
+import { cancelLoan } from "../../services/loanService.js";
 
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
@@ -25,15 +26,42 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
                 <td>${loan.status}</td>
-            `;
+                <td>
+                    <button class="cancel_btn" data-id="${loan.loanId}">cancel loan</button>
+                </td>`
+            ;
+
+            const cancelBtn = row.querySelector(".cancel_btn");
+            if(cancelBtn){
+                cancelBtn.addEventListener("click", async()=> {
+                    showConfirmationModal(async()=> {
+                        await loanCancellation(loan.loanId);
+                        console.log(loan.status);
+                    })
+                })
+            }
             tableBody.appendChild(row);
-        })
+
+            });
 
     } catch (error) {
         console.error("Failed to render loans", error);
         tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
 });
+
+/**
+ * cancel loan method
+ */
+
+const loanCancellation = async(id) => {
+    try {
+        await cancelLoan(id);
+        window.location.reload();
+    }catch (error){
+        console.log(`Error: ${error}`);
+    }
+}
 
 
 /**
@@ -82,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = "";
 
         loansByUser.forEach(loan => {
-            if(loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED"){
+            if(loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED" || loan.status === "CANCELLED"){
                 return false;
             }
             const row = document.createElement("tr");
@@ -231,5 +259,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     
 });
 
+
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+
+    modal.style.display = "flex";
+
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
+        modal.style.display = "none";
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
+}
 
 

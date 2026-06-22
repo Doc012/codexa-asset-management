@@ -73,6 +73,11 @@ public class LoanController {
         return loanService.returnLoan(id);
     }
 
+    @PutMapping("/cancel/{id}")
+    public LoanResponseDTO cancelPendingLoan(@PathVariable Long id){
+        return loanService.cancelLoan(id);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         loanService.deleteLoan(id);
