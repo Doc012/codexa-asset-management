@@ -22,7 +22,6 @@ public class AuditLog {
     @Column(name = "log_id")
     private Long logId;
 
-//    @JoinColumn(name = "user_id", nullable = false)
     @Column(name = "user_id")
     private Long userId;
 

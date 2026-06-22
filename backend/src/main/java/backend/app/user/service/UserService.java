@@ -170,7 +170,7 @@ public class UserService {
         AuditLog auditLog = new AuditLog().builder()
                 .entityType(EntityType.USER)
                 .entityId(user.getUserId())
-                .userId(user.getUserId()) // Logged in  user ID
+                .userId(7L) // Logged-in  user ID
                 .actionType(ActionType.DELETE)
                 .oldValue("N/A")
                 .newValue("Deleted User ID: " + user.getUserId())
@@ -285,29 +285,6 @@ public class UserService {
                 auditLogService.createLog(log);
             }
         }
-
-//        if(theUpdater.getRole() == Role.ADMIN){
-//            if(!java.util.Objects.equals(user.getPicUrl(), oldPicURL)) {
-//                AuditLog log = AuditLog.builder()
-//                        .entityType(EntityType.USER)
-//                        .entityId(id)
-//                        .userId(user.getUserId())
-//                        .actionType(ActionType.UPDATE)
-//                        .oldValue(oldLastName)
-//                        .newValue(user.getFirstName())
-//                        .message(theUpdater.getFirstName() + " updated the image of: " + oldLastName)
-//                        .build();
-//                auditLogService.createLog(log);
-//            }
-//        }
-
-
-
-
-
-
-
-
 
         return userRepo.save(user);
     }

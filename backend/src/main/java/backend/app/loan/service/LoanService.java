@@ -73,7 +73,7 @@ public class LoanService {
             AuditLog log = AuditLog.builder()
                     .entityType(EntityType.LOAN)
                     .entityId(createdLoan.loanId())
-                    .userId(1L)
+                    .userId(7L)
                     .actionType(ActionType.CREATE)
                     .oldValue("")
                     .newValue(createdLoan.toString())

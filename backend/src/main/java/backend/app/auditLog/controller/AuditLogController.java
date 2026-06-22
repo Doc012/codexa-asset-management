@@ -1,5 +1,6 @@
 package backend.app.auditLog.controller;
 
+import backend.app.auditLog.dto.AuditLogDTO;
 import backend.app.auditLog.enums.ActionType;
 import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.service.AuditLogService;
@@ -70,6 +71,11 @@ public class AuditLogController {
                     "Invalid entity type. " + ex.getMessage()
             );
         }
+    }
+
+    @GetMapping("manager/{id}")
+    public List<AuditLogDTO.managerLogResponse> getManagerLogs(@PathVariable Long id){
+        return service.managerLog(id);
     }
 
 }
