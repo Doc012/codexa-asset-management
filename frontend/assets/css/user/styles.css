@@ -449,6 +449,7 @@ th, td {
 .asset-table {
     width:100%;
     border-collapse:collapse;
+    margin-top: 10px;
 }
 
 .asset-table th {

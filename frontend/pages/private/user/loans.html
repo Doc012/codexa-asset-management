@@ -88,9 +88,7 @@
       </li>
     </ul>
   </aside>
-
-  <main id="mainContent" class="content">
-
+ <main id="mainContent" class="content">
     <section id="dashboardPage" class="page active">
 
       <div class="loans">
@@ -103,7 +101,7 @@
         </div>
 
         <div id="pendingLoans" class="tab-content active-content">
-          <table>
+          <table class="asset-table">
             <thead>
               <tr>
                 <th>Title</th>
@@ -117,14 +115,14 @@
                 <td>Laptop Dell</td>
                 <td>Electronics</td>
                 <td>2026-06-10</td>
-                <td>2026-06-17</td>
+                <td><span class="status-indicator warning-state">Awaiting Return</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div id="activeLoans" class="tab-content active-content">
-          <table>
+        <div id="activeLoans" class="tab-content">
+          <table class="asset-table">
             <thead>
               <tr>
                 <th>Title</th>
@@ -140,13 +138,14 @@
                 <td>Electronics</td>
                 <td>2026-06-10</td>
                 <td>2026-06-17</td>
+                <td><span class="status-indicator active-state">Deployed</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div id="loanHistory" class="tab-content">
-          <table>
+          <table class="asset-table">
             <thead>
               <tr>
                 <th>Title</th>
@@ -162,14 +161,14 @@
                 <td>Electronics</td>
                 <td>2026-05-01</td>
                 <td>2026-05-08</td>
-                <td><span style="color: #27ae60; font-weight: bold;">Returned</span></td>
+                <td><span class="status-badge success">Returned</span></td>
               </tr>
               <tr>
                 <td>Projector</td>
                 <td>Electronics</td>
                 <td>2026-06-15</td>
                 <td>—</td>
-                <td><span style="color: #f1c40f; font-weight: bold;">Pending</span></td>
+                <td><span class="status-badge warning">Pending</span></td>
               </tr>
             </tbody>
           </table>
@@ -177,7 +176,6 @@
 
       </div>
 
-      </div>
       <div id="btnConfirmation" class="modal">
         <div class="modal-content">
           <h2>Are you sure?</h2>
@@ -188,10 +186,10 @@
           </div>
         </div>
       </div>
+      
       <div id="successMessage" class="success"></div>
     </section>
   </main>
-
   <script src="../../../assets/js/user/script.js"></script>
   <script src="../../../assets/js/loans.js" type="module"></script>
   <script src="../../../assets/js/users.js" type="module"></script>

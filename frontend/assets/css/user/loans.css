@@ -51,6 +51,7 @@
 
 .tab-content {
     width: 100%;
+    display: none;
     overflow-x: auto; /* Generates a clean internal scrollbar ONLY if text spills over on tiny phones */
     background: #ffffff;
     border-radius: 8px;
