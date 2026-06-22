@@ -73,6 +73,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         assets.forEach(asset => {
             const row = document.createElement("tr");
+            const isLoaned = asset.assetStatus === "LOANED";
+
+            if (isLoaned) {
+                row.classList.add("row-disabled");
+            }
 
             row.innerHTML = `
                 <td>${asset.title}</td>
@@ -86,7 +91,20 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
                 </td>
                 <td>${asset.assetStatus}</td>
+                <td>
+                    <button class="request-btn" data-id="${asset.assetId}" ${isLoaned ? "disabled" : ""}>${isLoaned ? "Unavailable" : "Request Loan"}</button>
+                </td>
             `;
+
+            const requestButton = row.querySelector(".request-btn");
+
+            if (requestButton && !isLoaned) {
+                requestButton.addEventListener("click", () => {
+                    showConfirmationModal(async () => {
+                        await requestLoan(asset.assetId);
+                    });
+                });
+            }
 
             tableBody.appendChild(row);
 
