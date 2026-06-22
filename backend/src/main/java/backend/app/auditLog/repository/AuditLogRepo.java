@@ -3,6 +3,7 @@ package backend.app.auditLog.repository;
 import backend.app.auditLog.enums.ActionType;
 import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.model.AuditLog;
+import backend.app.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

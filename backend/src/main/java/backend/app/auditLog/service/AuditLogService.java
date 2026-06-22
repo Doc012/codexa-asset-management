@@ -4,16 +4,17 @@ import backend.app.auditLog.enums.ActionType;
 import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.model.AuditLog;
 import backend.app.auditLog.repository.AuditLogRepo;
-import backend.app.user.service.UserService;
+import backend.app.user.model.User;
+import backend.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,6 +22,7 @@ import java.util.List;
 public class AuditLogService {
 
     private final AuditLogRepo repository;
+    private final UserRepository userRepository;
 
     /**
      *
@@ -64,6 +66,14 @@ public class AuditLogService {
         List<AuditLog> logs = repository.findByUserId(userId);
         Collections.reverse(logs);
         return logs;
+    }
+
+    public List<AuditLog> getAuditLogsByUserEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return repository.findByUserId(user.getUserId());
     }
 
     public List<AuditLog> getAuditLogsByActionType(ActionType actionType){

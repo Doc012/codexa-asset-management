@@ -4,6 +4,7 @@ import backend.app.auditLog.enums.ActionType;
 import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.service.AuditLogService;
 import backend.app.auditLog.model.AuditLog;
+import backend.app.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,11 @@ public class AuditLogController {
     @GetMapping("/user/{id}")
     public List<AuditLog> getLogsByUserId(@PathVariable Long id){
         return service.getAuditLogsByUserId(id);
+    }
+
+    @GetMapping("/by-email")
+    public List<AuditLog> getLogsByUserEmail(@RequestParam String email){
+        return service.getAuditLogsByUserEmail(email);
     }
 
     @GetMapping("/action-type")
