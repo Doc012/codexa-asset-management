@@ -177,7 +177,28 @@ public class LoanService {
     }
 
     public void deleteLoan(Long loanId) {
-        loanRepo.deleteById(loanId);
+        Loan loan = loanRepo.findById(loanId).orElseThrow(
+                () -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "loan not found with id: " + loanId
+                )
+        );
+        User user = userRepo.findById(1L).
+                orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
+
+        AuditLog log = new AuditLog().builder()
+                .userId(user.getUserId())
+                .entityType(EntityType.LOAN)
+                .entityId(loan.getLoanId())
+                .actionType(ActionType.DELETE)
+                .oldValue("N/A")
+                .newValue("Deleted loan with ID: " + loan.getLoanId())
+                .message("Deleted Loan - " + loan.getAsset())
+                .build();
+        auditLogService.createLog(log);
+
+        loanRepo.delete(loan);
     }
 
     private Loan getEntity(Long id) {

@@ -89,6 +89,11 @@ public class AssetService {
      * @return the details of the newly created asset
      */
     public ResponseAssetDto createAsset(RequestAssetDto assetDto){
+        User theUpdater = userRepo.findById(1L)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
+                );
+
         Asset asset = Asset.builder()
                 .title(assetDto.title())
                 .category(assetDto.category())
@@ -102,6 +107,17 @@ public class AssetService {
                 .build();
 
         Asset savedAsset = assetRepo.save(asset);
+
+        AuditLog log = new AuditLog().builder()
+                .userId(theUpdater.getUserId())
+                .entityType(EntityType.ASSET)
+                .entityId(asset.getAssetId())
+                .actionType(ActionType.CREATE)
+                .oldValue("N/A")
+                .newValue("Created Asset with ID: " + asset.getAssetId())
+                .message("Created Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
+                .build();
+        auditLogService.createLog(log);
 
         return new ResponseAssetDto(
                 savedAsset.getAssetId(),
@@ -122,10 +138,27 @@ public class AssetService {
      * @param id - ID of the asset to be deleted
      */
     public void deleteAsset(Long id){
-        if(!assetRepo.existsById(id)) {
-            throw new RuntimeException("Asset Not Found");
-        }
-        assetRepo.deleteById(id);
+        Asset asset = assetRepo.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found"));
+
+        User theUpdater = userRepo.findById(1L)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
+
+        AuditLog log = new AuditLog().builder()
+                .userId(theUpdater.getUserId())
+                .entityType(EntityType.ASSET)
+                .entityId(asset.getAssetId())
+                .actionType(ActionType.DELETE)
+                .oldValue("N/A")
+                .newValue("Deleted Asset with ID: " + asset.getAssetId())
+                .message("Deleted Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
+                .build();
+        auditLogService.createLog(log);
+
+        assetRepo.delete(asset);
     }
 
     /**
@@ -182,7 +215,7 @@ public class AssetService {
         }
 
         if(theUpdater.getRole() == Role.ADMIN){
-            if (!java.util.Objects.equals(existingAsset.getCategory(), oldCategory)) {
+            if (!java.util.Objects.equals(oldCategory, existingAsset.getCategory())) {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.ASSET)
                         .entityId(id)
@@ -338,8 +371,9 @@ public class AssetService {
      */
     public ResponseAssetDto getAssetBySerialNumber(String serialNumber) {
         Asset serialNumberAsset = assetRepo.findBySerialNumber(serialNumber)
-                .orElseThrow(() -> new RuntimeException
-                        ("Asset not found with Serial Number: " + serialNumber));
+                .orElseThrow(() -> new ResponseStatusException
+                        (HttpStatus.NOT_FOUND, "Asset not found with Serial Number:")
+                );
 
         return new ResponseAssetDto(
                 serialNumberAsset.getAssetId(),

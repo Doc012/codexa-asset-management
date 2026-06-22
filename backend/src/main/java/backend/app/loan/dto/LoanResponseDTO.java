@@ -1,8 +1,8 @@
-package backend.loan.dto;
+package backend.app.loan.dto;
 
-import backend.asset.enums.AssetCategory;
-import backend.asset.enums.AssetStatus;
-import backend.loan.enums.LoanStatus;
+import backend.app.asset.enums.AssetCategory;
+import backend.app.asset.enums.AssetStatus;
+import backend.app.loan.enums.LoanStatus;
 
 import java.time.LocalDate;
 
