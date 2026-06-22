@@ -4,104 +4,147 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assets</title>
-  <link rel="stylesheet" href="../../../assets/css/admin/assets.css" />
-  <script src="https://kit.fontawesome.com/384885d02f.js" crossorigin="anonymous"></script>
+  <title>Asset IQ - Assets</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/user/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/admin/assets.css" >
+</head>
 
 <body>
-  <header>
-    <div id="header-profile">
-      <span>Asset Management System</span>
-
-      <div id="profile">
-        <i class="fa-regular fa-bell"></i>
-        <img src="https://i.pinimg.com/564x/20/5f/a9/205fa9fd919ddc9a52de9807098f9232.jpg" alt="profile">
-      </div>
+  <!-- TOPBAR HEADER -->
+  <header class="topbar">
+    <div class="left-nav">
+      <button id="menuBtn" class="menu-btn">☰</button>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
     </div>
-
-    <div id="sidebar">
-      <div id="logo">
-        <img src="../../../assets/images/assetIq-removebg-preview.png" alt="asset iq logo">
-      </div>
-
-      <div id="navbar">
-        <div id="nav-tems">
-          <ul>
-            <li>
-              <a href="dashboard.html">
-                <i class="fa-solid fa-house"></i>
-                <span>Dashboard</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-
-            <li>
-              <a href="assets.html" id="selected">
-                <i class="fa-solid fa-bezier-curve"></i>
-                <span>Assets</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-
-            <li>
-              <a href="loans.html">
-                <i class="fa-solid fa-hand-holding"></i>
-                <span>Loans</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-
-            <li>
-              <a href="users.html">
-                <i class="fa-solid fa-users"></i>
-                <span>Users</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-
-            <li>
-              <a href="logs.html">
-                <i class="fa-solid fa-list-check"></i>
-                <span>Logs</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-
-            <li>
-              <a href="settings.html">
-                <i class="fa-solid fa-gear"></i>
-                <span>Settings</span> <!-- FIXED: Wrapped text in a span -->
-              </a>
-            </li>
-          </ul>
+    <div class="right-nav">
+      <div id="profileContainer" class="profile-container">
+        <div id="profileInitial" class="profile-initial">S</div>
+        <img id="profileImage" class="profile-image" src="https://i.pinimg.com/564x/20/5f/a9/205fa9fd919ddc9a52de9807098f9232.jpg" alt="profile_picture">
+        <input type="file" id="profileUpload" hidden>
+        <div class="profile-dropdown">
+          <button id="uploadBtn">Upload Photo</button>
+          <a href="./settings.html"><button>Profile</button></a>
+          <button>Logout</button>
         </div>
       </div>
-
-
-
-      <div id="logout-btn">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        <span>Sign out</span>
-      </div>
-    </div>
-
-    <div id="nav-button">
-      <i class="fa-solid fa-angle-left"></i>
     </div>
   </header>
 
-  <main>
-    <section id="assets-management-section">
+  <!-- SIDEBAR NAVIGATION -->
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li class="nav-item">
+        <a href="./dashboard.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          <span class="nav-text">Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item active">
+        <a href="./assets.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span class="nav-text">Assets</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="./loans.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+          </svg>
+          <span class="nav-text">Loans</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="./users.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span class="nav-text">Users</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="./logs.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span class="nav-text">Logs</span>
+        </a>
+      </li>
+
+      <hr class="sidebar-divider">
+
+      <li class="nav-item">
+        <a href="./settings.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="nav-text">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- MAIN WORKSPACE -->
+  <main id="mainContent" class="content">
+    <section id="assets-management-section" class="page active">
+      
       <div class="portal-toolbar-header">
         <div class="title-meta">
           <h1>Asset Management</h1>
           <p>Manage your organization's physical inventories and tracking parameters.</p>
         </div>
         <div class="action-buttons-group">
-          <button class="portal-btn secondary" id="export-data-btn"><i class="fa-solid fa-file-export"></i> Export <i
-              class="fa-solid fa-angle-down"></i></button>
-          <button class="portal-btn primary" id="open-add-modal-btn"><i class="fa-solid fa-plus"></i> Add Asset</button>
+          <button class="portal-btn secondary" id="export-data-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon-left">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+              <polyline points="16 6 12 2 8 6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
+            </svg>
+            Export 
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon-right">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <button class="portal-btn primary" id="open-add-modal-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-icon-left">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg> 
+            Add Asset
+          </button>
         </div>
       </div>
 
       <div class="portal-filter-bar">
         <div class="search-input-container">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
           <input type="text" id="asset-search-input" placeholder="Search assets...">
         </div>
         <div class="select-filters-container">
@@ -116,8 +159,9 @@
         </div>
       </div>
 
+      <!-- MAIN CRUD DATA LEDGER -->
       <div class="portal-card-table-wrapper">
-        <table id="assets-crud-table">
+        <table id="assets-crud-table" class="asset-table">
           <thead>
             <tr>
               <th>Asset Details</th>
@@ -125,7 +169,7 @@
               <th>Deployment</th>
               <th>Financials</th>
               <th>Condition</th>
-              <th class="text-right">Actions</th>
+              <th class="actions-header">Actions</th>
             </tr>
           </thead>
           <tbody id="assets-table-body">
@@ -133,7 +177,8 @@
               <td>
                 <div class="flex-meta-cell">
                   <div class="table-img-frame">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-JE3-8mwW3NBubrf9zdTQVEzmHckPkA6z31HzcCfSAnysCG8-5Z3onow&s=10"></div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-JE3-8mwW3NBubrf9zdTQVEzmHckPkA6z31HzcCfSAnysCG8-5Z3onow&s=10" alt="Asset item tracking visual preview thumbnail">
+                  </div>
                   <div>
                     <span class="cell-primary-title">Dell Laptop XPS 15</span>
                     <span class="cell-sub-label">Asset ID #1</span>
@@ -142,28 +187,54 @@
               </td>
               <td>
                 <div class="stacked-cell-labels">
-                  <span class="cell-data-text"><i class="fa-solid fa-barcode"></i> DEL-XPS-001-2024</span>
+                  <span class="cell-data-text code-font">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="3" y1="5" x2="3" y2="19"></line>
+                      <line x1="6" y1="5" x2="6" y2="19"></line>
+                      <line x1="10" y1="5" x2="10" y2="19"></line>
+                      <line x1="14" y1="5" x2="14" y2="19"></line>
+                      <line x1="18" y1="5" x2="18" y2="19"></line>
+                      <line x1="21" y1="5" x2="21" y2="19"></line>
+                    </svg>
+                    DEL-XPS-001-2024
+                  </span>
                   <span class="cell-tag-chip font-blue">Electronics</span>
                 </div>
               </td>
               <td>
-                <span class="cell-data-text"><i class="fa-solid fa-location-dot"></i> Office Building A, Floor 3</span>
+                <span class="cell-data-text location-flex">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  Office Building A, Floor 3
+                </span>
               </td>
               <td>
                 <div class="stacked-cell-labels">
-                  <span class="cell-primary-title">R1,299.99</span>
+                  <span class="cell-primary-title text-semibold">R1,299.99</span>
                   <span class="cell-sub-label">Acq: 2024-01-15</span>
                 </div>
               </td>
               <td>
-                <span class="status-chip chip-success">Good</span>
+                <span class="status-badge good">Good</span>
               </td>
               <td>
                 <div class="row-actions-group">
-                  <button class="row-action-btn edit" title="Edit Properties"><i
-                      class="fa-solid fa-pen-to-square"></i></button>
-                  <button class="row-action-btn delete" title="Delete Asset"><i
-                      class="fa-solid fa-trash-can"></i></button>
+                  <button class="row-action-btn edit" title="Edit Properties">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </button>
+                  <button class="row-action-btn delete" title="Delete Asset">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -172,11 +243,17 @@
       </div>
     </section>
 
+    <!-- MODAL OVERLAY BOX -->
     <div id="asset-modal-overlay" class="modal-hidden">
       <div class="portal-modal-card">
         <div class="modal-card-header">
           <h2 id="modal-form-title">Add System Asset</h2>
-          <button id="close-modal-btn" class="modal-close-icon"><i class="fa-solid fa-xmark"></i></button>
+          <button id="close-modal-btn" class="modal-close-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
 
         <form id="asset-crud-form">
@@ -236,24 +313,8 @@
       </div>
     </div>
   </main>
-
-
-
-  <footer>
-    <div class="footer-content">
-      <p>&copy; 2026 <strong>Asset IQ</strong>. Asset Management System. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#">System Docs</a>
-        <span class="divider">&bull;</span>
-        <a href="#">Support Desk</a>
-        <span class="divider">&bull;</span>
-        <span class="version-tag">v1.0.0</span>
-      </div>
-    </div>
-  </footer>
-
   <script src="../../../assets/js/admin/script.js"></script>
   <script src="../../../assets/js/admin/assest.js"></script>
+  <script type="module" src="../../../assets/js/user/script.js"></script>
 </body>
-
 </html>

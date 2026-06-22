@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asset IQ - Manager Dashboard</title>
+  <title>Asset IQ - Enterprise Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
   <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/admin/dashboard.css">
 </head>
 
 <body>
   <header class="topbar">
     <div class="left-nav">
       <button id="menuBtn" class="menu-btn">☰</button>
-      <h2 class="logo">Asset IQ</h2>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
     </div>
     <div class="right-nav">
       <div id="profileContainer" class="profile-container">
-        <div id="profileInitial" class="profile-initial">T</div>
-        <img id="profileImage" class="profile-image" src="../../../assets/images/IMG-20250621-WA0001.jpg" alt="profile_picture">
+        <div id="profileInitial" class="profile-initial">S</div>
+        <img id="profileImage" class="profile-image" src="" alt="profile_picture">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
-          <a href="./profile.html"><button>Profile</button></a>
+          <a href="./settings.html"><button>Profile</button></a>
           <button>Logout</button>
         </div>
       </div>
@@ -32,18 +32,8 @@
 
   <aside id="sidebar" class="sidebar">
     <ul>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-          </svg>
-          <span class="nav-text">Home</span>
-        </a>
-      </li>
-
       <li class="nav-item active">
-        <a href="#" class="nav-link">
+        <a href="./dashboard.html" class="nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
             <rect x="3" y="3" width="7" height="9"></rect>
             <rect x="14" y="3" width="7" height="5"></rect>
@@ -55,19 +45,7 @@
       </li>
 
       <li class="nav-item">
-        <a href="loan_requests.html" class="nav-link">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="12" y1="18" x2="12" y2="12"></line>
-            <line x1="9" y1="15" x2="15" y2="15"></line>
-          </svg>
-          <span class="nav-text">Loan Requests</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="assets.html" class="nav-link">
+        <a href="./assets.html" class="nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
             <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -78,20 +56,46 @@
       </li>
 
       <li class="nav-item">
-        <a href="report.html" class="nav-link">
+        <a href="./loans.html" class="nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
-            <line x1="18" y1="20" x2="18" y2="10"></line>
-            <line x1="12" y1="20" x2="12" y2="4"></line>
-            <line x1="6" y1="20" x2="6" y2="14"></line>
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
           </svg>
-          <span class="nav-text">Reports</span>
+          <span class="nav-text">Loans</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="./users.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span class="nav-text">Users</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="./logs.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span class="nav-text">Logs</span>
         </a>
       </li>
 
       <hr style="border: none; border-top: 1px solid #343B48; margin: 15px 10px;">
 
       <li class="nav-item">
-        <a href="profile.html" class="nav-link">
+        <a href="./settings.html" class="nav-link">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -101,89 +105,100 @@
       </li>
     </ul>
   </aside>
-
-  <main id="mainContent" class="content">
-    <section id="dashboardPage" class="page active">
-
-      <div class="welcome-card">
-        <h1>Welcome Back, Tumelo</h1>
-        <p>Manage enterprise asset distributions, audit approvals, and operational metrics.</p>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h3>Loan Requests</h3>
-          <h2>12</h2>
-          <p class="empty" style="margin-top: 10px; font-size: 14px;">Awaiting managerial approval.</p>
-          <a href="loan_requests.html"><button class="primary-btn" style="margin-top: 15px; padding: 10px 20px;">Review Requests</button></a>
-        </div>
-
-        <div class="stat-card danger">
-          <h3>Retirement Flags</h3>
-          <h2>8</h2>
-          <p class="empty" style="margin-top: 10px; font-size: 14px;">Assets require action flags.</p>
-          <a href="assets.html"><button class="primary-btn" style="margin-top: 15px; padding: 10px 20px; background-color: var(--danger);">View Assets</button></a>
-        </div>
-
-        <div class="stat-card">
-          <h3>System Reports</h3>
-          <h2 style="font-size: 24px; padding: 6px 0;">Active</h2>
-          <p class="empty" style="margin-top: 10px; font-size: 14px;">Generate data metrics.</p>
-          <a href="report.html"><button class="primary-btn" style="margin-top: 15px; padding: 10px 20px;">View Reports</button></a>
+ <main id="mainContent" class="content">
+    <section id="adminDashboardPage" class="page active">
+      
+      <div class="portal-toolbar-header">
+        <div class="title-meta">
+          <h1>Administrative Control Center</h1>
+          <p>Global infrastructure health, inventory capitalization overview, and system deployment tracking.</p>
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 25px; margin-top: 25px; align-items: start;">
-        
-        <div class="assets" style="margin-top: 0;">
-          <h2>Recent Audit Requirements</h2>
-          <div class="panel-table-container">
-            <table class="asset-table">
-              <thead>
-                <tr>
-                  <th>Asset Item</th>
-                  <th>Department</th>
-                  <th>Status Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>Dell Latitude 5420</code></td>
-                  <td>Engineering</td>
-                  <td><span class="status-badge pending">Pending Audit</span></td>
-                </tr>
-                <tr>
-                  <td><code>Sony Alpha a7 III</code></td>
-                  <td>Marketing</td>
-                  <td><span class="status-badge good">Verified</span></td>
-                </tr>
-              </tbody>
-            </table>
+     <div class="admin-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon-frame primary-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <div class="metric-data">
+            <small>Total Assets</small>
+            <h3>250</h3>
           </div>
         </div>
 
-        <div class="panel" style="background: white; border-radius: 20px; padding: 20px; box-shadow: var(--shadow);">
-          <h2>Upcoming Events</h2>
-          <ul class="activity-list" style="list-style: none; padding-top: 10px;">
-            <li style="padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px;">
-              <strong style="color: var(--text);">Asset Audit</strong> <span style="color: var(--primary); float: right;">15 June</span>
-            </li>
-            <li style="padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px;">
-              <strong style="color: var(--text);">Monthly Review</strong> <span style="color: var(--muted); float: right;">30 June</span>
-            </li>
-            <li style="padding: 12px 0; font-size: 14px;">
-              <strong style="color: var(--text);">Inventory Check</strong> <span style="color: var(--muted); float: right;">05 July</span>
-            </li>
-          </ul>
+        <div class="metric-card">
+          <div class="metric-icon-frame success-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <div class="metric-data">
+            <small>Assets Out</small>
+            <h3>184</h3>
+          </div>
         </div>
 
+        <div class="metric-card">
+          <div class="metric-icon-frame danger-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <div class="metric-data">
+            <small>Assets Overdue</small>
+            <h3 class="danger-text">12</h3>
+          </div>
+        </div>
       </div>
+
+      <div class="admin-split-layout">
+        <div class="portal-card-table-wrapper">
+          <div class="card-inline-header">
+            <h4>Critical System Logs</h4>
+            <a href="./logs.html" class="action-view-all-link">View All Logs</a>
+          </div>
+          <table class="asset-table">
+            <thead>
+              <tr>
+                <th>Operator</th>
+                <th>Action</th>
+                <th class="actions-header">Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="adminRecentLogsBody">
+              <tr>
+                <td>
+                  <span class="cell-primary-title">sys_admin@asset-iq.com</span>
+                  <span class="cell-sub-label">IP: 192.168.4.112</span>
+                </td>
+                <td>
+                  <span class="admin-event-tag tag-delete">DELETE</span>
+                  <span class="event-summary">Removed broken asset ID: MAC-BOOK-089</span>
+                </td>
+                <td class="text-right text-muted font-monospace">
+                  11:09 UTC
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="cell-primary-title">mgreen@organization.com</span>
+                  <span class="cell-sub-label">IP: 192.168.4.15</span>
+                </td>
+                <td>
+                  <span class="admin-event-tag tag-checkout">CHECK_OUT</span>
+                  <span class="event-summary">Loaned Lenovo T14 to tech_team</span>
+                </td>
+                <td class="text-right text-muted font-monospace">
+                  10:42 UTC
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </section>
   </main>
-
   <script src="../../../assets/js/users.js" type="module"></script>
-  <script src="../../../assets/js/config.js" type="module"></script>
-  <script src="../../../assets/js/user/script.js"></script>
+  <script src="../../../assets/js/user/assets.js" type="module"></script>
+  <script src="../../../assets/js/auditLogs.js" type="module"></script>
+  <script src="../../../assets/js/loans.js" type="module"></script>
+  <script src="../../../assets/js/user/script.js" type="module"></script>
 </body>
-
 </html>
