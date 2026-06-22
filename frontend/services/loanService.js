@@ -43,6 +43,15 @@ export async function approveLoan(id) {
     return await response.json();
 }
 
+export async function checkoutLoan(id){
+    const response = await fetch(`${API_BASE_URL}/loans/checkout/${id}`,{
+        method: "PUT"
+    });
+
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}
+
 export async function rejectLoan(id) {
     const response = await fetch(`${API_BASE_URL}/loans/reject/${id}`, {
         method: 'PUT'

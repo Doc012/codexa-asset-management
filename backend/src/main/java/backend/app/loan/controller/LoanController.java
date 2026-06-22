@@ -63,6 +63,11 @@ public class LoanController {
         return loanService.rejectLoan(id);
     }
 
+    @PutMapping("/checkout/{id}")
+    public LoanResponseDTO checkoutLoan(@PathVariable Long id){
+        return loanService.checkOutLoan(id);
+    }
+
     @PutMapping("/return/{id}")
     public LoanResponseDTO returnLoan(@PathVariable Long id) {
         return loanService.returnLoan(id);

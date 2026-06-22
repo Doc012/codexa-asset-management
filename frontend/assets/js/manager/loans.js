@@ -3,6 +3,7 @@ import { getAllLoans } from "../../../services/loanService.js";
 import { approveLoan } from "../../../services/loanService.js";
 import { rejectLoan } from "../../../services/loanService.js";
 import { returnLoan } from "../../../services/loanService.js";
+import { checkoutLoan } from "../../../services/loanService.js";
 /**
  * get all loans and the numeric value of all loans belonging to a MANAGER
  */
@@ -172,6 +173,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = "";
 
         pendingLoans.forEach((loan) => {
+            console.log(loan);
             const row = document.createElement("tr");
 
             row.innerHTML = `
@@ -206,6 +208,58 @@ const loanReturn = async (loanId) => {
         window.location.reload();
     } catch (error) {
         console.log(`Error ${error}`)
+    }
+};
+
+/**
+ * Checkout loans
+ */
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const tableBody = document.querySelector("#checkout-loan-body");
+
+    try {
+        const approvedLoans = await getLoansByStatus("APPROVED");
+        const filteredLoans = approvedLoans.filter(
+            loan => loan.assetStatus !== "LOANED"
+        );
+        
+        tableBody.innerHTML = "";
+
+        filteredLoans.forEach(loan => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${loan.title}</td>
+            <td>${loan.requesterEmail}</td>
+            <td>${loan.requestDate}</td>
+            <td>${loan.department}</td>
+            <td>${loan.assetStatus}</td>
+            <td>
+                <button class="checkout_btn" data-id="${loan.loanId}">Checkout</button>
+            </td>`;
+            const checkoutBtn = row.querySelector(".checkout_btn");
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener("click", () => {
+                    showConfirmationModal(async () => {
+                        await loanCheckout(loan.loanId);
+
+                    });
+                });
+            }
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.log(`Error: ${error}`);
+    }
+});
+
+const loanCheckout = async (id) => {
+    try {
+        await checkoutLoan(id);
+        window.location.reload();
+    } catch (error) {
+        console.log(`Error: ${error}`);
     }
 };
 

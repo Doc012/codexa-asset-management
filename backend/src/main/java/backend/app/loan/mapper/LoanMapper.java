@@ -38,6 +38,7 @@ public class LoanMapper {
                 asset.getAssetId(),
                 asset.getTitle(),
                 asset.getCategory(),
+                asset.getAssetStatus(),
                 user.getEmail(),
                 user.getDepartment(),
                 loan.getStatus(),

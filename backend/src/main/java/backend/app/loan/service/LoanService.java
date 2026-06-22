@@ -131,8 +131,18 @@ public class LoanService {
     public LoanResponseDTO approveLoan(Long loanId) {
 
         Loan loan = getEntity(loanId);
-
         loan.setStatus(LoanStatus.APPROVED);
+        return loanMapper.toDTO(loanRepo.save(loan));
+    }
+
+    public LoanResponseDTO checkOutLoan(Long loanId){
+        Loan loan = getEntity(loanId);
+
+        if (loan.getAsset().getAssetStatus() == AssetStatus.LOANED) {
+            throw new IllegalStateException("Asset already loaned out");
+        }
+
+        loan.getAsset().setAssetStatus(AssetStatus.LOANED);
         loan.setCheckoutDate(LocalDate.now());
         loan.setDueDate(LocalDate.now().plusDays(62));
 
@@ -150,6 +160,7 @@ public class LoanService {
         }
 
         loan.setStatus(LoanStatus.REJECTED);
+        loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }
@@ -159,6 +170,7 @@ public class LoanService {
         Loan loan = getEntity(loanId);
 
         loan.setStatus(LoanStatus.RETURNED);
+        loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
         loan.setReturnDate(LocalDate.now());
 
         return loanMapper.toDTO(loanRepo.save(loan));

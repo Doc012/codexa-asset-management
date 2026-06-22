@@ -1082,6 +1082,25 @@ th, td {
     border-radius: 8px;
 }
 
+tr.row-disabled {
+    background-color: #f4f5f7 !important;
+    color: #8a92a6 !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+tr.row-disabled img {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+tr.row-disabled .request_loan_btn {
+    background-color: #cbd5e1 !important;
+    color: #94a3b8 !important;
+    border: 1px solid #cbd5e1 !important;
+    cursor: not-allowed;
+    pointer-events: none; /* Disables hover effects/clicks completely */
+}
+
 /* ==========================================================================
    4. DEVICE SIZE MEDIA QUERIES
    ========================================================================== */

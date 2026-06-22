@@ -1,7 +1,8 @@
-package backend.app.loan.dto;
+package backend.loan.dto;
 
-import backend.app.asset.enums.AssetCategory;
-import backend.app.loan.enums.LoanStatus;
+import backend.asset.enums.AssetCategory;
+import backend.asset.enums.AssetStatus;
+import backend.loan.enums.LoanStatus;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public record LoanResponseDTO(
         Long assetId,
         String title,
         AssetCategory category,
+        AssetStatus assetStatus,
         String requesterEmail,
         String department,
         LoanStatus status,
