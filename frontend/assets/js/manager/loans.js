@@ -1,9 +1,6 @@
-import { getLoansByStatus } from "../../../services/loanService.js";
-import { getAllLoans } from "../../../services/loanService.js";
-import { approveLoan } from "../../../services/loanService.js";
-import { rejectLoan } from "../../../services/loanService.js";
-import { returnLoan } from "../../../services/loanService.js";
-import { checkoutLoan } from "../../../services/loanService.js";
+import { getLoansByStatus, getAllLoans,
+    approveLoan, checkoutLoan, returnLoan, rejectLoan
+} from "../../../services/loanService.js";
 
 /**
  * get all loans and the numeric value of all loans in the system

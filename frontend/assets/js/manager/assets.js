@@ -1,224 +1,177 @@
 import {
     getAllAssets,
-    deleteAsset,
-    createAsset,
+    getAssetsByCategory,
+    getAssetsByCondition
 } from "../../../services/assetService.js";
 
-import { API_BASE_URL } from "../config.js";
 import { createLoan } from "../../../services/loanService.js";
 
-// get all assets
-// document.addEventListener("DOMContentLoaded", async () => {
-//     const tableBody = document.getElementById("asset-table-body");
-
-//     try {
-//         const assets = await getAllAssets();
-//         tableBody.innerHTML = "";
-
-//         assets.forEach(asset => {
-//             const row = document.createElement("tr");
-
-//             row.innerHTML = `
-//                 <td>${asset.assetId}</td>
-//                 <td>${asset.title}</td>
-//                 <td>${asset.category}</td>
-//                 <td>${asset.serialNumber}</td>
-//                 <td>${asset.acquisitionDate}</td>
-//                 <td>${asset.cost}</td>
-//                 <td>${asset.location}</td>
-//                 <td>${asset.condition}</td>
-//                 <td>${asset.photoPath}</td>
-//                 <td>
-//                     <button class="delete-btn" data-id="${asset.assetId}">Delete</button>
-//                 </td>
-//             `;
-
-//             // Attach event listener PER button
-//             const deleteBtn = row.querySelector(".delete-btn");
-//             deleteBtn.addEventListener("click", async () => {
-//                 const id = deleteBtn.dataset.id;
-//                 const confirmDelete = confirm("Are you sure you want to delete this asset?");
-//                 if (!confirmDelete) return;
-//                 try {
-//                     await deleteAsset(id); // use your service
-//                     alert("Asset deleted successfully");
-//                     // Remove row instantly instead of reload
-//                     row.remove();
-
-//                 } catch (error) {
-//                     alert("Failed to delete asset");
-//                 }
-//             });
-//             tableBody.appendChild(row);
-//         });
-
-//     } catch (error) {
-//         console.error("Failed to render ASSETS", error);
-//         tableBody.innerHTML = `<tr><td colspan = "10" style="color: red";> Error: ${error.message}</td></tr>`;
-//     }
-// });
+let currentCondition = "ALL";
+let currentCategory = "ALL";
 
 
-
-/**
- * This is for The User viewing assets
- */
 document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("asset-table-body");
-
-
-    try {
-        const assets = await getAllAssets();
-        tableBody.innerHTML = "";
-
-        assets.forEach(asset => {
-            const row = document.createElement("tr");
-            const isLoaned = asset.assetStatus === "LOANED";
-
-            if (isLoaned) {
-                row.classList.add("row-disabled");
-            }
-
-            row.innerHTML = `
-                <td>${asset.title}</td>
-                <td>${asset.category}</td>
-                <td>${asset.serialNumber}</td>
-                <td>${asset.acquisitionDate}</td>
-                <td>${asset.cost}</td>
-                <td>${asset.location}</td>
-                <td>${asset.condition}</td>
-                <td>
-                    <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
-                </td>
-                <td>${asset.assetStatus}</td>
-                <td>
-                    <button class="request-btn" data-id="${asset.assetId}" ${isLoaned ? "disabled" : ""}>${isLoaned ? "Unavailable" : "Request Loan"}</button>
-                </td>
-            `;
-
-            const requestButton = row.querySelector(".request-btn");
-
-            if (requestButton && !isLoaned) {
-                requestButton.addEventListener("click", () => {
-                    showConfirmationModal(async () => {
-                        await requestLoan(asset.assetId);
-                    });
-                });
-            }
-
-            tableBody.appendChild(row);
-
-        });
-
-    } catch (error) {
-        console.error("Failed to render ASSETS", error);
-        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-
+    await viewAllAssets();
+    setupFilters();
 });
 
+
 /**
- * Assets page for Staff
+ * Load all filters
  */
-// document.addEventListener("DOMContentLoaded", async () => {
-//     const tableBody = document.getElementById("assetsTableBody");
-
-//     try {
-//         const assets = await getAllAssets();
-//         tableBody.innerHTML = "";
-
-//         assets.forEach(asset => {
-//             const row = document.createElement("tr");
-
-//             row.innerHTML = `
-//                 <td>${asset.title}</td>
-//                 <td>${asset.category}</td>
-//                 <td>${asset.condition}</td>
-//                 <td>
-//                     <img src="${asset.photoPath} alt="Asset Image" style="width: 80px; height: auto;"/>
-//                 </td>
-//                 <td>
-//                     <button class="request-btn" data-id="${asset.assetId}">Request Loan</button>
-//                 </td>
-//             `;
-
-//             const requestButton = row.querySelector(".request-btn");
-//             requestButton.addEventListener("click", async () => {
-//                 await requestLoan(asset.assetId);
-//             });
-
-//             tableBody.appendChild(row);
-
-//         });
-
-//     } catch (error) {
-//         console.error("Failed to render ASSETS", error);
-//         tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
-//     }
-
-// });
-
-// /**
-//  * This is used to create an asset:
-//  */
-// document.addEventListener("DOMContentLoaded", () => {
-//     const form = document.getElementById("create-asset-form");
-//     const message = document.getElementById("message");
-
-//     form.addEventListener("submit", async (e) => {
-//         e.preventDefault(); // stop page reload
-
-//         // Collect form data
-//         const assetData = {
-//             title: document.getElementById("title").value,
-//             category: document.getElementById("category").value,
-//             serialNumber: document.getElementById("serialNumber").value,
-//             acquisitionDate: document.getElementById("acquisitionDate").value,
-//             cost: parseFloat(document.getElementById("cost").value),
-//             location: document.getElementById("location").value,
-//             condition: document.getElementById("condition").value,
-//             photoPath: document.getElementById("photoPath").value
-//         };
-
-//         try {
-//             // Call API
-//             const result = await createAsset(assetData);
-
-//             console.log("Asset created:", result);
-
-//             message.style.color = "green";
-//             message.textContent = "Asset created successfully!";
-
-//             // Reset form
-//             form.reset();
-
-//             // Optional: Redirect back to assets list
-//             setTimeout(() => {
-//                 window.location.href = "assets.html";
-//             }, 1500);
-
-//         } catch (error) {
-//             console.error("Error creating asset:", error);
-//             message.style.color = "red";
-//             message.textContent = `Error: ${error.message}`;
-//         }
-//     });
-// });
+const viewAllAssets = async () => {
+    try {
+        const assets = await getAllAssets();
+        renderAssets(assets);
+    } catch (error) {
+        console.error("Failed to load assets:", error);
+    }
+};
 
 
-// /**
-//  * REQUEST A loan on an asset
-//  */
+/**
+ * Apply filters
+ */
+const applyFilters = async () => {
+    try {
+        let assets = await getAllAssets();
 
-// const requestLoan = async (assetId) => {
-//     const userData = {
-//         userId: 4,
-//         assetId: assetId
-//     };
+        if (currentCondition !== "ALL") {
+            assets = assets.filter(a => a.condition === currentCondition);
+        }
 
-//     try {
-//         createLoan(userData);
-//     } catch (error) {
-//         console.log("Error: " + error)
-//     }
-// };
+        if (currentCategory !== "ALL") {
+            assets = assets.filter(a => a.category === currentCategory);
+        }
+
+        renderAssets(assets);
+    } catch (error) {
+        console.error("Filter error:", error);
+    }
+};
+
+/**
+ * Filters
+ * @returns 
+ */
+const setupFilters = () => {
+    const conditionDropDown = document.querySelector("#conditionFilter");
+    const categoryDropDown = document.querySelector("#categoryFilter");
+
+    if (!conditionDropDown || !categoryDropDown) {
+        console.error("Filter dropdowns not found in DOM");
+        return;
+    }
+
+    conditionDropDown.addEventListener("change", async (e) => {
+        currentCondition = e.target.value;
+        await applyFilters();
+    });
+
+    categoryDropDown.addEventListener("change", async (e) => {
+        currentCategory = e.target.value;
+        await applyFilters();
+    });
+};
+
+
+/**
+ * Populates the assets table
+ * @param {} assets 
+ * @returns 
+ */
+const renderAssets = (assets) => {
+    const tableBody = document.getElementById("assets-table-body");
+
+    if (!tableBody) {
+        console.error("Table body not found");
+        return;
+    }
+
+    tableBody.innerHTML = "";
+
+    assets.forEach(asset => {
+        const row = document.createElement("tr");
+
+        const isLoaned = asset.assetStatus === "LOANED";
+
+        if (isLoaned) {
+            row.classList.add("row-disabled");
+        }
+
+        row.innerHTML = `
+            <td>${asset.title}</td>
+            <td>${asset.category}</td>
+            <td>${asset.serialNumber}</td>
+            <td>${asset.acquisitionDate}</td>
+            <td>${asset.cost}</td>
+            <td>${asset.location}</td>
+            <td>${asset.condition}</td>
+            <td>
+                <img src="${asset.photoPath}" alt="Asset Image" style="width:80px;" />
+            </td>
+            <td>${asset.assetStatus}</td>
+            <td>
+                <button class="request-btn"
+                    data-id="${asset.assetId}"
+                    ${isLoaned ? "disabled" : ""}>
+                    ${isLoaned ? "Unavailable" : "Request Loan"}
+                </button>
+            </td>
+        `;
+
+        const btn = row.querySelector(".request-btn");
+
+        if (btn && !isLoaned) {
+            btn.addEventListener("click", () => {
+                showConfirmationModal(async () => {
+                    await requestLoan(asset.assetId);
+                    console.log("Loan requested");
+                });
+            });
+        }
+
+        tableBody.appendChild(row);
+    });
+};
+
+
+/**
+ * Allows a user to confirm a loan request
+ * @param {} onConfirm 
+ * @returns 
+ */
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+
+    if (!modal) {
+        console.error("Modal not found");
+        return;
+    }
+
+    modal.style.display = "flex";
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
+        modal.style.display = "none";
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
+
+/**
+ * Requests a loan
+ * @param {*} assetId 
+ */
+const requestLoan = async (assetId) => {
+    try {
+        await createLoan({
+            userId: 4,
+            assetId: assetId
+        });
+    } catch (error) {
+        console.log("Error:", error);
+    }
+};

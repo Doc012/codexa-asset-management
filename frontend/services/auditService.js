@@ -19,6 +19,12 @@ export async function getUserLogsById(id) {
     return await response.json();
 }
 
+export async function getAllManagerLogs(){
+    const response = await fetch(`${API_BASE_URL}/logs/manager`);
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}
+
 async function createLog(logData) {
     const response = await fetch(`${API_BASE_URL}/logs`, {
         method: 'POST',

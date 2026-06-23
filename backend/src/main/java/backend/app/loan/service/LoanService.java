@@ -66,7 +66,7 @@ public class LoanService {
             loan.setRequestDate(LocalDate.now());
             loan.setStatus(LoanStatus.PENDING);
             
-            loanRepo.save(loan);
+//            loanRepo.save(loan);
 
             LoanResponseDTO createdLoan = loanMapper.toDTO(loanRepo.save(loan));
 
@@ -76,7 +76,7 @@ public class LoanService {
                     .userId(7L)
                     .actionType(ActionType.CREATE)
                     .oldValue("N/A")
-                    .newValue(createdLoan.toString())
+                    .newValue(createdLoan.title())
                     .message(user.getFirstName() + "(" + user.getEmail() + "), sent a loan request.")
                     .build();
 

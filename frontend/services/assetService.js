@@ -64,3 +64,9 @@ export async function deleteAsset(id) {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return true;
 }
+
+export async function getAssetsByCondition(condition){
+    const response = await fetch(`${API_BASE_URL}/assets/condition/${condition}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}

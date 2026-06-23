@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 /**
  * This is for confirmation of a loan request
+ * @param {*} onConfirm 
  */
 function showConfirmationModal(onConfirm) {
     const modal = document.getElementById("btnConfirmation");
