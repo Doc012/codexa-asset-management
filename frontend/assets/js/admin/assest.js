@@ -211,13 +211,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. CLIENT SIDE REALTIME LOOKUP (Search and filter logic)
     function executeLocalQueryFilters() {
         const query = searchInput.value.toLowerCase();
-        const cat = categorySelect.value;
+        const cat = categorySelect.value.toLowerCase(); //Convert selected dropdown index value to lowercase
 
         const filtered = assetWorkspaceData.filter(asset => {
-            const matchesSearch = asset.title.toLowerCase().includes(query) ||
-                asset.serialNumber.toLowerCase().includes(query) ||
-                asset.location.toLowerCase().includes(query);
-            const matchesCat = cat === "all" || asset.category === cat;
+            const matchesSearch = 
+                (asset.title && asset.title.toLowerCase().includes(query) ||
+                (asset.serialNumber && asset.serialNumber.toLowerCase().includes(query)) ||
+                (asset.location && asset.location.toLowerCase().includes(query)));
+
+            const assetCategoryNormalized = asset.category ? asset.category.toLowerCase() : ""; 
+            const matchesCat = cat === "all" || assetCategoryNormalized === cat;
             return matchesSearch && matchesCat;
         });
         renderAssetsTableRows(filtered);

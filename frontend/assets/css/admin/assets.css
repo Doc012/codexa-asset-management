@@ -170,6 +170,7 @@
     border: 1px solid rgba(0, 0, 0, 0.02);
     width: 100%; /* Force it to occupy full available workspace width */
     margin-top: 20px;
+    overflow-x: auto; /* allow for horizontal scrolling on assets table */
 }
 
 .asset-table th {
@@ -308,7 +309,60 @@
     color: #ef4444;
     background-color: #fef2f2;
 }
+/* ------------------------------------------------------- */
 
+/* showing the action buttons - chnging the colors: */
+/* ==========================================================================
+   FORCE ACTION BUTTON VISIBILITY (No Overrides Allowed)
+   ========================================================================== */
+.row-actions-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.row-action-btn {
+    background: transparent !important;
+    border: none !important;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+/* Force Edit Button SVGs to be visibly dark gray by default */
+.row-action-btn.edit svg {
+    stroke: #64748b !important;
+    fill: none !important;
+}
+
+/* Edit Hover State */
+.row-action-btn.edit:hover {
+    background-color: #f5f3ff !important;
+}
+.row-action-btn.edit:hover svg {
+    stroke: #4f46e5 !important; /* Turns bright Indigo on hover */
+}
+
+/* Force Delete Button SVGs to be visibly muted red/gray by default */
+.row-action-btn.delete svg {
+    stroke: #94a3b8 !important;
+    fill: none !important;
+}
+
+/* Delete Hover State */
+.row-action-btn.delete:hover {
+    background-color: #fef2f2 !important;
+}
+.row-action-btn.delete:hover svg {
+    stroke: #ef4444 !important; /* Turns bright Red on hover */
+}
+
+
+/* --------------------------------------------------------- */
 #asset-modal-overlay {
     position: fixed;
     top: 0;
