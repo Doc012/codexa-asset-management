@@ -5,6 +5,35 @@ document.addEventListener("DOMContentLoaded", async () => {
   const logScopeFilter = document.getElementById("logScopeFilter");
   const logSearchInput = document.getElementById("logSearchInput");
 
+  const adminRecentLogstableBody = document.getElementById("adminRecentLogsBody");
+    
+    try {
+        const logs = await getAllLogs();
+        const slicedLogs = logs.slice(0, 4);
+        adminRecentLogstableBody.innerHTML = "";
+
+        slicedLogs.forEach(log => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = 
+            `
+                <td>${log.logCreatorEmail}</td>
+                <td>
+                <span class="admin-event-tag tag-delete">${log.actionType}</span>
+                <span class="event-summary">${log.message}</span>
+                </td>
+                <td class="text-right text-muted font-monospace">${log.timestamp}</td>                
+            
+            `;
+
+            adminRecentLogstableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Failed to render Audit Logs", error);
+        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+
   let logs = [];
 
   // Fetch logs once
