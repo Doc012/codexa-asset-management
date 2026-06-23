@@ -293,3 +293,44 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 });
+
+/**
+ * Display the total number of overdue loans:
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    // Target your exact dashboard element ID
+    const overdueCard = document.getElementById("loansOverdueCard");
+    
+    // Set today to midnight (June 23, 2026) for accurate comparisons
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (overdueCard) {
+        try {
+            const allLoans = await getAllLoans();
+
+            if (allLoans && Array.isArray(allLoans)) {
+                
+                const globalOverdue = allLoans.filter((loan) => {
+                    // 1. Skip rows without a due date, or requests that weren't approved
+                    if (loan.status !== "APPROVED" || !loan.dueDate) {
+                        return false;
+                    }
+
+                    // 2. Clear out time mismatches
+                    const dueDate = new Date(loan.dueDate);
+                    dueDate.setHours(0, 0, 0, 0); 
+
+                    // 3. If today is past the due date, it is overdue
+                    return today > dueDate;
+                });
+
+                // Update your "Loans Overdue" card counter
+                overdueCard.textContent = globalOverdue.length;
+            }
+        } catch (error) {
+            console.error(`Failed to calculate global overdue loans: ${error}`);
+            overdueCard.textContent = "0";
+        }
+    }
+});
