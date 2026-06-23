@@ -115,6 +115,7 @@
       </li>
     </ul>
   </aside>
+
   <main id="mainContent" class="content">
     <section id="logsPage" class="page active">
 
@@ -126,7 +127,6 @@
       </div>
 
       <div class="portal-filter-bar">
-
         <div class="filter-controls-group">
           <div class="filter-dropdown-wrapper">
             <label for="logScopeFilter">Action</label>
@@ -137,45 +137,39 @@
               <option value="DELETE">DELETE</option>
               <option value="CHECK_OUT">CHECK_OUT</option>
               <option value="CHECK_IN">CHECK_IN</option>
-              <option value="email"> EMAIL</option>
+              <option value="EMAIL">EMAIL</option>
             </select>
+          </div>
+          <div class="filter-search-wrapper">
+            <label for="logSearchInput">Search</label>
+            <input type="text" id="logSearchInput" placeholder="Search logs...">
           </div>
         </div>
       </div>
-      <div class="portal-card-table-wrapper">
-        <table class="asset-table log-table">
+
+      <div class="logs-table">
+        <table>
           <thead>
             <tr>
-              <th>Date & Time</th>
-              <th>User</th>
-              <th>Action Performed</th>
-              <th>Asset ID</th>
+              <th>Operator</th>
+              <th>Action</th>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Message</th>
+              <th>New Value</th>
+              <th>Old Value</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
-          <tbody id="logsTableBody">
-            <tr>
-              <td class="timestamp-cell">
-                <span class="cell-primary-title">2026-06-22</span>
-                <span class="cell-sub-label text-monospace">11:09:56 UTC</span>
-              </td>
-              <td>
-                <span class="cell-primary-title">sys_admin@asset-iq.com</span>
-              </td>
-              <td>
-                <p class="event-description-text">Authorized a loan for asset ID REF-XPS-001 to jsmith@org.com</p>
-              </td>
-              <td>
-                <span class="cell-primary-title font-monospace">DEL-XPS-001-2024</span>
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="logsTableBody"></tbody>
         </table>
       </div>
+
     </section>
   </main>
   <script src="../../../assets/js/users.js" type="module"></script>
   <script src="../../../assets/js/user/assets.js" type="module"></script>
-  <script src="../../../assets/js/auditLogs.js" type="module"></script>
+  <script src="../../../assets/js/admin/auditLogs.js" type="module"></script>
   <script src="../../../assets/js/loans.js" type="module"></script>
   <script src="../../../assets/js/user/script.js" type="module"></script>
 </body>
