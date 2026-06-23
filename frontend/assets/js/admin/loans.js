@@ -1,7 +1,7 @@
-import { getLoansByStatus } from "../../services/loanService.js";
-import { getAllLoans } from "../../services/loanService.js";
-import { getLoansByUser } from "../../services/loanService.js";
-import { cancelLoan } from "../../services/loanService.js";
+import { getLoansByStatus } from "../../../services/loanService.js";
+import { getAllLoans } from "../../../services/loanService.js";
+import { getLoansByUser } from "../../../services/loanService.js";
+import { cancelLoan } from "../../../services/loanService.js";
 
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
