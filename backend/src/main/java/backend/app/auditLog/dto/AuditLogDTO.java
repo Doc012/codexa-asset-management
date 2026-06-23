@@ -6,7 +6,7 @@ import backend.app.auditLog.enums.EntityType;
 import java.time.LocalDateTime;
 
 public class AuditLogDTO {
-    public record managerLogResponse(
+    public record auditLogResponse(
           Long logId,
           String logCreatorEmail,
           String entityTitle,

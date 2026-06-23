@@ -94,43 +94,49 @@ public class AssetService {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
                 );
 
-        Asset asset = Asset.builder()
-                .title(assetDto.title())
-                .category(assetDto.category())
-                .serialNumber(assetDto.serialNumber())
-                .acquisitionDate(assetDto.acquisitionDate())
-                .cost(assetDto.cost())
-                .location(assetDto.location())
-                .condition(assetDto.condition())
-                .photoPath(assetDto.photoPath())
-                .assetStatus(AssetStatus.AVAILABLE)
-                .build();
+        try {
+            Asset asset = Asset.builder()
+                    .title(assetDto.title())
+                    .category(assetDto.category())
+                    .serialNumber(assetDto.serialNumber())
+                    .acquisitionDate(assetDto.acquisitionDate())
+                    .cost(assetDto.cost())
+                    .location(assetDto.location())
+                    .condition(assetDto.condition())
+                    .photoPath(assetDto.photoPath())
+                    .assetStatus(AssetStatus.AVAILABLE)
+                    .build();
 
-        Asset savedAsset = assetRepo.save(asset);
+            Asset savedAsset = assetRepo.save(asset);
 
-        AuditLog log = new AuditLog().builder()
-                .userId(theUpdater.getUserId())
-                .entityType(EntityType.ASSET)
-                .entityId(asset.getAssetId())
-                .actionType(ActionType.CREATE)
-                .oldValue("N/A")
-                .newValue("Created Asset with ID: " + asset.getAssetId())
-                .message("Created Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
-                .build();
-        auditLogService.createLog(log);
+            AuditLog log = new AuditLog().builder()
+                    .userId(theUpdater.getUserId())
+                    .entityType(EntityType.ASSET)
+                    .entityId(asset.getAssetId())
+                    .actionType(ActionType.CREATE)
+                    .oldValue("N/A")
+                    .newValue("Created Asset with ID: " + asset.getAssetId())
+                    .message("Created Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
+                    .build();
+            auditLogService.createLog(log);
 
-        return new ResponseAssetDto(
-                savedAsset.getAssetId(),
-                savedAsset.getTitle(),
-                savedAsset.getCategory(),
-                savedAsset.getSerialNumber(),
-                savedAsset.getAcquisitionDate(),
-                savedAsset.getCost(),
-                savedAsset.getLocation(),
-                savedAsset.getCondition(),
-                savedAsset.getPhotoPath(),
-                savedAsset.getAssetStatus()
-        );
+            return new ResponseAssetDto(
+                    savedAsset.getAssetId(),
+                    savedAsset.getTitle(),
+                    savedAsset.getCategory(),
+                    savedAsset.getSerialNumber(),
+                    savedAsset.getAcquisitionDate(),
+                    savedAsset.getCost(),
+                    savedAsset.getLocation(),
+                    savedAsset.getCondition(),
+                    savedAsset.getPhotoPath(),
+                    savedAsset.getAssetStatus()
+            );
+        } catch (Exception ex){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        }
+
+
     }
 
     /**

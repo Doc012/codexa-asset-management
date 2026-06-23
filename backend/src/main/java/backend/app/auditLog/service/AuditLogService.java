@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -40,25 +41,52 @@ public class AuditLogService {
      * @param id
      * @return
      */
-    public AuditLog getAuditLogById(Long id){
-        return repository.findById(id)
+    public AuditLogDTO.auditLogResponse getAuditLogById(Long id){
+        AuditLog log = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Audit Log Not Found With ID: " + id
                 ));
+
+        return new AuditLogDTO.auditLogResponse(
+                log.getLogId(),
+                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                entityTitle(log.getEntityType(), log.getEntityId()),
+                log.getEntityType(),
+                log.getActionType(),
+                log.getTimestamp(),
+                log.getOldValue(),
+                log.getNewValue(),
+                log.getMessage()
+        );
     }
 
     /**
      *
      * @return
      */
-    public List<AuditLog> getAllAuditLogs(){
+    public List<AuditLogDTO.auditLogResponse> getAllAuditLogs(){
         List<AuditLog> logs = repository.findAll();
+
+        List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                                log.getLogId(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                entityTitle(log.getEntityType(), log.getEntityId()),
+                                log.getEntityType(),
+                                log.getActionType(),
+                                log.getTimestamp(),
+                                log.getOldValue(),
+                                log.getNewValue(),
+                                log.getMessage()
+                        )
+                ).toList();
+
         Collections.reverse(logs);
-        return logs;
+        return logsDto;
     }
 
-    public AuditLog createLog(AuditLog log){
+    public AuditLogDTO.auditLogResponse createLog(AuditLog log){
         AuditLog newLog = AuditLog.builder()
                 .entityType(log.getEntityType())
                 .entityId(log.getEntityId())
@@ -70,32 +98,116 @@ public class AuditLogService {
                 .message(log.getMessage())
                 .build();
 
-        return repository.save(newLog);
+        AuditLog savedLog = repository.save(newLog);
+
+        return new AuditLogDTO.auditLogResponse(
+                savedLog.getLogId(),
+                userRepository.findById(savedLog.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                entityTitle(savedLog.getEntityType(), savedLog.getEntityId()),
+                savedLog.getEntityType(),
+                savedLog.getActionType(),
+                savedLog.getTimestamp(),
+                savedLog.getOldValue(),
+                savedLog.getNewValue(),
+                savedLog.getMessage()
+        );
+
+
     }
 
-    public List<AuditLog> getAuditLogsByUserId(Long userId){
+    public List<AuditLogDTO.auditLogResponse> getAuditLogsByUserId(Long userId){
         List<AuditLog> logs = repository.findByUserId(userId);
+
+
         Collections.reverse(logs);
-        return logs;
+        List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                                log.getLogId(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                entityTitle(log.getEntityType(), log.getEntityId()),
+                                log.getEntityType(),
+                                log.getActionType(),
+                                log.getTimestamp(),
+                                log.getOldValue(),
+                                log.getNewValue(),
+                                log.getMessage()
+                        )
+                ).toList();
+
+        Collections.reverse(logs);
+        return logsDto;
+
     }
 
-    public List<AuditLog> getAuditLogsByUserEmail(String email) {
+    public List<AuditLogDTO.auditLogResponse> getAuditLogsByUserEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        return repository.findByUserId(user.getUserId());
+        List<AuditLog> logs = repository.findByUserId(user.getUserId());
+
+        List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                                log.getLogId(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                entityTitle(log.getEntityType(), log.getEntityId()),
+                                log.getEntityType(),
+                                log.getActionType(),
+                                log.getTimestamp(),
+                                log.getOldValue(),
+                                log.getNewValue(),
+                                log.getMessage()
+                        )
+                ).toList();
+
+        Collections.reverse(logs);
+        return logsDto;
+
     }
 
-    public List<AuditLog> getAuditLogsByActionType(ActionType actionType){
-        return repository.findByActionType(actionType);
+    public List<AuditLogDTO.auditLogResponse> getAuditLogsByActionType(ActionType actionType){
+        List<AuditLog> logs = repository.findByActionType(actionType);
+
+        List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                                log.getLogId(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                entityTitle(log.getEntityType(), log.getEntityId()),
+                                log.getEntityType(),
+                                log.getActionType(),
+                                log.getTimestamp(),
+                                log.getOldValue(),
+                                log.getNewValue(),
+                                log.getMessage()
+                        )
+                ).toList();
+
+        Collections.reverse(logs);
+        return logsDto;
     }
 
-    public List<AuditLog> getAuditLogsByEntityType(EntityType entityType){
-        return repository.findByEntityType(entityType);
+    public List<AuditLogDTO.auditLogResponse> getAuditLogsByEntityType(EntityType entityType){
+        List<AuditLog> logs = repository.findByEntityType(entityType);
+
+        List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                                log.getLogId(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                entityTitle(log.getEntityType(), log.getEntityId()),
+                                log.getEntityType(),
+                                log.getActionType(),
+                                log.getTimestamp(),
+                                log.getOldValue(),
+                                log.getNewValue(),
+                                log.getMessage()
+                        )
+                ).toList();
+
+        Collections.reverse(logs);
+        return logsDto;
     }
 
-    public List<AuditLogDTO.managerLogResponse> managerLog(Long id){
+    public List<AuditLogDTO.auditLogResponse> managerLog(Long id){
 
         return repository.findByUserId(id).stream()
                 .filter(log -> log.getEntityType().equals(EntityType.LOAN))
@@ -107,7 +219,7 @@ public class AuditLogService {
                             ));
 
                     if (user.getRole().equals(Role.MANAGER)){
-                        return new AuditLogDTO.managerLogResponse(
+                        return new AuditLogDTO.auditLogResponse(
                                 log.getLogId(),
                                 userRepository.findById(log.getUserId())
                                         .map(User::getEmail)

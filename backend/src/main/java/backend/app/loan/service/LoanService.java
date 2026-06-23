@@ -75,7 +75,7 @@ public class LoanService {
                     .entityId(createdLoan.loanId())
                     .userId(7L)
                     .actionType(ActionType.CREATE)
-                    .oldValue("")
+                    .oldValue("N/A")
                     .newValue(createdLoan.toString())
                     .message(user.getFirstName() + "(" + user.getEmail() + "), sent a loan request.")
                     .build();
