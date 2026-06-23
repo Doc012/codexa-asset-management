@@ -193,7 +193,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ ...payload, assetId: parseInt(activeId) })
                     });
-                    if (response.ok) loadAssetsInventoryFromServer();
+                    // if (response.ok) loadAssetsInventoryFromServer();
+
+                    if (response.ok) {
+                    // Extract the newly updated asset object returned from your API
+                        const updatedAsset = await response.json();
+                    // Update your local array cache instantly so your client-side filters stay in sync
+                        assetWorkspaceData = assetWorkspaceData.map(asset => 
+                            asset.assetId == activeId ? updatedAsset : asset
+                        );
+                    // Re-render the table with the modified local cache array
+                        renderAssetsTableRows(assetWorkspaceData);
+                    }
                 } else {
                     // Trigger POST operation for new additions
                     const response = await fetch(API_URL, {
@@ -201,13 +212,21 @@ document.addEventListener("DOMContentLoaded", () => {
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(payload)
                     });
-                    if (response.ok) loadAssetsInventoryFromServer();
+                    // if (response.ok) loadAssetsInventoryFromServer();
+
+                    if (response.ok) {
+                    // If your API returns the newly created object, grab it
+                        const newAsset = await response.json();
+                        assetWorkspaceData.push(newAsset);
+                        renderAssetsTableRows(assetWorkspaceData);
+                    }
                 }
                 hideModal();
             } catch (err) { console.error("Failed to commit form changes onto remote server:", err); }
         });
     }
 
+    
     // 5. CLIENT SIDE REALTIME LOOKUP (Search and filter logic)
     function executeLocalQueryFilters() {
         const query = searchInput.value.toLowerCase();
