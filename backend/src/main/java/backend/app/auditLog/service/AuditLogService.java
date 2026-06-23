@@ -244,6 +244,23 @@ public class AuditLogService {
 
     }
 
+    public List<AuditLogDTO.auditLogResponse> managerLogs(){
+        return repository.findAll().stream()
+                .filter(log -> log.getEntityType().equals(EntityType.LOAN))
+                .map(log -> new AuditLogDTO.auditLogResponse(
+                        log.getLogId(),
+                        userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                        entityTitle(log.getEntityType(), log.getEntityId()),
+                        log.getEntityType(),
+                        log.getActionType(),
+                        log.getTimestamp(),
+                        log.getOldValue(),
+                        log.getNewValue(),
+                        log.getMessage()
+                ))
+                .toList();
+    }
+
     public <T> T entityTitle(EntityType entityType, Long id){
         if (entityType.equals(EntityType.LOAN)){
             return (T) loanRepo.findById(id)

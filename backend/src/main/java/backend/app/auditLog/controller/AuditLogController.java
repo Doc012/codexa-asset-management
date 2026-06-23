@@ -78,4 +78,9 @@ public class AuditLogController {
         return service.managerLog(id);
     }
 
+    @GetMapping("/manager")
+    public List<AuditLogDTO.auditLogResponse> managerLogs(){
+        return service.managerLogs();
+    }
+
 }
