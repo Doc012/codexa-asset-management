@@ -6,6 +6,9 @@ import { API_BASE_URL } from "../config.js";
 import { createLoan } from "../../../services/loanService.js";
 
 
+
+
+
 /**
  * This is for The User viewing assets in their dashboard
  * The user can also see the total number of assets
