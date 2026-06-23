@@ -276,3 +276,20 @@ function showConfirmationModal(onConfirm) {
 }
 
 
+/**
+ * Displaying the total loans on the card, displayed on the admin dashboard
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    const loanCounter = document.getElementById("totalLoansCard");
+
+    if(loanCounter) {
+        try {
+            const loans = await getAllLoans();
+            const totalLoans = loans.length;
+
+            loanCounter.textContent = totalLoans;
+        } catch (error) {
+            console.error("FAILED TO RENDER LOANS" + error);
+        }
+    }
+});
