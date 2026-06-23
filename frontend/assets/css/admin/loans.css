@@ -183,6 +183,22 @@
   background: var(--success-bg, #ecfdf5);
   color: var(--success, #10b981);
 }
+.status-badge.pending {
+  background: var(--success-bg, #f7ff83);
+  color: var(--success, #7a790f);
+}
+.status-badge.cancelled {
+  background: var(--success-bg, #fdecec);
+  color: var(--success, #b91010);
+}
+.status-badge.rejected {
+  background: var(--success-bg, #ff0000);
+  color: var(--success, #000000);
+}
+.status-badge.returned {
+  background: var(--success-bg, #5bffb2);
+  color: var(--success, #000000);
+}
 
 /* ==========================================================================
    ACTION BUTTON INTERACTION LAYER

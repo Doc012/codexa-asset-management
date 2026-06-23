@@ -1,336 +1,140 @@
-import { getLoansByStatus } from "../../../services/loanService.js";
-import { getAllLoans } from "../../../services/loanService.js";
-import { getLoansByUser } from "../../../services/loanService.js";
-import { cancelLoan } from "../../../services/loanService.js";
-
-/**
- * VIEW ALL PENDING STAFF's loan when logged in
- */
+import { 
+    getAllLoans,
+    returnLoan,
+    rejectLoan,
+    approveLoan,
+    cancelLoan 
+} from "../../../services/loanService.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("pendingTableBody");
+    const tableBody = document.getElementById("loansTableBody");
+    const searchInput = document.getElementById("loanSearchInput");
+    const statusFilter = document.getElementById("loanStatusFilter");
+
+    let allLoans = []; 
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        allLoans = await getAllLoans();
+        renderTable(allLoans);
+    } catch(error){
+        console.error("Failed to render Loans table", error);
+        tableBody.innerHTML = `<tr><td colspan="5" style="color: red; text-align: center;">Error: ${error.message}</td></tr>`;
+    }
 
+    function renderTable(loansToRender) {
         tableBody.innerHTML = "";
-
-        loansByUser.forEach(loan => {
-            if (loan.status !== "PENDING") {
-                return false;
-            }
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${loan.title}</td>
-                <td>${loan.category}</td>
-                <td>${loan.requestDate}</td>
-                <td>${loan.status}</td>
-                <td>
-                    <button class="cancel_btn" data-id="${loan.loanId}">cancel loan</button>
-                </td>`
-            ;
-
-            const cancelBtn = row.querySelector(".cancel_btn");
-            if(cancelBtn){
-                cancelBtn.addEventListener("click", async()=> {
-                    showConfirmationModal(async()=> {
-                        await loanCancellation(loan.loanId);
-                        console.log(loan.status);
-                    })
-                })
-            }
-            tableBody.appendChild(row);
-
-            });
-
-    } catch (error) {
-        console.error("Failed to render loans", error);
-        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-});
-
-/**
- * cancel loan method
- */
-
-const loanCancellation = async(id) => {
-    try {
-        await cancelLoan(id);
-        window.location.reload();
-    }catch (error){
-        console.log(`Error: ${error}`);
-    }
-}
-
-
-/**
- * View loan history for user:
- * Rejected and Returned
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("historyTableBody");
-    
-    try {
-        const loansByUser = await getLoansByUser(4);
-        tableBody.innerHTML = "";
-
-        loansByUser.forEach(loan => {
-            if(loan.status === "PENDING" || loan.status === "APPROVED"){
-                return false;
-            }
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${loan.title}</td>
-                <td>${loan.category}</td>
-                <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
-                <td>${loan.status}</td>
-            `
-
-            tableBody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Failed to render LOANS", error);
-        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-});
-
-/**
- * View all active Loans
- * APPROVED and not Returned
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const tableBody = document.getElementById("activeTableBody");
-    
-    try {
-        const loansByUser = await getLoansByUser(4);
-        tableBody.innerHTML = "";
-
-        loansByUser.forEach(loan => {
-            if(loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED" || loan.status === "CANCELLED"){
-                return false;
-            }
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${loan.title}</td>
-                <td>${loan.category}</td>
-                <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
-                <td>${loan.status}</td>
-            `
-
-            tableBody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Failed to render LOANS", error);
-        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-});
-
-/**
- * All STAFF's Due soon loans
- * 
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const dueSoonElement = document.getElementById("total_requests");
-    const userId = 4;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    try {
-
-        const loansDue = await getLoansByUser(userId);
-
-        const total = loansDue.filter((loan) => {
-            if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
-                return false;
-            }
-            const dueDate = new Date(loan.dueDate);
-            const diff = dueDate - today;
-
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-            return daysRemaining >= 0 && daysRemaining <= 8;
-        });
-
-        const totalDueLoans = total.length;
-
-        if (dueSoonElement && loansDue) {
-            dueSoonElement.textContent = totalDueLoans;
-        }
-
-    } catch (error) {
-        console.log(`Error: ${error}`)
-    }
-
-});
-
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const dueSoonElement = document.getElementById("total_requests");
-    const userId = 4;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    try {
-
-        const loansDue = await getLoansByUser(userId);
-
-        const total = loansDue.filter((loan) => {
-            if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
-                return false;
-            }
-            const dueDate = new Date(loan.dueDate);
-            const diff = dueDate - today;
-
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-            return daysRemaining >= 0 && daysRemaining <= 8;
-        });
-
-        const totalDueLoans = total.length;
-
-        if (dueSoonElement && loansDue) {
-            dueSoonElement.textContent = totalDueLoans;
-        }
-
-    } catch (error) {
-        console.log(`Error: ${error}`)
-    }
-
-});
-/**
- * All STAFF's overdue loans
- */
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const overdueElement = document.getElementById("overdue");
-    const userId = 4;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    try {
-        const getUserLoans = await getLoansByUser(userId);
-
-        const total = getUserLoans.filter((loan) => {
-            const dueDate = new Date(loan.dueDate);
-            const diff = today - dueDate;
-
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-            return daysRemaining <= 0;
-
-        });
-
-        const totalOverDue = total.length;
-
-        if (getUserLoans && overdueElement) {
-            overdueElement.textContent = totalOverDue;
-        }
-
-    } catch (error) {
-        console.log(`Error: ${error}`);
-    }
-
-});
-/**
- * All loans of the user
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const allUserLoansCard = document.getElementById("totalLoans");
-    const userId = 4;
-
-    try {
-        const loansByUser = await getLoansByUser(4);
         
-        if(loansByUser && allUserLoansCard){
-            allUserLoansCard.textContent = loansByUser.length;
+        if (loansToRender.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888;">No loans matched your criteria.</td></tr>`;
+            return;
         }
 
-    }catch (error){
-        console.log(`Error: ${error}`)
+        loansToRender.forEach(loan => {
+            const row = document.createElement("tr");
+            
+            const actionButtons = getActionButtonsHTML(loan.status, loan.loanId);
+
+            row.innerHTML = `
+                <td class="flex-meta-cell">
+                    <div>
+                        <span class="cell-primary-title">${loan.title || 'Unknown Asset'}</span>
+                        <span class="cell-sub-label code-font">ID: ${loan.assetId}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="cell-primary-title">${loan.requesterEmail.split('@')[0]}</span> 
+                    <span class="cell-sub-label">${loan.requesterEmail}</span>
+                </td>
+                <td>
+                    <span class="cell-primary-title">${loan.requestDate || 'N/A'}</span>
+                    <span class="cell-sub-label">Due: ${loan.dueDate || 'N/A'}</span>
+                </td>
+                <td>
+                    <span class="status-badge ${getStatusLabel(loan.status)}">${loan.status || 'PENDING'}</span>
+                </td>
+                <td>
+                    <div class="row-actions-group">
+                        ${actionButtons}
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
     }
-    
-});
 
-
-function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
-
-    modal.style.display = "flex";
-
-    document.getElementById("confirmBtn").onclick = async () => {
-        await onConfirm();
-        modal.style.display = "none";
-    };
-
-    document.getElementById("cancelBtn").onclick = () => {
-        modal.style.display = "none";
-    };
-}
-
-
-/**
- * Displaying the total loans on the card, displayed on the admin dashboard
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const loanCounter = document.getElementById("totalLoansCard");
-
-    if(loanCounter) {
-        try {
-            const loans = await getAllLoans();
-            const totalLoans = loans.length;
-
-            loanCounter.textContent = totalLoans;
-        } catch (error) {
-            console.error("FAILED TO RENDER LOANS" + error);
+    function getActionButtonsHTML(status, id) {
+        if (!status || status === 'PENDING') {
+            return `
+                <button class="row-action-btn edit action-approve" data-id="${id}" title="Approve Request">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </button>
+                <button class="row-action-btn delete action-reject" data-id="${id}" title="Reject Request">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </button>`;
         }
+        if (status === 'APPROVED') {
+            return `
+                <button class="row-action-btn edit action-return" data-id="${id}" title="Process Return Audit" style="stroke: #2563eb;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                </button>
+                <button class="row-action-btn delete action-cancel" data-id="${id}" title="Cancel Active Allocation">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                </button>`;
+        }
+        return `<span style="font-size: 12px; color:#aaa;">Archived</span>`;
     }
-});
 
-/**
- * Display the total number of overdue loans:
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    // Target your exact dashboard element ID
-    const overdueCard = document.getElementById("loansOverdueCard");
-    
-    // Set today to midnight (June 23, 2026) for accurate comparisons
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    function filterData() {
+        const searchQuery = searchInput.value.toLowerCase().trim();
+        const selectedStatus = statusFilter.value;
 
-    if (overdueCard) {
-        try {
-            const allLoans = await getAllLoans();
+        const filtered = allLoans.filter(loan => {
+            const matchesSearch = 
+                (loan.title && loan.title.toLowerCase().includes(searchQuery)) ||
+                (loan.assetId && String(loan.assetId).includes(searchQuery)) ||
+                (loan.requesterEmail && loan.requesterEmail.toLowerCase().includes(searchQuery));
 
-            if (allLoans && Array.isArray(allLoans)) {
-                
-                const globalOverdue = allLoans.filter((loan) => {
-                    // 1. Skip rows without a due date, or requests that weren't approved
-                    if (loan.status !== "APPROVED" || !loan.dueDate) {
-                        return false;
-                    }
+            const matchesStatus = (selectedStatus === "all") || (loan.status === selectedStatus);
 
-                    // 2. Clear out time mismatches
-                    const dueDate = new Date(loan.dueDate);
-                    dueDate.setHours(0, 0, 0, 0); 
+            return matchesSearch && matchesStatus;
+        });
 
-                    // 3. If today is past the due date, it is overdue
-                    return today > dueDate;
-                });
+        renderTable(filtered);
+    }
 
-                // Update your "Loans Overdue" card counter
-                overdueCard.textContent = globalOverdue.length;
-            }
-        } catch (error) {
-            console.error(`Failed to calculate global overdue loans: ${error}`);
-            overdueCard.textContent = "0";
+    searchInput.addEventListener("input", filterData);
+    statusFilter.addEventListener("change", filterData);
+
+
+    tableBody.addEventListener("click", async (event) => {
+        const button = event.target.closest(".row-action-btn");
+        if (!button) return;
+
+        const loanId = button.dataset.id;
+        
+        if (button.classList.contains("action-approve")) {
+            await approveLoan(loanId);
+            window.location.reload();
+        } else if (button.classList.contains("action-reject")) {
+            await rejectLoan(loanId);
+            window.location.reload();
+        } else if (button.classList.contains("action-return")) {
+            await returnLoan(loanId);
+            window.location.reload();
+        } else if (button.classList.contains("action-cancel")) {
+            await cancelLoan(loanId);
+            window.location.reload();
         }
+    });
+
+    function getStatusLabel(status) {
+        const statusMap = {
+            APPROVED: 'good',
+            PENDING: 'pending',
+            CANCELLED: 'cancelled',
+            REJECTED: 'rejected',
+            RETURNED: 'returned'
+        };
+        return statusMap[status] || 'pending';
     }
 });

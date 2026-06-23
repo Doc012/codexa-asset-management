@@ -7,7 +7,6 @@ import backend.app.user.repository.UserRepository;
 import backend.auth.dto.AuthDTO;
 import backend.security.jwt.JwtUtil;
 import backend.security.jwt.TokenStore;
-import jakarta.mail.Message;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
