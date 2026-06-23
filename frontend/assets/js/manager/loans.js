@@ -4,51 +4,27 @@ import { approveLoan } from "../../../services/loanService.js";
 import { rejectLoan } from "../../../services/loanService.js";
 import { returnLoan } from "../../../services/loanService.js";
 import { checkoutLoan } from "../../../services/loanService.js";
-/**
- * get all loans and the numeric value of all loans belonging to a MANAGER
- */
-// document.addEventListener("DOMContentLoaded", async () => {
-//     const tableBody = document.getElementById("all-loans-table");
-//     const allLoansElement = document.getElementById("all-loans");
-
-//     try {
-//         const allLoans = await getAllLoans();
-//         const totalLoans = allLoans.length;
-//         allLoansElement.innerHTML = totalLoans;
-
-//         tableBody.innerHTML = "";
-
-//         allLoans.forEach(allLoans => {
-//             const row = document.createElement("tr");
-
-//             row.innerHTML = `
-//                 <td>${loanId}</td>
-//                 <td>${userId}</td>
-//                 <td>${assetId}</td>
-//                 <td>${status}</td>
-//                 <td>${requestDate}</td>
-//                 <td>${checkoutDate}</td>
-//                 <td>${dueDate}</td>
-//             `;
-//         })
-
-//         tableBody.appendChild(row);
-
-//     } catch (error) {
-//         console.error("Failed to render loans", error);
-//         tableBody.innerHTML = `<tr><td colspan = "7" style="color: red";> Error: ${error.message}</td></tr>`;
-//     }
-// });
 
 /**
- * Displaying Pending loans on the loan requests
- * THE MANAGER
+ * get all loans and the numeric value of all loans in the system
  */
-
 document.addEventListener("DOMContentLoaded", async () => {
+    await allDashboardCards();
+    await allPendingLoans();
+    await allActiveLoans();
+    await checkingOutLoans();
+    await historicalLoans();
+});
+
+/**
+ * This for the Dashboard cards for Mangager's dashbaord.
+ */
+const allDashboardCards = async () => {
     const numOfPendingLoans = document.querySelector("#pending-loans-number")
     const numOfApprovedLoans = document.querySelector("#approved-loans");
     const numOfRejectedLoans = document.querySelector("#rejected-loans")
+    const allLoansElement = document.querySelector("#all-loans");
+
 
     const firstRow = document.querySelector(".row-details1")
     const secRow = document.querySelector(".row-details2")
@@ -67,6 +43,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const totalRejected = rejectedLoans.length;
         numOfRejectedLoans.textContent = totalRejected;
 
+        const allLoans = await getAllLoans();
+        const totalLoans = allLoans.length;
+        allLoansElement.textContent = totalLoans;
 
 
         if (firstRow) {
@@ -82,14 +61,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.log(`Error: ` + error)
     }
-});
+};
 
 /**
  * Manager can view Pending loans
  * Accept or Reject
  */
-
-document.addEventListener("DOMContentLoaded", async () => {
+const allPendingLoans = async () => {
     const tableBody = document.querySelector("#pendingLoansTableBody");
     try {
         const pendingLoans = await getLoansByStatus("PENDING");
@@ -134,9 +112,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.log(`Error: ` + error)
     }
-});
+};
 /**
- * Approve and reject loans
+ * Approve loans
  */
 
 const loanApproval = async (loanId) => {
@@ -165,7 +143,7 @@ const loanRejection = async (loanId) => {
  * All Active loans
  * Can be Returned
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const allActiveLoans = async()=> {
     const tableBody = document.querySelector("#active-loans-body");
     try {
         const pendingLoans = await getLoansByStatus("APPROVED");
@@ -200,8 +178,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.log(`Error: ` + error)
     }
-});
+};
 
+/**
+ * This method is used to return an asset
+ * @param {*} loanId loan id
+ */
 const loanReturn = async (loanId) => {
     try {
         await returnLoan(loanId);
@@ -215,7 +197,7 @@ const loanReturn = async (loanId) => {
  * Checkout loans
  */
 
-document.addEventListener("DOMContentLoaded", async () => {
+const checkingOutLoans = async()=>{
     const tableBody = document.querySelector("#checkout-loan-body");
 
     try {
@@ -223,7 +205,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const filteredLoans = approvedLoans.filter(
             loan => loan.assetStatus !== "LOANED"
         );
-        
+
         tableBody.innerHTML = "";
 
         filteredLoans.forEach(loan => {
@@ -252,8 +234,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.log(`Error: ${error}`);
     }
-});
+};
 
+/**
+ * Used to checkout a loan when collected
+ * @param {*} id  loan id
+ */
 const loanCheckout = async (id) => {
     try {
         await checkoutLoan(id);
@@ -268,7 +254,7 @@ const loanCheckout = async (id) => {
  * All returned and rejected loans
  */
 
-document.addEventListener("DOMContentLoaded", async () => {
+const historicalLoans = async()=> {
     const tableBody = document.querySelector("#historical-loans");
     try {
         const allLoans = await getAllLoans();
@@ -296,58 +282,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.log(`Error: ` + error)
     }
-});
+};
 
 
 /**
- * Displaying loans except the pending ones
+ * Allows a user to switch between tabs in the loans page
+ * @param {*} event 
+ * @param {*} tabId 
  */
-
-// const requestLoanHistory = async () => {
-//     const tableBody = document.querySelector("#all_loans tbody");
-
-//     try {
-//         const allLoans = await getAllLoans();
-//         tableBody.innerHTML = "";
-
-//         const loans = allLoans.filter((loan) => loan.status !== "PENDING");
-
-//         loans.forEach((loan) => {
-//             const row = document.createElement("tr");
-
-//             row.innerHTML = `
-//                 <td>${loan.assetId}</td>
-//                 <td>${loan.userId}</td>
-//                 <td>${loan.requestDate}</td>
-//                 <td>${loan.loanId}</td>
-//                 <td>${loan.status}</td>`
-
-//             tableBody.appendChild(row);
-//         })
-//     } catch (error) {
-//         console.log("Error: " + error)
-//     }
-// };
-
-// requestLoanHistory();
-
-
-
-
 function switchTab(event, tabId) {
-    // 1. Hide all active dashboard tab content containers
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active-content'));
-
-    // 2. Remove highlighted active navigation button classes
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(btn => btn.classList.remove('active'));
-
-    // 3. Mount current configurations active targets
     document.getElementById(tabId).classList.add('active-content');
     event.currentTarget.classList.add('active');
 }
 
+/**
+ * User for a confirmation for a user action 
+ * @param {*} onConfirm 
+ */
 function showConfirmationModal(onConfirm) {
     const modal = document.getElementById("btnConfirmation");
 

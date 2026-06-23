@@ -3,7 +3,8 @@ import { API_BASE_URL } from "../config.js";
 
 
 /**
- * GetUser by ID
+ * GetUser details by ID
+ * Display all user details on the dashboard
  */
 document.addEventListener("DOMContentLoaded", async () => {
     const managerElement = document.querySelector(".ledger-title");
@@ -25,10 +26,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (profileImage && profileInitial) {
             if (managerData.picUrl !== null) {
                 profileImage.src = managerData.picUrl;
-                // profileInitial.style.display = "none";
+
             } else {
                 profileInitial.textContent = `${managerData.firstName[0].toUpperCase()}`;
-                // profileImage.style.display = "none";
             }
         }
 
