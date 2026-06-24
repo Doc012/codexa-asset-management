@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await loanHistory();
     }
 
-    if(document.getElementById("collectionTableBody")){
+    if (document.getElementById("collectionTableBody")) {
         await waitingCollections();
     }
 
@@ -142,11 +142,12 @@ const waitingCollections = async () => {
         tableBody.innerHTML = "";
 
         const filteredLoans = loansByUser.filter(loan => {
-            return loan.status === "APPROVED" && loan.dueDate === null});
-            
-            const row = document.createElement("tr");
+            return loan.status === "APPROVED" && loan.dueDate === null
+        });
 
-            filteredLoans.forEach(loan => {
+        const row = document.createElement("tr");
+
+        filteredLoans.forEach(loan => {
 
             row.innerHTML = `
                 <td>${loan.title}</td>
@@ -175,20 +176,23 @@ const activeLoans = async () => {
         const loansByUser = await getLoansByUser(4);
         tableBody.innerHTML = "";
 
-        loansByUser.forEach(loan => {
-            if (loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED" || loan.status === "CANCELLED") {
-                return false;
-            }
+        const filteredLoans = loansByUser.filter(loan => {
+            return (loan.status === "APPROVED" && loan.dueDate !== null)
+        });
+
+        filteredLoans.forEach((loan) => {
             const row = document.createElement("tr");
+            if (overDueLoan(loan) < 0) {
+                row.classList.add("overdue-row");
+            }
 
             row.innerHTML = `
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
+                <td>${overDueLoan(loan)} days</td>
                 <td>${loan.status}</td>
             `
-            console.log(loan);
 
             tableBody.appendChild(row);
         });
@@ -199,45 +203,22 @@ const activeLoans = async () => {
     }
 };
 
-
 /**
- * All STAFF's overdue loans
- * It counts all loans that are due soon
- * 
+ * This checks if a single loan is overdue
+ * @param {} loan 
+ * @returns a boolean
  */
-// document.addEventListener("DOMContentLoaded", async () => {
-//     const dueSoonElement = document.getElementById("total_requests");
-//     const userId = 4;
-//     const today = new Date();
-//     today.setHours(0, 0, 0, 0);
+const overDueLoan = (loan) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-//     try {
+    const dueDate = new Date(loan.dueDate);
+    dueDate.setHours(0, 0, 0, 0)
+    const diff = (dueDate - today) / (86400000);
 
-//         const loansDue = await getLoansByUser(userId);
+    return diff;
 
-//         const total = loansDue.filter((loan) => {
-//             if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
-//                 return false;
-//             }
-//             const dueDate = new Date(loan.dueDate);
-//             const diff = dueDate - today;
-
-//             const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-//             return daysRemaining >= 0 && daysRemaining <= 8;
-//         });
-
-//         const totalDueLoans = total.length;
-
-//         if (dueSoonElement && loansDue) {
-//             dueSoonElement.textContent = totalDueLoans;
-//         }
-
-//     } catch (error) {
-//         console.log(`Error: ${error}`)
-//     }
-
-// });
+}
 
 
 /**
@@ -260,7 +241,7 @@ const dueSoonLoans = async () => {
             const dueDate = new Date(loan.dueDate);
             const diff = dueDate - today;
 
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            const daysRemaining = Math.ceil(diff / (86400000));
 
             return daysRemaining >= 0 && daysRemaining <= 8;
         });
@@ -291,16 +272,20 @@ const overDueLoans = async () => {
         const getUserLoans = await getLoansByUser(userId);
 
         const total = getUserLoans.filter((loan) => {
+            if (loan.status !== "APPROVED" || !loan.dueDate) {
+                return false;
+            }
+
             const dueDate = new Date(loan.dueDate);
-            const diff = today - dueDate;
+            dueDate.setHours(0, 0, 0, 0);
 
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            const diff = (dueDate - today) / 86400000;
 
-            return daysRemaining <= 0;
-
+            return diff < 0;
         });
 
         const totalOverDue = total.length;
+        console.log(totalOverDue)
 
         if (getUserLoans && overdueElement) {
             overdueElement.textContent = totalOverDue;
@@ -311,6 +296,8 @@ const overDueLoans = async () => {
     }
 
 };
+
+
 
 /**
  * All loans of the user
