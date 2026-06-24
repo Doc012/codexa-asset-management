@@ -138,3 +138,47 @@ document.addEventListener("DOMContentLoaded", async () => {
         return statusMap[status] || 'pending';
     }
 });
+
+
+
+/**
+ * Display total amount of loans on dashboard
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    const loansCard = document.getElementById("totalLoansCard");
+    try {
+        const allLoans = await getAllLoans();
+
+        const assetCounter = allLoans.length;
+        if(loansCard) {
+            loansCard.textContent = assetCounter;
+        }
+    } catch(error) {
+        console.error("FAILED TO RENDER TOTAL NUMBER OF LOANS")
+    }
+});
+
+/**
+ * Display overdue loans
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+    const loansOverdueCard = document.getElementById("loansOverdueCard");
+
+    try {
+        const loans = await getAllLoans();
+
+        const today = new Date();
+
+        const overdueLoans = loans.filter(loan => {
+            const dueDate = new Date(loan.dueDate);
+
+            return dueDate < today && !loan.RETURNED;
+        });
+
+        if(loansOverdueCard) {
+            loansOverdueCard.textContent = overdueLoans.length;
+        }
+    } catch(error) {
+        console.error("FAILED TO CALCULATE TOTAL OVERDUE LOANS");
+    }
+});
