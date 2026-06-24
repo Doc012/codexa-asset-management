@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/forms.css">
+  <title>Verify Email – AssetIQ</title>
+</head>
+<body>
+
+<section class="verify-email">
+  <div class="container-sm">
+    <div class="card" style="text-align:center;">
+
+      <div class="logo-wrapper">
+        <img src="/assets/images/AssetIq-removebg-preview.png" alt="AssetIQ Logo">
+      </div>
+
+      <h2>Email Verification</h2>
+
+      <!-- Shown while verifying -->
+      <div id="loadingBox">
+        <p>Verifying your email address…</p>
+      </div>
+
+      <!-- Shown if the URL has no ?token= param or token is invalid -->
+      <div id="errorBox" class="alert alert-error" hidden></div>
+
+      <!-- Shown on success -->
+      <div id="successBox" class="alert alert-success" hidden></div>
+
+      <p><a href="login.html"><b>Go to Login</b></a></p>
+
+    </div>
+  </div>
+</section>
+
+<script type="module" src="/assets/js/auth/verifyEmail.js"></script>
+</body>
+</html>

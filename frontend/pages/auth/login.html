@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/forms.css">
+  <title>Login – AssetIQ</title>
+</head>
+<body>
+
+<section class="login">
+  <div class="container-sm">
+    <form class="card login-form" id="loginForm" novalidate>
+
+      <div class="logo-wrapper">
+        <img src="/assets/images/AssetIq-removebg-preview.png" alt="AssetIQ Logo">
+      </div>
+
+      <h2>Welcome Back</h2>
+      <p>Login to access AssetIQ</p>
+
+      <!-- Error banner — hidden by default, shown by login.js on failure -->
+      <div id="errorBox" class="alert alert-error" hidden></div>
+
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email address"
+        autocomplete="email"
+        required
+      >
+
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button type="submit" id="submitBtn" class="btn">Login</button>
+
+      <p class="forgot-password">
+        <a href="forgot-password.html"><b>Forgot Password</b></a>
+      </p>
+      <p>
+        Don't have an account yet?
+        <a href="register.html"><b>Register</b></a>
+      </p>
+
+    </form>
+  </div>
+</section>
+
+<!-- type="module" enables ES module imports in login.js -->
+<script type="module" src="/assets/js/auth/login.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/assets/css/forms.css">
+  <title>Register – AssetIQ</title>
+</head>
+<body>
+
+<section class="register">
+  <div class="container-sm">
+    <form class="card register-form" id="registerForm" novalidate>
+
+      <div class="logo-wrapper">
+        <img src="/assets/images/AssetIq-removebg-preview.png" alt="AssetIQ Logo">
+      </div>
+
+      <h2>Create Account</h2>
+      <p>Join AssetIQ to get started</p>
+
+      <div id="errorBox"   class="alert alert-error"   hidden></div>
+      <div id="successBox" class="alert alert-success" hidden></div>
+
+      <input type="text"     id="firstName" name="firstName" placeholder="First name"     required>
+      <input type="text"     id="lastName"  name="lastName"  placeholder="Last name"      required>
+      <input type="email"    id="email"     name="email"     placeholder="Email address"  autocomplete="email" required>
+      <input type="password" id="password"  name="password"  placeholder="Password (min. 8 characters)" autocomplete="new-password" required>
+
+      <button type="submit" id="submitBtn" class="btn">Register</button>
+
+      <p>Already have an account? <a href="login.html"><b>Login</b></a></p>
+
+    </form>
+  </div>
+</section>
+
+<script type="module" src="/assets/js/auth/register.js"></script>
+</body>
+</html>
