@@ -155,6 +155,7 @@ const allActiveLoans = async()=> {
             <td>${loan.title}</td>
             <td>${loan.requesterEmail}</td>
             <td>${loan.requestDate}</td>
+            <td>${loan.dueDate}</td>
             <td>${loan.department}</td>
              <td>
                 <button class="return_btn" data-id="${loan.loanId}">Return</button>

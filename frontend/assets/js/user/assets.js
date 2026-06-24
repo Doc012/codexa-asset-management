@@ -8,12 +8,21 @@ import { createLoan } from "../../../services/loanService.js";
 
 
 
+document.addEventListener("DOMContentLoaded", async () => {
+    if (document.getElementById("user-asset-table-body")) {
+        await viewAssetsOnDashboard();
+    }
+
+    if (document.getElementById("assetsTableBody")) {
+        await assetPage();
+    }
+});
 
 /**
  * This is for The User viewing assets in their dashboard
  * The user can also see the total number of assets
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const viewAssetsOnDashboard = async () => {
     const tableBody = document.getElementById("user-asset-table-body");
     const assetCounter = document.getElementById("totalAssets");
 
@@ -35,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${asset.category}</td>
                 <td>${asset.condition}</td>
                 <td>
-                    <img src="${asset.photoPath} alt="Asset Image" style="width: 80px; height: auto;"/>
+                    <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
                 </td>
             `;
 
@@ -48,61 +57,121 @@ document.addEventListener("DOMContentLoaded", async () => {
         tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
     }
 
-});
+};
 
 /**
  * Assets page for Staff
  * Allows the user to view available assets and request a loan
  */
-document.addEventListener("DOMContentLoaded", async () => {
+
+const renderAssets = (tableBody, assets) => {
+    tableBody.innerHTML = "";
+
+    assets.forEach(asset => {
+        const row = document.createElement("tr");
+
+        const isLoaned = asset.assetStatus === "LOANED";
+        if (isLoaned) {
+            row.classList.add("row-disabled");
+        }
+
+        row.innerHTML = `
+            <td>${asset.title}</td>
+            <td>${asset.category}</td>
+            <td>${asset.condition}</td>
+            <td>
+                <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
+            </td>
+            <td>${asset.assetStatus}</td>
+            <td>
+                <button class="request-btn" data-id="${asset.assetId}" ${isLoaned ? "disabled" : ""}>
+                    ${isLoaned ? "Unavailable" : "Request Loan"}
+                </button>
+            </td>
+        `;
+
+
+        tableBody.appendChild(row);
+    });
+};
+
+/**
+ * FILTER ONLY (pure function)
+ */
+const filterAssets = (assets, search, category, condition) => {
+    return assets.filter(asset => {
+
+        const matchesSearch =
+            search === "" ||
+            asset.title?.toLowerCase().includes(search) ||
+            asset.category?.toLowerCase().includes(search) ||
+            asset.condition?.toLowerCase().includes(search) ||
+            asset.assetStatus?.toLowerCase().includes(search);
+
+        const matchesCategory =
+            category === "ALL" || asset.category === category;
+
+        const matchesCondition =
+            condition === "" || asset.condition === condition;
+
+        return matchesSearch && matchesCategory && matchesCondition;
+    });
+};
+
+/**
+ * MAIN CONTROLLER
+ */
+const assetPage = async () => {
     const tableBody = document.getElementById("assetsTableBody");
 
+    const searchInput = document.getElementById("assetSearch");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const conditionFilter = document.getElementById("conditionFilter");
+
+    let allAssets = [];
+
     try {
-        const assets = await getAllAssets();
-        tableBody.innerHTML = "";
+        allAssets = await getAllAssets();
 
-        assets.forEach(asset => {
-            const row = document.createElement("tr");
-            const isLoaned = asset.assetStatus === "LOANED";
+        renderAssets(tableBody, allAssets);
 
-            if (isLoaned) {
-                row.classList.add("row-disabled");
-            }
+        const applyFilters = () => {
+            const search = searchInput.value.toLowerCase().trim();
+            const category = categoryFilter.value;
+            const condition = conditionFilter.value;
 
-            row.innerHTML = `
-                <td>${asset.title}</td>
-                <td>${asset.category}</td>
-                <td>${asset.condition}</td>
-                <td>
-                    <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
-                </td>
-                <td>${asset.assetStatus}</td>
-                <td>
-                    <button class="request-btn" data-id="${asset.assetId}" ${isLoaned ? "disabled" : ""}>${isLoaned ? "Unavailable" : "Request Loan"}</button>
-                </td>
-            `;
+            const filtered = filterAssets(
+                allAssets,
+                search,
+                category,
+                condition
+            );
 
-            const requestButton = row.querySelector(".request-btn");
+            renderAssets(tableBody, filtered);
 
-            if (requestButton && !isLoaned) {
-                requestButton.addEventListener("click", () => {
-                    showConfirmationModal(async () => {
-                        await requestLoan(asset.assetId);
-                    });
-                });
-            }
+        };
 
+        tableBody.addEventListener("click", (event) => {
+            const button = event.target.closest(".request-btn");
+            if (!button) return;
 
-            tableBody.appendChild(row);
+            const assetId = button.dataset.id;
 
+            showConfirmationModal(async () => {
+                await requestLoan(assetId);
+            });
         });
+
+        searchInput.addEventListener("input", applyFilters);
+        categoryFilter.addEventListener("change", applyFilters);
+        conditionFilter.addEventListener("change", applyFilters);
 
     } catch (error) {
         console.error("Failed to render ASSETS", error);
-        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="6" style="color: red;">Error: ${error.message}</td></tr>`;
     }
+};
 
-});
 
 /**
  * This is for confirmation of a loan request
@@ -135,7 +204,7 @@ const requestLoan = async (assetId) => {
     };
 
     try {
-        createLoan(userData);
+        await createLoan(userData);
     } catch (error) {
         console.log("Error: " + error)
     }

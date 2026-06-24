@@ -4,12 +4,43 @@ import { getAllLoans } from "../../../services/loanService.js";
 import { getLoansByUser } from "../../../services/loanService.js";
 import { cancelLoan } from "../../../services/loanService.js";
 
+
+document.addEventListener("DOMContentLoaded", async () => {
+    if (document.getElementById("pendingTableBody")) {
+        await allPendingLoans();
+    }
+
+    if (document.getElementById("historyTableBody")) {
+        await loanHistory();
+    }
+
+    if(document.getElementById("collectionTableBody")){
+        await waitingCollections();
+    }
+
+    if (document.getElementById("activeTableBody")) {
+        await activeLoans();
+    }
+
+    if (document.getElementById("totalLoans")) {
+        await allUserLoans();
+    }
+
+    if (document.getElementById("total_requests")) {
+        await dueSoonLoans();
+    }
+
+    if (document.getElementById("overdue")) {
+        await overDueLoans();
+    }
+
+});
+
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
  * User must be able to cancel a pending loan
  */
-
-document.addEventListener("DOMContentLoaded", async () => {
+const allPendingLoans = async () => {
     const tableBody = document.getElementById("pendingTableBody");
 
     try {
@@ -29,14 +60,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${loan.requestDate}</td>
                 <td>${loan.status}</td>
                 <td>
-                    <button class="cancel_btn" data-id="${loan.loanId}">cancel loan</button>
+                    <button class="cancel_btn" data-id="${loan.loanId}">Cancel loan</button>
                 </td>`
-            ;
+                ;
 
             const cancelBtn = row.querySelector(".cancel_btn");
-            if(cancelBtn){
-                cancelBtn.addEventListener("click", async()=> {
-                    showConfirmationModal(async()=> {
+            if (cancelBtn) {
+                cancelBtn.addEventListener("click", async () => {
+                    showConfirmationModal(async () => {
                         await loanCancellation(loan.loanId);
                         console.log(loan.status);
                     })
@@ -44,23 +75,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
             tableBody.appendChild(row);
 
-            });
+        });
 
     } catch (error) {
         console.error("Failed to render loans", error);
         tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
-});
+};
 
 /**
  * cancel loan method
  */
 
-const loanCancellation = async(id) => {
+const loanCancellation = async (id) => {
     try {
         await cancelLoan(id);
         window.location.reload();
-    }catch (error){
+    } catch (error) {
         console.log(`Error: ${error}`);
     }
 }
@@ -70,15 +101,15 @@ const loanCancellation = async(id) => {
  * View loan history for user:
  * Rejected and Returned
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const loanHistory = async () => {
     const tableBody = document.getElementById("historyTableBody");
-    
+
     try {
         const loansByUser = await getLoansByUser(4);
         tableBody.innerHTML = "";
 
         loansByUser.forEach(loan => {
-            if(loan.status === "PENDING" || loan.status === "APPROVED"){
+            if (loan.status === "PENDING" || loan.status === "APPROVED") {
                 return false;
             }
             const row = document.createElement("tr");
@@ -98,21 +129,54 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Failed to render LOANS", error);
         tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
-});
+};
+
+/**
+ * All approved loans due for collection
+ */
+const waitingCollections = async () => {
+    const tableBody = document.getElementById("collectionTableBody");
+
+    try {
+        const loansByUser = await getLoansByUser(4);
+        tableBody.innerHTML = "";
+
+        const filteredLoans = loansByUser.filter(loan => {
+            return loan.status === "APPROVED" && loan.dueDate === null});
+            
+            const row = document.createElement("tr");
+
+            filteredLoans.forEach(loan => {
+
+            row.innerHTML = `
+                <td>${loan.title}</td>
+                <td>${loan.category}</td>
+                <td>${loan.requestDate}</td>
+                <td>${loan.status}</td>
+            `
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Failed to render LOANS", error);
+        tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
+    }
+};
 
 /**
  * View all active Loans
  * Approved,checkedout and not Returned
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const activeLoans = async () => {
     const tableBody = document.getElementById("activeTableBody");
-    
+
     try {
         const loansByUser = await getLoansByUser(4);
         tableBody.innerHTML = "";
 
         loansByUser.forEach(loan => {
-            if(loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED" || loan.status === "CANCELLED"){
+            if (loan.status === "PENDING" || loan.status === "REJECTED" || loan.status === "RETURNED" || loan.status === "CANCELLED") {
                 return false;
             }
             const row = document.createElement("tr");
@@ -124,6 +188,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <td>${loan.dueDate}</td>
                 <td>${loan.status}</td>
             `
+            console.log(loan);
 
             tableBody.appendChild(row);
         });
@@ -132,52 +197,53 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Failed to render LOANS", error);
         tableBody.innerHTML = `<tr><td colspan = "5" style="color: red";> Error: ${error.message}</td></tr>`;
     }
-});
+};
+
 
 /**
  * All STAFF's overdue loans
  * It counts all loans that are due soon
  * 
  */
-document.addEventListener("DOMContentLoaded", async () => {
-    const dueSoonElement = document.getElementById("total_requests");
-    const userId = 4;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+// document.addEventListener("DOMContentLoaded", async () => {
+//     const dueSoonElement = document.getElementById("total_requests");
+//     const userId = 4;
+//     const today = new Date();
+//     today.setHours(0, 0, 0, 0);
 
-    try {
+//     try {
 
-        const loansDue = await getLoansByUser(userId);
+//         const loansDue = await getLoansByUser(userId);
 
-        const total = loansDue.filter((loan) => {
-            if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
-                return false;
-            }
-            const dueDate = new Date(loan.dueDate);
-            const diff = dueDate - today;
+//         const total = loansDue.filter((loan) => {
+//             if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
+//                 return false;
+//             }
+//             const dueDate = new Date(loan.dueDate);
+//             const diff = dueDate - today;
 
-            const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
+//             const daysRemaining = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-            return daysRemaining >= 0 && daysRemaining <= 8;
-        });
+//             return daysRemaining >= 0 && daysRemaining <= 8;
+//         });
 
-        const totalDueLoans = total.length;
+//         const totalDueLoans = total.length;
 
-        if (dueSoonElement && loansDue) {
-            dueSoonElement.textContent = totalDueLoans;
-        }
+//         if (dueSoonElement && loansDue) {
+//             dueSoonElement.textContent = totalDueLoans;
+//         }
 
-    } catch (error) {
-        console.log(`Error: ${error}`)
-    }
+//     } catch (error) {
+//         console.log(`Error: ${error}`)
+//     }
 
-});
+// });
 
 
 /**
  * Total Due soon loans
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const dueSoonLoans = async () => {
     const dueSoonElement = document.getElementById("total_requests");
     const userId = 4;
     const today = new Date();
@@ -209,13 +275,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Error: ${error}`)
     }
 
-});
+};
 /**
  * All STAFF's overdue loans
  * Total overdue loans
  */
 
-document.addEventListener("DOMContentLoaded", async () => {
+const overDueLoans = async () => {
     const overdueElement = document.getElementById("overdue");
     const userId = 4;
     const today = new Date();
@@ -244,27 +310,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(`Error: ${error}`);
     }
 
-});
+};
+
 /**
  * All loans of the user
  * 
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const allUserLoans = async () => {
     const allUserLoansCard = document.getElementById("totalLoans");
     const userId = 4;
 
     try {
         const loansByUser = await getLoansByUser(4);
-        
-        if(loansByUser && allUserLoansCard){
+
+        if (loansByUser && allUserLoansCard) {
             allUserLoansCard.textContent = loansByUser.length;
         }
 
-    }catch (error){
+    } catch (error) {
         console.log(`Error: ${error}`)
     }
-    
-});
+
+};
 
 
 /**

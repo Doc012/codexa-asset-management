@@ -88,8 +88,54 @@
         </ul>
     </aside>
 
+
+
     <main id="mainContent" class="content">
         <section id="dashboardPage" class="page active">
+
+            <div class="metrics-strip-container"
+                style="display: flex; padding: 20px 30px; gap: 15px; align-items: center;">
+                <div style="flex-grow: 1;">
+                    <span class="metric-label font-muted" style="margin-bottom: 6px;">Live System Search</span>
+                    <input type="text" id="assetSearch"
+                        placeholder="Search assets by title, category, or status keyword..."
+                        style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px;">
+                </div>
+
+                <div style="width: 200px;">
+                    <span class="metric-label font-muted" style="margin-bottom: 6px;">Category Filter</span>
+                    <select id="categoryFilter"
+                        style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background-color: var(--surface);">
+                        <option value="ALL">All Categories</option>
+                        <option value="ACCESSOR">Accessor</option>
+                        <option value="DESKTOP">Desktop</option>
+                        <option value="FURNITURE">Furniture</option>
+                        <option value="LAPTOP">Laptop</option>
+                        <option value="MOBILE_PHONE">Mobile Phones</option>
+                        <option value="MONITOR">Monitors</option>
+                        <option value="NETWORK_DEVICES">Network Devices</option>
+                        <option value="PRINTERS">Printer</option>
+                        <option value="PROJECTOR">Projector</option>
+                        <option value="SOFTWARE_LICENSE">Software License</option>
+                        <option value="TABLET">Tablet</option>
+                        <option value="VEHICLE">Vehicle</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+
+                <div style="width: 200px;">
+                    <span class="metric-label font-muted" style="margin-bottom: 6px;">Filter Condition</span>
+                    <select id="conditionFilter"
+                        style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 14px; background-color: var(--surface);">
+                        <option value="">All Conditions</option>
+                        <option value="DAMAGED">Damaged</option>
+                        <option value="FAIR">Fair</option>
+                        <option value="GOOD">Good</option>
+                        <option value="NEW">New</option>
+                        <option value="RETIRED">Retired</option>
+                    </select>
+                </div>
+            </div>
             <div class="assets">
                 <h2>Assets</h2>
                 <div id="availableAssets" class="tab-content active-content">
@@ -135,7 +181,7 @@
         </section>
     </main>
 
-    <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
+    <!-- <script type="module" src="../../../assets/js/guards/staff.guard.js"></script> -->
     <script src="../../../assets/js/user/script.js"></script>
     <script src="../../../assets/js/user/loans.js" type="module"></script>
     <script src="../../../assets/js/user/users.js" type="module"></script>

@@ -108,21 +108,21 @@ public class LoanService {
     }
 
     public List<LoanResponseDTO> getLoanByUser(Long userId) {
-        return loanRepo.findByUser_UserId(userId)
+        return loanRepo.findByUser_UserIdOrderByRequestDateDesc(userId)
                 .stream()
                 .map(loanMapper::toDTO)
                 .toList();
     }
 
     public List<LoanResponseDTO> getAllLoans() {
-        return loanRepo.findAll()
+        return loanRepo.findAllByOrderByRequestDateDesc()
                 .stream()
                 .map(loanMapper::toDTO)
                 .toList();
     }
 
     public List<LoanResponseDTO> getLoanByStatus(LoanStatus status) {
-        return loanRepo.findByStatus(status)
+        return loanRepo.findByStatusOrderByRequestDateDesc(status)
                 .stream()
                 .map(loanMapper::toDTO)
                 .toList();

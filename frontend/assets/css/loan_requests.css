@@ -95,7 +95,9 @@
 }
 
 .approve_btn, 
-.reject_btn {
+.reject_btn,
+.checkout_btn,
+.return_btn {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -125,6 +127,12 @@
 .reject_btn:hover {
   background-color: rgba(239, 68, 68, 0.05);
   border-color: #ef4444;
+}
+
+.checkout_btn, .return_btn {
+  background-color: #10b981;
+  color: #ffffff;
+  margin-right: 6px;
 }
 
 .tab-content {

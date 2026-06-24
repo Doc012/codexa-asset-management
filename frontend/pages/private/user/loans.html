@@ -96,6 +96,7 @@
 
         <div class="tab-menu">
           <button class="tab-btn active" onclick="switchTab(event, 'pendingLoans')">Pending Returns</button>
+          <button class="tab-btn" onclick="switchTab(event, 'waiting-collection-Loans')">Waiting Collection</button>
           <button class="tab-btn" onclick="switchTab(event, 'activeLoans')">Active Loans</button>
           <button class="tab-btn" onclick="switchTab(event, 'loanHistory')">Loan History</button>
         </div>
@@ -106,7 +107,7 @@
               <tr>
                 <th>Title</th>
                 <th>Category</th>
-                <th>Loan Date</th>
+                <th>Request Date</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -116,7 +117,29 @@
                 <td>Laptop Dell</td>
                 <td>Electronics</td>
                 <td>2026-06-10</td>
-                <td><span class="status-indicator warning-state">Awaiting Return</span></td>
+                <td><button class="cancel_btn">Cancel</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="waiting-collection-Loans" class="tab-content">
+          <table class="asset-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Request Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="collectionTableBody">
+              <tr>
+                <td>Laptop Dell</td>
+                <td>Electronics</td>
+                <td>2026-06-10</td>
+                <td>2026-06-17</td>
+                <td><span class="status-indicator active-state">Deployed</span></td>
               </tr>
             </tbody>
           </table>
@@ -128,7 +151,7 @@
               <tr>
                 <th>Title</th>
                 <th>Category</th>
-                <th>Loan Date</th>
+                <th>Request Date</th>
                 <th>Due Date</th>
                 <th>Status</th>
               </tr>
@@ -192,7 +215,7 @@
     </section>
   </main>
 
-  <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
+  <!-- <script type="module" src="../../../assets/js/guards/staff.guard.js"></script> -->
   <script src="../../../assets/js/user/script.js"></script>
   <script src="../../../assets/js/user/loans.js" type="module"></script>
   <script src="../../../assets/js/user/users.js" type="module"></script>

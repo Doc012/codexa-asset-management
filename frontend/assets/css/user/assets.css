@@ -193,3 +193,44 @@
 .request-btn:hover {
   background: #4338ca;
 }
+
+.metrics-strip-container {
+  background: var(--surface, #ffffff);
+  border-radius: 12px;
+  border: 1px solid var(--border, #e2e8f0);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Automatically calculates 4 equal columns */
+  padding: 22px 0;
+  margin-bottom: 25px; /* Creates physical separation gap between top and bottom cards */
+}
+
+.metric-column {
+  padding: 5px 35px;
+}
+
+.metric-column.border-right {
+  border-right: 1px solid var(--border, #e2e8f0);
+}
+
+.metric-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  display: block;
+}
+
+.metric-data-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.metric-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text, #1e293b);
+  line-height: 1;
+}

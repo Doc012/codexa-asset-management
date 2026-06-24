@@ -100,3 +100,20 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.cancel_btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.cancel_btn {
+  background-color: #dc1c0e;
+  color: #ffffff;
+  margin-right: 6px;
+}
