@@ -132,6 +132,22 @@ public class LoanService {
         Loan loan = getEntity(loanId);
         loan.setStatus(LoanStatus.CANCELLED);
         loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
+
+        User user = userRepo.findById(1L).
+                orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
+
+        AuditLog log = new AuditLog().builder()
+                .userId(user.getUserId())
+                .entityType(EntityType.LOAN)
+                .entityId(loan.getLoanId())
+                .actionType(ActionType.CANCEL)
+                .oldValue("Pending")
+                .newValue("Cancelled out a loan with ID: " + loan.getLoanId())
+                .message("Cancelled loan - " + loan.getAsset().getTitle())
+                .build();
+        auditLogService.createLog(log);
         return loanMapper.toDTO(loanRepo.save(loan));
     }
 
@@ -139,6 +155,23 @@ public class LoanService {
 
         Loan loan = getEntity(loanId);
         loan.setStatus(LoanStatus.APPROVED);
+
+        User user = userRepo.findById(1L).
+                orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
+
+        AuditLog log = new AuditLog().builder()
+                .userId(user.getUserId())
+                .entityType(EntityType.LOAN)
+                .entityId(loan.getLoanId())
+                .actionType(ActionType.APPROVE)
+                .oldValue("Pending")
+                .newValue("Approved a loan with ID: " + loan.getLoanId())
+                .message("Approved loan - " + loan.getAsset().getTitle())
+                .build();
+        auditLogService.createLog(log);
+
         return loanMapper.toDTO(loanRepo.save(loan));
     }
 
@@ -152,6 +185,22 @@ public class LoanService {
         loan.getAsset().setAssetStatus(AssetStatus.LOANED);
         loan.setCheckoutDate(LocalDate.now());
         loan.setDueDate(LocalDate.now().plusDays(62));
+
+        User user = userRepo.findById(1L).
+                orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
+
+        AuditLog log = new AuditLog().builder()
+                .userId(user.getUserId())
+                .entityType(EntityType.LOAN)
+                .entityId(loan.getLoanId())
+                .actionType(ActionType.CHECK_OUT)
+                .oldValue("APPROVED")
+                .newValue("Checked out a loan with ID: " + loan.getLoanId())
+                .message("Checked out - " + loan.getAsset().getTitle())
+                .build();
+        auditLogService.createLog(log);
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }

@@ -111,3 +111,34 @@ WHERE title IN (
                 '4K Monitor LG 32UP550',
                 'Conference Table Mahogany'
     );
+
+-- Update the audit logs table to accept new enum values
+ALTER TABLE audit_logs DROP CONSTRAINT audit_logs_action_type_check;
+
+ALTER TABLE audit_logs ADD CONSTRAINT audit_logs_action_type_check
+    CHECK (
+        action_type IN (
+                        'CREATE',
+                        'UPDATE',
+                        'DELETE',
+                        'CHECK_OUT',
+                        'CHECK_IN',
+                        'APPROVE',
+                        'CANCEL'
+            )
+        );
+
+
+-- Update the loans table to accept new enum values
+ALTER TABLE loans DROP CONSTRAINT loans_status_check;
+
+ALTER TABLE loans ADD CONSTRAINT loans_status_check
+    CHECK (
+        status IN (
+                   'PENDING',
+                   'APPROVED',
+                   'CANCELLED',
+                   'REJECTED',
+                   'RETURNED'
+            )
+        );
