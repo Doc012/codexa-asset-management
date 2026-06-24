@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.password()))
                 .role(Role.STAFF)
                 .department(request.department())
-                .status(Status.PENDING)
+                .status(Status.PENDING_VERIFICATION)
                 .build();
 
         userRepository.save(user);
@@ -69,7 +70,20 @@ public class AuthService {
     public AuthDTO.AuthResponse login(AuthDTO.LoginRequest request){
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
-        } catch (BadCredentialsException e){
+        } catch(DisabledException e){
+            User user = userRepository.findByEmail(request.email())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found."));
+
+            String message = switch (user.getStatus()){
+                case PENDING_VERIFICATION -> "Your email is not verified. Please check your inbox.";
+                case PENDING_APPROVAL -> "Your account is pending admin approval.";
+                case INACTIVE -> "Your account has been deactivated. Contact support.";
+                default -> "Your account is not active.";
+            };
+
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, message);
+        }
+        catch (BadCredentialsException e){
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "Invalid email or password."
@@ -82,10 +96,16 @@ public class AuthService {
                         "User not found."
                 ));
 
-        if (user.getStatus() == Status.PENDING){
+        if (user.getStatus() == Status.PENDING_VERIFICATION){
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Email not verified. Please check your inbox."
+            );
+        }
+        if (user.getStatus() == Status.PENDING_APPROVAL){
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "You account needs admin approval"
             );
         }
 
@@ -173,12 +193,12 @@ public class AuthService {
             return new AuthDTO.MessageResponse("Email is already verified.");
         }
 
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(Status.PENDING_APPROVAL);
         userRepository.save(user);
         tokenStore.deleteEmailVerificationToken(token);
 
         log.info("Email verified for: {}", email);
-        return new AuthDTO.MessageResponse("Email verified successfully. You can now log in.");
+        return new AuthDTO.MessageResponse("Email verified successfully. You may now log in to your account, or wait for administrator approval if required.");
     }
 
     //_______// Forgot Password \\_______

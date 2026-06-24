@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +56,16 @@ public class GlobalExceptionHandler {
 
         return detail;
     }
+
+    //_______// Disabled account \\_______
+    @ExceptionHandler(DisabledException.class)
+    public ProblemDetail handleDisable(DisabledException ex){
+        ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
+        detail.setTitle("Account Not Active");
+        detail.setDetail("This account is not active. Please verify your email or contact support.");
+        return detail;
+    }
+
 
     //_______// RBAC - user is authenticated but lacks permission \\_______
     @ExceptionHandler(AccessDeniedException.class)

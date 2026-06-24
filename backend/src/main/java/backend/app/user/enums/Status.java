@@ -1,7 +1,8 @@
 package backend.app.user.enums;
 
 public enum Status {
-    PENDING,
+    PENDING_VERIFICATION,
     ACTIVE,
-    INACTIVE
+    INACTIVE,
+    PENDING_APPROVAL
 }
