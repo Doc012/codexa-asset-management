@@ -1,4 +1,7 @@
 import {API_BASE_URL} from "../assets/js/config.js"
+import { getUser } from "../assets/js/authContext.js"
+
+const userId = getUser().id;
 
 export async function getAllUsers() {
     const response = await fetch(
@@ -15,8 +18,8 @@ export async function getAllUsers() {
  * @returns user details in a json object
  */
 
-export const getUserById = (async (id) => {
-    const res = await fetch(`${API_BASE_URL}/users/user/${id}`);
+export const getUserById = (async () => {
+    const res = await fetch(`${API_BASE_URL}/users/user/${userId}`);
     return await res.json();
 });
 
@@ -86,8 +89,8 @@ export const updateAllUserDetails = (async (id, userData) => {
  * @param {*} id user id
  * @param {*} profileData object containing { firstName, lastName, picUrl }
  */
-export const updateUserProfile = async (id, profileData) => {
-  const res = await fetch(`${API_BASE_URL}/users/user/profile/${id}`, {
+export const updateUserProfile = async (profileData) => {
+  const res = await fetch(`${API_BASE_URL}/users/user/profile/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"

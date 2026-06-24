@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const userId = 1;
   const firstName = document.getElementById("firstName");
   const lastName = document.getElementById("lastName");
   const email = document.getElementById("email");
@@ -28,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const profileForm = document.getElementById("profileForm");
 
   try {
-    const user = await getUserById(userId);
+    const user = await getUserById();
     firstName.value = user.firstName || "";
     lastName.value = user.lastName || "";
     email.value = user.email || "";
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     try {
-      const updated = await updateUserProfile(userId, profileData);
+      const updated = await updateUserProfile(profileData);
       console.log("Profile updated:", updated);
       alert("Profile updated successfully!");
     } catch (error) {
