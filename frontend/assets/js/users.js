@@ -193,3 +193,108 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const searchInput = document.getElementById("userSearchInput");
+    const roleSelect = document.getElementById("userRoleFilter");
+    const tableBody = document.getElementById("userTableBody");
+
+    let allUsers = [];
+
+    // ✅ Load users
+    try {
+        const response = await getAllUsers();
+        allUsers = response;
+
+        renderUsers(allUsers);
+    } catch (error) {
+        console.error("Error loading users", error);
+    }
+
+    // ✅ Filter function (same pattern as assets)
+    function filterUsers() {
+        const query = searchInput.value.toLowerCase();
+        const roleValue = roleSelect.value.toUpperCase();
+
+        const filtered = allUsers.filter(user => {
+
+            const name = (user.name || user.fullName || "").toLowerCase();
+            const email = (user.email || user.emailAddress || "").toLowerCase();
+            const role = (user.role || "").toUpperCase();
+
+            const matchesSearch =
+                name.includes(query) ||
+                email.includes(query);
+
+            const matchesRole =
+                roleValue === "ALL" || role === roleValue;
+
+            return matchesSearch && matchesRole;
+        });
+
+        renderUsers(filtered);
+    }
+
+    // ✅ Attach listeners
+    if (searchInput) searchInput.addEventListener("input", filterUsers);
+    if (roleSelect) roleSelect.addEventListener("change", filterUsers);
+
+    // ✅ Render function
+    function renderUsers(users) {
+        tableBody.innerHTML = "";
+
+        if (users.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center;">
+                        No users found
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        users.forEach(user => {
+            const fullName = `${user.firstName} ${user.lastName}`;
+            const initials = `${user.firstName[0]}${user.lastName[0]}`;
+            tableBody.innerHTML += `
+                <tr>
+                    <td class="flex-meta-cell">
+                        <div class="table-img-frame initial-avatar">
+                            <span>${(initials || "U")[0]}</span>
+                        </div>
+                        <div>
+                            <span class="cell-primary-title">${fullName}</span>
+                            <span class="cell-sub-label">${user.email || user.emailAddress}</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="role-badge ${user.role.toLowerCase()}">
+                            ${user.role}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="cell-primary-title">${user.department}</span>
+                        <span class="cell-sub-label">No asset data</span>
+                    </td>
+
+                    <td>
+                        <span class="status-indicator active-state">
+                            Active Profile
+                        </span>
+                    </td>
+
+                    <td>
+                    <div class="row-actions-group">
+                        <button class="row-action-btn edit" data-id=${user.id} title="Modify Permissions">
+                            Edit
+                        </button>
+                    </div>
+                </td>
+                </tr>
+            `;
+        });
+    }
+});
