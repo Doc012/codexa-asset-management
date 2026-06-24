@@ -1,15 +1,8 @@
-/**
- * resetPassword.js
- * Handles reset-password.html
- * Reads ?token=... from the URL — this is the link clicked from the email.
- */
-
-import { resetPassword } from "../../authContext.js";
-import { requireGuest }  from "../../authGuard.js";
+import { resetPassword } from "../..//js/authContext.js";
+import { requireGuest }  from "../../js/authGuard.js";
 
 await requireGuest();
 
-// ── Read token from URL ───────────────────────────────────────────────────────
 const params        = new URLSearchParams(window.location.search);
 const resetToken    = params.get("token");
 
@@ -20,14 +13,13 @@ const errorBox      = document.getElementById("errorBox");
 const successBox    = document.getElementById("successBox");
 const invalidBox    = document.getElementById("invalidTokenBox");
 
-// If no token in URL, show an error immediately and disable the form
 if (!resetToken) {
   invalidBox.hidden = false;
   form.hidden       = true;
 }
 
-// ── Form submit ───────────────────────────────────────────────────────────────
 form.addEventListener("submit", async (e) => {
+  console.log("Script working... btn is clicked")
   e.preventDefault();
   clearMessages();
 

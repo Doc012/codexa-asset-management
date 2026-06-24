@@ -47,7 +47,6 @@ public class User {
    @NotBlank
    private String password;
 
-   @NotBlank
    private String department;
 
    @CreationTimestamp

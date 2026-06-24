@@ -1,9 +1,3 @@
-/**
- * verifyEmail.js
- * Handles verify-email.html
- * Reads ?token=... from the URL — this is the link clicked from the email.
- */
-
 import { verifyEmail } from "../../authContext.js";
 
 const params      = new URLSearchParams(window.location.search);

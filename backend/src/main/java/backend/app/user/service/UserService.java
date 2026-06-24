@@ -124,7 +124,7 @@ public class UserService {
                 .email(createUserDto.email())
                 .password(createUserDto.password())
                 .picUrl(createUserDto.picUrl())
-                .department(createUserDto.email())
+                .department("Unassigned")
                 .role(Role.STAFF)
                 .build();
 
@@ -133,7 +133,7 @@ public class UserService {
         AuditLog auditLog = new AuditLog().builder()
                 .entityType(EntityType.USER)
                 .entityId(savedUser.getUserId())
-                .userId(savedUser.getUserId()) // Logged in  user ID
+                .userId(savedUser.getUserId()) // Logged-in  user ID
                 .actionType(ActionType.CREATE)
                 .oldValue("N/A")
                 .newValue("Created User ID: " + savedUser.getUserId())

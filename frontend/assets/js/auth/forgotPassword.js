@@ -1,8 +1,3 @@
-/**
- * forgotPassword.js
- * Handles forgot-password.html
- */
-
 import { forgotPassword } from "../../js/authContext.js";
 import { requireGuest }   from "../../js/authGuard.js";
 
