@@ -87,46 +87,45 @@
   </aside>
 
   <main id="mainContent" class="content">
-    <section id="dashboardPage" class="page active">
+    <section id="settingsPage" class="page active">
       <div class="settings-card">
         <h2>Account Settings</h2>
+        <p class="subtitle">Manage your profile and security preferences</p>
 
+        <!-- Tabs -->
         <div class="settings-tabs">
-          <button class="settings-tab-btn active" onclick="switchSettingsTab(event, 'profileFormPanel')">Profile
-            Details</button>
-          <button class="settings-tab-btn" onclick="switchSettingsTab(event, 'securityFormPanel')">Security</button>
-          <button class="settings-tab-btn"
-            onclick="switchSettingsTab(event, 'preferencesFormPanel')">Preferences</button>
+          <button class="settings-tab-btn active" data-target="profilePanel">Profile Information</button>
+          <button class="settings-tab-btn" data-target="securityPanel">Security</button>
         </div>
 
-        <div id="profileFormPanel" class="settings-panel active-panel">
-          <form onsubmit="handleSettingsSave(event, 'Profile updated successfully!')" id="profile-form">
+        <!-- Profile Panel -->
+        <div id="profilePanel" class="settings-panel active-panel">
+          <form id="profileForm">
             <div class="settings-grid">
               <div class="settings-group">
                 <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" value="John" required>
+                <input type="text" id="firstName" value="John" required>
               </div>
               <div class="settings-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" value="Smith" required>
+                <input type="text" id="lastName" value="Smith" required>
               </div>
               <div class="settings-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" value="john.smith@company.com" required>
+                <input type="email" id="email" value="john.smith@company.com" required>
               </div>
               <div class="settings-group">
                 <label for="department">Department</label>
-                <input type="text" id="department" name="department" value="IT Department" class="locked-field"
-                  readonly>
+                <input type="text" id="department" value="IT Department" readonly>
               </div>
             </div>
             <button type="submit" class="settings-save-btn">Save Profile</button>
-            <div id="form-status-message"></div>
           </form>
         </div>
 
-        <div id="securityFormPanel" class="settings-panel">
-          <form onsubmit="handleSettingsSave(event, 'Password changed securely.')">
+        <!-- Security Panel -->
+        <div id="securityPanel" class="settings-panel">
+          <form id="securityForm">
             <div class="settings-group single-column">
               <label for="sec-current">Current Password</label>
               <input type="password" id="sec-current" placeholder="••••••••••••" required>
@@ -142,40 +141,15 @@
             <button type="submit" class="settings-save-btn">Update Password</button>
           </form>
         </div>
-
-        <div id="preferencesFormPanel" class="settings-panel">
-          <form onsubmit="handleSettingsSave(event, 'System preferences updated.')">
-            <div class="settings-group single-column inline-check">
-              <label class="settings-checkbox">
-                <input type="checkbox" checked>
-                <span>Email me before a loan item is overdue?</span>
-              </label>
-            </div>
-            <div class="settings-group single-column inline-check">
-              <label class="settings-checkbox">
-                <input type="checkbox" checked>
-                <span>Notify me when requested assets are approved?</span>
-              </label>
-            </div>
-            <div class="settings-group single-column">
-              <label for="pref-layout">Default Inventory View</label>
-              <select id="pref-layout">
-                <option value="grid">Standard Dynamic Table</option>
-                <option value="compact">High Density List</option>
-              </select>
-            </div>
-            <button type="submit" class="settings-save-btn">Save Preferences</button>
-          </form>
-        </div>
-
       </div>
-
-      <div id="settingsToast" class="settings-toast"></div>
     </section>
   </main>
 
-  <!-- <script type="module" src="../../../assets/js/guards/staff.guard.js"></script> -->
-  <script src="../../../assets/js/user/script.js"></script>
+
+
+
+  <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
+  <script src="../../../assets/js/user/settings.js"></script>
   <script src="../../../assets/js/user/users.js" type="module"></script>
 </body>
 
