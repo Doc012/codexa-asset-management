@@ -81,4 +81,27 @@ export const updateAllUserDetails = (async (id, userData) => {
     return await res.json();
 });
 
+/**
+ * Update user profile (firstName, lastName, picUrl)
+ * @param {*} id user id
+ * @param {*} profileData object containing { firstName, lastName, picUrl }
+ */
+export const updateUserProfile = async (id, profileData) => {
+  const res = await fetch(`${API_BASE_URL}/users/user/profile/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(profileData)
+  });
+
+  if (!res.ok) {
+    console.error("Failed to update profile:", res.status, res.statusText);
+    throw new Error("Profile update failed");
+  }
+
+  return await res.json();
+};
+
+
 

@@ -92,13 +92,11 @@
         <h2>Account Settings</h2>
         <p class="subtitle">Manage your profile and security preferences</p>
 
-        <!-- Tabs -->
         <div class="settings-tabs">
           <button class="settings-tab-btn active" data-target="profilePanel">Profile Information</button>
           <button class="settings-tab-btn" data-target="securityPanel">Security</button>
         </div>
 
-        <!-- Profile Panel -->
         <div id="profilePanel" class="settings-panel active-panel">
           <form id="profileForm">
             <div class="settings-grid">
@@ -112,11 +110,11 @@
               </div>
               <div class="settings-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" value="john.smith@company.com" required>
+                <input type="email" id="email" value="john.smith@company.com" readonly disabled>
               </div>
               <div class="settings-group">
                 <label for="department">Department</label>
-                <input type="text" id="department" value="IT Department" readonly>
+                <input type="text" id="department" value="IT Department" readonly disabled>
               </div>
             </div>
             <button type="submit" class="settings-save-btn">Save Profile</button>
@@ -149,9 +147,9 @@
 
 
   <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
-  <script src="../../../assets/js/user/settings.js"></script>
-    <script src="../../../assets/js/user/script.js"></script>
-  <script src="../../../assets/js/user/users.js" type="module"></script>
+  <script type="module" src="../../../assets/js/user/settings.js"></script>
+  <script type="module" src="../../../assets/js/user/script.js"></script>
+  <script type="module" src="../../../assets/js/user/users.js" type="module"></script>
 </body>
 
 </html>

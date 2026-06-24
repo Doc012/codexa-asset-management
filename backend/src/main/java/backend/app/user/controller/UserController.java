@@ -1,6 +1,7 @@
 package backend.app.user.controller;
 
 import backend.app.user.dto.CreateUserRequest;
+import backend.app.user.dto.UserDTO;
 import backend.app.user.dto.UserResponse;
 import backend.app.user.enums.Role;
 import backend.app.user.model.User;
@@ -36,6 +37,11 @@ public class UserController {
     @GetMapping("/user/email/{email}")
     public UserResponse getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
+    }
+
+    @PutMapping("/user/profile/{id}")
+    public User updateProfile(@PathVariable Long id, @RequestBody UserDTO.ProfileUpdateRequest request){
+        return userService.updateProfile(id, request);
     }
 
     @GetMapping("/role/{role}")

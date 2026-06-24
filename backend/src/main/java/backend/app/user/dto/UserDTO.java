@@ -1,0 +1,33 @@
+package backend.app.user.dto;
+
+import backend.app.user.enums.Role;
+import lombok.Builder;
+
+public class UserDTO {
+    @Builder
+    public record CreateUserRequest(
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String picUrl,
+            String department
+    ) {}
+
+    @Builder
+    public record UserResponse(
+            Long userId,
+            String firstName,
+            String lastName,
+            String email,
+            String picUrl,
+            String department,
+            Role role
+    ) {}
+
+    public record ProfileUpdateRequest(
+            String firstName,
+            String lastName,
+            String picUrl
+    ){}
+}

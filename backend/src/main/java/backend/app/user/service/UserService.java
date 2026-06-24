@@ -5,6 +5,7 @@ import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.model.AuditLog;
 import backend.app.auditLog.service.AuditLogService;
 import backend.app.user.dto.CreateUserRequest;
+import backend.app.user.dto.UserDTO;
 import backend.app.user.dto.UserResponse;
 import backend.app.user.enums.Role;
 import backend.app.user.model.User;
@@ -50,7 +51,7 @@ public class UserService {
     public UserResponse getUserById(Long id){
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "User with id " + id + "not found!"));
+                        "User with id " + id + " not found!"));
 
         return new UserResponse(
                 user.getUserId(),
@@ -85,6 +86,18 @@ public class UserService {
                 user.getDepartment(),
                 user.getRole());
 
+    }
+
+    public User updateProfile(Long id, UserDTO.ProfileUpdateRequest request){
+        User user = userRepo.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "User with id " + id + " not found!"));
+
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setPicUrl(request.picUrl());
+
+        return userRepo.save(user);
     }
 
     /**
@@ -288,7 +301,6 @@ public class UserService {
 
         return userRepo.save(user);
     }
-
 
     public String getRole(){
         User theUpdater = userRepo.findById(1L)
