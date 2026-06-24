@@ -119,10 +119,11 @@
 }
 
 .overdue-row {
-    background-color: #ffe5e5;
-}
-
-.overdue-row {
     background-color: #ffcccc;
     font-weight: 500;
+}
+
+.due-soon {
+  background-color: #f4cfa5;
+  font-weight: 500;
 }

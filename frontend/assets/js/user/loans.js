@@ -186,6 +186,10 @@ const activeLoans = async () => {
                 row.classList.add("overdue-row");
             }
 
+            if (overDueLoan(loan) < 10 && overDueLoan(loan) >= 0){
+                row.classList.add("due-soon")
+            }
+
             row.innerHTML = `
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
@@ -214,7 +218,7 @@ const overDueLoan = (loan) => {
 
     const dueDate = new Date(loan.dueDate);
     dueDate.setHours(0, 0, 0, 0)
-    const diff = (dueDate - today) / (86400000);
+    const diff = ((dueDate - today) / (86400000));
 
     return diff;
 
