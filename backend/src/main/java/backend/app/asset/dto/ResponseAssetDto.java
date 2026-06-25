@@ -8,7 +8,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public recordResponseAssetDto(
+public record ResponseAssetDto(
         Long assetId,
         String title,
         AssetCategory category,

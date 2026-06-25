@@ -125,7 +125,7 @@ public class AssetService {
                 Files.copy(file.getInputStream(), uploadPath.resolve(fileName),
                         StandardCopyOption.REPLACE_EXISTING);
 
-                filePath = "/uploads" + fileName;
+                filePath = "/uploads/" + fileName;
             }
 
             Asset asset = Asset.builder()

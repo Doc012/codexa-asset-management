@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
             </td>
 
-
             <td>
               <div class="row-actions-group">
 
