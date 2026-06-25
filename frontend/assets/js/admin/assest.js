@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formDate = document.getElementById("form-date");
     const formCost = document.getElementById("form-cost");
     const formCondition = document.getElementById("form-condition");
+    const formPhoto = document.getElementById("form-photo");
     const formLocation = document.getElementById("form-location");
 
     // Dynamic Filter References
@@ -64,7 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // IMPORTANT PATH SETUP: Build your server host absolute path for images
             const serverImageHost = "../../.."; // Adjust prefix folder levels as needed
-            const completeImagePath = `${asset.photoPath}`;
+            // const completeImagePath = `${asset.photoPath}`;
+            const completeImagePath = `http://localhost:8080${asset.photoPath}`;
 
             tr.innerHTML = `
             <td>
@@ -180,7 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 cost: parseFloat(formCost.value),
                 location: formLocation.value,
                 condition: formCondition.value,
-                photoPath: `/photos/default_path.jpg`
+                // photoPath: `/photos/default_path.jpg`
+                photoPath: null
             };
 
             const activeId = formIdField.value;
@@ -207,13 +210,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 } else {
                     // Trigger POST operation for new additions
+                    // const response = await fetch(API_URL, {
+                    //     method: "POST",
+                    //     headers: { "Content-Type": "application/json" },
+                    //     body: JSON.stringify(payload)
+                    // });
+                    // if (response.ok) loadAssetsInventoryFromServer();
+                    const formData = new FormData();
+                    // JSON part
+                    formData.append(
+                        "asset",
+                        new Blob([JSON.stringify(payload)], { type: "application/json" })
+                    );
+                    // File part
+                    if (formPhoto.files[0]) {
+                        formData.append("file", formPhoto.files[0]);
+                    }
                     const response = await fetch(API_URL, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(payload)
+                        body: formData
                     });
-                    // if (response.ok) loadAssetsInventoryFromServer();
-
+                    /**
+                     * 
+                     */
                     if (response.ok) {
                     // If your API returns the newly created object, grab it
                         const newAsset = await response.json();

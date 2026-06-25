@@ -301,20 +301,20 @@
             <div class="form-field">
               <label>Category *</label>
               <select id="form-category" required>
-                <option value="Laptop">Laptop</option>
-              <option value="Desktop">Desktop</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Printer">Printer</option>
-              <option value="Projector">Projector</option>
-              <option value="Tablet">Tablet</option>
-              <option value="Mobile Phone">Mobile Phone</option>
-              <option value="Network Device">Network Device</option>
-              <option value="Server">Server</option>
-              <option value="Accessory">Accessory</option>
-              <option value="Furniture">Furniture</option>
-              <option value="Software License">Software License</option>
-              <option value="Vehicle">Vehicle</option>
-              <option value="Other">Other</option>
+                <option value="LAPTOP">Laptop</option>
+              <option value="DESKTOP">Desktop</option>
+              <option value="MONITOR">Monitor</option>
+              <option value="PRINTER">Printer</option>
+              <option value="PROJECTOR">Projector</option>
+              <option value="TABLET">Tablet</option>
+              <option value="MOBILE_PHONE">Mobile Phone</option>
+              <option value="NETWORK_DEVICE">Network Device</option>
+              <option value="SERVER">Server</option>
+              <option value="ACCESSORY">Accessory</option>
+              <option value="FURNITURE">Furniture</option>
+              <option value="SOFTWARE_LICENSE">Software License</option>
+              <option value="VEHICLE">Vehicle</option>
+              <option value="OTHER">Other</option>
               </select>
             </div>
           </div>
@@ -338,10 +338,11 @@
             <div class="form-field">
               <label>Condition Status *</label>
               <select id="form-condition" required>
-                <option value="Excellent">Excellent</option>
-                <option value="Good">Good</option>
-                <option value="Fair">Fair</option>
-                <option value="Damaged">Damaged</option>
+                <option value="NEW">New</option>
+                <option value="RETIRED">Retired</option>
+                <option value="GOOD">Good</option>
+                <option value="FAIR">Fair</option>
+                <option value="DAMAGED">Damaged</option>
               </select>
             </div>
           </div>
@@ -349,6 +350,11 @@
           <div class="form-field">
             <label>Deployment Location *</label>
             <input type="text" id="form-location" required placeholder="Office Building A, Floor 3">
+          </div>
+
+          <div class="form-field">
+            <label>Asset Image</label>
+            <input type="file" id="form-photo" accept="image/*">
           </div>
 
           <div class="form-actions">
@@ -372,7 +378,7 @@
     <div id="successMessage" class="success"></div>
   </main>
 
-  <script type="module" src="../../../assets/js/guards/admin.guard.js"></script>
+  <!-- <script type="module" src="../../../assets/js/guards/admin.guard.js"></script> -->
   <script src="../../../assets/js/admin/script.js"></script>
   <script src="../../../assets/js/admin/assest.js"></script>
   <script type="module" src="../../../assets/js/user/script.js"></script>
