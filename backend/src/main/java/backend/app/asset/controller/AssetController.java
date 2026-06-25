@@ -7,8 +7,10 @@ import backend.app.asset.enums.AssetCondition;
 import backend.app.asset.enums.AssetStatus;
 import backend.app.asset.model.Asset;
 import backend.app.asset.service.AssetService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -33,14 +35,20 @@ public class AssetController {
         return assetService.getAssetById(id);
     }
 
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseAssetDto createAsset(@RequestBody RequestAssetDto newAsset){
-        return assetService.createAsset(newAsset);
+    public ResponseAssetDto createAsset(
+            @RequestPart("asset") @Valid RequestAssetDto newAsset,
+            @RequestPart (value = "file", required = false)MultipartFile file){
+        System.out.println("DTO: " + newAsset);
+        System.out.println("File: " + (file != null ? file.getOriginalFilename() : "null"));
+        return assetService.createAsset(newAsset, file);
     }
 
     @PutMapping("/{id}")
-    public ResponseAssetDto updateAsset(@PathVariable Long id, @RequestBody RequestAssetDto asset){
+    public ResponseAssetDto updateAsset(
+            @PathVariable Long id,
+            @RequestBody RequestAssetDto asset){
         return assetService.updateAsset(id, asset);
     }
 

@@ -17,10 +17,16 @@ import backend.app.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AssetService {
@@ -88,13 +94,40 @@ public class AssetService {
      * @param assetDto - the asset to be created -> user input
      * @return the details of the newly created asset
      */
-    public ResponseAssetDto createAsset(RequestAssetDto assetDto){
+    @Transactional
+    public ResponseAssetDto createAsset(RequestAssetDto assetDto, MultipartFile file){
         User theUpdater = userRepo.findById(1L)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
                 );
 
         try {
+
+            /**
+             * image upload
+             */
+            String filePath = "/uploads/default.jpg";
+
+            // file upload
+            if(file != null && !file.isEmpty()) {
+                // validate file type
+                if(!file.getContentType().startsWith("image/")) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Only image files allowed");
+                }
+
+                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+                Path uploadPath = Paths.get("uploads");
+                if(!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+
+                Files.copy(file.getInputStream(), uploadPath.resolve(fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                filePath = "/uploads" + fileName;
+            }
+
             Asset asset = Asset.builder()
                     .title(assetDto.title())
                     .category(assetDto.category())
@@ -103,7 +136,7 @@ public class AssetService {
                     .cost(assetDto.cost())
                     .location(assetDto.location())
                     .condition(assetDto.condition())
-                    .photoPath(assetDto.photoPath())
+                    .photoPath(filePath)
                     .assetStatus(AssetStatus.AVAILABLE)
                     .build();
 
@@ -135,8 +168,6 @@ public class AssetService {
         } catch (Exception ex){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         }
-
-
     }
 
     /**
@@ -202,8 +233,15 @@ public class AssetService {
         existingAsset.setCost(updatedAssetDto.cost());
         existingAsset.setLocation(updatedAssetDto.location());
         existingAsset.setCondition(updatedAssetDto.condition());
-        existingAsset.setPhotoPath(updatedAssetDto.photoPath());
-        existingAsset.setAssetStatus(updatedAssetDto.assetStatus());
+//        existingAsset.setPhotoPath(updatedAssetDto.photoPath());
+        if (updatedAssetDto.photoPath() != null) {
+            existingAsset.setPhotoPath(updatedAssetDto.photoPath());
+        }
+
+//        existingAsset.setAssetStatus(updatedAssetDto.assetStatus());
+        if (updatedAssetDto.assetStatus() != null) {
+            existingAsset.setAssetStatus(updatedAssetDto.assetStatus());
+        }
 
         if (theUpdater.getRole() == Role.ADMIN){
             if (!java.util.Objects.equals(existingAsset.getTitle(), oldTitle)){
@@ -221,7 +259,7 @@ public class AssetService {
         }
 
         if(theUpdater.getRole() == Role.ADMIN){
-            if (!java.util.Objects.equals(oldCategory, existingAsset.getCategory())) {
+            if (!java.util.Objects.equals(oldCategory, existingAsset.getCategory().name())) {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.ASSET)
                         .entityId(id)
@@ -344,7 +382,7 @@ public class AssetService {
                         .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(String.valueOf(oldStatus))
-                        .newValue(existingAsset.getPhotoPath())
+                        .newValue(existingAsset.getAssetStatus().name())
                         .message(theUpdater.getFirstName() +
                                 " updated status of asset: " + oldTitle)
                         .build();
