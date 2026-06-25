@@ -1,8 +1,8 @@
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const API_URL = "http://localhost:8080/api/v1/assets";
 
+    // UI Elements Selection
     const tableBody = document.getElementById("assets-table-body");
     const assetModal = document.getElementById("asset-modal-overlay");
     const openModalBtn = document.getElementById("open-add-modal-btn");
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formPhoto = document.getElementById("form-photo");
     const formLocation = document.getElementById("form-location");
 
+    // Dynamic Filter References
     const searchInput = document.getElementById("asset-search-input");
     const categorySelect = document.getElementById("filter-category-select");
 
@@ -54,24 +55,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 tr.style.backgroundColor = "#f5f5f566";
             }
 
-            // const completeImagePath = `http://localhost:8080${asset.photoPath}`;
             const completeImagePath = asset.photoPath ? `http://localhost:8080${asset.photoPath}` : "../../../assets/images/default_asset.jpg";
 
 
             tr.innerHTML = `
             <td>
               <div class="flex-meta-cell">
-                <div class="table-img-frame">
-                  <img src="${completeImagePath}"
-                    alt="${asset.title}" 
-                    onerror="this.onerror=null; this.src='../../../assets/images/default_asset.jpg';">
-
-                </div>
                 <div>
                   <span class="cell-primary-title">${asset.title}</span>
-                  
                 </div>
               </div>
+            </td>
+
+            <td>
+                <div class="table-img-frame">
+                  <img src="${completeImagePath}"
+                    alt="${asset.title}"
+                    onerror="this.onerror=null; this.src='../../../assets/images/default_asset.jpg';">
+                </div>
             </td>
 
             <td>
@@ -83,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>
               <span class="cell-data-text"> ${asset.location} </span>
             </td>
-            
+
             <td>
                 <span class="status-chip ${
                     asset.status === "AVAILABLE" ? "chip-success" :
@@ -99,16 +100,16 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="row-actions-group">
 
                 <button class="row-action-btn edit">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit
                 </button>
 
                 ${
                     isRetired
                     ? `<button class="row-action-btn restore">
-                        <i class="fa-solid fa-rotate-left"></i>
+                        Retired
                        </button>`
                     : `<button class="row-action-btn retire">
-                        <i class="fa-solid fa-box-archive"></i>
+                        Retire
                        </button>`
                 }
 
@@ -204,79 +205,104 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ========================================================
-    // CREATE / UPDATE
-    // ========================================================
-    crudForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    // 4. FORM SUBMISSION WORKFLOW: Execute POST or PUT methods
+    if (crudForm) {
+        crudForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        const payload = {
-            title: formTitle.value,
-            category: formCategory.value,
-            serialNumber: formSerial.value,
-            acquisitionDate: formDate.value,
-            cost: parseFloat(formCost.value),
-            location: formLocation.value,
-            condition: formCondition.value,
-            photoPath: null
-        };
+            const payload = {
+                title: formTitle.value,
+                category: formCategory.value,
+                serialNumber: formSerial.value,
+                acquisitionDate: formDate.value,
+                cost: parseFloat(formCost.value),
+                location: formLocation.value,
+                condition: formCondition.value,
+                // photoPath: `/photos/default_path.jpg`
+                photoPath: null
+            };
 
-        const id = formIdField.value;
+            const activeId = formIdField.value;
 
-        try {
-            if (id) {
-                await fetch(`${API_URL}/${id}`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-            } else {
-                const formData = new FormData();
-                formData.append("asset", new Blob([JSON.stringify(payload)], { type: "application/json" }));
+            try {
+                if (activeId) {
+                    // Trigger PUT operation for existing asset updates
+                    const response = await fetch(`${API_URL}/${activeId}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ ...payload, assetId: parseInt(activeId) })
+                    });
+                    // if (response.ok) loadAssetsInventoryFromServer();
 
-                if (formPhoto.files[0]) {
-                    formData.append("file", formPhoto.files[0]);
+                    if (response.ok) {
+                    // Extract the newly updated asset object returned from your API
+                        const updatedAsset = await response.json();
+                    // Update your local array cache instantly so your client-side filters stay in sync
+                        assetWorkspaceData = assetWorkspaceData.map(asset => 
+                            asset.assetId == activeId ? updatedAsset : asset
+                        );
+                    // Re-render the table with the modified local cache array
+                        renderAssetsTableRows(assetWorkspaceData);
+                    }
+                } else {
+                    // Trigger POST operation for new additions
+                    // const response = await fetch(API_URL, {
+                    //     method: "POST",
+                    //     headers: { "Content-Type": "application/json" },
+                    //     body: JSON.stringify(payload)
+                    // });
+                    // if (response.ok) loadAssetsInventoryFromServer();
+                    const formData = new FormData();
+                    // JSON part
+                    formData.append(
+                        "asset",
+                        new Blob([JSON.stringify(payload)], { type: "application/json" })
+                    );
+                    // File part
+                    if (formPhoto.files[0]) {
+                        formData.append("file", formPhoto.files[0]);
+                    }
+                    const response = await fetch(API_URL, {
+                        method: "POST",
+                        body: formData
+                    });
+                    /**
+                     * 
+                     */
+                    if (response.ok) {
+                    // If your API returns the newly created object, grab it
+                        const newAsset = await response.json();
+                        assetWorkspaceData.push(newAsset);
+                        renderAssetsTableRows(assetWorkspaceData);
+                    }
                 }
+                hideModal();
+            } catch (err) { console.error("Failed to commit form changes onto remote server:", err); }
+        });
+    }
 
-                await fetch(API_URL, { method: "POST", body: formData });
-            }
-
-            hideModal();
-            loadAssetsInventoryFromServer();
-
-        } catch (err) {
-            console.error("Save failed:", err);
-        }
-    });
-
-    // ========================================================
-    // SEARCH + FILTER
-    // ========================================================
+    
+    // 5. CLIENT SIDE REALTIME LOOKUP (Search and filter logic)
     function executeLocalQueryFilters() {
         const query = searchInput.value.toLowerCase();
-        const cat = categorySelect.value.toLowerCase();
+        const cat = categorySelect.value.toLowerCase(); //Convert selected dropdown index value to lowercase
 
         const filtered = assetWorkspaceData.filter(asset => {
-            const matchesSearch =
-                asset.title?.toLowerCase().includes(query) ||
-                asset.serialNumber?.toLowerCase().includes(query) ||
-                asset.location?.toLowerCase().includes(query);
+            const matchesSearch = 
+                (asset.title && asset.title.toLowerCase().includes(query) ||
+                (asset.serialNumber && asset.serialNumber.toLowerCase().includes(query)) ||
+                (asset.location && asset.location.toLowerCase().includes(query)));
 
-            const matchesCat =
-                cat === "all" || asset.category?.toLowerCase() === cat;
-
+            const assetCategoryNormalized = asset.category ? asset.category.toLowerCase() : ""; 
+            const matchesCat = cat === "all" || assetCategoryNormalized === cat;
             return matchesSearch && matchesCat;
         });
-
         renderAssetsTableRows(filtered);
     }
 
-    searchInput?.addEventListener("input", executeLocalQueryFilters);
-    categorySelect?.addEventListener("change", executeLocalQueryFilters);
+    if (searchInput) searchInput.addEventListener("input", executeLocalQueryFilters);
+    if (categorySelect) categorySelect.addEventListener("change", executeLocalQueryFilters);
 
-    // ========================================================
-    // INIT
-    // ========================================================
+    // Initial load execution call on frame bootstrap mount
     loadAssetsInventoryFromServer();
-
 });

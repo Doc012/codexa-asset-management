@@ -3,134 +3,6 @@ import { API_BASE_URL } from "../../js/config.js"
 import { getUser } from "../authContext.js"
 
 
-                <td>
-                    <div class="row-actions-group">
-                        <button class="row-action-btn edit" data-id=${user.id} title="Modify Permissions">
-                            Edit
-                        </button>
-                    </div>
-                </td>
-            `;
-
-            tableBody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Failed to load users:", error);
-    }
-});
-
-
-
-
-
-/**
- * GetUser by ID
- */
-document.addEventListener("DOMContentLoaded", async () => {
-    const managerElement = document.querySelector(".card.welcome h2");
-    const profileNameElement = document.querySelector(".profile_info h2");
-    const profileRoleElement = document.querySelector(".role");
-    const profileEmailElement = document.querySelector(".user_email");
-    const userName = document.querySelector(".welcome-card h1")
-    const profileImage = document.querySelector(".profile-image")
-    const profileInitial = document.querySelector(".profile-initial")
-
-
-    try {
-        const managerId = 1;
-        const userId = 4;
-        const managerData = await getUserById(managerId);
-        const userData = await getUserById(userId);
-
-        if (managerData) {
-
-            if (managerElement) {
-                managerElement.textContent = `Welcome back, ${managerData.firstName}`;
-            }
-
-            if (profileNameElement) {
-                profileNameElement.textContent = `${managerData.firstName} ${managerData.lastName}`;
-            }
-
-            if (profileRoleElement) {
-                profileRoleElement.textContent = `Role: ${managerData.role}`;
-            }
-
-            if (profileEmailElement) {
-                profileEmailElement.textContent = `Email: ${managerData.email}`;
-            }
-
-        }
-
-        if (userData) {
-            if (userName) {
-                userName.textContent = `Welcome back, ${userData.firstName}`
-            }
-            if (profileImage && profileInitial) {
-                if (userData.picUrl !== null) {
-                    profileImage.src = userData.picUrl;
-                } else {
-                    profileInitial.textContent = `${userData.firstName[0].toUpperCase()}`;
-                }
-            }
-        }
-    } catch (error) {
-        console.error("Error:", error);
-    }
-});
-
-
-/**
- * UPDATE User details
- */
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const userId = 3;
-    try {
-
-        const currentUser = await getUserById(userId);
-        const form = document.querySelector("#profile-form");
-
-        const submitForm = form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const userData = {
-                "firstName": document.querySelector("#firstName").value,
-                "lastName": document.querySelector("#lastName").value,
-                "email": document.querySelector("#email").value,
-                "department": currentUser.department,
-                "picUrl": currentUser.picUrl
-            }
-            try {
-                const updateUserDetails = await updateAllUserDetails(userId, userData);
-            } catch (error) {
-                console.log(error);
-            }
-
-        });
-
-    } catch (error) {
-        console.log(error);
-    }
-
-});
-
-
-/**
- * 
- */
-
-import { getUserById, updateAllUserDetails, getAllUsers, } from "../../services/userService.js";
-import { API_BASE_URL } from "./config.js";
-
-// async function getAllUsers() {
-//     const response = await fetch(`${API_BASE_URL}/users`);
-//     if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     return await response.json();
-// }
-
 document.addEventListener("DOMContentLoaded", async () => {
     await userDetails();
     await filters();
@@ -300,7 +172,6 @@ const filters = async () => {
 
     let allUsers = [];
 
-    // ✅ Load users
     try {
         const response = await getAllUsers();
         allUsers = response;
@@ -310,7 +181,6 @@ const filters = async () => {
         console.error("Error loading users", error);
     }
 
-    // ✅ Filter function (same pattern as assets)
     function filterUsers() {
         const query = searchInput.value.toLowerCase();
         const roleValue = roleSelect.value.toUpperCase();
@@ -329,11 +199,9 @@ const filters = async () => {
         renderUsers(filtered);
     }
 
-    // ✅ Attach listeners
     if (searchInput) searchInput.addEventListener("input", filterUsers);
     if (roleSelect) roleSelect.addEventListener("change", filterUsers);
 
-    // ✅ Render function
     function renderUsers(users) {
         tableBody.innerHTML = "";
 
@@ -349,7 +217,7 @@ const filters = async () => {
         }
 
         users.forEach(user => {
-
+           
             const currentId = user.userId;
 
             const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
