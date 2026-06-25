@@ -131,6 +131,8 @@ const assetPage = async () => {
 
     try {
         allAssets = await getAllAssets();
+        // dsiplay all assets that are available
+        allAssets = allAssets.filter(asset => asset.assetStatus === "AVAILABLE");
 
         renderAssets(tableBody, allAssets);
 

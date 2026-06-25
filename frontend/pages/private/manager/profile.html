@@ -95,7 +95,7 @@
         </div>
 
         <div id="profileFormPanel" class="settings-panel active-panel">
-          <form id="profile-form">
+          <form onsubmit="handleSettingsSave(event, 'Profile updated successfully!')" id="profile-form">
             <div class="settings-grid">
               <div class="settings-group">
                 <label for="firstName">First Name</label>
@@ -165,8 +165,9 @@
     </section>
   </main>
 
+  <!-- <script type="module" src="../../../assets/js/guards/manager.guard.js"></script> -->
   <script src="../../../assets/js/manager/users.js" type="module"></script>
-  <!-- <script src="../../../assets/js/config.js" type="module"></script> -->
+  <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
 </body>
 

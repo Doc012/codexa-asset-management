@@ -53,6 +53,6 @@ public class Asset {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "asset_status")
-    private AssetStatus assetStatus;
+    private AssetStatus assetStatus = AssetStatus.AVAILABLE;
 
 }

@@ -70,3 +70,27 @@ export async function getAssetsByCondition(condition){
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
+
+export async function retireAsset(id) {
+    const response = await fetch(`${API_BASE_URL}/assets/${id}/retire`, {
+        method: 'PUT'
+    });
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    return true;
+}
+
+export async function restoreAsset(id) {
+    const response = await fetch(`${API_BASE_URL}/assets/${id}/restore`, {
+        method: 'PUT'
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return true;
+}
+
+
+export async function getActiveAssets() {
+    const response = await fetch(`${API_BASE_URL}/assets/active`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+}
+

@@ -9,6 +9,7 @@ import backend.app.asset.model.Asset;
 import backend.app.asset.service.AssetService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,6 +57,24 @@ public class AssetController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAsset(@PathVariable Long id) {
         assetService.deleteAsset(id);
+    }
+
+
+    @PutMapping("/{id}/retire")
+    public ResponseEntity<String> retireAsset(@PathVariable Long id) {
+        assetService.retireAsset(id);
+        return ResponseEntity.ok("Asset retired successfully");
+    }
+
+    @PutMapping("/{id}/restore")
+    public ResponseEntity<String> restoreAsset(@PathVariable Long id) {
+        assetService.restoreAsset(id);
+        return ResponseEntity.ok("Asset restored successfully");
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<Asset>> getActiveAssets() {
+        return ResponseEntity.ok(assetService.getActiveAssets());
     }
 
     @GetMapping("/serial/{serialNumber}")

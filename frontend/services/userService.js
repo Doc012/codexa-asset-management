@@ -1,5 +1,7 @@
 import {API_BASE_URL} from "../assets/js/config.js"
+import { getUser } from "../assets/js/authContext.js"
 
+// const userId = getUser().id;
 
 export async function getAllUsers() {
     const response = await fetch(

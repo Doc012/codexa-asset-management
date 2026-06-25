@@ -496,4 +496,50 @@ public class AssetService {
                 .toList();
 
     }
+
+    public void retireAsset(Long id){
+        Asset asset = assetRepo.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found"));
+
+        if(asset.getAssetStatus() == AssetStatus.RETIRED){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Asset Already Retired");
+        }
+
+        User theUpdater = userRepo.findById(1L)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
+
+        asset.setAssetStatus(AssetStatus.RETIRED);
+
+        AuditLog log = new AuditLog().builder()
+                .userId(theUpdater.getUserId())
+                .entityType(EntityType.ASSET)
+                .entityId(asset.getAssetId())
+                .actionType(ActionType.DELETE)
+                .oldValue("N/A")
+                .newValue("Retired Asset with ID: " + asset.getAssetId())
+                .message("Retired Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
+                .build();
+        auditLogService.createLog(log);
+    }
+
+    public void restoreAsset(Long id) {
+        Asset asset = assetRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Asset not found"));
+
+        if (asset.getAssetStatus() != AssetStatus.RETIRED) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Asset is not retired");
+        }
+        asset.setAssetStatus(AssetStatus.AVAILABLE);
+        assetRepo.save(asset);
+    }
+
+    public List<Asset> getActiveAssets() {
+        return assetRepo.findByAssetStatus(AssetStatus.AVAILABLE);
+    }
 }
