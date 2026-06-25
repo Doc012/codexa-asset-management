@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tableBody.innerHTML = "";
 
         dataArray.forEach(asset => {
+
             const tr = document.createElement("tr");
             tr.dataset.id = asset.assetId;
 
