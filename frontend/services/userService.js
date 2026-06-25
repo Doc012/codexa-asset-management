@@ -1,7 +1,5 @@
 import {API_BASE_URL} from "../assets/js/config.js"
-import { getUser } from "../assets/js/authContext.js"
-
-const userId = getUser().id;
+// import { getUser } from "../assets/js/authContext.js"
 
 export async function getAllUsers() {
     const response = await fetch(
@@ -89,7 +87,7 @@ export const updateAllUserDetails = (async (id, userData) => {
  * @param {*} id user id
  * @param {*} profileData object containing { firstName, lastName, picUrl }
  */
-export const updateUserProfile = async (profileData) => {
+export const updateUserProfile = async (userId, profileData) => {
   const res = await fetch(`${API_BASE_URL}/users/user/profile/${userId}`, {
     method: "PUT",
     headers: {
@@ -105,6 +103,23 @@ export const updateUserProfile = async (profileData) => {
 
   return await res.json();
 };
+
+export const changePassword = async (userId, passwordRequest) => {
+    const res = await fetch(`http://localhost:8080/api/v1/auth/change-password/${userId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(passwordRequest)
+    });
+
+    if (!res.ok){
+        console.error("Failed to update the password: ", res.status, res.statusText);
+        throw new Error("Password update failed");
+    }
+
+    return await res.json;
+}
 
 
 

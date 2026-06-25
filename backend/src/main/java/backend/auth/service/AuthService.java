@@ -1,5 +1,6 @@
 package backend.auth.service;
 
+import backend.app.user.dto.UserDTO;
 import backend.app.user.enums.Role;
 import backend.app.user.enums.Status;
 import backend.app.user.model.User;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -271,5 +273,22 @@ public class AuthService {
                         user.getStatus().name()
                 )
         );
+    }
+
+    //_______// Change Password \\_______
+    public void changePassword(Long id, UserDTO.ChangePasswordRequest request){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
+
+        if (passwordEncoder.matches(request.currentPassword(), user.getPassword())){
+            user.setPassword(passwordEncoder.encode(request.newPassword()));
+
+            userRepository.save(user);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current password you entered is incorrect");
+        }
     }
 }

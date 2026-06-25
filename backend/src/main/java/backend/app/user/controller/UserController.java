@@ -6,9 +6,12 @@ import backend.app.user.dto.UserResponse;
 import backend.app.user.enums.Role;
 import backend.app.user.model.User;
 import backend.app.user.service.UserService;
+import backend.auth.dto.AuthDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

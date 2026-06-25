@@ -10,8 +10,10 @@ import backend.app.user.dto.UserResponse;
 import backend.app.user.enums.Role;
 import backend.app.user.model.User;
 import backend.app.user.repository.UserRepository;
+import backend.auth.dto.AuthDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 

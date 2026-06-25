@@ -30,4 +30,9 @@ public class UserDTO {
             String lastName,
             String picUrl
     ){}
+
+    public record ChangePasswordRequest(
+            String currentPassword,
+            String newPassword
+    ){}
 }

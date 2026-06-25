@@ -1,4 +1,4 @@
-import { getUserById, updateAllUserDetails, getAllUsers, } from "../../services/userService.js";
+import { getUserById, updateAllUserDetails, getAllUsers, } from "../../../services/userService.js";
 import { API_BASE_URL } from "./config.js";
 
 // async function getAllUsers() {
@@ -12,6 +12,7 @@ import { API_BASE_URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("user-table-body");
 
+    alert("Mmdsjfnokfd");
     try {
         const users = await getAllUsers();
         tableBody.innerHTML = ""; // Clear loader

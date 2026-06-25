@@ -1,4 +1,5 @@
-import { getUserById, updateUserProfile } from "../../../services/userService.js";
+import { getUserById, updateUserProfile, changePassword } from "../../../services/userService.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const tabButtons = document.querySelectorAll(".settings-tab-btn");
   const panels = document.querySelectorAll(".settings-panel");
@@ -25,6 +26,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const email = document.getElementById("email");
   const department = document.getElementById("department");
   const profileForm = document.getElementById("profileForm");
+
+  const securityForm = document.getElementById("securityForm");
+  const currentPassword = document.getElementById("sec-current");
+  const newPassword = document.getElementById("sec-new");  
+  const confirmPassword = document.getElementById("sec-confirm");
 
   try {
     const user = await getUserById();
@@ -53,4 +59,27 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Failed to update profile.");
     }
   });
+
+  securityForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const userId = 21;
+    const passwordRequest = {
+      currentPassword: currentPassword.value,
+      newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value
+
+    }
+
+    try {
+      const updated = await changePassword(userId, passwordRequest);
+      console.log("Password updatedL: ", updated);
+      alert("Password changed successfully!");
+    } catch(error){
+      console.error("Update failed:", error);
+      alert("Failed to change password.")
+    }
+  })
+
+  
 });

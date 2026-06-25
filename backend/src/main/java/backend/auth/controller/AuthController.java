@@ -1,5 +1,6 @@
 package backend.auth.controller;
 
+import backend.app.user.dto.UserDTO;
 import backend.auth.dto.AuthDTO;
 import backend.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -113,6 +114,14 @@ public class AuthController {
     @Operation(summary = "Reset password using the emailed token", description = "Token expires after 15 minutes. All active sessions are invalidated on success.")
     public ResponseEntity<AuthDTO.MessageResponse> resetPassword(@Valid @RequestBody AuthDTO.ResetPasswordRequest request){
         return ResponseEntity.ok(authService.resetPassword(request));
+    }
+
+    @PutMapping("/change-password/{id}")
+    @Operation(summary = "Change password", description = "Uses the logged in user to change the password")
+    public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody UserDTO.ChangePasswordRequest request){
+        authService.changePassword(id, request);
+
+        return ResponseEntity.ok("Password changed successfully.");
     }
 
 }
