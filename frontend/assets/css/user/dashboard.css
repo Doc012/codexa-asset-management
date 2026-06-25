@@ -1,11 +1,11 @@
-.welcome-card {
+/* .welcome-card {
     background: white;
     padding: 30px;
     border-radius: 22px;
     box-shadow: var(--shadow);
-    /* Add an elegant corporate left accent line */
+    Add an elegant corporate left accent line
     border-left: 6px solid var(--sidebar);
-}
+} */
 
 
 .welcome-card h1 {
