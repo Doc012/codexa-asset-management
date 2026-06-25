@@ -6,7 +6,15 @@ import {
     cancelLoan 
 } from "../../../services/loanService.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async()=> {
+    await totalLoans();
+    await allOverDueLoans();
+    if (document.getElementById("loansTableBody")) {
+        await viewAllLoans();
+    }
+});
+
+const viewAllLoans = async()=> {
     const tableBody = document.getElementById("loansTableBody");
     const searchInput = document.getElementById("loanSearchInput");
     const statusFilter = document.getElementById("loanStatusFilter");
@@ -137,14 +145,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
         return statusMap[status] || 'pending';
     }
-});
+};
 
 
 
 /**
  * Display total amount of loans on dashboard
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const totalLoans = async()=> {
     const loansCard = document.getElementById("totalLoansCard");
     try {
         const allLoans = await getAllLoans();
@@ -156,12 +164,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch(error) {
         console.error("FAILED TO RENDER TOTAL NUMBER OF LOANS")
     }
-});
+};
 
 /**
  * Display overdue loans
  */
-document.addEventListener("DOMContentLoaded", async () => {
+const allOverDueLoans = async()=> {
     const loansOverdueCard = document.getElementById("loansOverdueCard");
 
     try {
@@ -181,4 +189,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch(error) {
         console.error("FAILED TO CALCULATE TOTAL OVERDUE LOANS");
     }
-});
+};

@@ -5,6 +5,7 @@ import {
 } from "../../../services/assetService.js";
 
 import { createLoan } from "../../../services/loanService.js";
+import {getUser} from "../authContext.js"
 
 let currentCondition = "ALL";
 let currentCategory = "ALL";
@@ -168,7 +169,7 @@ function showConfirmationModal(onConfirm) {
 const requestLoan = async (assetId) => {
     try {
         await createLoan({
-            userId: 4,
+            userId: getUser().id,
             assetId: assetId
         });
     } catch (error) {

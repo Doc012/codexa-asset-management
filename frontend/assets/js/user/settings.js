@@ -1,4 +1,7 @@
-import { getUserById, updateUserProfile, changePassword } from "../../../services/userService.js";
+import { getUserById, updateUserProfile } from "../../../services/userService.js";
+import {getUser} from "../authContext.js"
+
+import { changePassword } from "../../../services/userService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const tabButtons = document.querySelectorAll(".settings-tab-btn");
@@ -26,14 +29,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const email = document.getElementById("email");
   const department = document.getElementById("department");
   const profileForm = document.getElementById("profileForm");
+  const userId = getUser().id;
 
   const securityForm = document.getElementById("securityForm");
   const currentPassword = document.getElementById("sec-current");
-  const newPassword = document.getElementById("sec-new");  
+  const newPassword = document.getElementById("sec-new");
   const confirmPassword = document.getElementById("sec-confirm");
 
   try {
-    const user = await getUserById();
+    const user = await getUserById(userId);
     firstName.value = user.firstName || "";
     lastName.value = user.lastName || "";
     email.value = user.email || "";
@@ -81,5 +85,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   })
 
-  
+
 });

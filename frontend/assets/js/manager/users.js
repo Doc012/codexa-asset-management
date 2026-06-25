@@ -1,6 +1,9 @@
 import { getUserById } from "../../../services/userService.js";
 import { API_BASE_URL } from "../config.js";
 import { updateAllUserDetails } from "../../../services/userService.js";
+import { getUser } from "../authContext.js"
+
+
 
 
 /**
@@ -9,8 +12,9 @@ import { updateAllUserDetails } from "../../../services/userService.js";
  */
 document.addEventListener("DOMContentLoaded", async () => {
     await userDetails();
-    await updateUserDetails();
 });
+
+const userId = getUser().id;
 
 const userDetails = async()=> {
     const managerElement = document.querySelector(".ledger-title");
@@ -18,8 +22,7 @@ const userDetails = async()=> {
     const profileInitial = document.querySelector(".profile-initial")
 
     try {
-        const managerId = 8;
-        const managerData = await getUserById(managerId);
+        const managerData = await getUserById(userId);
 
         if (managerData) {
 
@@ -43,15 +46,14 @@ const userDetails = async()=> {
 };
 
 
-const updateUserDetails = async()=> {
-
-    const userId = 3;
+document.addEventListener("DOMContentLoaded", async()=> {
     try {
 
         const currentUser = await getUserById(userId);
+        console.log(currentUser);
         const form = document.querySelector("#profile-form");
 
-        const submitForm = form.addEventListener("submit", async (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             const userData = {
                 "firstName": document.querySelector("#firstName").value,
@@ -60,8 +62,10 @@ const updateUserDetails = async()=> {
                 "department": currentUser.department,
                 "picUrl": currentUser.picUrl
             }
+
+            console.log(userData);
             try {
-                const updateUserDetails = await updateAllUserDetails(userId, userData);
+                await updateAllUserDetails(userId, userData);
                 console.log("Hello There!")
             } catch (error) {
                 console.log(error);
@@ -73,7 +77,7 @@ const updateUserDetails = async()=> {
         console.log(error);
     }
 
-};
+});
 
 
 

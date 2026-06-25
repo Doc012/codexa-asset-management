@@ -193,8 +193,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-
-
 document.addEventListener("DOMContentLoaded", async () => {
 
     const searchInput = document.getElementById("userSearchInput");
@@ -370,14 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ? rawDepartmentValue 
             : `${rawDepartmentValue} Department`;
 
-        // Explicitly match the backend's CreateUserRequest structural properties
+        // ✅ FIXED PAYLOAD: Explicitly match the backend's CreateUserRequest structural properties
         const userData = {
             firstName: document.getElementById('edit-firstName').value.trim(),
             lastName: document.getElementById('edit-lastName').value.trim(),
             email: document.getElementById('edit-email').value.trim(),
             department: formattedDepartment,
             role: document.getElementById('edit-role').value,
-            picUrl: null 
+            picUrl: null // ✅ Explicitly passes your expected schema parameter safely
         };
 
         try {

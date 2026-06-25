@@ -1,11 +1,10 @@
 import {
     getAllAssets,
 } from "../../../services/assetService.js";
+import { getUser } from "../authContext.js"
 
 import { API_BASE_URL } from "../config.js";
 import { createLoan } from "../../../services/loanService.js";
-
-
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -199,7 +198,7 @@ function showConfirmationModal(onConfirm) {
 
 const requestLoan = async (assetId) => {
     const userData = {
-        userId: 4,
+        userId: getUser().id,
         assetId: assetId
     };
 

@@ -163,11 +163,10 @@ public class UserService {
                 .firstName(savedUser.getFirstName())
                 .lastName(savedUser.getLastName())
                 .email(savedUser.getEmail())
-                .picUrl(savedUser.getFirstName())
+                .picUrl(savedUser.getPicUrl())
                 .department(savedUser.getDepartment())
                 .role(savedUser.getRole())
                 .build();
-
 
         return userResponse;
 

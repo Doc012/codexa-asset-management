@@ -1,6 +1,7 @@
 import { getUserById } from "../../../services/userService.js";
 import { API_BASE_URL } from "../config.js";
 import { updateAllUserDetails } from "../../../services/userService.js";
+import { getUser } from "../authContext.js";
 
 
 /**
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
+const userId = getUser().id;
+
 const userDetails = async () => {
     const userName = document.querySelector(".welcome-card h1")
     const profileImage = document.querySelector(".profile-image")
@@ -20,7 +23,6 @@ const userDetails = async () => {
 
 
     try {
-        const userId = 8;
         const userData = await getUserById(userId);
 
         if (userData) {
@@ -45,7 +47,6 @@ const userDetails = async () => {
  * UPDATE User details oin the settings
  */
 const updateDetails = async() => {
-    const userId = 3;
     try {
 
         const currentUser = await getUserById(userId);

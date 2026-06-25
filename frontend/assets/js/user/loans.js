@@ -3,6 +3,7 @@ import { getLoansByStatus } from "../../../services/loanService.js";
 import { getAllLoans } from "../../../services/loanService.js";
 import { getLoansByUser } from "../../../services/loanService.js";
 import { cancelLoan } from "../../../services/loanService.js";
+import {getUser} from "../authContext.js"
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -36,6 +37,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
+const userId = getUser().id;
+
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
  * User must be able to cancel a pending loan
@@ -44,7 +47,7 @@ const allPendingLoans = async () => {
     const tableBody = document.getElementById("pendingTableBody");
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        const loansByUser = await getLoansByUser(userId);
 
         tableBody.innerHTML = "";
 
@@ -105,7 +108,7 @@ const loanHistory = async () => {
     const tableBody = document.getElementById("historyTableBody");
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        const loansByUser = await getLoansByUser(userId);
         tableBody.innerHTML = "";
 
         loansByUser.forEach(loan => {
@@ -138,7 +141,7 @@ const waitingCollections = async () => {
     const tableBody = document.getElementById("collectionTableBody");
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        const loansByUser = await getLoansByUser(userId);
         tableBody.innerHTML = "";
 
         const filteredLoans = loansByUser.filter(loan => {
@@ -173,7 +176,7 @@ const activeLoans = async () => {
     const tableBody = document.getElementById("activeTableBody");
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        const loansByUser = await getLoansByUser(userId);
         tableBody.innerHTML = "";
 
         const filteredLoans = loansByUser.filter(loan => {
@@ -230,7 +233,6 @@ const overDueLoan = (loan) => {
  */
 const dueSoonLoans = async () => {
     const dueSoonElement = document.getElementById("total_requests");
-    const userId = 4;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -268,7 +270,6 @@ const dueSoonLoans = async () => {
 
 const overDueLoans = async () => {
     const overdueElement = document.getElementById("overdue");
-    const userId = 4;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -309,10 +310,9 @@ const overDueLoans = async () => {
  */
 const allUserLoans = async () => {
     const allUserLoansCard = document.getElementById("totalLoans");
-    const userId = 4;
 
     try {
-        const loansByUser = await getLoansByUser(4);
+        const loansByUser = await getLoansByUser(userId);
 
         if (loansByUser && allUserLoansCard) {
             allUserLoansCard.textContent = loansByUser.length;

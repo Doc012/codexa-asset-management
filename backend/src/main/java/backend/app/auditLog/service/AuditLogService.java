@@ -67,6 +67,7 @@ public class AuditLogService {
      */
     public List<AuditLogDTO.auditLogResponse> getAllAuditLogs(){
         List<AuditLog> logs = repository.findAll();
+        Collections.reverse(logs);
 
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
                 .map(log -> new AuditLogDTO.auditLogResponse(
@@ -81,8 +82,6 @@ public class AuditLogService {
                                 log.getMessage()
                         )
                 ).toList();
-
-        Collections.reverse(logs);
         return logsDto;
     }
 
@@ -117,7 +116,7 @@ public class AuditLogService {
 
     public List<AuditLogDTO.auditLogResponse> getAuditLogsByUserId(Long userId){
         List<AuditLog> logs = repository.findByUserId(userId);
-
+        Collections.reverse(logs);
 
         Collections.reverse(logs);
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
@@ -134,7 +133,6 @@ public class AuditLogService {
                         )
                 ).toList();
 
-        Collections.reverse(logs);
         return logsDto;
 
     }
@@ -145,6 +143,7 @@ public class AuditLogService {
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         List<AuditLog> logs = repository.findByUserId(user.getUserId());
+        Collections.reverse(logs);
 
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
                 .map(log -> new AuditLogDTO.auditLogResponse(
@@ -160,13 +159,13 @@ public class AuditLogService {
                         )
                 ).toList();
 
-        Collections.reverse(logs);
         return logsDto;
 
     }
 
     public List<AuditLogDTO.auditLogResponse> getAuditLogsByActionType(ActionType actionType){
         List<AuditLog> logs = repository.findByActionType(actionType);
+        Collections.reverse(logs);
 
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
                 .map(log -> new AuditLogDTO.auditLogResponse(
@@ -182,12 +181,12 @@ public class AuditLogService {
                         )
                 ).toList();
 
-        Collections.reverse(logs);
         return logsDto;
     }
 
     public List<AuditLogDTO.auditLogResponse> getAuditLogsByEntityType(EntityType entityType){
         List<AuditLog> logs = repository.findByEntityType(entityType);
+        Collections.reverse(logs);
 
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
                 .map(log -> new AuditLogDTO.auditLogResponse(
@@ -203,7 +202,6 @@ public class AuditLogService {
                         )
                 ).toList();
 
-        Collections.reverse(logs);
         return logsDto;
     }
 
