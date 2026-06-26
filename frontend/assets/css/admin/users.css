@@ -508,3 +508,21 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+/* inactive account */
+.active-state {
+  color: green;
+  font-weight: bold;
+}
+.inactive-state {
+  color: red;
+  font-weight: bold;
+}
+.row-action-btn.deactivate-btn {
+  background-color: #dc2626;
+  color: white;
+}
+.row-action-btn.activate-btn {
+  background-color: #16a34a;
+  color: white;
+}

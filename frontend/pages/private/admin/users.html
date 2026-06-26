@@ -192,6 +192,11 @@
               and manage role elevation queries.
             </p>
           </div>
+
+          <button id="open-add-user-modal" class="primary-btn">
+            + Create User
+          </button>
+
         </div>
 
         <div class="portal-filter-bar">
@@ -238,55 +243,6 @@
               </tr>
             </thead>
             <tbody id="userTableBody">
-              <tr>
-                <td class="flex-meta-cell">
-                  <div class="table-img-frame initial-avatar">
-                    <span>JD</span>
-                  </div>
-                  <div>
-                    <span class="cell-primary-title">Jane Doe</span>
-                    <span class="cell-sub-label">jdoe@organization.com</span>
-                  </div>
-                </td>
-                <td>
-                  <span class="role-badge badge-admin">Administrator</span>
-                </td>
-                <td>
-                  <span class="cell-primary-title">3 Active Assets</span>
-                  <span class="cell-sub-label">0 Overdue Tickets</span>
-                </td>
-                <td>
-                  <span class="status-indicator active-state"
-                    >Active Profile</span
-                  >
-                </td>
-                <td>
-                  <div class="row-actions-group">
-                    <button
-                      class="row-action-btn edit"
-                      title="Modify Permissions"
-                    >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <path
-                          d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                        ></path>
-                        <path
-                          d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
 
@@ -328,6 +284,16 @@
                     <option value="ADMIN">ADMIN</option>
                     <option value="STAFF">STAFF</option>
                     <option value="MANAGER">MANAGER</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label>Status</label>
+                  <select id="edit-status">
+                    <option value="PENDING_VERIFICATION">Pending Verification</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                    <option value="PENDING_APPROVAL">Pending Approval</option>
                   </select>
                 </div>
 
@@ -392,5 +358,7 @@
   <script src="../../../assets/js/auditLogs.js" type="module"></script>
   <script src="../../../assets/js/loans.js" type="module"></script>
   <script src="../../../assets/js/user/script.js" type="module"></script> -->
+
+
   </body>
 </html>
