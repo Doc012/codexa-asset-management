@@ -34,3 +34,22 @@ Read in this order (simplest → most complex):
 - manager.guard.js
 - staff.guard.js
 These are the simplest files — each is just one line that calls `requireRole` with the correct role. They're the entry point on every private page.
+<!-- ============================================================================================================================================= -->
+
+<!-- ________// SSL \\__________ -->
+## Local HTTPS Setup (required for refresh token cookie)
+
+Run this command from the `backend/` directory:
+
+### Windows
+```powershell
+& "C:\Program Files\Java\jdk-25.0.2\bin\keytool.exe" -genkeypair -alias assetiq -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore src/main/resources/assetiq.p12 -validity 365 -dname "CN=localhost" -storepass assetiq123
+```
+
+### Mac/Linux
+```bash
+keytool -genkeypair -alias assetiq -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore src/main/resources/assetiq.p12 -validity 365 -dname "CN=localhost" -storepass assetiq123
+```
+
+Then open https://localhost:8443/swagger-ui.html in your browser and click
+**Advanced → Proceed to localhost** to trust the certificate.

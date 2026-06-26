@@ -1,4 +1,4 @@
-import { resetPassword } from "../..//js/authContext.js";
+import { resetPassword } from "../../js/authContext.js";
 import { requireGuest }  from "../../js/authGuard.js";
 
 await requireGuest();
