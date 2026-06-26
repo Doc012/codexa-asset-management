@@ -1,6 +1,4 @@
-/* ==========================================================================
-   MAIN WORKSPACE SURFACE ARCHITECTURE
-   ========================================================================== */
+
 .content {
   margin-top: 64px;
   margin-left: 240px;
@@ -10,14 +8,16 @@
   transition: margin-left 0.2s ease-in-out;
 }
 
-/* Sidebar collapsed helper alignment state */
+
 .content.expanded {
   margin-left: 70px;
 }
 
-/* ==========================================================================
-   TYPOGRAPHY & META CONTROLS
-   ========================================================================== */
+.portal-toolbar-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .portal-toolbar-header h1 {
   font-size: 28px;
   font-weight: 700;
@@ -31,9 +31,6 @@
   font-size: 14px;
 }
 
-/* ==========================================================================
-   DIRECTORY SUMMARY METRICS STRIP
-   ========================================================================== */
 .users-summary-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -69,9 +66,7 @@
   color: #d97706 !important;
 }
 
-/* ==========================================================================
-   SEARCH & INTERACTION BAR
-   ========================================================================== */
+
 .portal-filter-bar {
   display: flex;
   justify-content: space-between;
@@ -130,9 +125,7 @@
   outline: none;
 }
 
-/* ==========================================================================
-   IDENTITY DATA DIRECTORY LEDGER
-   ========================================================================== */
+
 .portal-card-table-wrapper {
   background: var(--bg-surface, #ffffff);
   border-radius: 12px;
@@ -186,7 +179,7 @@
   border: 1px solid var(--border, #e2e8f0);
 }
 
-/* Default dynamic structural layout for avatar text values */
+
 .initial-avatar {
   background: #f1f5f9;
   color: #475569;
@@ -211,7 +204,7 @@
   margin-top: 2px;
 }
 
-/* Role Badges */
+
 .role-badge {
   display: inline-flex;
   align-items: center;
@@ -226,7 +219,7 @@
   color: var(--primary, #4f46e5);
 }
 
-/* Status Indicators */
+
 .status-indicator {
   position: relative;
   font-size: 13px;
@@ -249,9 +242,7 @@
   background: var(--success, #10b981);
 }
 
-/* ==========================================================================
-   ROW ACTION BUTTON GROUPS
-   ========================================================================== */
+
 .actions-header {
   text-align: right !important;
   padding-right: 32px !important;
@@ -297,7 +288,21 @@
   background: #fef2f2;
 }
 
-/* Mobile Responsiveness Matrix Override handles compressed viewports */
+.primary-btn {
+  display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+
 @media (max-width: 768px) {
   .content {
     margin-left: 0 !important;
@@ -314,10 +319,8 @@
   }
 }
 
-/* ==========================================================================
-   USER EDIT MODAL SYSTEM (Aligned with Asset UI)
-   ========================================================================== */
 
+/* edit */
 /* Overlay */
 #user-modal-overlay {
   position: fixed;
@@ -325,7 +328,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dim background */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
