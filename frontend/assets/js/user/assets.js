@@ -1,5 +1,4 @@
-import {
-    getAllAssets,
+import {getAllAssets,
 } from "../../../services/assetService.js";
 import { getUser } from "../authContext.js"
 
@@ -62,33 +61,50 @@ const viewAssetsOnDashboard = async () => {
  * Assets page for Staff
  * Allows the user to view available assets and request a loan
  */
-
 const renderAssets = (tableBody, assets) => {
     tableBody.innerHTML = "";
 
     assets.forEach(asset => {
         const row = document.createElement("tr");
-
         const isLoaned = asset.assetStatus === "LOANED";
+
         if (isLoaned) {
             row.classList.add("row-disabled");
         }
 
         row.innerHTML = `
             <td>${asset.title}</td>
-            <td>${asset.category}</td>
-            <td>${asset.condition}</td>
             <td>
-                <img src="${asset.photoPath}" alt="Asset Image" style="width: 80px; height: auto;"/>
+                <div class="table-img-frame">
+                    <img class="asset-img"
+                         src="${asset.photoPath}"
+                         alt="Asset Image"/>
+                </div>
             </td>
+
+            <td>${asset.category}</td>
             <td>${asset.assetStatus}</td>
+            <td>${asset.condition}</td>
+
             <td>
-                <button class="request-btn" data-id="${asset.assetId}" ${isLoaned ? "disabled" : ""}>
+                <button class="view-btn"
+                        data-id="${asset.assetId}">
+                    More
+                </button>
+
+                <button class="request-btn"
+                        data-id="${asset.assetId}"
+                        ${isLoaned ? "disabled" : ""}>
                     ${isLoaned ? "Unavailable" : "Request Loan"}
                 </button>
             </td>
         `;
 
+        const viewBtn = row.querySelector(".view-btn");
+
+        viewBtn.addEventListener("click", () => {
+            openAssetModal(asset);
+        });
 
         tableBody.appendChild(row);
     });
@@ -149,7 +165,6 @@ const assetPage = async () => {
             );
 
             renderAssets(tableBody, filtered);
-
         };
 
         tableBody.addEventListener("click", (event) => {
@@ -197,16 +212,62 @@ function showConfirmationModal(onConfirm) {
 /**
  * REQUEST A loan on an asset that is available
  */
-
 const requestLoan = async (assetId) => {
-    const userData = {
-        userId: getUser().id,
-        assetId: assetId
-    };
-
     try {
-        await createLoan(userData);
+        await createLoan({
+            userId: 7,
+            assetId: assetId
+        });
+
+        console.log("Loan requested successfully");
+
     } catch (error) {
-        console.log("Error: " + error)
+        console.log("Error:", error);
     }
 };
+
+/**
+ * Allows a user to see the asset and its details
+ * @param {*} asset 
+ */
+const openAssetModal = (asset) => {
+    const modal = document.getElementById("assetDetailsModal");
+    const body = document.getElementById("assetDetailsBody");
+
+    body.innerHTML = `
+        <div class="asset-details-card">
+
+            <img src="${asset.photoPath}" alt="asset image"/>
+
+            <h2>${asset.title}</h2>
+
+            <p><strong>Category:</strong> ${asset.category}</p>
+            <p><strong>Status:</strong> ${asset.assetStatus}</p>
+            <p><strong>Condition:</strong> ${asset.condition}</p>
+            <p><strong>Cost:</strong> ${asset.cost}</p>
+            <p><strong>Serial Number:</strong> ${asset.serialNumber}</p>
+            <p><strong>Location:</strong> ${asset.location}</p>
+
+        </div>
+    `;
+
+    modal.style.display = "flex";
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("assetDetailsModal");
+    const closeBtn = document.getElementById("closeAssetModal");
+
+    if (!closeBtn) return;
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+});
