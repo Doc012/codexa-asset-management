@@ -5,10 +5,11 @@ import {
 } from "../../../services/assetService.js";
 
 import { createLoan } from "../../../services/loanService.js";
-import {getUser} from "../authContext.js"
+import { getUser } from "../authContext.js"
 
 let currentCondition = "ALL";
 let currentCategory = "ALL";
+let searchQuery = "";
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -45,6 +46,17 @@ const applyFilters = async () => {
             assets = assets.filter(a => a.category === currentCategory);
         }
 
+        if (searchQuery && searchQuery.length > 0) {
+            assets = assets.filter(a => {
+                return (
+                    (a.title && a.title.toLowerCase().includes(searchQuery)) ||
+                    (a.category && a.category.toLowerCase().includes(searchQuery)) ||
+                    (a.serialNumber && a.serialNumber.toLowerCase().includes(searchQuery)) ||
+                    (a.location && a.location.toLowerCase().includes(searchQuery))
+                );
+            });
+        }
+
         renderAssets(assets);
     } catch (error) {
         console.error("Filter error:", error);
@@ -58,8 +70,9 @@ const applyFilters = async () => {
 const setupFilters = () => {
     const conditionDropDown = document.querySelector("#conditionFilter");
     const categoryDropDown = document.querySelector("#categoryFilter");
+    const searchInput = document.querySelector("#assetSearch");
 
-    if (!conditionDropDown || !categoryDropDown) {
+    if (!conditionDropDown || !categoryDropDown || !searchInput) {
         console.error("Filter dropdowns not found in DOM");
         return;
     }
@@ -71,6 +84,11 @@ const setupFilters = () => {
 
     categoryDropDown.addEventListener("change", async (e) => {
         currentCategory = e.target.value;
+        await applyFilters();
+    });
+
+     searchInput.addEventListener("input", async (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
         await applyFilters();
     });
 };
@@ -102,16 +120,14 @@ const renderAssets = (assets) => {
 
         row.innerHTML = `
             <td>${asset.title}</td>
-            <td>${asset.category}</td>
-            <td>${asset.serialNumber}</td>
-            <td>${asset.acquisitionDate}</td>
-            <td>${asset.cost}</td>
-            <td>${asset.location}</td>
-            <td>${asset.condition}</td>
             <td>
-                <img src="${asset.photoPath}" alt="Asset Image" style="width:80px;" />
+                <div class="table-img-frame">
+                    <img class="asset-img" src="${asset.photoPath}" alt="Asset Image" />
+                </div>
             </td>
+            <td>${asset.category}</td>
             <td>${asset.assetStatus}</td>
+            <td>${asset.condition}</td>
             <td>
                 <button class="request-btn"
                     data-id="${asset.assetId}"

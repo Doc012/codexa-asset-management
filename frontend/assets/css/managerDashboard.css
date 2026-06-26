@@ -142,7 +142,7 @@
 
 .manager-ledger-table th {
   text-align: left !important;
-  padding: 14px 16px !important;
+  padding: 10px 12px !important;
   border-bottom: 2px solid var(--border) !important;
   font-size: 12px !important;
   text-transform: uppercase !important;
@@ -153,8 +153,30 @@
 }
 
 .manager-ledger-table td {
-  padding: 18px 16px !important;
+  padding: 10px 12px !important;
   border-bottom: 1px solid var(--border) !important;
+}
+
+.manager-ledger-table tbody td {
+  font-size: 14px;
+}
+
+.cell-primary-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.cell-sub-label {
+  font-size: 15px;
+}
+
+.cell-data-text {
+  font-size: 15px;
+}
+
+.cell-tag-chip,
+.status-chip {
+  font-size: 15px;
 }
 
 /* Update this container to handle responsive overflow scrolling safely */
@@ -250,6 +272,26 @@
     margin-left: 70px;
     width: calc(100% - 70px);
 }
+.asset-img {
+  max-width: 60px;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.asset-img {
+  max-width: 60px;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.manager-ledger-table td {
+  vertical-align: middle;
+}
 
 @media (max-width: 768px) {
     #mainContent {
@@ -279,4 +321,22 @@
   padding-bottom: 12px;
   border-bottom: 2px solid #e2e8f0; 
   width: 100%;
+}
+
+.table-img-frame {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.asset-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
 }

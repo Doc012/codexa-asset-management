@@ -32,3 +32,90 @@
 .download-btn:active {
   transform: scale(0.98);
 }
+
+.reports-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 30px;
+  margin-top: 20px;
+  background: var(--surface, #fff);
+  border-radius: 10px;
+}
+
+/* SEARCH */
+.reports-filter-bar .search-box {
+  flex: 1;
+}
+
+.reports-filter-bar input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  outline: none;
+}
+
+/* DROPDOWN */
+.reports-filter-bar .filter-box {
+  width: 220px;
+}
+
+.reports-filter-bar select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  background: var(--surface, #fff);
+  cursor: pointer;
+}
+
+.metric-label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.metrics-strip-container.report-filters {
+  display: flex;
+  padding: 20px 30px;
+  gap: 15px;
+  align-items: center;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.015);
+  margin-bottom: 20px;
+}
+
+.filter-block {
+  flex-grow: 1;
+}
+
+.filter-block .metric-label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.filter-block input,
+.filter-block select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background: var(--surface);
+}
+
+.filter-block input:focus,
+.filter-block select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 200, 83, 0.15);
+}
