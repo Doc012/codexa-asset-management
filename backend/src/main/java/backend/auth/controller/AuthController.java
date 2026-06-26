@@ -42,7 +42,7 @@ public class AuthController {
                 .secure(true)
                 .path("/api/v1/auth")
                 .maxAge(Duration.ofDays(7))
-                .sameSite("Strict")
+                .sameSite("None")
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -75,7 +75,7 @@ public class AuthController {
                 .secure(true)
                 .path("/api/v1/auth")
                 .maxAge(Duration.ofDays(7))
-                .sameSite("Strict")
+                .sameSite("None")
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
@@ -92,8 +92,19 @@ public class AuthController {
 
     @PostMapping("/logout")
     @Operation(summary = "Logout", description = "Blacklists the current access token and removes the refresh token from Redis.")
-    public ResponseEntity<AuthDTO.MessageResponse> logout(@RequestHeader("Authorization") String authHeader){
+    public ResponseEntity<AuthDTO.MessageResponse> logout(@RequestHeader("Authorization") String authHeader, HttpServletResponse response) {
+
         String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+
+        ResponseCookie deleteCookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/api/v1/auth")
+                .maxAge(0)
+                .sameSite("None")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
 
         return ResponseEntity.ok(authService.logout(token));
     }
@@ -118,10 +129,9 @@ public class AuthController {
 
     @PutMapping("/change-password/{id}")
     @Operation(summary = "Change password", description = "Uses the logged in user to change the password")
-    public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody UserDTO.ChangePasswordRequest request){
+    public ResponseEntity<AuthDTO.MessageResponse> changePassword(@PathVariable Long id, @RequestBody UserDTO.ChangePasswordRequest request) {
         authService.changePassword(id, request);
-
-        return ResponseEntity.ok("Password changed successfully.");
+        return ResponseEntity.ok(new AuthDTO.MessageResponse("Password changed successfully."));
     }
 
 }

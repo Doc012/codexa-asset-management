@@ -1,5 +1,5 @@
 import { getUserById, updateUserProfile } from "../../../services/userService.js";
-import {getUser} from "../authContext.js"
+import { getUser, logout } from "../authContext.js"
 
 import { changePassword } from "../../../services/userService.js";
 
@@ -29,12 +29,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   const email = document.getElementById("email");
   const department = document.getElementById("department");
   const profileForm = document.getElementById("profileForm");
-  const userId = getUser().id;
 
   const securityForm = document.getElementById("securityForm");
   const currentPassword = document.getElementById("sec-current");
   const newPassword = document.getElementById("sec-new");
   const confirmPassword = document.getElementById("sec-confirm");
+
+  const userId = getUser()?.id;
+  if (!userId) {
+    console.error("No user in session — redirecting to login");
+    window.location.href = "/pages/auth/login.html";
+    return;
+  }
+
+  console.log(getUser());
 
   try {
     const user = await getUserById(userId);
@@ -55,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     try {
-      const updated = await updateUserProfile(profileData);
+      const updated = await updateUserProfile(userId, profileData);
       console.log("Profile updated:", updated);
       alert("Profile updated successfully!");
     } catch (error) {
@@ -67,23 +75,34 @@ document.addEventListener("DOMContentLoaded", async () => {
   securityForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const userId = 21;
+    if (newPassword.value.length < 8) {
+      alert("New password must be at least 8 characters.");
+      return;
+    }
+
+    if (newPassword.value !== confirmPassword.value) {
+      alert("New password and confirm password do not match.");
+      return;
+    }
+
     const passwordRequest = {
       currentPassword: currentPassword.value,
-      newPassword: newPassword.value,
-      confirmPassword: confirmPassword.value
-
+      newPassword: newPassword.value
     }
 
     try {
-      const updated = await changePassword(userId, passwordRequest);
-      console.log("Password updatedL: ", updated);
+      await changePassword(userId, passwordRequest);
       alert("Password changed successfully!");
-    } catch(error){
+      securityForm.reset();
+    } catch (error) {
       console.error("Update failed:", error);
-      alert("Failed to change password.")
+      alert(error.message || "Failed to change password.");
     }
   })
 
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await logout();
+  });
 
 });

@@ -1,16 +1,10 @@
-import {API_BASE_URL} from "../assets/js/config.js"
-import { getUser } from "../assets/js/authContext.js"
-
-// const userId = getUser().id;
+import { apiFetch } from "../assets/js/apiFetch.js";
 
 export async function getAllUsers() {
-    const response = await fetch(
-        `${API_BASE_URL}/users`
-    );
+    const response = await apiFetch(`/users`);
 
     return await response.json();
 }
-
 
 /**
  * 
@@ -19,7 +13,7 @@ export async function getAllUsers() {
  */
 
 export const getUserById = (async (userId) => {
-    const res = await fetch(`${API_BASE_URL}/users/user/${userId}`);
+    const res = await apiFetch(`/users/user/${userId}`);
     return await res.json();
 });
 
@@ -30,7 +24,7 @@ export const getUserById = (async (userId) => {
  */
 
 export const getUserByEmail = (async (email) => {
-    const res = await fetch(`${API_BASE_URL}/user/email/${email}`);
+    const res = await apiFetch(`/user/email/${email}`);
     return await res.json();
 });
 
@@ -40,7 +34,7 @@ export const getUserByEmail = (async (email) => {
  * @returns all users by their roles in a json object
  */
 export const getAllUsersByRole = (async (role) => {
-    const res = await fetch(`${API_BASE_URL}/role/${role}`);
+    const res = await apiFetch(`/role/${role}`);
     return await res.json();
 })
 
@@ -51,7 +45,7 @@ export const getAllUsersByRole = (async (role) => {
  */
 
 export const createUser = (async (userData) => {
-    const res = await fetch(`${API_BASE_URL}/users`, {
+    const res = await apiFetch(`/users`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -68,8 +62,8 @@ export const createUser = (async (userData) => {
  * @param {*} id 
  * @param {*} userData 
  */
-export const updateAllUserDetails = (async (userId, userData) => {
-    const res = await fetch(`${API_BASE_URL}/users/user/${userId}`, {
+export const updateAllUserDetails = (async (id, userData) => {
+    const res = await apiFetch(`/users/user/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -77,7 +71,7 @@ export const updateAllUserDetails = (async (userId, userData) => {
         body: JSON.stringify(userData)
     });
 
-    if (!res.ok){
+    if (!res.ok) {
         console.log(res)
     }
 
@@ -86,42 +80,40 @@ export const updateAllUserDetails = (async (userId, userData) => {
 
 /**
  * Update user profile (firstName, lastName, picUrl)
- * @param {*} userId user id
+ * @param {*} id user id
  * @param {*} profileData object containing { firstName, lastName, picUrl }
  */
 export const updateUserProfile = async (userId, profileData) => {
-  const res = await fetch(`${API_BASE_URL}/users/user/profile/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(profileData)
-  });
-
-  if (!res.ok) {
-    console.error("Failed to update profile:", res.status, res.statusText);
-    throw new Error("Profile update failed");
-  }
-
-  return await res.json();
-};
-
-export const changePassword = async (userId, passwordRequest) => {
-    const res = await fetch(`http://localhost:8080/api/v1/auth/change-password/${userId}`, {
+    const res = await apiFetch(`/users/user/profile/${userId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(passwordRequest)
+        body: JSON.stringify(profileData)
     });
 
-    if (!res.ok){
-        console.error("Failed to update the password: ", res.status, res.statusText);
-        throw new Error("Password update failed");
+    if (!res.ok) {
+        console.error("Failed to update profile:", res.status, res.statusText);
+        throw new Error("Profile update failed");
     }
 
-    return await res.json;
-}
+    return await res.json();
+};
 
 
+export const changePassword = async (userId, passwordRequest) => {
+    const res = await apiFetch(`/auth/change-password/${userId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(passwordRequest),
+    });
 
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || err.message || "Password update failed");
+    }
+
+    return await res.json();
+};

@@ -452,3 +452,22 @@
     gap: 12px;
     margin-top: 24px;
 }
+
+.form-actions .portal-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.form-actions .portal-btn.primary {
+    background-color: #10b981; 
+    color: white;
+}
+
+.form-actions .portal-btn.secondary {
+    background-color: transparent;
+    color: #4b5563;           
+    border-color: #d1d5db;    
+}

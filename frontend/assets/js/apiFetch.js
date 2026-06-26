@@ -27,10 +27,10 @@ export async function apiFetch(path, options = {}) {
   return res;
 }
 
-function buildHeaders(extra = {}) {
+function buildHeaders(extra = {}, body) {
   const token = getAccessToken();
   return {
-    "Content-Type": "application/json",
+    ...(body ? { "Content-Type": "application/json" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...extra,
   };

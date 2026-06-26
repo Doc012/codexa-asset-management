@@ -1,4 +1,4 @@
-// import { API_AUTH_URL } from "./config.js";
+import { API_AUTH_URL } from "./config.js";
 
 const SESSION_TOKEN_KEY = "aq_access_token";
 const SESSION_USER_KEY  = "aq_user";
@@ -56,7 +56,7 @@ export async function login(email, password) {
 export async function logout() {
   if (_state.accessToken) {
     await fetch(`${API_AUTH_URL}/logout`, {
-      method: "GET",
+      method: "POST",
       headers: { Authorization: `Bearer ${_state.accessToken}` },
       credentials: "include",
     }).catch(() => {});
@@ -68,21 +68,22 @@ export async function logout() {
 }
 
 export async function tryRefresh() {
-  if (_state.accessToken) return true;
-
   try {
     const res = await fetch(`${API_AUTH_URL}/refresh`, {
       method: "POST",
       credentials: "include",
     });
 
-    if (!res.ok) return false;
+    if (!res.ok) {
+      _clearSession();
+      return false;
+    }
 
     const data = await res.json();
     _setSession(data.accessToken, data.user);
-
     return true;
   } catch {
+    _clearSession();
     return false;
   }
 }
