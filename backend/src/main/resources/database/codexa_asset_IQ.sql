@@ -142,3 +142,9 @@ ALTER TABLE loans ADD CONSTRAINT loans_status_check
                    'RETURNED'
             )
         );
+
+
+UPDATE users SET status = 'ACTIVE' WHERE user_id = 7;
+UPDATE users SET status = 'ACTIVE' WHERE user_id = 6;
+UPDATE users SET status = 'ACTIVE' WHERE user_id = 5;
+UPDATE users SET status = 'ACTIVE' WHERE user_id = 4;
