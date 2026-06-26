@@ -14,20 +14,19 @@
 
 <body>
   <header class="topbar">
-
     <div class="left-nav">
       <button id="menuBtn" class="menu-btn">☰</button>
       <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
     </div>
     <div class="right-nav">
-      <div id="profileContainer" class="profile-container">
+      <div class="profile-container">
         <div id="profileInitial" class="profile-initial">S</div>
-        <img id="profileImage" class="profile-image" src="" alt="profile_picture">
+        <img id="profileImage" class="profile-image">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
-          <a href="./settings.html"><button>Settings</button></a>
-          <button>Logout</button>
+          <a href="./settings.html"><button>Profile</button></a>
+          <button id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
@@ -197,7 +196,8 @@
     </section>
 </main>
 
-  <!-- <script type="module" src="../../../assets/js/guards/staff.guard.js"></script> -->
+  <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
+  <script type="module" src="../../../assets/js/common/header.js"></script>
   <script src="../../../assets/js/user/users.js" type="module"></script>
   <script src="../../../assets/js/user/assets.js" type="module"></script>
   <script src="../../../assets/js/admin/auditLogs.js" type="module"></script>

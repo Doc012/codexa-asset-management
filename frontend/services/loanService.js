@@ -1,32 +1,32 @@
 // ─── Loan Service ─────────────────────────────────────────────────────────────
-import { API_BASE_URL } from "../assets/js/config.js";
+import { apiFetch } from "../assets/js/apiFetch.js";
 
 export async function getAllLoans() {
-    const response = await fetch(`${API_BASE_URL}/loans`);
+    const response = await apiFetch(`/loans`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
 
 async function getLoanById(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/${id}`);
+    const response = await apiFetch(`/loans/${id}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
 
 export async function getLoansByUser(userId) {
-    const response = await fetch(`${API_BASE_URL}/loans/user/${userId}`);
+    const response = await apiFetch(`/loans/user/${userId}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
 
 export async function getLoansByStatus(statusValue) {
-    const response = await fetch(`${API_BASE_URL}/loans/status?status=${statusValue}`);
+    const response = await apiFetch(`/loans/status?status=${statusValue}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
 }
 
 export async function createLoan(loanData) {
-    const response = await fetch(`${API_BASE_URL}/loans`, {
+    const response = await apiFetch(`/loans`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loanData)
@@ -36,7 +36,7 @@ export async function createLoan(loanData) {
 }
 
 export async function cancelLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/cancel/${id}`, {
+    const response = await apiFetch(`/loans/cancel/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -45,7 +45,7 @@ export async function cancelLoan(id) {
 }
 
 export async function approveLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/approve/${id}`, {
+    const response = await apiFetch(`/loans/approve/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -53,7 +53,7 @@ export async function approveLoan(id) {
 }
 
 export async function checkoutLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/checkout/${id}`, {
+    const response = await apiFetch(`/loans/checkout/${id}`, {
         method: "PUT"
     });
 
@@ -62,7 +62,7 @@ export async function checkoutLoan(id) {
 }
 
 export async function rejectLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/reject/${id}`, {
+    const response = await apiFetch(`/loans/reject/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -70,7 +70,7 @@ export async function rejectLoan(id) {
 }
 
 export async function returnLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/return/${id}`, {
+    const response = await apiFetch(`/loans/return/${id}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -78,7 +78,7 @@ export async function returnLoan(id) {
 }
 
 async function deleteLoan(id) {
-    const response = await fetch(`${API_BASE_URL}/loans/${id}`, {
+    const response = await apiFetch(`/loans/${id}`, {
         method: 'DELETE'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);

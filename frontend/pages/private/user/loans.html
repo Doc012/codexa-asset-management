@@ -19,15 +19,13 @@
     </div>
     <div class="right-nav">
       <div class="profile-container">
-
-        <!--Add the functionality for the id="profileInital" when u don't have a picture, it takes your Intitial-->
         <div id="profileInitial" class="profile-initial">S</div>
         <img id="profileImage" class="profile-image">
         <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
           <a href="./settings.html"><button>Profile</button></a>
-          <button>Logout</button>
+          <button id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
@@ -215,7 +213,8 @@
     </section>
   </main>
 
-  <!-- <script type="module" src="../../../assets/js/guards/staff.guard.js"></script> -->
+  <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
+    <script type="module" src="../../../assets/js/common/header.js"></script>
   <script src="../../../assets/js/user/script.js"></script>
   <script src="../../../assets/js/user/loans.js" type="module"></script>
   <script src="../../../assets/js/user/users.js" type="module"></script>
