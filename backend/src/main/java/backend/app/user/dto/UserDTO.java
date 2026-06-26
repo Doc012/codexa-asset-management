@@ -1,6 +1,7 @@
 package backend.app.user.dto;
 
 import backend.app.user.enums.Role;
+import backend.app.user.enums.Status;
 import lombok.Builder;
 
 public class UserDTO {
@@ -34,5 +35,10 @@ public class UserDTO {
     public record ChangePasswordRequest(
             String currentPassword,
             String newPassword
+    ){}
+
+    public record ChangeStatus(
+            Long userId,
+            Status userStatus
     ){}
 }

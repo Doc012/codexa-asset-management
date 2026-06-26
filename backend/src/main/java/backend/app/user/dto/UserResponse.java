@@ -1,6 +1,7 @@
 package backend.app.user.dto;
 
 import backend.app.user.enums.Role;
+import backend.app.user.enums.Status;
 import lombok.*;
 
 @Builder
@@ -11,5 +12,6 @@ public record UserResponse(
         String email,
         String picUrl,
         String department,
-        Role role) {
+        Role role,
+        Status status) {
 }

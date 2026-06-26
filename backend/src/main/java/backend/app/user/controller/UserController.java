@@ -4,6 +4,7 @@ import backend.app.user.dto.CreateUserRequest;
 import backend.app.user.dto.UserDTO;
 import backend.app.user.dto.UserResponse;
 import backend.app.user.enums.Role;
+import backend.app.user.enums.Status;
 import backend.app.user.model.User;
 import backend.app.user.service.UserService;
 import backend.auth.dto.AuthDTO;
@@ -75,4 +76,20 @@ public class UserController {
         return userService.deleteUser(id);
     }
 
+    @PatchMapping("/deactivate/{id}")
+    public String deactivateUser(@PathVariable Long id) {
+        return userService.deactivateUSer(id);
+    }
+
+    @PutMapping("/user-status/{id}")
+    public User changeUserStatus(@PathVariable Long id, @RequestParam String status) {
+        try {
+            Status stat = Status.valueOf(status.toUpperCase());
+            UserDTO.ChangeStatus reco = new UserDTO.ChangeStatus(id, stat);
+
+            return userService.changeUserStatus(reco);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid status.");
+        }
+    }
 }
