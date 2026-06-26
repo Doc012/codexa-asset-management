@@ -630,13 +630,12 @@
  * 
  */
 import {
-  getUserById,
-  updateAllUserDetails,
   getAllUsers,
+  updateAllUserDetails,
 } from '../../services/userService.js';
 
 /**
- * ✅ MAIN APP INIT (single entry point — removed duplicates)
+ * ✅ MAIN INIT
  */
 document.addEventListener('DOMContentLoaded', async () => {
   const tableBody = document.getElementById('userTableBody');
@@ -648,18 +647,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   /**
    * ✅ LOAD USERS
    */
-  try {
-    allUsers = await getAllUsers();
-    renderUsers(allUsers);
-  } catch (err) {
-    console.error('❌ Failed to load users:', err);
+  async function loadUsers() {
+    try {
+      allUsers = await getAllUsers();
+      renderUsers(allUsers);
+    } catch (err) {
+      console.error('❌ Failed to load users:', err);
+    }
   }
+
+  await loadUsers();
 
   /**
    * ✅ FILTER USERS
    */
   function filterUsers() {
-    if (!searchInput || !roleSelect) return; // ✅ FIX: prevent null crash
+    if (!searchInput || !roleSelect) return;
 
     const query = searchInput.value.toLowerCase();
     const roleValue = roleSelect.value.toUpperCase();
@@ -669,25 +672,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       const email = (user.email || '').toLowerCase();
       const role = (user.role || '').toUpperCase();
 
-      const matchesSearch = name.includes(query) || email.includes(query);
-      const matchesRole = roleValue === 'ALL' || role === roleValue;
-
-      return matchesSearch && matchesRole;
+      return (
+        (name.includes(query) || email.includes(query)) &&
+        (roleValue === 'ALL' || role === roleValue)
+      );
     });
 
     renderUsers(filtered);
   }
 
-  if (searchInput) searchInput.addEventListener('input', filterUsers);
-  if (roleSelect) roleSelect.addEventListener('change', filterUsers);
+  searchInput?.addEventListener('input', filterUsers);
+  roleSelect?.addEventListener('change', filterUsers);
 
   /**
-   * ✅ RENDER USERS (single version — removed duplicates)
+   * ✅ RENDER USERS
    */
   function renderUsers(users) {
     tableBody.innerHTML = '';
 
-    if (users.length === 0) {
+    if (!users.length) {
       tableBody.innerHTML = `
         <tr>
           <td colspan="5" style="text-align:center;">No users found</td>
@@ -697,10 +700,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     users.forEach((user) => {
-      const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
-      const initials = `${(user.firstName || 'U')[0]}${(user.lastName || 'X')[0]}`.toUpperCase();
+      const fullName = `${user.firstName} ${user.lastName}`;
+      const initials = `${user.firstName[0]}${user.lastName[0]}`;
 
-      // ✅ FIX: dynamic status class
       const statusClass = (user.status || '').toLowerCase();
 
       tableBody.innerHTML += `
@@ -727,7 +729,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           </td>
 
           <td>
-            <!-- ✅ FIX: removed hardcoded active-state -->
+            <!-- ✅ dynamic status styling -->
             <span class="status-indicator ${statusClass}">
               ${user.status}
             </span>
@@ -735,6 +737,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           <td>
             <div class="row-actions-group">
+              <!-- ✅ ONLY EDIT BUTTON (removed activate/deactivate) -->
               <button class="row-action-btn edit">Edit</button>
             </div>
           </td>
@@ -744,50 +747,42 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   /**
-   * ✅ EDIT MODAL LOGIC
+   * ✅ EDIT MODAL
    */
   const modalOverlay = document.getElementById('user-modal-overlay');
-  const closeModalBtn = document.getElementById('close-user-modal');
-  const cancelModalBtn = document.getElementById('cancel-user-edit');
   const editForm = document.getElementById('user-edit-form');
 
-  /**
-   * ✅ OPEN MODAL (FIXED)
-   */
   tableBody.addEventListener('click', (e) => {
-    if (e.target.classList.contains('edit')) {
-      const row = e.target.closest('tr');
-      const userId = row.dataset.id;
+    if (!e.target.classList.contains('edit')) return;
 
-      const user = allUsers.find(u => u.userId == userId);
+    const row = e.target.closest('tr');
+    const userId = row.dataset.id;
+    const user = allUsers.find(u => u.userId == userId);
 
-      if (!user) return;
+    if (!user) return;
 
-      // ✅ populate fields correctly
-      document.getElementById('user-id').value = user.userId;
-      document.getElementById('edit-firstName').value = user.firstName;
-      document.getElementById('edit-lastName').value = user.lastName;
-      document.getElementById('edit-email').value = user.email;
-      document.getElementById('edit-department').value = user.department;
-      document.getElementById('edit-role').value = user.role;
+    // ✅ populate form
+    document.getElementById('user-id').value = user.userId;
+    document.getElementById('edit-firstName').value = user.firstName;
+    document.getElementById('edit-lastName').value = user.lastName;
+    document.getElementById('edit-email').value = user.email;
+    document.getElementById('edit-department').value = user.department;
+    document.getElementById('edit-role').value = user.role;
 
-      // ✅ ✅✅ FIX: populate status (THIS WAS MISSING)
-      document.getElementById('edit-status').value = user.status;
+    // ✅ IMPORTANT FIX: status now loads
+    document.getElementById('edit-status').value = user.status;
 
-      modalOverlay.classList.remove('modal-hidden');
-    }
+    modalOverlay.classList.remove('modal-hidden');
   });
 
-  /**
-   * ✅ CLOSE MODAL
-   */
-  const closeModal = () => modalOverlay.classList.add('modal-hidden');
+  document.getElementById('close-user-modal')
+    ?.addEventListener('click', () => modalOverlay.classList.add('modal-hidden'));
 
-  closeModalBtn?.addEventListener('click', closeModal);
-  cancelModalBtn?.addEventListener('click', closeModal);
+  document.getElementById('cancel-user-edit')
+    ?.addEventListener('click', () => modalOverlay.classList.add('modal-hidden'));
 
   /**
-   * ✅ UPDATE USER (FIXED)
+   * ✅ UPDATE USER (STATUS INCLUDED)
    */
   editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -801,52 +796,81 @@ document.addEventListener('DOMContentLoaded', async () => {
       department: document.getElementById('edit-department').value.trim(),
       role: document.getElementById('edit-role').value,
 
-      // ✅ ✅✅ CRITICAL FIX: ADD STATUS TO PAYLOAD
+      // ✅ ✅ CRITICAL FIX
       status: document.getElementById('edit-status').value,
 
       picUrl: null,
     };
 
+    console.log("📤 Updating user:", userData);
+
     try {
       await updateAllUserDetails(userId, userData);
 
-      closeModal();
+      modalOverlay.classList.add('modal-hidden');
 
-      // ✅ refresh UI
-      allUsers = await getAllUsers();
-      renderUsers(allUsers);
-
+      await loadUsers(); // ✅ refresh UI
     } catch (err) {
       console.error('❌ Update failed:', err);
-      alert('Failed to update user');
+      alert('Update failed');
     }
   });
 
   /**
-   * ✅ ACTIVATE / DEACTIVATE
+   * ✅ CREATE USER MODAL
    */
-  document.addEventListener('click', async (e) => {
-    const userId = e.target.dataset.id;
+  const addUserModal = document.getElementById('add-user-modal-overlay');
+  const openAddUserBtn = document.getElementById('open-add-user-modal');
+  const closeAddUserBtn = document.getElementById('close-add-user-modal');
+  const cancelAddUserBtn = document.getElementById('cancel-add-user');
+  const addUserForm = document.getElementById('add-user-form');
+
+  function showAddUserModal() {
+    addUserModal.classList.remove('modal-hidden');
+  }
+
+  function hideAddUserModal() {
+    addUserModal.classList.add('modal-hidden');
+    addUserForm.reset();
+  }
+
+  // ✅ FIX: ensure button works
+  openAddUserBtn?.addEventListener('click', showAddUserModal);
+  closeAddUserBtn?.addEventListener('click', hideAddUserModal);
+  cancelAddUserBtn?.addEventListener('click', hideAddUserModal);
+
+  addUserForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      firstName: document.getElementById('add-firstName').value.trim(),
+      lastName: document.getElementById('add-lastName').value.trim(),
+      email: document.getElementById('add-email').value.trim(),
+      password: document.getElementById('add-password').value.trim(),
+      department: document.getElementById('add-department').value.trim(),
+      picUrl: null,
+    };
+
+    console.log("📤 Creating user:", payload);
 
     try {
-      if (e.target.classList.contains('deactivate-btn')) {
-        await fetch(`http://localhost:8080/api/v1/users/${userId}/deactivate`, {
-          method: 'PATCH',
-        });
-      }
+      const res = await fetch('http://localhost:8080/api/v1/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-      if (e.target.classList.contains('activate-btn')) {
-        await fetch(`http://localhost:8080/api/v1/users/${userId}/activate`, {
-          method: 'PATCH',
-        });
-      }
+      if (!res.ok) throw new Error(await res.text());
 
-      // ✅ refresh after action
-      allUsers = await getAllUsers();
-      renderUsers(allUsers);
+      alert('✅ User created');
+
+      hideAddUserModal();
+
+      await loadUsers(); // ✅ refresh table
 
     } catch (err) {
-      console.error('❌ Status toggle failed:', err);
+      console.error('❌ Create failed:', err);
+      alert('Create failed');
     }
   });
 
