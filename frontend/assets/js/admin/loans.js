@@ -229,3 +229,48 @@ function showConfirmationModal(onConfirm) {
         modal.style.display = "none";
     };
 }
+
+
+/**
+ * Loans card on dashboard
+ */
+document.addEventListener("DOMContentLoaded", async() => {
+    const loansCounter = document.getElementById("totalLoansCard");
+
+    if (loansCounter) {
+        try {
+            const loans = await getAllLoans();
+            const totalLoans = loans.length;
+            
+            loansCounter.textContent = totalLoans;
+
+        } catch (error) {
+            console.error("Failed to render ASSETS", error);
+            loansCounter.textContent = "Error";
+        }
+    }
+});
+
+/**
+ * Loans Overdue card on dashboard
+ */
+document.addEventListener("DOMContentLoaded", async() => {
+    const loansOverdueCard = document.getElementById("loansOverdueCard");
+
+    try {
+        const loans = await getAllLoans();
+        const today = new Date();
+
+        const overdueLoans = loans.filter(loan => {
+            const dueDate = new Date(loans.dueDate);
+            return dueDate < today && !loan.RETURNED;
+        })
+
+        if(loansOverdueCard) {
+            loansOverdueCard.textContent = overdueLoans.length;
+        }
+
+    } catch(error) {
+        console.error("FAILED TO CALCULATE OVERDUE LOANS", error);
+    }
+});
