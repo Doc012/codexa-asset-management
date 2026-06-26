@@ -701,16 +701,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     users.forEach((user) => {
       const fullName = `${user.firstName} ${user.lastName}`;
-      const initials = `${user.firstName[0]}${user.lastName[0]}`;
 
       const statusClass = (user.status || '').toLowerCase();
 
       tableBody.innerHTML += `
         <tr data-id="${user.userId}">
           <td class="flex-meta-cell">
-            <div class="table-img-frame initial-avatar">
-              <span>${initials}</span>
-            </div>
+
             <div>
               <span class="cell-primary-title">${fullName}</span>
               <span class="cell-sub-label">${user.email}</span>
@@ -725,7 +722,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           <td>
             <span class="cell-primary-title">${user.department || 'General'}</span>
-            <span class="cell-sub-label">Managed Profile</span>
           </td>
 
           <td>
