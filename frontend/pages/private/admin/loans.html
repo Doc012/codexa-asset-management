@@ -303,7 +303,6 @@
                     <th>Requested By</th>
                     <th>Request Date</th>
                     <th>Department</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -330,10 +329,21 @@
           </div>
         </div>
       </section>
+
+      <div id="btnConfirmation" class="modal" style="display: none">
+        <div class="modal-content">
+          <p>Are you sure?</p>
+          <p>You won't be able to go back once you confirm.</p>
+
+          <div class="modal-actions">
+            <button id="confirmBtn" class="confirm">Confirm</button>
+            <button id="cancelBtn" class="cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="../../../assets/js/user/script.js"></script>
     <script src="../../../assets/js/admin/loans.js" type="module"></script>
-    <!-- <script src="../../../assets/js/admin/loans.js" type="module"></script> -->
   </body>
 </html>
