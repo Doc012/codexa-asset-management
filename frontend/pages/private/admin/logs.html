@@ -1,159 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset IQ - Audit Logs</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asset IQ - Audit Logs</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../assets/css/user/styles.css" />
+    <link rel="stylesheet" href="../../../assets/css/user/dashboard.css" />
+    <link rel="stylesheet" href="../../../assets/css/managerDashboard.css" />
+    <link rel="stylesheet" href="../../../assets/css/admin/logs.css">
+  </head>
 
-  <link rel="stylesheet" href="../../../assets/css/user/styles.css">
-  <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
-  <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
-  <link rel="stylesheet" href="../../../assets/css/manager/reports.css">
-</head>
+  <body>
+    <header class="topbar">
+      <div class="left-nav">
+        <button id="menuBtn" class="menu-btn">☰</button>
+        <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
+      </div>
 
-<body>
+      <div class="right-nav">
+        <div id="profileContainer" class="profile-container">
+          <div id="profileInitial" class="profile-initial">T</div>
+          <img
+            id="profileImage"
+            class="profile-image"
+            src="../../../assets/images/IMG-20250621-WA0001.jpg"
+            alt="profile_picture"
+          />
 
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="left-nav">
-      <button id="menuBtn" class="menu-btn">☰</button>
-      <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
-    </div>
+          <input type="file" id="profileUpload" hidden />
 
-    <div class="right-nav">
-      <div id="profileContainer" class="profile-container">
-        <div id="profileInitial" class="profile-initial">T</div>
-        <img id="profileImage"
-             class="profile-image"
-             src="../../../assets/images/IMG-20250621-WA0001.jpg"
-             alt="profile_picture">
-
-        <input type="file" id="profileUpload" hidden>
-
-        <div class="profile-dropdown">
-          <button id="uploadBtn">Upload Photo</button>
-          <a href="./profile.html"><button>Profile</button></a>
-          <button>Logout</button>
+          <div class="profile-dropdown">
+            <button id="uploadBtn">Upload Photo</button>
+            <a href="./profile.html"><button>Profile</button></a>
+            <button>Logout</button>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- SIDEBAR -->
-  <aside id="sidebar" class="sidebar">
-    <ul>
-      <li class="nav-item">
-        <a href="dashboard.html" class="nav-link">Home</a>
-      </li>
+    <aside id="sidebar" class="sidebar">
+      <ul>
+        <li class="nav-item">
+          <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="./assets.html" class="nav-link">Assets</a>
+        </li>
+        <li class="nav-item">
+          <a href="./loans.html" class="nav-link">Loans</a>
+        </li>
+        <li class="nav-item">
+          <a href="./users.html" class="nav-link">Users</a>
+        </li>
+        <li class="nav-item active">
+          <a href="./logs.html" class="nav-link">Logs</a>
+        </li>
+        <li class="nav-item">
+          <a href="./settings.html" class="nav-link">Settings</a>
+        </li>
+      </ul>
+    </aside>
 
-      <li class="nav-item">
-        <a href="loan_requests.html" class="nav-link">Loans</a>
-      </li>
+    <main id="mainContent" class="content manager-hub-content">
+      <div class="executive-header">
+        <div class="header-titles">
+          <span class="system-tag">Management System</span>
+          <h1 class="ledger-title">Audit Logs</h1>
+        </div>
 
-      <li class="nav-item">
-        <a href="assets.html" class="nav-link">Assets</a>
-      </li>
-
-      <li class="nav-item active">
-        <a href="report.html" class="nav-link">Logs</a>
-      </li>
-    </ul>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main id="mainContent" class="content manager-hub-content">
-
-    <!-- HEADER -->
-    <div class="executive-header">
-      <div class="header-titles">
-        <span class="system-tag">Management System</span>
-        <h1 class="ledger-title">Audit Logs</h1>
+        <div class="clearance-tag">
+          Clearance Level:
+          <span class="clearance-level">Manager Account</span>
+        </div>
       </div>
 
-      <div class="clearance-tag">
-        Clearance Level:
-        <span class="clearance-level">Manager Account</span>
-      </div>
-    </div>
-
-    <!-- WRAPPER -->
-    <div class="work-queue-container">
-
-      <!-- HEADER ACTIONS -->
-      <div class="report-header-actions"
-           style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
-
-        <h3 class="queue-heading">System Activity Logs</h3>
-
-        <button id="downloadReportBtn" class="primary-btn download-btn">
-          Download CSV
-        </button>
-      </div>
-
-      <!-- FILTER BAR -->
-      <div class="metrics-strip-container"
-           style="display:flex; gap:15px; align-items:center; padding:20px; margin-top:15px;">
-
-        <!-- SEARCH -->
-        <div style="flex:1;">
-          <span class="metric-label">Search Logs</span>
+      <div class="portal-filter-bar">
+        <div class="search-input-container">
           <input
             type="text"
-            id="reportSearch"
-            placeholder="Search by email, userId, action, entity..."
-            style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px;"
+            id="asset-search-input"
+            placeholder="Search logs..."
           />
         </div>
 
-        <!-- ACTION FILTER -->
-        <div style="width:200px;">
-          <span class="metric-label">Action Type</span>
-          <select id="actionTypeFilter"
-                  style="width:100%; padding:10px; border:1px solid var(--border); border-radius:6px;">
-            <option value="ALL">All</option>
-            <option value="CREATE">Create</option>
-            <option value="UPDATE">Update</option>
-            <option value="DELETE">Delete</option>
-          </select>
+        <div class="select-filters-container">
+          <div class="filter-dropdown-wrapper">
+            <label for="filter-category-select">Logs:</label>
+            <select id="filter-category-select">
+              <option value="ALL">All Logs</option>
+              <option value="CREATE">Create</option>
+              <option value="UPDATE">Update</option>
+              <option value="DELETE">Delete</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-queue-container">
+        <div class="report-header-actions"
+          style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;">
+          <h3 class="queue-heading">System Activity Logs</h3>
+
+          <button id="downloadReportBtn" class="primary-btn download-btn">
+            Download CSV
+          </button>
         </div>
 
+        <div class="metrics-strip-container"
+          style="display:flex;gap:15px;align-items:center;padding:20px;margin-top:15px;">
+        </div>
+
+        <div class="panel-table-container">
+          <table class="asset-table manager-ledger-table">
+            <thead>
+              <tr>
+                <th>Log ID</th>
+                <th>User Email</th>
+                <th>Entity Type</th>
+                <th>Action Type</th>
+                <th>Timestamp</th>
+                <th>New Value</th>
+                <th>Old Value</th>
+              </tr>
+            </thead>
+
+            <tbody class="reports-table"></tbody>
+          </table>
+        </div>
       </div>
+    </main>
 
-      <!-- TABLE -->
-      <div class="panel-table-container">
-
-        <table class="asset-table manager-ledger-table">
-
-          <thead>
-            <tr>
-              <th>Log ID</th>
-              <th>User Email</th>
-              <th>Entity Type</th>
-              <th>Action Type</th>
-              <th>Timestamp</th>
-              <th>New Value</th>
-              <th>Old Value</th>
-            </tr>
-          </thead>
-
-          <tbody class="reports-table"></tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-
-  </main>
-
-  <!-- SCRIPTS -->
-  <script src="../../../assets/js/manager/users.js" type="module"></script>
-  <script src="../../../assets/js/config.js" type="module"></script>
-  <script src="../../../assets/js/user/script.js"></script>
-  <script src="../../../assets/js/manager/auditLogs.js" type="module"></script>
-
-</body>
+    <script src="../../../assets/js/manager/users.js" type="module"></script>
+    <script src="../../../assets/js/config.js" type="module"></script>
+    <script src="../../../assets/js/user/script.js"></script>
+    <script src="../../../assets/js/manager/auditLogs.js" type="module"></script>
+  </body>
 </html>
