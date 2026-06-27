@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       allUsers = await getAllUsers();
       renderUsers(allUsers);
     } catch (err) {
-      console.error('❌ Failed to load users:', err);
+      console.error('Failed to load users:', err);
     }
   }
 
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       picUrl: null,
     };
 
-    console.log("📤 Updating user:", userData);
+    console.log("Updating user:", userData);
 
     try {
       await updateAllUserDetails(userId, userData);
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       await loadUsers();
 
     } catch (err) {
-      console.error('❌ Create failed:', err);
+      console.error('Create failed:', err);
       alert('Create failed');
     }
   });

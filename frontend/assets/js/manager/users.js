@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await userDetails();
 });
 
-const userId = getUser().id;
+const userId = 8;
 
 const userDetails = async()=> {
     const managerElement = document.querySelector(".ledger-title");

@@ -1,0 +1,63 @@
+/* Search and Filter Strip Box */
+.portal-filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.search-input-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted, #64748b);
+    pointer-events: none;
+}
+
+.search-input-container input {
+    width: 100%;
+    background-color: white;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 10px;
+    padding: 12px 14px 12px 42px;
+    color: var(--text-main, #0f172a);
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.search-input-container input:focus {
+    outline: none;
+    border-color: var(--primary, #4f46e5);
+    background-color: white;
+}
+
+.filter-dropdown-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-dropdown-wrapper label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted, #64748b);
+}
+
+.filter-dropdown-wrapper select {
+    background-color: white;
+    border: 1px solid var(--border, #e2e8f0);
+    color: var(--text-main, #0f172a);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
