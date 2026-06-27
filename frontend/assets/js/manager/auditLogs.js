@@ -36,11 +36,11 @@ const applyFilters = async () => {
 
         if (searchQuery) {
             logs = logs.filter(log => {
-                const email = (log.logCreatorEmail || "").toLowerCase();
-                const userId = String(log.userId || "").toLowerCase();
-                const entityType = (log.entityType || "").toLowerCase();
-                const actionType = (log.actionType || "").toLowerCase();
-                const logId = String(log.logId || "").toLowerCase();
+                const email = (log.logCreatorEmail).toLowerCase();
+                const userId = String(log.userId).toLowerCase();
+                const entityType = (log.entityType).toLowerCase();
+                const actionType = (log.actionType).toLowerCase();
+                const logId = String(log.logId).toLowerCase();
 
                 return (
                     email.includes(searchQuery) ||
@@ -66,6 +66,7 @@ const applyFilters = async () => {
 const setupFilters = () => {
     const actionDropdown = document.querySelector("#actionTypeFilter");
     const searchInput = document.querySelector("#reportSearch");
+    
 
     if (!actionDropdown || !searchInput) {
         console.error("Report filters not found in DOM");
