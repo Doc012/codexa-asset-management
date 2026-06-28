@@ -393,13 +393,11 @@
   flex-wrap: wrap;
 }
 
-
-.filter-dropdown-wrapper label,
-.filter-search-wrapper label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: #444;
+.filter-search-wrapper label, 
+.filter-dropdown-wrapper label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted, #64748b);
 }
 
 .filter-dropdown-wrapper select,

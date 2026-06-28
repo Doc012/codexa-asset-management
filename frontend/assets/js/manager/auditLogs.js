@@ -95,7 +95,6 @@ const setupDownload = () => {
     }
 
     downloadBtn.addEventListener("click", () => {
-        console.log("Download clicked, exporting:", filteredLogs.length, "logs");
         downloadCsv(filteredLogs);
     });
 };

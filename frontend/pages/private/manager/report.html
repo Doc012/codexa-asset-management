@@ -92,26 +92,26 @@
       </div>
     </div>
 
-    <div class="metrics-strip-container report-filters">
-      <div class="filter-block">
-        <span class="metric-label font-muted">Search Logs</span>
-        <input
-          type="text"
-          id="reportSearch"
-          placeholder="Search by user, action type, entity..."
-        />
-      </div>
+    <div class="portal-filter-bar">
+        <div class="search-input-container" id="reportSearch">
+          <input
+            type="text"
+            id="asset-search-input"
+            placeholder="Search logs..."
+          />
+        </div>
 
-      <div class="filter-block">
-        <span class="metric-label font-muted">Action Type</span>
-        <select id="actionTypeFilter">
-          <option value="ALL">All Actions</option>
-          <option value="CREATE">Create</option>
-          <option value="UPDATE">Update</option>
-          <option value="DELETE">Delete</option>
-          <option value="APPROVE">Approve</option>
-          <option value="REJECT">Reject</option>
-        </select>
+        <div class="select-filters-container" id="actionTypeFilter">
+          <div class="filter-dropdown-wrapper">
+            <label for="filter-category-select">Logs:</label>
+            <select id="filter-category-select">
+              <option value="ALL">All Logs</option>
+              <option value="CREATE">Create</option>
+              <option value="UPDATE">Update</option>
+              <option value="DELETE">Delete</option>
+            </select>
+          </div>
+        </div>
       </div>
 
     </div>
