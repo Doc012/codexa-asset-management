@@ -1,0 +1,125 @@
+/* ─── Asset Details Modal ──────────────────────────────────────────────────── */
+
+/* The existing #assetDetailsModal uses class="modal-more".
+   Add display:flex centering so it overlays correctly. */
+#assetDetailsModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.asset-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    width: 100%;
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+}
+
+/* ── Hero: image + title side-by-side ── */
+.asset-details-hero {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+}
+
+.asset-details-img-wrap {
+    flex-shrink: 0;
+    width: 120px;
+    height: 96px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.asset-details-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.asset-details-hero-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.asset-details-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.3;
+}
+
+.asset-details-id {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin: 0 0 0.65rem 0;
+}
+
+.asset-details-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ── Detail grid ── */
+.asset-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+}
+
+.asset-detail-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    gap: 1rem;
+}
+
+.asset-detail-row:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.asset-detail-row:nth-child(even) {
+    background: #f9fafb;
+}
+
+.detail-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.detail-value {
+    font-size: 0.9rem;
+    color: #111827;
+    word-break: break-word;
+}
+
+/* ── Footer actions ── */
+.asset-details-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f0f0f0;
+}

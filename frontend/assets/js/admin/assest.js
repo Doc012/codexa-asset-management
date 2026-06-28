@@ -1,6 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { getAllAssets, getAssetById } from "../../../services/assetService.js"
 
-    const API_URL = "http://localhost:8080/api/v1/assets";
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const API_URL = "https://localhost:8443/api/v1assets";
 
     const tableBody = document.getElementById("assets-table-body");
     const assetModal = document.getElementById("asset-modal-overlay");
@@ -11,13 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTitle = document.getElementById("modal-form-title");
 
     const formIdField = document.getElementById("form-asset-id");
+
     const formTitle = document.getElementById("form-title");
+    const formPhoto = document.getElementById("form-photo");
     const formCategory = document.getElementById("form-category");
+    
     const formSerial = document.getElementById("form-serial");
     const formDate = document.getElementById("form-date");
     const formCost = document.getElementById("form-cost");
     const formCondition = document.getElementById("form-condition");
-    const formPhoto = document.getElementById("form-photo");
     const formLocation = document.getElementById("form-location");
 
     const searchInput = document.getElementById("asset-search-input");
@@ -33,16 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
      * @function loadAssetsInventoryFromServer
      * @throws {Error} If the HTTP response status code is not ok.
      */
-    async function loadAssetsInventoryFromServer() {
-        try {
-            const response = await fetch(API_URL);
-            if (!response.ok) throw new Error("Failed to fetch assets");
-            assetWorkspaceData = await response.json();
-            renderAssetsTableRows(assetWorkspaceData);
-        } catch (error) {
-            console.error("Error loading assets:", error);
-        }
-    }
+    // async function loadAssetsInventoryFromServer() {
+    //     try {
+    //         const response = await fetch(API_URL);
+    //         if (!response.ok) throw new Error("Failed to fetch assets");
+    //         assetWorkspaceData = await response.json();
+    //         renderAssetsTableRows(assetWorkspaceData);
+    //     } catch (error) {
+    //         console.error("Error loading assets:", error);
+    //     }
+    // }
+
+    console.log(getAllAssets());
 
     /**
      * Generates and inserts HTML table rows into the DOM based on the provided asset data array.
@@ -160,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.error("Retire failed:", res.status);
                         return;
                     }
-                    loadAssetsInventoryFromServer();
+                    getAllAssets();
                 } catch (err) {
                     console.error("Retire error:", err);
                 }
@@ -174,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.error("Restore failed:", res.status);
                     return;
                 }
-                loadAssetsInventoryFromServer();
+                getAllAssets();
             } catch (err) {
                 console.error("Restore error:", err);
             }
@@ -287,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (categorySelect) categorySelect.addEventListener("change", executeLocalQueryFilters);
     if (conditionSelect) conditionSelect.addEventListener("change", executeLocalQueryFilters);
 
-    loadAssetsInventoryFromServer();
+    getAllAssets();
 });
 
 /**
