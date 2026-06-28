@@ -195,21 +195,21 @@
           <div class="filter-dropdown-wrapper" id="categoryFilter">
             <label>Category:</label>
             <select id="filter-category-select">
-              <option value="ALL">All Categories</option>
-              <option value="LAPTOP">Laptop</option>
-              <option value="DESKTOP">Desktop</option>
-              <option value="MONITOR">Monitor</option>
-              <option value="PRINTER">Printer</option>
-              <option value="PROJECTOR">Projector</option>
-              <option value="TABLET">Tablet</option>
-              <option value="MOBILE_PHONE">Mobile Phone</option>
-              <option value="NETWORK_DEVICE">Network Device</option>
-              <option value="SERVER">Server</option>
-              <option value="ACCESSORY">Accessory</option>
-              <option value="FURNITURE">Furniture</option>
-              <option value="SOFTWARE_LICENSE">Software License</option>
-              <option value="VEHICLE">Vehicle</option>
-              <option value="OTHER">Other</option>
+              <option value="all">All Categories</option>
+              <option value="Laptop">Laptop</option>
+              <option value="Desktop">Desktop</option>
+              <option value="Monitor">Monitor</option>
+              <option value="Printer">Printer</option>
+              <option value="Projector">Projector</option>
+              <option value="Tablet">Tablet</option>
+              <option value="Mobile Phone">Mobile Phone</option>
+              <option value="Network Device">Network Device</option>
+              <option value="Server">Server</option>
+              <option value="Accessory">Accessory</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Software License">Software License</option>
+              <option value="Vehicle">Vehicle</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
@@ -249,30 +249,13 @@
         </div>
       </div>
 
-      <div id="btnConfirmation" class="modal">
-        <div class="modal-content">
-          <h2>Are you sure?</h2>
-          <p>You won't be able to go back once you confirm.</p>
-          <div class="modal-actions">
-            <button id="confirmBtn" class="confirm">Yes, Confirm</button>
-            <button id="cancelBtn" class="cancel">Cancel</button>
-          </div>
+      <div id="assetDetailsModal" class="modal-more">
+        <div class="modal-content asset-modal-content">
+          <span id="closeAssetModal" style="float:right;cursor:pointer;font-size:20px;">&times;</span>
+          <div id="assetDetailsBody"></div>
         </div>
       </div>
-      <div id="successMessage" class="success"></div>
-
-      <div id="assetDetailsModal" class="modal-more">
-            <div class="modal-content asset-modal-content">
-
-                <span id="closeAssetModal" style="float:right;cursor:pointer;font-size:20px;">
-                    &times;
-                </span>
-
-                <div id="assetDetailsBody"></div>
-
-            </div>
-        </div>
-
+    </main>
     </main>
 
     <!-- <script type="module" src="../../../assets/js/guards/manager.guard.js"></script> -->

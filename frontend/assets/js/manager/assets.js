@@ -132,26 +132,10 @@ const renderAssets = (assets) => {
             <td>
                 <button class="view-btn"
                         data-id="${asset.assetId}">
-                    More
-                </button>
-                <button class="request-btn"
-                    data-id="${asset.assetId}"
-                    ${isLoaned ? "disabled" : ""}>
-                    ${isLoaned ? "Unavailable" : "Request Loan"}
+                    More Info
                 </button>
             </td>
         `;
-
-        const btn = row.querySelector(".request-btn");
-
-        if (btn && !isLoaned) {
-            btn.addEventListener("click", () => {
-                showConfirmationModal(async () => {
-                    await requestLoan(asset.assetId);
-                    console.log("Loan requested");
-                });
-            });
-        }
 
         const viewBtn = row.querySelector(".view-btn");
 
@@ -163,46 +147,6 @@ const renderAssets = (assets) => {
     });
 };
 
-
-/**
- * Allows a user to confirm a loan request
- * @param {} onConfirm 
- * @returns 
- */
-function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
-
-    if (!modal) {
-        console.error("Modal not found");
-        return;
-    }
-
-    modal.style.display = "flex";
-    document.getElementById("confirmBtn").onclick = async () => {
-        await onConfirm();
-        modal.style.display = "none";
-    };
-
-    document.getElementById("cancelBtn").onclick = () => {
-        modal.style.display = "none";
-    };
-}
-
-
-/**
- * Requests a loan
- * @param {*} assetId 
- */
-const requestLoan = async (assetId) => {
-    try {
-        await createLoan({
-            userId: getUser().id,
-            assetId: assetId
-        });
-    } catch (error) {
-        console.log("Error:", error);
-    }
-};
 
 /**
  * Allows a user to see the asset and its details

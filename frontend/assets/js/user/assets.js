@@ -1,19 +1,17 @@
-import {getAllAssets,
-} from "../../../services/assetService.js";
-import { getUser } from "../authContext.js"
+import { getAllAssets } from "../../../services/assetService.js";
+import { getUser } from "../authContext.js";
 
 import { API_BASE_URL } from "../config.js";
 import { createLoan } from "../../../services/loanService.js";
 
-
 document.addEventListener("DOMContentLoaded", async () => {
-    if (document.getElementById("user-asset-table-body")) {
-        await viewAssetsOnDashboard();
-    }
+  if (document.getElementById("user-asset-table-body")) {
+    await viewAssetsOnDashboard();
+  }
 
-    if (document.getElementById("assetsTableBody")) {
-        await assetPage();
-    }
+  if (document.getElementById("assetsTableBody")) {
+    await assetPage();
+  }
 });
 
 /**
@@ -21,23 +19,23 @@ document.addEventListener("DOMContentLoaded", async () => {
  * The user can also see the total number of assets
  */
 const viewAssetsOnDashboard = async () => {
-    const tableBody = document.getElementById("user-asset-table-body");
-    const assetCounter = document.getElementById("totalAssets");
+  const tableBody = document.getElementById("user-asset-table-body");
+  const assetCounter = document.getElementById("totalAssets");
 
-    try {
-        const assets = await getAllAssets();
-        const slicedAssets = assets.slice(0, 4);
-        tableBody.innerHTML = "";
+  try {
+    const assets = await getAllAssets();
+    const slicedAssets = assets.slice(0, 4);
+    tableBody.innerHTML = "";
 
-        const totalAssets = assets.length;
-        if (assetCounter) {
-            assetCounter.textContent = totalAssets;
-        }
+    const totalAssets = assets.length;
+    if (assetCounter) {
+      assetCounter.textContent = totalAssets;
+    }
 
-        slicedAssets.forEach(asset => {
-            const row = document.createElement("tr");
+    slicedAssets.forEach((asset) => {
+      const row = document.createElement("tr");
 
-            row.innerHTML = `
+      row.innerHTML = `
                 <td>${asset.title}</td>
                 <td>${asset.category}</td>
                 <td>${asset.condition}</td>
@@ -46,15 +44,12 @@ const viewAssetsOnDashboard = async () => {
                 </td>
             `;
 
-            tableBody.appendChild(row);
-
-        });
-
-    } catch (error) {
-        console.error("Failed to render ASSETS", error);
-        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
-
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("Failed to render ASSETS", error);
+    tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+  }
 };
 
 /**
@@ -62,17 +57,17 @@ const viewAssetsOnDashboard = async () => {
  * Allows the user to view available assets and request a loan
  */
 const renderAssets = (tableBody, assets) => {
-    tableBody.innerHTML = "";
+  tableBody.innerHTML = "";
 
-    assets.forEach(asset => {
-        const row = document.createElement("tr");
-        const isLoaned = asset.assetStatus === "LOANED";
+  assets.forEach((asset) => {
+    const row = document.createElement("tr");
+    const isLoaned = asset.assetStatus === "LOANED";
 
-        if (isLoaned) {
-            row.classList.add("row-disabled");
-        }
+    if (isLoaned) {
+      row.classList.add("row-disabled");
+    }
 
-        row.innerHTML = `
+    row.innerHTML = `
             <td>${asset.title}</td>
             <td>
                 <div class="table-img-frame">
@@ -94,110 +89,103 @@ const renderAssets = (tableBody, assets) => {
                 </button>
             </td>
         `;
-        tableBody.appendChild(row);
-    });
+
+    row
+      .querySelector(".request-btn")
+      .addEventListener("click", async () => {
+        await showConfirmationModal(async () => {
+          await requestLoan(asset.assetId);
+        });
+      });
+    tableBody.appendChild(row);
+  });
 };
 
 /**
  * FILTER ONLY
  */
 const filterAssets = (assets, search, category, condition) => {
-    return assets.filter(asset => {
+  return assets.filter((asset) => {
+    const matchesSearch =
+      search === "" ||
+      asset.title?.toLowerCase().includes(search) ||
+      asset.category?.toLowerCase().includes(search) ||
+      asset.condition?.toLowerCase().includes(search) ||
+      asset.assetStatus?.toLowerCase().includes(search);
 
-        const matchesSearch =
-            search === "" ||
-            asset.title?.toLowerCase().includes(search) ||
-            asset.category?.toLowerCase().includes(search) ||
-            asset.condition?.toLowerCase().includes(search) ||
-            asset.assetStatus?.toLowerCase().includes(search);
+    const matchesCategory = category === "ALL" || asset.category === category;
 
-        const matchesCategory =
-            category === "ALL" || asset.category === category;
+    const matchesCondition = condition === "" || asset.condition === condition;
 
-        const matchesCondition =
-            condition === "" || asset.condition === condition;
-
-        return matchesSearch && matchesCategory && matchesCondition;
-    });
+    return matchesSearch && matchesCategory && matchesCondition;
+  });
 };
 
 /**
  * MAIN CONTROLLER
  */
 const assetPage = async () => {
-    const tableBody = document.getElementById("assetsTableBody");
+  const tableBody = document.getElementById("assetsTableBody");
 
-    const searchInput = document.getElementById("assetSearch");
-    const categoryFilter = document.getElementById("filter-category-select");
-    const conditionFilter = document.getElementById("conditionFilter");
+  const searchInput = document.getElementById("assetSearch");
+  const categoryFilter = document.getElementById("filter-category-select");
+  const conditionFilter = document.getElementById("conditionFilter");
 
-    let allAssets = [];
+  let allAssets = [];
 
-    try {
-        allAssets = await getAllAssets();
-        renderAssets(tableBody, allAssets);
+  try {
+    allAssets = await getAllAssets();
+    renderAssets(tableBody, allAssets);
 
-        const applyFilters = () => {
-            const search = searchInput.value.toLowerCase().trim();
-            const category = categoryFilter.value;
-            const condition = conditionFilter.value;
+    const applyFilters = () => {
+      const search = searchInput.value.toLowerCase().trim();
+      const category = categoryFilter.value;
+      const condition = conditionFilter.value;
 
-            const filtered = filterAssets(
-                allAssets,
-                search,
-                category,
-                condition
-            );
+      const filtered = filterAssets(allAssets, search, category, condition);
 
-            renderAssets(tableBody, filtered);
-        };
-        searchInput.addEventListener("input", applyFilters);
-        categoryFilter.addEventListener("change", applyFilters);
-        conditionFilter.addEventListener("change", applyFilters);
-
-    } catch (error) {
-        console.error("Failed to render ASSETS", error);
-        tableBody.innerHTML =
-            `<tr><td colspan="6" style="color:red;">Error: ${error.message}</td></tr>`;
-    }
+      renderAssets(tableBody, filtered);
+    };
+    searchInput.addEventListener("input", applyFilters);
+    categoryFilter.addEventListener("change", applyFilters);
+    conditionFilter.addEventListener("change", applyFilters);
+  } catch (error) {
+    console.error("Failed to render ASSETS", error);
+    tableBody.innerHTML = `<tr><td colspan="6" style="color:red;">Error: ${error.message}</td></tr>`;
+  }
 };
-
 
 /**
  * This is for confirmation of a loan request
- * @param {*} onConfirm 
+ * @param {*} onConfirm
  */
 function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
+  const modal = document.getElementById("btnConfirmation");
 
-    modal.style.display = "flex";
+  modal.style.display = "flex";
 
-    document.getElementById("confirmBtn").onclick = async () => {
-        await onConfirm();
-        modal.style.display = "none";
-    };
+  document.getElementById("confirmBtn").onclick = async () => {
+    await onConfirm();
+    modal.style.display = "none";
+  };
 
-    document.getElementById("cancelBtn").onclick = () => {
-        modal.style.display = "none";
-    };
+  document.getElementById("cancelBtn").onclick = () => {
+    modal.style.display = "none";
+  };
 }
-
 
 /**
  * REQUEST A loan on an asset that is available
  */
 const requestLoan = async (assetId) => {
-    try {
-        await createLoan({
-            userId: 7,
-            assetId: assetId
-        });
+  try {
+    await createLoan({
+      userId: 6,
+      assetId: assetId,
+    });
 
-        console.log("Loan requested successfully");
-
-    } catch (error) {
-        console.log("Error:", error);
-    }
+    console.log("Loan requested successfully");
+  } catch (error) {
+    console.log("Error:", error);
+  }
 };
-
-

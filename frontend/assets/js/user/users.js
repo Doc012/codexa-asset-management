@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-const userId = getUser().id;
+const userId = 6;
 
 const userDetails = async () => {
     const userName = document.querySelector(".welcome-card h1")
@@ -62,7 +62,7 @@ const updateDetails = async() => {
                 "picUrl": currentUser.picUrl
             }
             try {
-                const updateUserDetails = await updateAllUserDetails(userId, userData);
+                await updateAllUserDetails(userId, userData);
             } catch (error) {
                 console.log(error);
             }

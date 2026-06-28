@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-const userId = getUser().id;
+const userId = 6;
 
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
