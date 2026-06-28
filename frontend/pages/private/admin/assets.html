@@ -21,16 +21,18 @@
       <button id="menuBtn" class="menu-btn">☰</button>
       <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
     </div>
+
     <div class="right-nav">
-      <div id="profileContainer" class="profile-container">
+      <div id="profile-container" class="profile-container">
         <div id="profileInitial" class="profile-initial">S</div>
-        <img id="profileImage" class="profile-image"
-          src="https://i.pinimg.com/564x/20/5f/a9/205fa9fd919ddc9a52de9807098f9232.jpg" alt="profile_picture" />
+        <img id="profileImage" class="profile-image" src="" alt="profile_picture" />
+
         <input type="file" id="profileUpload" hidden />
+
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
           <a href="./settings.html"><button>Profile</button></a>
-          <button>Logout</button>
+          <button id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
@@ -203,7 +205,7 @@
           </thead>
 
           <tbody id="assets-table-body">
-          
+
           </tbody>
         </table>
       </div>
@@ -324,6 +326,7 @@
   </main>
 
   <script type="module" src="../../../assets/js/guards/admin.guard.js"></script>
+  <script type="module" src="../../../assets/js/common/header.js"></script>
   <script type="module" src="../../../assets/js/admin/script.js"></script>
   <script type="module" src="../../../assets/js/admin/assets.js"></script>
   <script type="module" src="../../../assets/js/admin/assest.js"></script>
