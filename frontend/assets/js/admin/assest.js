@@ -289,3 +289,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadAssetsInventoryFromServer();
 });
+
+/**
+ * Allows a user to see the asset and its details
+ * @param {*} asset 
+ */
+const openAssetModal = (asset) => {
+    const modal = document.getElementById("assetDetailsModal");
+    const body = document.getElementById("assetDetailsBody");
+
+    body.innerHTML = `
+        <div class="asset-details-card">
+
+            <img src="${asset.photoPath}" alt="asset image"/>
+
+            <h2>${asset.title}</h2>
+
+            <p><strong>Category:</strong> ${asset.category}</p>
+            <p><strong>Status:</strong> ${asset.assetStatus}</p>
+            <p><strong>Condition:</strong> ${asset.condition}</p>
+            <p><strong>Cost:</strong> ${asset.cost}</p>
+            <p><strong>Serial Number:</strong> ${asset.serialNumber}</p>
+            <p><strong>Location:</strong> ${asset.location}</p>
+
+        </div>
+    `;
+
+    modal.style.display = "flex";
+};
+
+const modalCloseBtn = async () => {
+    const modal = document.getElementById("assetDetailsModal");
+    const closeBtn = document.getElementById("closeAssetModal");
+
+    if (!closeBtn) return;
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+};

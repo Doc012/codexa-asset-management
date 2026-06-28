@@ -87,11 +87,6 @@ const renderAssets = (tableBody, assets) => {
             <td>${asset.condition}</td>
 
             <td>
-                <button class="view-btn"
-                        data-id="${asset.assetId}">
-                    More
-                </button>
-
                 <button class="request-btn"
                         data-id="${asset.assetId}"
                         ${isLoaned ? "disabled" : ""}>
@@ -99,13 +94,6 @@ const renderAssets = (tableBody, assets) => {
                 </button>
             </td>
         `;
-
-        const viewBtn = row.querySelector(".view-btn");
-
-        viewBtn.addEventListener("click", () => {
-            openAssetModal(asset);
-        });
-
         tableBody.appendChild(row);
     });
 };
@@ -140,7 +128,7 @@ const assetPage = async () => {
     const tableBody = document.getElementById("assetsTableBody");
 
     const searchInput = document.getElementById("assetSearch");
-    const categoryFilter = document.getElementById("categoryFilter");
+    const categoryFilter = document.getElementById("filter-category-select");
     const conditionFilter = document.getElementById("conditionFilter");
 
     let allAssets = [];
@@ -163,25 +151,14 @@ const assetPage = async () => {
 
             renderAssets(tableBody, filtered);
         };
-
-        tableBody.addEventListener("click", (event) => {
-            const button = event.target.closest(".request-btn");
-            if (!button) return;
-
-            const assetId = button.dataset.id;
-
-            showConfirmationModal(async () => {
-                await requestLoan(assetId);
-            });
-        });
-
         searchInput.addEventListener("input", applyFilters);
         categoryFilter.addEventListener("change", applyFilters);
         conditionFilter.addEventListener("change", applyFilters);
 
     } catch (error) {
         console.error("Failed to render ASSETS", error);
-        tableBody.innerHTML = `<tr><td colspan="6" style="color: red;">Error: ${error.message}</td></tr>`;
+        tableBody.innerHTML =
+            `<tr><td colspan="6" style="color:red;">Error: ${error.message}</td></tr>`;
     }
 };
 
@@ -223,48 +200,4 @@ const requestLoan = async (assetId) => {
     }
 };
 
-/**
- * Allows a user to see the asset and its details
- * @param {*} asset 
- */
-const openAssetModal = (asset) => {
-    const modal = document.getElementById("assetDetailsModal");
-    const body = document.getElementById("assetDetailsBody");
 
-    body.innerHTML = `
-        <div class="asset-details-card">
-
-            <img src="${asset.photoPath}" alt="asset image"/>
-
-            <h2>${asset.title}</h2>
-
-            <p><strong>Category:</strong> ${asset.category}</p>
-            <p><strong>Status:</strong> ${asset.assetStatus}</p>
-            <p><strong>Condition:</strong> ${asset.condition}</p>
-            <p><strong>Cost:</strong> ${asset.cost}</p>
-            <p><strong>Serial Number:</strong> ${asset.serialNumber}</p>
-            <p><strong>Location:</strong> ${asset.location}</p>
-
-        </div>
-    `;
-
-    modal.style.display = "flex";
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("assetDetailsModal");
-    const closeBtn = document.getElementById("closeAssetModal");
-
-    if (!closeBtn) return;
-
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-
-    window.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.style.display = "none";
-        }
-    });
-
-});

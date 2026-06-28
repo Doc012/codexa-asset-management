@@ -15,6 +15,7 @@ let searchQuery = "";
 document.addEventListener("DOMContentLoaded", async () => {
     await viewAllAssets();
     setupFilters();
+    await modalCloseBtn();
 });
 
 
@@ -129,6 +130,10 @@ const renderAssets = (assets) => {
             <td>${asset.assetStatus}</td>
             <td>${asset.condition}</td>
             <td>
+                <button class="view-btn"
+                        data-id="${asset.assetId}">
+                    More
+                </button>
                 <button class="request-btn"
                     data-id="${asset.assetId}"
                     ${isLoaned ? "disabled" : ""}>
@@ -147,6 +152,12 @@ const renderAssets = (assets) => {
                 });
             });
         }
+
+        const viewBtn = row.querySelector(".view-btn");
+
+        viewBtn.addEventListener("click", () => {
+            openAssetModal(asset);
+        });
 
         tableBody.appendChild(row);
     });
@@ -191,4 +202,50 @@ const requestLoan = async (assetId) => {
     } catch (error) {
         console.log("Error:", error);
     }
+};
+
+/**
+ * Allows a user to see the asset and its details
+ * @param {*} asset 
+ */
+const openAssetModal = (asset) => {
+    const modal = document.getElementById("assetDetailsModal");
+    const body = document.getElementById("assetDetailsBody");
+
+    body.innerHTML = `
+        <div class="asset-details-card">
+
+            <img src="${asset.photoPath}" alt="asset image"/>
+
+            <h2>${asset.title}</h2>
+
+            <p><strong>Category:</strong> ${asset.category}</p>
+            <p><strong>Status:</strong> ${asset.assetStatus}</p>
+            <p><strong>Condition:</strong> ${asset.condition}</p>
+            <p><strong>Cost:</strong> ${asset.cost}</p>
+            <p><strong>Serial Number:</strong> ${asset.serialNumber}</p>
+            <p><strong>Location:</strong> ${asset.location}</p>
+
+        </div>
+    `;
+
+    modal.style.display = "flex";
+};
+
+const modalCloseBtn = async () => {
+    const modal = document.getElementById("assetDetailsModal");
+    const closeBtn = document.getElementById("closeAssetModal");
+
+    if (!closeBtn) return;
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
 };
