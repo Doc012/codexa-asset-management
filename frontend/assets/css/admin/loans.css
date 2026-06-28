@@ -216,3 +216,181 @@
   border-color: var(--danger, #ef4444);
   background: #fef2f2;
 }
+
+
+
+/* _______// TABS AND TABLES \\_______ */
+.panel-table-container {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 16px;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); */
+}
+
+.asset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border: none !important;
+}
+
+.manager-ledger-table th,
+.manager-ledger-table td {
+  text-align: left !important;
+  padding: 14px 20px;
+  vertical-align: middle;
+  /* border-bottom: 1px solid #f1f5f9; */
+}
+
+.manager-ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; padding-left: 20px;} /* Asset Name */
+.manager-ledger-table th:nth-child(2), .manager-ledger-table td:nth-child(2) { width: 20%; } /* Requested By */
+.manager-ledger-table th:nth-child(3), .manager-ledger-table td:nth-child(3) { width: 15%; } /* Date */
+.manager-ledger-table th:nth-child(4), .manager-ledger-table td:nth-child(4) { width: 15%; } /* Department */
+.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; padding-right: 20px;} /* Actions / Status Badges */
+
+.manager-ledger-table th:first-child,
+.manager-ledger-table td:first-child {
+  border-left: none !important;
+  padding-left: 20px;
+}
+
+.manager-ledger-table th:last-child,
+.manager-ledger-table td:last-child {
+  border-right: none !important;
+  padding-right: 20px;
+}
+
+.manager-ledger-table tr:first-child th {
+  border-top: none !important;
+}
+
+.manager-ledger-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.manager-ledger-table .row-details {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* ─── Loan Status Badges ───────────────────────────────────────────────────── */
+/* Add these to your existing stylesheet alongside the current .status-badge rules */
+
+.status-badge.pending {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.status-badge.approved {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-badge.rejected {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-badge.cancelled {
+  background-color: rgba(107, 114, 128, 0.1);
+  color: #6b7280;
+}
+
+.status-badge.returned {
+  background-color: rgba(2, 167, 232, 0.1);
+  color: #02a7e8;
+}
+
+.approve_btn, 
+.reject_btn,
+.checkout_btn,
+.return_btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.approve_btn {
+  background-color: #10b981;
+  color: #ffffff;
+  margin-right: 6px;
+}
+
+.approve_btn:hover {
+  background-color: #059669;
+}
+
+.reject_btn {
+  background-color: transparent;
+  border-color: #e2e8f0;
+  color: #ef4444;
+}
+
+.reject_btn:hover {
+  background-color: rgba(239, 68, 68, 0.05);
+  border-color: #ef4444;
+}
+
+.checkout_btn, .return_btn {
+  background-color: #10b981;
+  color: #ffffff;
+  margin-right: 6px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active-content {
+  display: block !important;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.tab-btn:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.tab-btn.active {
+  background-color: #4f46e5;
+  color: white;
+}

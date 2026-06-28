@@ -172,29 +172,53 @@ function renderCheckout(data) {
   });
 }
 
+function loanStatusClass(status) {
+  const map = {
+    PENDING:   "pending",
+    APPROVED:  "approved",
+    REJECTED:  "rejected",
+    CANCELLED: "cancelled",
+    RETURNED:  "returned",
+  };
+  return map[status] ?? "";
+}
+
 /**
  * HISTORY
  */
 function renderHistory(data) {
   const body = document.querySelector("#historical-loans");
   if (!body) return;
-
+ 
   body.innerHTML = "";
-
+ 
   data.forEach((loan) => {
     const row = document.createElement("tr");
-
+ 
     row.innerHTML = `
-            <td>${loan.title}</td>
-            <td>${loan.requesterEmail}</td>
-            <td>${loan.requestDate}</td>
-            <td>${loan.department}</td>
-            <td>${loan.status}</td>
-        `;
-
+      <td>${loan.title}</td>
+      <td>${loan.requesterEmail}</td>
+      <td>${loan.requestDate}</td>
+      <td>${loan.department}</td>
+      <td>
+        <span class="status-badge ${loanStatusClass(loan.status)}">
+          ${formatLoanStatus(loan.status)}
+        </span>
+      </td>
+    `;
+ 
     body.appendChild(row);
   });
 }
+
+function formatLoanStatus(status) {
+  if (!status) return "—";
+  return status
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 
 /**
  * ACTIONS
