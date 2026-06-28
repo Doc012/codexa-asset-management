@@ -17,18 +17,20 @@
   <header class="topbar">
     <div class="left-nav">
       <button id="menuBtn" class="menu-btn">☰</button>
-      <h2 class="logo">Asset<span class="logo-accent"> IQ</h2>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
     </div>
+
     <div class="right-nav">
-      <div id="profileContainer" class="profile-container">
-        <div id="profileInitial" class="profile-initial">T</div>
-        <img id="profileImage" class="profile-image" src="../../../assets/images/IMG-20250621-WA0001.jpg"
-          alt="profile_picture">
-        <input type="file" id="profileUpload" hidden>
+      <div id="profile-container" class="profile-container">
+        <div id="profileInitial" class="profile-initial">S</div>
+        <img id="profileImage" class="profile-image" src="" alt="profile_picture" />
+
+        <input type="file" id="profileUpload" hidden />
+
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
-          <a href="./profile.html"><button>Profile</button></a>
-          <button>Logout</button>
+          <a href="./settings.html"><button>Profile</button></a>
+          <button id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
@@ -167,7 +169,8 @@
     </section>
   </main>
 
-  <!-- <script type="module" src="../../../assets/js/guards/manager.guard.js"></script> -->
+  <script type="module" src="../../../assets/js/guards/manager.guard.js"></script>
+  <script type="module" src="../../../assets/js/common/header.js"></script>
   <script src="../../../assets/js/manager/users.js" type="module"></script>
   <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
