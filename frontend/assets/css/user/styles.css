@@ -967,7 +967,7 @@ button.confirm {
   cursor: pointer;
 }
 
-button.request-btn {
+button.request-btn, .view-btn {
   background: #7690e6;
   color: white;
   border: none;

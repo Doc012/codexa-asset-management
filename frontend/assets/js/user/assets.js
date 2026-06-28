@@ -111,7 +111,7 @@ const renderAssets = (tableBody, assets) => {
 };
 
 /**
- * FILTER ONLY (pure function)
+ * FILTER ONLY
  */
 const filterAssets = (assets, search, category, condition) => {
     return assets.filter(asset => {
@@ -147,9 +147,6 @@ const assetPage = async () => {
 
     try {
         allAssets = await getAllAssets();
-        // dsiplay all assets that are available
-        allAssets = allAssets.filter(asset => asset.assetStatus === "AVAILABLE");
-
         renderAssets(tableBody, allAssets);
 
         const applyFilters = () => {
