@@ -1,270 +1,221 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asset IQ - Audit Logs</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset IQ - Audit Logs</title>
 
-    <link rel="stylesheet" href="../../../assets/css/user/styles.css" />
-    <link rel="stylesheet" href="../../../assets/css/user/dashboard.css" />
-    <link rel="stylesheet" href="../../../assets/css/managerDashboard.css" />
-    <link rel="stylesheet" href="../../../assets/css/admin/logs.css" />
-  </head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
-  <body>
-    <header class="topbar">
-      <div class="left-nav">
-        <button id="menuBtn" class="menu-btn">☰</button>
-        <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
-      </div>
+  <link rel="stylesheet" href="../../../assets/css/user/styles.css" />
+  <!-- <link rel="stylesheet" href="../../../assets/css/user/dashboard.css" /> -->
+  <!-- <link rel="stylesheet" href="../../../assets/css/managerDashboard.css" /> -->
+  <link rel="stylesheet" href="../../../assets/css/admin/logs.css" />
+</head>
 
-      <div class="right-nav">
-        <div id="profileContainer" class="profile-container">
-          <div id="profileInitial" class="profile-initial">T</div>
-          <img
-            id="profileImage"
-            class="profile-image"
-            src="../../../assets/images/IMG-20250621-WA0001.jpg"
-            alt="profile_picture"
-          />
+<body>
+  <header class="topbar">
+    <div class="left-nav">
+      <button id="menuBtn" class="menu-btn">☰</button>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span></h2>
+    </div>
 
-          <input type="file" id="profileUpload" hidden />
+    <div class="right-nav">
+      <div id="profileContainer" class="profile-container">
+        <div id="profileInitial" class="profile-initial">T</div>
+        <img id="profileImage" class="profile-image" src="../../../assets/images/IMG-20250621-WA0001.jpg"
+          alt="profile_picture" />
 
-          <div class="profile-dropdown">
-            <button id="uploadBtn">Upload Photo</button>
-            <a href="./profile.html"><button>Profile</button></a>
-            <button>Logout</button>
-          </div>
+        <input type="file" id="profileUpload" hidden />
+
+        <div class="profile-dropdown">
+          <button id="uploadBtn">Upload Photo</button>
+          <a href="./profile.html"><button>Profile</button></a>
+          <button>Logout</button>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <aside id="sidebar" class="sidebar">
-      <ul>
-        <li class="nav-item">
-          <a href="./dashboard.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <rect x="3" y="3" width="7" height="9"></rect>
-              <rect x="14" y="3" width="7" height="5"></rect>
-              <rect x="14" y="12" width="7" height="9"></rect>
-              <rect x="3" y="16" width="7" height="5"></rect>
-            </svg>
-            <span class="nav-text">Dashboard</span>
-          </a>
-        </li>
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li class="nav-item">
+        <a href="./dashboard.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <rect x="3" y="3" width="7" height="9"></rect>
+            <rect x="14" y="3" width="7" height="5"></rect>
+            <rect x="14" y="12" width="7" height="9"></rect>
+            <rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          <span class="nav-text">Dashboard</span>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a href="./assets.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-            <span class="nav-text">Assets</span>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="./assets.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span class="nav-text">Assets</span>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a href="./loans.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              ></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="12" y1="18" x2="12" y2="12"></line>
-              <line x1="9" y1="15" x2="15" y2="15"></line>
-            </svg>
-            <span class="nav-text">Loans</span>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="./loans.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+          </svg>
+          <span class="nav-text">Loans</span>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a href="./users.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-            <span class="nav-text">Users</span>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="./users.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span class="nav-text">Users</span>
+        </a>
+      </li>
 
-        <li class="nav-item active">
-          <a href="./logs.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              ></path>
-              <polyline points="14 2 14 8 20 8"></polyline>
-              <line x1="16" y1="13" x2="8" y2="13"></line>
-              <line x1="16" y1="17" x2="8" y2="17"></line>
-              <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span class="nav-text">Logs</span>
-          </a>
-        </li>
+      <li class="nav-item active">
+        <a href="./logs.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span class="nav-text">Logs</span>
+        </a>
+      </li>
 
-        <hr class="sidebar-divider" />
+      <hr class="sidebar-divider" />
 
-        <li class="nav-item">
-          <a href="./settings.html" class="nav-link">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="nav-icon"
-            >
-              <circle cx="12" cy="12" r="3"></circle>
-              <path
-                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-              ></path>
-            </svg>
-            <span class="nav-text">Settings</span>
-          </a>
-        </li>
-      </ul>
-    </aside>
+      <li class="nav-item">
+        <a href="./settings.html" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="nav-icon">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          <span class="nav-text">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
 
-    <main id="mainContent" class="content manager-hub-content">
-      <div class="executive-header">
-        <div class="header-titles">
-          <span class="system-tag">Management System</span>
-          <h1 class="ledger-title">Audit Logs</h1>
-        </div>
+  <main id="mainContent" class="content manager-hub-content">
+    <div class="executive-header">
+      <div class="header-titles">
+        <span class="system-tag">Management System</span>
+        <h1 class="ledger-title">Audit Logs</h1>
+      </div>
+      <div class="clearance-tag">
+        Clearance Level:
+        <span class="clearance-level">Admin Account</span>
+      </div>
+    </div>
 
-        <div class="clearance-tag">
-          Clearance Level:
-          <span class="clearance-level">Admin Account</span>
-        </div>
+    <div class="portal-filter-bar">
+      <div class="search-input-container">
+        <span class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+        </span>
+        <input type="text" id="log-search-input" placeholder="Search by email, message, log ID…" />
       </div>
 
-      <div class="portal-filter-bar">
-        <div class="search-input-container" id="reportSearch">
-          <input
-            type="text"
-            id="asset-search-input"
-            placeholder="Search logs..."
-          />
+      <div class="filter-controls-group">
+        <div class="filter-dropdown-wrapper">
+          <label for="action-type-select">Action</label>
+          <select id="action-type-select">
+            <option value="ALL">All actions</option>
+            <option value="CREATE">Create</option>
+            <option value="UPDATE">Update</option>
+            <option value="APPROVE">Approve</option>
+            <option value="DELETE">Delete</option>
+            <option value="CHECK_OUT">Check out</option>
+            <option value="CHECK_IN">Check in</option>
+            <option value="CANCEL">Cancel</option>
+          </select>
         </div>
 
-        <div class="select-filters-container" id="actionTypeFilter">
-          <div class="filter-dropdown-wrapper">
-            <label for="filter-category-select">Logs:</label>
-            <select id="filter-category-select">
-              <option value="ALL">All Logs</option>
-              <option value="CREATE">Create</option>
-              <option value="UPDATE">Update</option>
-              <option value="DELETE">Delete</option>
-            </select>
-          </div>
+        <div class="filter-dropdown-wrapper">
+          <label for="entity-type-select">Entity</label>
+          <select id="entity-type-select">
+            <option value="ALL">All entities</option>
+            <option value="ASSET">Asset</option>
+            <option value="LOAN">Loan</option>
+            <option value="USER">User</option>
+          </select>
         </div>
       </div>
+    </div>
 
-      <div class="work-queue-container">
-        <div
-          class="report-header-actions"
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-          "
-        >
+    <div class="work-queue-container">
+      <div class="report-header-actions">
+        <div class="queue-heading-group">
           <h3 class="queue-heading">System Activity Logs</h3>
-
-          <button id="downloadReportBtn" class="primary-btn download-btn">
-            Download CSV Report
-          </button>
+          <span class="log-result-count" id="logResultCount"></span>
         </div>
+        <button id="downloadReportBtn" class="primary-btn download-btn">
+          Download CSV Report
+        </button>
+      </div>
 
-        <div class="panel-table-container">
-          <table class="asset-table manager-ledger-table">
-            <thead>
-              <tr>
-                <th>Log ID</th>
-                <th>User Email</th>
-                <th>Entity Type</th>
-                <th>Action Type</th>
-                <th>Timestamp</th>
-                <th>New Value</th>
-                <th>Old Value</th>
-              </tr>
-            </thead>
+      <div class="panel-table-container">
+        <table class="asset-table manager-ledger-table">
+          <thead>
+            <tr>
+              <th>Log ID</th>
+              <th>Action</th>
+              <th>Entity</th>
+              <th>Message</th>
+              <th>User</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody class="reports-table"></tbody>
+        </table>
 
-            <tbody class="reports-table"></tbody>
-          </table>
+        <div class="logs-empty-state" id="logsEmptyState" style="display: none;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <ellipse cx="12" cy="5" rx="9" ry="3" />
+            <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+            <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" />
+          </svg>
+          <p>No logs match your filters</p>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <script src="../../../assets/js/manager/users.js" type="module"></script>
-    <script src="../../../assets/js/config.js" type="module"></script>
-    <script src="../../../assets/js/user/script.js"></script>
-    <script
-      src="../../../assets/js/manager/auditLogs.js"
-      type="module"
-    ></script>
-  </body>
+  <!-- <script src="../../../assets/js/manager/users.js" type="module"></script> -->
+  <!-- <script src="../../../assets/js/config.js" type="module"></script> -->
+  <!-- <script src="../../../assets/js/user/script.js"></script> -->
+  <script src="../../../assets/js/manager/auditLogs.js" type="module"></script>
+</body>
+
 </html>

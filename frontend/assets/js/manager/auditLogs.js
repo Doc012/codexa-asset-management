@@ -1,7 +1,9 @@
 import { getAllLogs } from "../../../services/auditService.js";
 
 let currentAction = "ALL";
+let currentEntity = "ALL";
 let searchQuery = "";
+let allLogs = [];
 let filteredLogs = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -10,142 +12,150 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupDownload();
 });
 
-/**
- * LOAD ALL LOGS
- */
+/* ─── Load ──────────────────────────────────────────────────────────────── */
+
 const loadLogs = async () => {
     try {
-        const logs = await getAllLogs();
-        filteredLogs = logs; 
-        renderLogs(logs);
+        allLogs = await getAllLogs();
+        filteredLogs = allLogs;
+        renderLogs(allLogs);
     } catch (error) {
         console.error("Failed to load audit logs:", error);
     }
 };
 
-/**
- * APPLY FILTERS
- */
-const applyFilters = async () => {
-    try {
-        let logs = await getAllLogs();
+/* ─── Filters ───────────────────────────────────────────────────────────── */
 
-        if (currentAction !== "ALL") {
-            logs = logs.filter(log => log.actionType === currentAction);
-        }
+const applyFilters = () => {
+    filteredLogs = allLogs.filter(log => {
+        if (currentAction !== "ALL" && log.actionType !== currentAction) return false;
+        if (currentEntity !== "ALL" && log.entityType !== currentEntity) return false;
 
         if (searchQuery) {
-            logs = logs.filter(log => {
-                const email = (log.logCreatorEmail).toLowerCase();
-                const userId = String(log.userId).toLowerCase();
-                const entityType = (log.entityType).toLowerCase();
-                const actionType = (log.actionType).toLowerCase();
-                const logId = String(log.logId).toLowerCase();
+            const haystack = [
+                log.logCreatorEmail,
+                log.message,
+                log.entityType,
+                log.actionType,
+                String(log.logId),
+            ].join(" ").toLowerCase();
 
-                return (
-                    email.includes(searchQuery) ||
-                    userId.includes(searchQuery) ||
-                    entityType.includes(searchQuery) ||
-                    actionType.includes(searchQuery) ||
-                    logId.includes(searchQuery)
-                );
-            });
+            if (!haystack.includes(searchQuery)) return false;
         }
 
-        filteredLogs = logs;
-        renderLogs(logs);
+        return true;
+    });
 
-    } catch (error) {
-        console.error("Filter error:", error);
-    }
+    renderLogs(filteredLogs);
 };
 
-/**
- * FILTER EVENTS
- */
 const setupFilters = () => {
-    const actionDropdown = document.querySelector("#actionTypeFilter");
-    const searchInput = document.querySelector("#reportSearch");
-    
+    const searchInput   = document.querySelector("#log-search-input");
+    const actionSelect  = document.querySelector("#action-type-select");
+    const entitySelect  = document.querySelector("#entity-type-select");
 
-    if (!actionDropdown || !searchInput) {
-        console.error("Report filters not found in DOM");
+    if (!searchInput || !actionSelect || !entitySelect) {
+        console.error("Log filter elements not found in DOM");
         return;
     }
 
-    actionDropdown.addEventListener("change", (e) => {
+    searchInput.addEventListener("input", e => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        applyFilters();
+    });
+
+    actionSelect.addEventListener("change", e => {
         currentAction = e.target.value;
         applyFilters();
     });
 
-    searchInput.addEventListener("input", (e) => {
-        searchQuery = e.target.value.toLowerCase().trim();
+    entitySelect.addEventListener("change", e => {
+        currentEntity = e.target.value;
         applyFilters();
     });
 };
 
-/**
- * Download only filtered logs
- */
-const setupDownload = () => {
-    const downloadBtn = document.querySelector("#downloadReportBtn");
+/* ─── Render ────────────────────────────────────────────────────────────── */
 
-    if (!downloadBtn) {
-        return;
-    }
-
-    downloadBtn.addEventListener("click", () => {
-        downloadCsv(filteredLogs);
-    });
+const ACTION_LABELS = {
+    CREATE:    "Create",
+    UPDATE:    "Update",
+    DELETE:    "Delete",
+    APPROVE:   "Approve",
+    CHECK_OUT: "Check out",
+    CHECK_IN:  "Check in",
+    CANCEL:    "Cancel",
 };
 
-/**
- * RENDER TABLE
- */
+const formatTimestamp = (ts) => {
+    const d = new Date(ts);
+    return d.toLocaleDateString("en-ZA", { day: "2-digit", month: "short", year: "numeric" })
+        + " · "
+        + d.toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" });
+};
+
 const renderLogs = (logs) => {
-    const tableBody = document.querySelector(".reports-table");
+    const tableBody  = document.querySelector(".reports-table");
+    const emptyState = document.getElementById("logsEmptyState");
+    const countBadge = document.getElementById("logResultCount");
 
     if (!tableBody) return;
 
     tableBody.innerHTML = "";
 
+    countBadge.textContent = `${logs.length} log${logs.length !== 1 ? "s" : ""}`;
+
+    if (logs.length === 0) {
+        emptyState.style.display = "flex";
+        return;
+    }
+
+    emptyState.style.display = "none";
+
     logs.forEach(log => {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${log.logId}</td>
-            <td>${log.logCreatorEmail}</td>
-            <td>${log.entityType}</td>
-            <td>${log.actionType}</td>
-            <td>${log.timestamp}</td>
-            <td>${log.newValue}</td>
-            <td>${log.oldValue}</td>
+            <td><span class="log-id-cell">${log.logId}</span></td>
+            <td>
+                <span class="action-badge badge-${log.actionType}">
+                    <span class="action-dot"></span>
+                    ${ACTION_LABELS[log.actionType] ?? log.actionType}
+                </span>
+            </td>
+            <td><span class="entity-chip entity-${log.entityType}">${log.entityType}</span></td>
+            <td><span class="log-message-cell" title="${log.message}">${log.message}</span></td>
+            <td><span class="log-email-cell" title="${log.logCreatorEmail}">${log.logCreatorEmail}</span></td>
+            <td><span class="log-ts-cell">${formatTimestamp(log.timestamp)}</span></td>
         `;
 
         tableBody.appendChild(row);
     });
 };
 
-/**
- * CSV EXPORT
- */
+/* ─── CSV Export ────────────────────────────────────────────────────────── */
+
+const setupDownload = () => {
+    const downloadBtn = document.querySelector("#downloadReportBtn");
+    if (!downloadBtn) return;
+    downloadBtn.addEventListener("click", () => downloadCsv(filteredLogs));
+};
+
 const downloadCsv = (logs) => {
-    let csv = "Log ID,Email,Entity Type,Action Type,Timestamp,New Value,Old Value\n";
+    const header = ["Log ID", "Email", "Entity Type", "Action Type", "Timestamp", "Message", "Old Value", "New Value"];
+    const rows = logs.map(l =>
+        [l.logId, l.logCreatorEmail, l.entityType, l.actionType, l.timestamp, `"${l.message}"`, `"${l.oldValue}"`, `"${l.newValue}"`].join(",")
+    );
 
-    logs.forEach(log => {
-        csv += `${log.logId},${log.logCreatorEmail},${log.entityType},${log.actionType},${log.timestamp},${log.newValue},${log.oldValue}\n`;
-    });
-
+    const csv  = [header.join(","), ...rows].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
+    const url  = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
-    a.href = url;
-    a.download = "filtered-report.csv";
-
+    a.href     = url;
+    a.download = "audit-logs.csv";
     document.body.appendChild(a);
     a.click();
-
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 };
