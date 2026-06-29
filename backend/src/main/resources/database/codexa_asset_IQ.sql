@@ -152,3 +152,15 @@ UPDATE users SET status = 'ACTIVE' WHERE user_id = 4;
 
 -- User Status length increase in the database(PostgreSQL)
 ALTER TABLE users ALTER COLUMN status TYPE VARCHAR(50);
+
+ALTER TABLE users DROP CONSTRAINT users_status_check;
+
+ALTER TABLE users ADD CONSTRAINT users_status_check
+    CHECK (
+        status IN (
+                   'PENDING_VERIFICATION',
+                   'ACTIVE',
+                   'INACTIVE',
+                   'PENDING_APPROVAL'
+            )
+        );
