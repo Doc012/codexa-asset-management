@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin - Asset IQ - Assets</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -23,12 +23,11 @@
     </div>
 
     <div class="right-nav">
-      <div id="profile-container" class="profile-container">
+      <div id="profileContainer" class="profile-container">
         <div id="profileInitial" class="profile-initial">S</div>
-        <img id="profileImage" class="profile-image" src="" alt="profile_picture" />
-
-        <input type="file" id="profileUpload" hidden />
-
+        <img id="profileImage" class="profile-image"
+          src="https://i.pinimg.com/564x/20/5f/a9/205fa9fd919ddc9a52de9807098f9232.jpg" alt="profile_picture">
+        <input type="file" id="profileUpload" hidden>
         <div class="profile-dropdown">
           <button id="uploadBtn">Upload Photo</button>
           <a href="./settings.html"><button>Profile</button></a>
@@ -105,7 +104,7 @@
         </a>
       </li>
 
-      <hr class="sidebar-divider" />
+      <hr class="sidebar-divider">
 
       <li class="nav-item">
         <a href="./settings.html" class="nav-link">
@@ -124,13 +123,11 @@
 
   <main id="mainContent" class="content">
     <section id="assets-management-section" class="page active">
+
       <div class="portal-toolbar-header">
         <div class="title-meta">
           <h1>Asset Management</h1>
-          <p>
-            Manage your organization's physical inventories and tracking
-            parameters.
-          </p>
+          <p>Manage your organization's physical inventories and tracking parameters.</p>
         </div>
         <div class="action-buttons-group">
           <button class="portal-btn primary" id="open-add-modal-btn">
@@ -151,7 +148,7 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" id="asset-search-input" placeholder="Search assets..." />
+          <input type="text" id="asset-search-input" placeholder="Search assets...">
         </div>
         <div class="select-filters-container">
           <div class="filter-dropdown-wrapper">
@@ -196,7 +193,7 @@
           <thead>
             <tr>
               <th>Title</th>
-              <th>Photo</th>
+              <th>Image</th>
               <th>Category</th>
               <th>Status</th>
               <th>Condition</th>
@@ -237,19 +234,19 @@
               <label>Category *</label>
               <select id="form-category" required>
                 <option value="LAPTOP">Laptop</option>
-                <option value="DESKTOP">Desktop</option>
-                <option value="MONITOR">Monitor</option>
-                <option value="PRINTER">Printer</option>
-                <option value="PROJECTOR">Projector</option>
-                <option value="TABLET">Tablet</option>
-                <option value="MOBILE_PHONE">Mobile Phone</option>
-                <option value="NETWORK_DEVICE">Network Device</option>
-                <option value="SERVER">Server</option>
-                <option value="ACCESSORY">Accessory</option>
-                <option value="FURNITURE">Furniture</option>
-                <option value="SOFTWARE_LICENSE">Software License</option>
-                <option value="VEHICLE">Vehicle</option>
-                <option value="OTHER">Other</option>
+              <option value="DESKTOP">Desktop</option>
+              <option value="MONITOR">Monitor</option>
+              <option value="PRINTER">Printer</option>
+              <option value="PROJECTOR">Projector</option>
+              <option value="TABLET">Tablet</option>
+              <option value="MOBILE_PHONE">Mobile Phone</option>
+              <option value="NETWORK_DEVICE">Network Device</option>
+              <option value="SERVER">Server</option>
+              <option value="ACCESSORY">Accessory</option>
+              <option value="FURNITURE">Furniture</option>
+              <option value="SOFTWARE_LICENSE">Software License</option>
+              <option value="VEHICLE">Vehicle</option>
+              <option value="OTHER">Other</option>
               </select>
             </div>
           </div>
@@ -293,9 +290,7 @@
           </div>
 
           <div class="form-actions">
-            <button type="button" id="cancel-form-btn" class="portal-btn secondary">
-              Edit asset
-            </button>
+            <button type="button" id="cancel-form-btn" class="portal-btn secondary">Edit asset</button>
             <button type="button" class="portal-btn primary">Retire</button>
           </div>
         </form>
@@ -325,11 +320,9 @@
     </div>
   </main>
 
-  <script type="module" src="../../../assets/js/guards/admin.guard.js"></script>
-  <script type="module" src="../../../assets/js/common/header.js"></script>
-  <script type="module" src="../../../assets/js/admin/script.js"></script>
-  <script type="module" src="../../../assets/js/admin/assets.js"></script>
-  <script type="module" src="../../../assets/js/admin/assest.js"></script>
+  <!-- <script type="module" src="../../../assets/js/guards/admin.guard.js"></script> -->
+  <script src="../../../assets/js/admin/script.js"></script>
+  <script src="../../../assets/js/admin/assest.js"></script>
   <script type="module" src="../../../assets/js/user/script.js"></script>
 </body>
 
