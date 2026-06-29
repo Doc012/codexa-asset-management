@@ -2,7 +2,7 @@ import { getAllAssets, getAssetById } from "../../../services/assetService.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    const API_URL = "https://localhost:8443/api/v1assets";
+    const API_URL = "https://localhost:8443/api/v1/assets";
 
     const tableBody = document.getElementById("assets-table-body");
     const assetModal = document.getElementById("asset-modal-overlay");
