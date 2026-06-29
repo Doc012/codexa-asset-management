@@ -1,4 +1,4 @@
-import { getAllLogs } from "../../../services/auditService.js";
+import { getAllLogs, getAllManagerLogs } from "../../../services/auditService.js";
 
 let currentAction = "ALL";
 let searchQuery = "";
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
  */
 const loadLogs = async () => {
     try {
-        const logs = await getAllLogs();
+        const logs = await getAllManagerLogs();
         filteredLogs = logs; 
         renderLogs(logs);
     } catch (error) {

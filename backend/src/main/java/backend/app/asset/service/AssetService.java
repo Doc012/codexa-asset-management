@@ -15,6 +15,7 @@ import backend.app.user.enums.Role;
 import backend.app.user.model.User;
 import backend.app.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,16 +30,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AssetService {
     private final AssetRepo assetRepo;
     private final UserRepository userRepo;
     private final AuditLogService auditLogService;
 
-    public AssetService(AssetRepo assetRepo, UserRepository userRepo, AuditLogService auditLogService) {
-        this.assetRepo = assetRepo;
-        this.userRepo = userRepo;
-        this.auditLogService = auditLogService;
-    }
 
     /**
      * this method returns all the assets from the database
@@ -148,7 +145,7 @@ public class AssetService {
                     .entityId(asset.getAssetId())
                     .actionType(ActionType.CREATE)
                     .oldValue("N/A")
-                    .newValue("Created Asset with ID: " + asset.getAssetId())
+                    .newValue("Created Asset SN: " + asset.getSerialNumber())
                     .message("Created Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
                     .build();
             auditLogService.createLog(log);
