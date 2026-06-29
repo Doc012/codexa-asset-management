@@ -21,5 +21,14 @@ if (!emailToken) {
   }
 }
 
+/**
+ * Displays an error message to the user.
+ * @param {string} msg - The error message text.
+ */
 function showError(msg)   { errorBox.textContent   = msg; errorBox.hidden   = false; }
+
+/**
+ * Displays a success message to the user.
+ * @param {string} msg - The success message text.
+ */
 function showSuccess(msg) { successBox.textContent = msg; successBox.hidden = false; }

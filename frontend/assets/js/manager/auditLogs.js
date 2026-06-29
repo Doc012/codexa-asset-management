@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /**
- * LOAD ALL LOGS
+ * Load all logs
  */
 const loadLogs = async () => {
     try {
@@ -24,7 +24,7 @@ const loadLogs = async () => {
 };
 
 /**
- * APPLY FILTERS
+ * Apply filters
  */
 const applyFilters = async () => {
     try {
@@ -61,7 +61,7 @@ const applyFilters = async () => {
 };
 
 /**
- * FILTER EVENTS
+ * Filter events
  */
 const setupFilters = () => {
     const actionDropdown = document.querySelector("#actionTypeFilter");
@@ -101,7 +101,7 @@ const setupDownload = () => {
 };
 
 /**
- * RENDER TABLE
+ * Render data into the table
  */
 const renderLogs = (logs) => {
     const tableBody = document.querySelector(".reports-table");
@@ -128,7 +128,7 @@ const renderLogs = (logs) => {
 };
 
 /**
- * CSV EXPORT
+ * Export data to csv
  */
 const downloadCsv = (logs) => {
     let csv = "Log ID,Email,Entity Type,Action Type,Timestamp,New Value,Old Value\n";

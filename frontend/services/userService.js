@@ -1,5 +1,9 @@
 import { apiFetch } from "../assets/js/apiFetch.js";
 
+/**
+ * Fetches all user records from the database.
+ * @returns {Promise<Array>} A promise that resolves to an array of all user objects.
+ */
 export async function getAllUsers() {
     const response = await apiFetch(`/users`);
 
@@ -7,31 +11,29 @@ export async function getAllUsers() {
 }
 
 /**
- * 
- * @param {*} id user id from the users table
- * @returns user details in a json object
+ * Fetches details for a single user by their unique user ID.
+ * @param {string|number} userId - The unique identifier from the users table.
+ * @returns {Promise<Object>} A promise that resolves to the user details object.
  */
-
 export const getUserById = (async (userId) => {
     const res = await apiFetch(`/users/user/${userId}`);
     return await res.json();
 });
 
 /**
- * 
- * @param {*} email of the user
- * @returns user details in a json object
+ * Fetches user details matching a specified email address.
+ * @param {string} email - The email address of the target user.
+ * @returns {Promise<Object>} A promise that resolves to the user details object.
  */
-
 export const getUserByEmail = (async (email) => {
     const res = await apiFetch(`/user/email/${email}`);
     return await res.json();
 });
 
 /**
- * 
- * @param {*} role 
- * @returns all users by their roles in a json object
+ * Fetches all user records assigned to a specific role.
+ * @param {string} role - The name of the authorization role to filter by.
+ * @returns {Promise<Array>} A promise that resolves to an array of user objects matching the role.
  */
 export const getAllUsersByRole = (async (role) => {
     const res = await apiFetch(`/role/${role}`);
@@ -39,11 +41,10 @@ export const getAllUsersByRole = (async (role) => {
 })
 
 /**
- * 
- * @param {*} userData 
- * @returns 
+ * Submits a request to register or create a new user record.
+ * @param {Object} userData - The creation properties and metadata payload for the user.
+ * @returns {Promise<Object>} A promise that resolves to the newly created user object context.
  */
-
 export const createUser = (async (userData) => {
     const res = await apiFetch(`/users`, {
         method: "POST",
@@ -58,12 +59,13 @@ export const createUser = (async (userData) => {
 });
 
 /**
- * 
- * @param {*} id 
- * @param {*} userData 
+ * Updates all comprehensive profile and system details for an individual user record.
+ * @param {string|number} id - The database identifier of the target user record.
+ * @param {Object} userData - The complete bundle of updated user attributes.
+ * @returns {Promise<Object>} A promise that resolves to the modified user record response object.
  */
 export const updateAllUserDetails = (async (id, userData) => {
-    const res = await apiFetch(`/users/user/${id}`, {
+    const res = await apiFetch(`/users/user/profile/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -79,9 +81,10 @@ export const updateAllUserDetails = (async (id, userData) => {
 });
 
 /**
- * Update user profile (firstName, lastName, picUrl)
- * @param {*} id user id
- * @param {*} profileData object containing { firstName, lastName, picUrl }
+ * Modifies specific publicly visible profile properties for an assigned user.
+ * @param {string|number} userId - The database identifier of the user workspace.
+ * @param {Object} profileData - A subset dictionary containing the updated firstName, lastName, and picUrl fields.
+ * @returns {Promise<Object>} A promise that resolves to the freshly modified user profile object.
  */
 export const updateUserProfile = async (userId, profileData) => {
     const res = await apiFetch(`/users/user/profile/${userId}`, {
@@ -100,7 +103,12 @@ export const updateUserProfile = async (userId, profileData) => {
     return await res.json();
 };
 
-
+/**
+ * Processes a security credential replacement check operation.
+ * @param {string|number} userId - The identifier linked directly to the requested record target.
+ * @param {Object} passwordRequest - A configuration map containing the required verification fields currentPassword and newPassword.
+ * @returns {Promise<Object>} A promise that resolves to the successful message receipt payload.
+ */
 export const changePassword = async (userId, passwordRequest) => {
     const res = await apiFetch(`/auth/change-password/${userId}`, {
         method: "PUT",

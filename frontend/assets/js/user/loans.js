@@ -3,7 +3,7 @@ import { getLoansByStatus } from "../../../services/loanService.js";
 import { getAllLoans } from "../../../services/loanService.js";
 import { getLoansByUser } from "../../../services/loanService.js";
 import { cancelLoan } from "../../../services/loanService.js";
-import {getUser} from "../authContext.js"
+import { getUser } from "../authContext.js"
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-const userId = 6;
+const userId = getUser().id;
 
 /**
  * VIEW ALL PENDING STAFF's loan when logged in
@@ -189,7 +189,7 @@ const activeLoans = async () => {
                 row.classList.add("overdue-row");
             }
 
-            if (overDueLoan(loan) < 10 && overDueLoan(loan) >= 0){
+            if (overDueLoan(loan) < 10 && overDueLoan(loan) >= 0) {
                 row.classList.add("due-soon")
             }
 
@@ -323,24 +323,5 @@ const allUserLoans = async () => {
     }
 
 };
-
-
-/**
- * This is for confirmation of a loan request
- */
-function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
-
-    modal.style.display = "flex";
-
-    document.getElementById("confirmBtn").onclick = async () => {
-        await onConfirm();
-        modal.style.display = "none";
-    };
-
-    document.getElementById("cancelBtn").onclick = () => {
-        modal.style.display = "none";
-    };
-}
 
 

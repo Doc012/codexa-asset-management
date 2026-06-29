@@ -43,21 +43,36 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+/**
+ * Toggles the loading state of the registration form submit button.
+ * @param {boolean} loading - True if processing registration, false otherwise.
+ */
 function setLoading(loading) {
   submitBtn.disabled    = loading;
   submitBtn.textContent = loading ? "Registering..." : "Register";
 }
 
+/**
+ * Displays an error message to the user in the error container.
+ * @param {string} message - The error message content to render.
+ */
 function showError(message) {
   errorBox.textContent = message;
   errorBox.hidden      = false;
 }
 
+/**
+ * Displays a success message to the user in the success container.
+ * @param {string} message - The success message content to render.
+ */
 function showSuccess(message) {
   successBox.textContent = message;
   successBox.hidden      = false;
 }
 
+/**
+ * Resets and hides all error and success display containers.
+ */
 function clearMessages() {
   errorBox.textContent   = "";
   errorBox.hidden        = true;

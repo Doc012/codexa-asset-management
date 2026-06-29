@@ -102,7 +102,7 @@ const renderAssets = (tableBody, assets) => {
 };
 
 /**
- * FILTER ONLY
+ * Filters
  */
 const filterAssets = (assets, search, category, condition) => {
   return assets.filter((asset) => {
@@ -122,7 +122,7 @@ const filterAssets = (assets, search, category, condition) => {
 };
 
 /**
- * MAIN CONTROLLER
+ * Main controller
  */
 const assetPage = async () => {
   const tableBody = document.getElementById("assetsTableBody");
@@ -160,18 +160,52 @@ const assetPage = async () => {
  * @param {*} onConfirm
  */
 function showConfirmationModal(onConfirm) {
-  const modal = document.getElementById("btnConfirmation");
+    const modal = document.getElementById("btnConfirmation");
 
-  modal.style.display = "flex";
+    const title = modal.querySelector("h2");
+    const message = modal.querySelector("p");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
 
-  document.getElementById("confirmBtn").onclick = async () => {
-    await onConfirm();
-    modal.style.display = "none";
-  };
+    modal.style.display = "flex";
 
-  document.getElementById("cancelBtn").onclick = () => {
-    modal.style.display = "none";
-  };
+    title.textContent = "Are you sure?";
+    message.textContent = "You won't be able to go back once you confirm.";
+    confirmBtn.style.display = "inline-block";
+    confirmBtn.disabled = false;
+    cancelBtn.textContent = "Cancel";
+
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    const finalConfirmBtn = document.getElementById("confirmBtn");
+    const finalCancelBtn = document.getElementById("cancelBtn");
+
+    finalConfirmBtn.onclick = async () => {
+        try {
+            await onConfirm();
+
+            title.textContent = "Success";
+            message.textContent = "Loan requested successfully";
+
+            finalConfirmBtn.style.display = "none";
+            finalCancelBtn.textContent = "Close";
+
+            finalCancelBtn.onclick = () => {
+                modal.style.display = "none";
+            };
+
+        } catch (err) {
+            console.error("CONFIRM ERROR:", err);
+        }
+    };
+
+    finalCancelBtn.onclick = () => {
+        modal.style.display = "none";
+    };
 }
 
 /**
@@ -180,11 +214,9 @@ function showConfirmationModal(onConfirm) {
 const requestLoan = async (assetId) => {
   try {
     await createLoan({
-      userId: 6,
+      userId: getUser().id,
       assetId: assetId,
     });
-
-    console.log("Loan requested successfully");
   } catch (error) {
     console.log("Error:", error);
   }

@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     //     }
     // }
 
-    console.log(getAllAssets());
+    // console.log(getAllAssets());
 
     /**
      * Generates and inserts HTML table rows into the DOM based on the provided asset data array.

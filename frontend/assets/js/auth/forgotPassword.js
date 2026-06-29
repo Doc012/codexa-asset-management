@@ -25,13 +25,30 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+/**
+ * Toggles the loading state of the form submit button.
+ * @param {boolean} loading - True if the form is processing, false otherwise.
+ */
 function setLoading(loading) {
   submitBtn.disabled    = loading;
   submitBtn.textContent = loading ? "Sending..." : "Send Reset Link";
 }
 
+/**
+ * Displays an error message to the user.
+ * @param {string} msg - The error message text.
+ */
 function showError(msg)   { errorBox.textContent   = msg; errorBox.hidden   = false; }
+
+/**
+ * Displays a success message to the user.
+ * @param {string} msg - The success message text.
+ */
 function showSuccess(msg) { successBox.textContent = msg; successBox.hidden = false; }
+
+/**
+ * Resets and hides all error and success messages.
+ */
 function clearMessages()  {
   errorBox.textContent = ""; errorBox.hidden = true;
   successBox.textContent = ""; successBox.hidden = true;

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-const userId = 6;
+const userId = getUser().id;
 
 const userDetails = async () => {
     const userName = document.querySelector(".welcome-card h1")
@@ -46,11 +46,11 @@ const userDetails = async () => {
 /**
  * UPDATE User details oin the settings
  */
-const updateDetails = async() => {
+const updateDetails = async () => {
     try {
 
         const currentUser = await getUserById(userId);
-        const form = document.querySelector("#profile-form");
+        const form = document.querySelector("#profileForm");
 
         const submitForm = form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -62,7 +62,9 @@ const updateDetails = async() => {
                 "picUrl": currentUser.picUrl
             }
             try {
-                await updateAllUserDetails(userId, userData);
+                showConfirmationModal(async () => {
+                    await updateAllUserDetails(userId, userData);
+                })
             } catch (error) {
                 console.log(error);
             }
@@ -75,3 +77,39 @@ const updateDetails = async() => {
 
 };
 
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("updated-details");
+    const title = modal.querySelector("h2");
+    const message = modal.querySelector("p");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    modal.style.display = "flex";
+
+    confirmBtn.onclick = async () => {
+        try {
+            await onConfirm();
+
+            title.textContent = "Success";
+            message.textContent = "Your details have been updated successfully.";
+
+            confirmBtn.style.display = "none";
+            cancelBtn.textContent = "Close";
+
+            cancelBtn.onclick = () => {
+                modal.style.display = "none";
+                title.textContent = "Update your details";
+                message.textContent = "Are you sure you want update your details?";
+                confirmBtn.style.display = "inline-block";
+                cancelBtn.textContent = "Cancel";
+            };
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    cancelBtn.onclick = () => {
+        modal.style.display = "none";
+    };
+}

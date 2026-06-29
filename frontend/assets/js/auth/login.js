@@ -32,16 +32,27 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+/**
+ * Toggles the loading state of the login form submit button.
+ * @param {boolean} loading - True if authenticating, false otherwise.
+ */
 function setLoading(loading) {
   submitBtn.disabled     = loading;
   submitBtn.textContent  = loading ? "Logging in..." : "Login";
 }
 
+/**
+ * Displays an error message to the user in the error container.
+ * @param {string} message - The message content to render.
+ */
 function showError(message) {
   errorBox.textContent = message;
   errorBox.hidden      = false;
 }
 
+/**
+ * Resets and hides the error display container.
+ */
 function clearError() {
   errorBox.textContent = "";
   errorBox.hidden      = true;

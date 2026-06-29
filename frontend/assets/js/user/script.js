@@ -21,22 +21,17 @@ if (menuBtn && sidebar && content) {
     menuBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         
-        // Check if the user is viewing on a screen narrower than a tablet (768px)
         const isMobile = window.innerWidth <= 768;
 
         if (isMobile) {
-            // Mobile Mode: Slide the entire sidebar drawer open/close with full text labels
             sidebar.classList.toggle("mobile-open");
             
-            // Clean up desktop states so they don't break the mobile layout view
             sidebar.classList.remove("closed");
             if (content) content.classList.remove("expanded");
         } else {
-            // Desktop Mode: Toggle thin icon layout and shift main content margins over
             sidebar.classList.toggle("closed");
             if (content) content.classList.toggle("expanded");
             
-            // Clean up mobile states
             sidebar.classList.remove("mobile-open");
         }
     });
@@ -78,7 +73,6 @@ if (uploadBtn && profileUpload) {
     uploadBtn.addEventListener("click", () => profileUpload.click());
 }
 
-// Hydrate saved picture
 const savedImage = localStorage.getItem("profilePicture");
 if (savedImage && profileImage && profileInitial) {
     profileImage.src = savedImage;
@@ -115,21 +109,22 @@ cancelBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
+/**
+ * Switches the active tab view and highlights the selected tab button.
+ * @param {Event} event - The click event triggering the tab change.
+ * @param {string} tabId - The DOM ID of the tab content container to display.
+ */
 function switchTab(event, tabId) {
     if (event) event.preventDefault();
     
-    // 1. Hide all tab contents and remove active class
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active-content'));
 
-    // 2. Remove the active styling class from all tab buttons
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(btn => btn.classList.remove('active'));
 
-    // 3. Show the targeted tab content panel
     document.getElementById(tabId).classList.add('active-content');
 
-    // 4. Highlight the currently clicked button with your blue CSS profile
     event.currentTarget.classList.add('active');
 }
 
@@ -170,27 +165,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/**
+ * Switches the active settings panel view and highlights the selected settings tab button.
+ * @param {Event} event - The click event triggering the settings tab change.
+ * @param {string} targetPanelId - The DOM ID of the settings panel container to display.
+ */
 function switchSettingsTab(event, targetPanelId) {
     if (event) event.preventDefault();
 
-    // 1. Hide all internal form panels
     const panels = document.querySelectorAll('.settings-panel');
     panels.forEach(p => p.classList.remove('active-panel'));
 
-    // 2. CLEAR THE BLUE STYLE FROM ALL TABS (Fixes your exact bug)
-    // We target '.settings-tab-btn' explicitly to match your HTML class names
     const tabs = document.querySelectorAll('.settings-tab-btn');
     tabs.forEach(t => t.classList.remove('active'));
 
-    // 3. Mount active visible state back to selected panel container
     const target = document.getElementById(targetPanelId);
     if (target) target.classList.add('active-panel');
     
-    // 4. Apply the blue active highlight to ONLY the clicked button
     if (event && event.currentTarget) {
         event.currentTarget.classList.add('active');
     }
 }
-
-
-

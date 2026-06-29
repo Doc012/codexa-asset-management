@@ -12,8 +12,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupDownload();
 });
 
-/* ─── Load ──────────────────────────────────────────────────────────────── */
-
+/**
+ * Fetches all audit logs from the service and triggers the initial render.
+ */
 const loadLogs = async () => {
     try {
         allLogs = await getAllLogs();
@@ -24,8 +25,9 @@ const loadLogs = async () => {
     }
 };
 
-/* ─── Filters ───────────────────────────────────────────────────────────── */
-
+/**
+ * Filters the master logs array based on selected action, entity, and search text.
+ */
 const applyFilters = () => {
     filteredLogs = allLogs.filter(log => {
         if (currentAction !== "ALL" && log.actionType !== currentAction) return false;
@@ -49,6 +51,9 @@ const applyFilters = () => {
     renderLogs(filteredLogs);
 };
 
+/**
+ * Attaches change and input listeners to the search and filter UI components.
+ */
 const setupFilters = () => {
     const searchInput   = document.querySelector("#log-search-input");
     const actionSelect  = document.querySelector("#action-type-select");
@@ -75,8 +80,6 @@ const setupFilters = () => {
     });
 };
 
-/* ─── Render ────────────────────────────────────────────────────────────── */
-
 const ACTION_LABELS = {
     CREATE:    "Create",
     UPDATE:    "Update",
@@ -87,6 +90,11 @@ const ACTION_LABELS = {
     CANCEL:    "Cancel",
 };
 
+/**
+ * Converts a timestamp into a formatted localized string.
+ * @param {string|number} ts - The raw timestamp value.
+ * @returns {string} The formatted date and time string.
+ */
 const formatTimestamp = (ts) => {
     const d = new Date(ts);
     return d.toLocaleDateString("en-ZA", { day: "2-digit", month: "short", year: "numeric" })
@@ -94,6 +102,10 @@ const formatTimestamp = (ts) => {
         + d.toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" });
 };
 
+/**
+ * Dynamically updates the DOM table rows to display the provided list of logs.
+ * @param {Array} logs - The array of log objects to render.
+ */
 const renderLogs = (logs) => {
     const tableBody  = document.querySelector(".reports-table");
     const emptyState = document.getElementById("logsEmptyState");
@@ -133,14 +145,19 @@ const renderLogs = (logs) => {
     });
 };
 
-/* ─── CSV Export ────────────────────────────────────────────────────────── */
-
+/**
+ * Binds the export functionality to the report download button.
+ */
 const setupDownload = () => {
     const downloadBtn = document.querySelector("#downloadReportBtn");
     if (!downloadBtn) return;
     downloadBtn.addEventListener("click", () => downloadCsv(filteredLogs));
 };
 
+/**
+ * Generates and triggers a browser download for a CSV file from log data.
+ * @param {Array} logs - The filtered log subset to save into the CSV file.
+ */
 const downloadCsv = (logs) => {
     const header = ["Log ID", "Email", "Entity Type", "Action Type", "Timestamp", "Message", "Old Value", "New Value"];
     const rows = logs.map(l =>
@@ -162,29 +179,29 @@ const downloadCsv = (logs) => {
 
 const adminRecentLogstableBody = document.getElementById("adminRecentLogsBody");
     
-    try {
-        const logs = await getAllLogs();
-        const slicedLogs = logs.slice(0, 4);
-        adminRecentLogstableBody.innerHTML = "";
+try {
+    const logs = await getAllLogs();
+    const slicedLogs = logs.slice(0, 4);
+    adminRecentLogstableBody.innerHTML = "";
 
-        slicedLogs.forEach(log => {
-            const row = document.createElement("tr");
+    slicedLogs.forEach(log => {
+        const row = document.createElement("tr");
 
-            row.innerHTML = 
-            `
-                <td>${log.logCreatorEmail}</td>
-                <td>
-                <span class="admin-event-tag tag-delete">${log.actionType}</span>
-                <span class="event-summary">${log.message}</span>
-                </td>
-                <td class="text-right text-muted font-monospace">${log.timestamp}</td>                
-            
-            `;
+        row.innerHTML = 
+        `
+            <td>${log.logCreatorEmail}</td>
+            <td>
+            <span class="admin-event-tag tag-delete">${log.actionType}</span>
+            <span class="event-summary">${log.message}</span>
+            </td>
+            <td class="text-right text-muted font-monospace">${log.timestamp}</td>                
+        
+        `;
 
-            adminRecentLogstableBody.appendChild(row);
-        });
+        adminRecentLogstableBody.appendChild(row);
+    });
 
-    } catch (error) {
-        console.error("Failed to render Audit Logs", error);
-        tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
-    }
+} catch (error) {
+    console.error("Failed to render Audit Logs", error);
+    tableBody.innerHTML = `<tr><td colspan = "4" style="color: red";> Error: ${error.message}</td></tr>`;
+}

@@ -2,23 +2,18 @@ import { getUserById } from "../../../services/userService.js";
 import { getAllAssets } from "../../../services/assetService.js";
 import { getLoansByUser, createLoan, returnLoan, deleteLoan } from "../../../services/loanService.js";
 
-// Session Anchor State (Tied to your architecture setup)
 const CURRENT_USER_ID = 1; 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Initialize Dashboard Layout Context
     await hydrateUserProfile();
     await loadAvailableAssets();
     await loadUserLoanHistory();
 
-    // Setup Submit Loan Request Form Handling
     const requestForm = document.getElementById("loanRequestForm");
     if (requestForm) {
         requestForm.addEventListener("submit", handleLoanSubmit);
     }
 });
-
-
 
 /**
  * Hydrates upper stats widgets & welcoming text components
@@ -38,9 +33,6 @@ async function hydrateUserProfile() {
     }
 }
 
-/**
- * Loads inventory into both the available assets table AND the loan drop-down menu
- */
 /**
  * Loads inventory into the dynamic interactive request selection table
  */
@@ -62,7 +54,6 @@ async function loadAvailableAssets() {
         }
 
         assets.forEach(asset => {
-            // Check if your backend uses asset.assetId or asset.id
             const id = asset.assetId || asset.id; 
 
             tableBody.innerHTML += `
@@ -78,7 +69,6 @@ async function loadAvailableAssets() {
                 </tr>`;
         });
 
-        // Wire up row clicking events
         attachTableSelectionListeners();
 
     } catch (error) {
@@ -100,20 +90,16 @@ function attachTableSelectionListeners() {
             const assetTitle = row.dataset.title;
             const radioButton = row.querySelector("input[type='radio']");
 
-            // 1. Reset highlights on all other sibling rows
             rows.forEach(r => {
                 r.style.backgroundColor = "";
                 r.style.outline = "";
             });
 
-            // 2. Apply highlight style treatment to chosen selection row
-            row.style.backgroundColor = "#E8F5E9"; // Matches theme green accent surface tint background color
+            row.style.backgroundColor = "#E8F5E9"; 
             row.style.outline = "1px solid var(--primary)";
 
-            // 3. Keep the radio element checkbox checked state matching
             if (radioButton) radioButton.checked = true;
 
-            // 4. Update core form input targets
             hiddenInput.value = assetId;
             statusText.innerHTML = `Selected: <span style="color: var(--primary); font-weight:700;">${assetTitle}</span>`;
         });
@@ -141,11 +127,9 @@ async function handleLoanSubmit(e) {
         await createLoan(payload);
         alert("Loan Request successfully created!");
         
-        // Reset selections gracefully
         document.getElementById("selectedAssetId").value = "";
         document.getElementById("selectionStatusText").textContent = "No asset selected";
         
-        // Reload system log metrics arrays tables views seamlessly
         await loadAvailableAssets();
         await loadUserLoanHistory(); 
     } catch (error) {
@@ -166,7 +150,6 @@ async function loadUserLoanHistory() {
         const userLoans = await getLoansByUser(CURRENT_USER_ID);
         const allAssets = await getAllAssets();
         
-        // Turn array assets into lookup map for performance speed matching ID to Title
         const assetMap = allAssets.reduce((map, item) => {
             map[item.assetId] = item.title;
             return map;
@@ -185,7 +168,6 @@ async function loadUserLoanHistory() {
             const checkout = loan.checkoutDate || `<span style="color:var(--muted); font-style:italic;">Pending Out</span>`;
             const returned = loan.returnDate || `<span style="color:var(--muted);">—</span>`;
             
-            // Build Contextual Interactive Action Button UI Row Elements
             let actionMarkup = `<span style="color: var(--muted); font-size:13px;">No actions open</span>`;
             
             if (loan.status === "PENDING") {
@@ -207,17 +189,12 @@ async function loadUserLoanHistory() {
                 </tr>`;
         });
 
-        // Wire Up Interactive Actions Listeners
         attachActionListeners();
 
     } catch (error) {
         console.error("Failed to compile custom users logs table context:", error);
     }
 }
-
-/**
- * Direct Request Submissions Logic Handler (Create Operation)
- */
 
 /**
  * Click tracking engine maps elements for Return (Update) & Cancel (Delete) requests

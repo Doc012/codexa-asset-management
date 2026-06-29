@@ -6,11 +6,9 @@ import {
     retireAsset,
 } from "../../../services/assetService.js";
 
-// ─── State ────────────────────────────────────────────────────────────────────
 let allAssets     = [];
-let pendingAction = null; // { type: 'retire'|'delete', id }
+let pendingAction = null; 
 
-// ─── Static DOM refs (exist in HTML from page load) ───────────────────────────
 const tableBody       = document.getElementById("assets-table-body");
 const searchInput     = document.getElementById("asset-search-input");
 const categoryFilter  = document.getElementById("filter-category-select");
@@ -43,13 +41,10 @@ const closeDetails   = document.getElementById("closeAssetModal");
 
 const successMessage = document.getElementById("successMessage");
 
-// ─── Injected field accessors (elements added by injectMissingFormFields) ─────
-// Always access via these helpers — the elements don't exist until DOMContentLoaded.
 const field = {
     assetStatus: () => document.getElementById("form-asset-status"),
 };
 
-// ─── Bootstrap ────────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
     injectMissingFormFields();
     await loadAndRender();
@@ -57,9 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 /**
- * The HTML form has no assetStatus select or photo URL input.
- * We inject them after the Condition row so the script owns the full field set
- * without requiring HTML changes.
+ * Injects missing form fields into the DOM on page load.
  */
 function injectMissingFormFields() {
     const conditionRow = document.getElementById("form-condition").closest(".form-row");
@@ -81,7 +74,9 @@ function injectMissingFormFields() {
     conditionRow.insertAdjacentElement("afterend", extraRow);
 }
 
-// ─── Data loading ─────────────────────────────────────────────────────────────
+/**
+ * Fetches all assets from the service and renders them in the table.
+ */
 async function loadAndRender() {
     try {
         allAssets = await getAllAssets();
@@ -96,7 +91,10 @@ async function loadAndRender() {
     }
 }
 
-// ─── Table rendering ──────────────────────────────────────────────────────────
+/**
+ * Renders the asset list rows and attaches event listeners to action buttons.
+ * @param {Array} assets - The list of assets to display.
+ */
 function renderTable(assets) {
     if (!assets.length) {
         tableBody.innerHTML = `
@@ -166,7 +164,10 @@ function renderTable(assets) {
     );
 }
 
-// ─── Asset Details Modal ──────────────────────────────────────────────────────
+/**
+ * Displays the detailed view modal for a specific asset.
+ * @param {number} id - The ID of the asset to view.
+ */
 function openDetailsModal(id) {
     const asset = allAssets.find(a => a.assetId === id);
     if (!asset) return;
@@ -230,11 +231,20 @@ function openDetailsModal(id) {
     detailsModal.style.display = "flex";
 }
 
+/**
+ * Closes the asset details modal and clears its contents.
+ */
 function closeDetailsModal() {
     detailsModal.style.display = "none";
     detailsBody.innerHTML = "";
 }
 
+/**
+ * Generates an HTML string for a single row in the details view.
+ * @param {string} label - The label of the detail field.
+ * @param {any} value - The value of the detail field.
+ * @returns {string} The formatted detail row template string.
+ */
 function detailRow(label, value) {
     return `
         <div class="asset-detail-row">
@@ -244,7 +254,9 @@ function detailRow(label, value) {
     `;
 }
 
-// ─── Add / Edit Form Modal ────────────────────────────────────────────────────
+/**
+ * Resets the form and configures it to display as the creation modal.
+ */
 function openAddModal() {
     modalTitle.textContent = "Add System Asset";
     assetForm.reset();
@@ -254,6 +266,10 @@ function openAddModal() {
     showFormModal();
 }
 
+/**
+ * Populates the form fields with existing asset data and displays it as an editor.
+ * @param {number} id - The ID of the asset to edit.
+ */
 function openEditModal(id) {
     const asset = allAssets.find(a => a.assetId === id);
     if (!asset) return;
@@ -273,9 +289,20 @@ function openEditModal(id) {
     showFormModal();
 }
 
+/**
+ * Displays the asset creation or editor modal form.
+ */
 function showFormModal()  { modalOverlay.classList.remove("modal-hidden"); }
+
+/**
+ * Closes the modal form and resets its fields.
+ */
 function closeFormModal() { modalOverlay.classList.add("modal-hidden"); assetForm.reset(); }
 
+/**
+ * Configures actions and text for the form submit buttons based on current operation mode.
+ * @param {string} mode - The current form mode, either 'add' or 'edit'.
+ */
 function syncFormButtons(mode) {
     const [leftBtn, rightBtn] = document.querySelectorAll(".form-actions .portal-btn");
 
@@ -291,7 +318,9 @@ function syncFormButtons(mode) {
     }
 }
 
-// ─── CRUD handlers ────────────────────────────────────────────────────────────
+/**
+ * Handles the creation of a new asset from the form data.
+ */
 async function handleSave() {
     if (!assetForm.reportValidity()) return;
 
@@ -305,6 +334,9 @@ async function handleSave() {
     }
 }
 
+/**
+ * Handles the updates submitted through the asset editor form.
+ */
 async function handleUpdate() {
     if (!assetForm.reportValidity()) return;
 
@@ -319,11 +351,19 @@ async function handleUpdate() {
     }
 }
 
+/**
+ * Opens a confirmation modal for a specific user action.
+ * @param {string} type - The operation action type (e.g., 'retire', 'delete').
+ * @param {number} id - The ID of the asset targeted by the action.
+ */
 function requestConfirmation(type, id) {
     pendingAction = { type, id };
     confirmModal.style.display = "flex";
 }
 
+/**
+ * Performs the execution of a confirmed pending action.
+ */
 async function executeConfirmedAction() {
     if (!pendingAction) return;
     const { type, id } = pendingAction;
@@ -345,7 +385,10 @@ async function executeConfirmedAction() {
     }
 }
 
-// ─── Payload builder ──────────────────────────────────────────────────────────
+/**
+ * Constructs a structured data object from the current state of form fields.
+ * @returns {Object} The constructed asset payload object.
+ */
 function buildPayload() {
     return {
         title:           formTitle.value.trim(),
@@ -359,7 +402,9 @@ function buildPayload() {
     };
 }
 
-// ─── Filtering / search ───────────────────────────────────────────────────────
+/**
+ * Evaluates active filter values and refreshes the asset table display.
+ */
 function applyFilters() {
     const query     = searchInput.value.trim().toLowerCase();
     const category  = categoryFilter.value;
@@ -386,7 +431,9 @@ function applyFilters() {
     renderTable(filtered);
 }
 
-// ─── Static event bindings ────────────────────────────────────────────────────
+/**
+ * Attaches initial interactive event listeners to permanent DOM elements.
+ */
 function bindStaticEvents() {
     openAddBtn.addEventListener("click", openAddModal);
 
@@ -412,7 +459,11 @@ function bindStaticEvents() {
     conditionFilter.addEventListener("change", applyFilters);
 }
 
-// ─── Utilities ────────────────────────────────────────────────────────────────
+/**
+ * Replaces system underscores with spaces and title cases text string values.
+ * @param {string} value - The raw system string label.
+ * @returns {string} The formatted user-friendly label string.
+ */
 function formatLabel(value) {
     if (!value) return "";
     return value
@@ -421,12 +472,22 @@ function formatLabel(value) {
         .replace(/\b\w/g, c => c.toUpperCase());
 }
 
+/**
+ * Formats an ISO date string into a standard localized DMY format.
+ * @param {string} iso - The ISO structured date string (YYYY-MM-DD).
+ * @returns {string} The converted date string (DD/MM/YYYY).
+ */
 function formatDate(iso) {
     if (!iso) return "—";
     const [year, month, day] = iso.split("-");
     return `${day}/${month}/${year}`;
 }
 
+/**
+ * Converts a numeric value into South African Rand currency string structure.
+ * @param {number} value - The raw financial number format.
+ * @returns {string} The formatted currency string.
+ */
 function formatCurrency(value) {
     if (value == null) return "—";
     return new Intl.NumberFormat("en-ZA", {
@@ -434,6 +495,11 @@ function formatCurrency(value) {
     }).format(value);
 }
 
+/**
+ * Maps system status states to specific CSS utility class identifiers.
+ * @param {string} status - The system status text state.
+ * @returns {string} The matched CSS class name.
+ */
 function statusClass(status) {
     const map = {
         ACTIVE:   "good",
@@ -443,6 +509,10 @@ function statusClass(status) {
     return map[status] ?? "";
 }
 
+/**
+ * Handles presentation logic for displaying temporary success notification messages.
+ * @param {string} message - The text content to display within notification element.
+ */
 function showSuccess(message) {
     successMessage.textContent = message;
     successMessage.style.display = "block";

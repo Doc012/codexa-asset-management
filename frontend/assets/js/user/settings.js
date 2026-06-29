@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.classList.add("active");
 
-      const targetId = btn.dataset.target; // same as getAttribute("data-target")
+      const targetId = btn.dataset.target; 
       const targetPanel = document.getElementById(targetId);
       if (targetPanel) {
         targetPanel.classList.add("active-panel");
@@ -65,10 +65,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const updated = await updateUserProfile(userId, profileData);
       console.log("Profile updated:", updated);
-      alert("Profile updated successfully!");
     } catch (error) {
       console.error("Update failed:", error);
-      alert("Failed to update profile.");
     }
   });
 
@@ -76,12 +74,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
     if (newPassword.value.length < 8) {
-      alert("New password must be at least 8 characters.");
       return;
     }
 
     if (newPassword.value !== confirmPassword.value) {
-      alert("New password and confirm password do not match.");
       return;
     }
 
@@ -92,11 +88,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       await changePassword(userId, passwordRequest);
-      alert("Password changed successfully!");
       securityForm.reset();
     } catch (error) {
       console.error("Update failed:", error);
-      alert(error.message || "Failed to change password.");
     }
   })
 
