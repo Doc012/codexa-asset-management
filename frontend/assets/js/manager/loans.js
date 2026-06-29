@@ -1,4 +1,5 @@
-import { getLoansByStatus, getAllLoans,
+import {
+    getLoansByStatus, getAllLoans,
     approveLoan, checkoutLoan, returnLoan, rejectLoan
 } from "../../../services/loanService.js";
 
@@ -12,6 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     await checkingOutLoans();
     await historicalLoans();
 });
+
+const successMessage = document.getElementById("successMessage");
 
 /**
  * This for the Dashboard cards for Mangager's dashbaord.
@@ -117,7 +120,16 @@ const allPendingLoans = async () => {
 const loanApproval = async (loanId) => {
     try {
         await approveLoan(loanId);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+
+        successMessage.textContent = "Loan was successfully approved.";
+        successMessage.style.display = "block";
+
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 20000);
     } catch (error) {
         console.log(`Error: ${error}`)
     }
@@ -129,7 +141,16 @@ const loanApproval = async (loanId) => {
 const loanRejection = async (loanId) => {
     try {
         await rejectLoan(loanId);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+
+        successMessage.textContent = "Loan rejected.";
+        successMessage.style.display = "block";
+
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 20000);
     } catch (error) {
         console.log(`Error: ${error}`)
     }
@@ -140,7 +161,7 @@ const loanRejection = async (loanId) => {
  * All Active loans
  * Can be Returned
  */
-const allActiveLoans = async()=> {
+const allActiveLoans = async () => {
     const tableBody = document.querySelector("#active-loans-body");
     try {
         const pendingLoans = await getLoansByStatus("APPROVED");
@@ -185,7 +206,15 @@ const allActiveLoans = async()=> {
 const loanReturn = async (loanId) => {
     try {
         await returnLoan(loanId);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+        successMessage.textContent = "Loan returned..";
+        successMessage.style.display = "block";
+
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 20000);
     } catch (error) {
         console.log(`Error ${error}`)
     }
@@ -195,7 +224,7 @@ const loanReturn = async (loanId) => {
  * Checkout loans
  */
 
-const checkingOutLoans = async()=>{
+const checkingOutLoans = async () => {
     const tableBody = document.querySelector("#checkout-loan-body");
 
     try {
@@ -241,7 +270,15 @@ const checkingOutLoans = async()=>{
 const loanCheckout = async (id) => {
     try {
         await checkoutLoan(id);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+        successMessage.textContent = "Asset was successfully checked out.";
+        successMessage.style.display = "block";
+
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 20000);
     } catch (error) {
         console.log(`Error: ${error}`);
     }
@@ -252,7 +289,7 @@ const loanCheckout = async (id) => {
  * All returned and rejected loans
  */
 
-const historicalLoans = async()=> {
+const historicalLoans = async () => {
     const tableBody = document.querySelector("#historical-loans");
     try {
         const allLoans = await getAllLoans();

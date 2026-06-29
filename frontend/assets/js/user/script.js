@@ -93,20 +93,22 @@ deleteBtn.addEventListener("click", () => {
 }
 
 confirmBtn.addEventListener("click", () => {
+    console.log("We are here blud!")
   modal.style.display = "none";
-  successMessage.textContent = "Your file has been updated successfully.";
+  successMessage.textContent = "Success.";
   successMessage.style.display = "block";
 
   setTimeout(() => {
     successMessage.style.display = "none";
   }, 1000);
 
-  console.log("File updated in system!");
 });
 
 
 cancelBtn.addEventListener("click", () => {
   modal.style.display = "none";
+  successMessage.textContent = "Cancelled.";
+  successMessage.style.display = "block";
 });
 
 /**

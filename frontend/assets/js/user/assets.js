@@ -160,63 +160,38 @@ const assetPage = async () => {
  * @param {*} onConfirm
  */
 function showConfirmationModal(onConfirm) {
-    const modal = document.getElementById("btnConfirmation");
+  const modal = document.getElementById("btnConfirmation");
 
-    const title = modal.querySelector("h2");
-    const message = modal.querySelector("p");
-    const confirmBtn = document.getElementById("confirmBtn");
-    const cancelBtn = document.getElementById("cancelBtn");
+  modal.style.display = "flex";
+  document.getElementById("confirmBtn").onclick = async () => {
+    await onConfirm();
+    modal.style.display = "none";
 
-    modal.style.display = "flex";
+  };
 
-    title.textContent = "Are you sure?";
-    message.textContent = "You won't be able to go back once you confirm.";
-    confirmBtn.style.display = "inline-block";
-    confirmBtn.disabled = false;
-    cancelBtn.textContent = "Cancel";
-
-    const newConfirmBtn = confirmBtn.cloneNode(true);
-    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-
-    const newCancelBtn = cancelBtn.cloneNode(true);
-    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-
-    const finalConfirmBtn = document.getElementById("confirmBtn");
-    const finalCancelBtn = document.getElementById("cancelBtn");
-
-    finalConfirmBtn.onclick = async () => {
-        try {
-            await onConfirm();
-
-            title.textContent = "Success";
-            message.textContent = "Loan requested successfully";
-
-            finalConfirmBtn.style.display = "none";
-            finalCancelBtn.textContent = "Close";
-
-            finalCancelBtn.onclick = () => {
-                modal.style.display = "none";
-            };
-
-        } catch (err) {
-            console.error("CONFIRM ERROR:", err);
-        }
-    };
-
-    finalCancelBtn.onclick = () => {
-        modal.style.display = "none";
-    };
+  document.getElementById("cancelBtn").onclick = () => {
+    modal.style.display = "none";
+  };
 }
 
 /**
  * REQUEST A loan on an asset that is available
  */
 const requestLoan = async (assetId) => {
+  const successMessage = document.getElementById("successMessage");
   try {
     await createLoan({
       userId: getUser().id,
       assetId: assetId,
     });
+
+    successMessage.textContent = "Loan was successfully requested.";
+    successMessage.style.display = "block";
+
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 20000);
+
   } catch (error) {
     console.log("Error:", error);
   }

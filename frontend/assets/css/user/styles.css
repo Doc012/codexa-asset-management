@@ -990,11 +990,22 @@ button.cancel:hover { background: #b91c1c; }
   display: none;
   margin-top: 20px;
   padding: 12px;
-  background: #4caf50;
-  color: white;
   border-radius: 6px;
   text-align: center;
    transition: opacity 0.5s ease;
+}
+
+.success {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #22c55e;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 10px;
+  z-index: 9999;
+  font-size: 16px;
 }
 
 #mainContent {

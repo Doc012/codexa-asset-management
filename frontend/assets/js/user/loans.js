@@ -53,7 +53,7 @@ const allPendingLoans = async () => {
 
         loansByUser.forEach(loan => {
             if (loan.status !== "PENDING") {
-                return false;
+                return;
             }
             const row = document.createElement("tr");
 
@@ -72,7 +72,6 @@ const allPendingLoans = async () => {
                 cancelBtn.addEventListener("click", async () => {
                     showConfirmationModal(async () => {
                         await loanCancellation(loan.loanId);
-                        console.log(loan.status);
                     })
                 })
             }
@@ -115,7 +114,7 @@ const loanHistory = async () => {
 
         loansByUser.forEach(loan => {
             if (loan.status === "PENDING" || loan.status === "APPROVED") {
-                return false;
+                return;
             }
             const row = document.createElement("tr");
 
@@ -123,7 +122,7 @@ const loanHistory = async () => {
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>-</td>
+                <td>${loan.dueDate}</td>
                 <td>${loan.status}</td>
             `
 
@@ -244,7 +243,7 @@ const dueSoonLoans = async () => {
 
         const total = loansDue.filter((loan) => {
             if (!loan || loan.status !== "APPROVED" || !loan.dueDate) {
-                return false;
+                return;
             }
             const dueDate = new Date(loan.dueDate);
             const diff = dueDate - today;
@@ -332,45 +331,17 @@ const allUserLoans = async () => {
  */
 function showConfirmationModal(onConfirm) {
     const modal = document.getElementById("btnConfirmation");
-    if (!modal) return;
-
-    const confirmBtn = modal.querySelector("#confirmBtn");
-    const cancelBtn = modal.querySelector("#cancelBtn");
-
-    if (!confirmBtn || !cancelBtn) return;
 
     modal.style.display = "flex";
 
-    const newConfirmBtn = confirmBtn.cloneNode(true);
-    const newCancelBtn = cancelBtn.cloneNode(true);
-
-    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
-
-    newConfirmBtn.addEventListener("click", async () => {
-        try {
-            newConfirmBtn.disabled = true;
-
-            await onConfirm();
-
-            const title = modal.querySelector("h2");
-            const message = modal.querySelector("p");
-
-            if (title) title.textContent = "Success";
-            if (message) message.textContent = "Loan cancelled successfully.";
-
-            newConfirmBtn.style.display = "none";
-            newCancelBtn.textContent = "Close";
-
-        } catch (err) {
-            console.error(err);
-            newConfirmBtn.disabled = false;
-        }
-    });
-
-    newCancelBtn.addEventListener("click", () => {
+    document.getElementById("confirmBtn").onclick = async () => {
+        await onConfirm();
         modal.style.display = "none";
-    });
+    };
+
+    document.getElementById("cancelBtn").onclick = () => {
+        modal.style.display = "none";
+    };
 }
 
 
