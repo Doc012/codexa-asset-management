@@ -93,7 +93,9 @@ const allPendingLoans = async () => {
 const loanCancellation = async (id) => {
     try {
         await cancelLoan(id);
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     } catch (error) {
         console.log(`Error: ${error}`);
     }
@@ -121,7 +123,7 @@ const loanHistory = async () => {
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
+                <td>-</td>
                 <td>${loan.status}</td>
             `
 
@@ -323,5 +325,52 @@ const allUserLoans = async () => {
     }
 
 };
+
+
+/**
+ * This is for confirmation of a loan request
+ */
+function showConfirmationModal(onConfirm) {
+    const modal = document.getElementById("btnConfirmation");
+    if (!modal) return;
+
+    const confirmBtn = modal.querySelector("#confirmBtn");
+    const cancelBtn = modal.querySelector("#cancelBtn");
+
+    if (!confirmBtn || !cancelBtn) return;
+
+    modal.style.display = "flex";
+
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    newConfirmBtn.addEventListener("click", async () => {
+        try {
+            newConfirmBtn.disabled = true;
+
+            await onConfirm();
+
+            const title = modal.querySelector("h2");
+            const message = modal.querySelector("p");
+
+            if (title) title.textContent = "Success";
+            if (message) message.textContent = "Loan cancelled successfully.";
+
+            newConfirmBtn.style.display = "none";
+            newCancelBtn.textContent = "Close";
+
+        } catch (err) {
+            console.error(err);
+            newConfirmBtn.disabled = false;
+        }
+    });
+
+    newCancelBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+}
 
 
