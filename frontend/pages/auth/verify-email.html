@@ -1,40 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/assets/css/forms.css">
   <title>Verify Email – AssetIQ</title>
 </head>
+
 <body>
 
-<section class="verify-email">
-  <div class="container-sm">
-    <div class="card" style="text-align:center;">
+  <div class="auth-shell">
 
-      <div class="logo-wrapper">
-        <img src="/assets/images/AssetIq-removebg-preview.png" alt="AssetIQ Logo">
+    <!-- ── Left branded panel ─────────────────────────────────── -->
+    <aside class="auth-panel" aria-hidden="true">
+      <div class="auth-panel-art">
+        <svg viewBox="0 0 560 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+              <circle cx="1.5" cy="1.5" r="1.5" fill="#1E2D4A" />
+            </pattern>
+          </defs>
+          <rect width="560" height="900" fill="url(#dots)" />
+          <g opacity="0.18" stroke="#1E6BFF" stroke-width="1.5" fill="none">
+            <line x1="140" y1="460" x2="280" y2="380" />
+            <line x1="280" y1="380" x2="420" y2="460" />
+            <line x1="280" y1="380" x2="280" y2="520" />
+            <line x1="140" y1="460" x2="100" y2="580" />
+            <line x1="420" y1="460" x2="460" y2="580" />
+            <line x1="280" y1="520" x2="180" y2="620" />
+            <line x1="280" y1="520" x2="380" y2="620" />
+          </g>
+          <g fill="#1E6BFF" opacity="0.35">
+            <circle cx="280" cy="380" r="8" />
+            <circle cx="140" cy="460" r="6" />
+            <circle cx="420" cy="460" r="6" />
+            <circle cx="280" cy="520" r="6" />
+            <circle cx="100" cy="580" r="4" />
+            <circle cx="460" cy="580" r="4" />
+            <circle cx="180" cy="620" r="4" />
+            <circle cx="380" cy="620" r="4" />
+          </g>
+          <circle cx="280" cy="380" r="28" fill="#1E6BFF" opacity="0.06" />
+          <rect x="0" y="800" width="200" height="3" fill="#1E6BFF" opacity="0.4" rx="2" />
+        </svg>
       </div>
 
-      <h2>Email Verification</h2>
-
-      <!-- Shown while verifying -->
-      <div id="loadingBox">
-        <p>Verifying your email address…</p>
+      <div class="auth-panel-brand">
+        <img src="/assets/images/AssetIq-removebg-preview.png" alt="">
+        <span class="auth-panel-brand-name">AssetIQ</span>
       </div>
 
-      <!-- Shown if the URL has no ?token= param or token is invalid -->
-      <div id="errorBox" class="alert alert-error" hidden></div>
+      <div class="auth-panel-body">
+        <p class="auth-panel-tagline">
+          Every asset.<br>
+          <span>Accounted for.</span>
+        </p>
+        <p class="auth-panel-sub">
+          Track, assign, manage and loan your organisation's equipment from request to return in one place.
+        </p>
+      </div>
 
-      <!-- Shown on success -->
-      <div id="successBox" class="alert alert-success" hidden></div>
+      <p class="auth-panel-footer">© 2026 AssetIQ · Internal use only</p>
+    </aside>
 
-      <p><a href="login.html"><b>Go to Login</b></a></p>
+    <!-- ── Right form side ────────────────────────────────────── -->
+    <main class="auth-form-side">
+      <div class="auth-form-inner">
 
-    </div>
+        <div class="verify-icon" id="verifyIcon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+        </div>
+
+        <div class="auth-form-header">
+          <p class="auth-form-eyebrow">Almost there</p>
+          <h1 class="auth-form-title">Verifying your email</h1>
+          <p class="auth-form-subtitle">Just a moment while we confirm your address</p>
+        </div>
+
+        <!-- Loading state -->
+        <div id="loadingBox">
+          <div class="spinner" role="status" aria-label="Verifying…"></div>
+          <p>Verifying your email address…</p>
+        </div>
+
+        <!-- Error state -->
+        <div id="errorBox" class="alert alert-error" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <span></span>
+        </div>
+
+        <!-- Success state -->
+        <div id="successBox" class="alert alert-success" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+          <span></span>
+        </div>
+
+        <div class="auth-form-links" style="margin-top: 24px;">
+          <p><a href="login.html">Go to sign in</a></p>
+        </div>
+
+      </div>
+    </main>
+
   </div>
-</section>
 
-<script type="module" src="/assets/js/auth/verifyEmail.js"></script>
+  <script type="module" src="/assets/js/auth/verifyEmail.js"></script>
 </body>
+
 </html>

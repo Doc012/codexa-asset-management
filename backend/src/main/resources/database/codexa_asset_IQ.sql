@@ -148,3 +148,7 @@ UPDATE users SET status = 'ACTIVE' WHERE user_id = 7;
 UPDATE users SET status = 'ACTIVE' WHERE user_id = 6;
 UPDATE users SET status = 'ACTIVE' WHERE user_id = 5;
 UPDATE users SET status = 'ACTIVE' WHERE user_id = 4;
+
+
+-- User Status length increase in the database(PostgreSQL)
+ALTER TABLE users ALTER COLUMN status TYPE VARCHAR(50);
