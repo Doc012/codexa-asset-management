@@ -1,6 +1,3 @@
-/* ==========================================================================
-   ADMIN MAIN WORKSPACE ARCHITECTURE
-   ========================================================================== */
 .content {
   margin-top: 64px;
   margin-left: 240px;
@@ -14,7 +11,6 @@
   margin-left: 70px;
 }
 
-/* Typography Layout Rules */
 .portal-toolbar-header h1 {
   font-size: 28px;
   font-weight: 700;
@@ -28,9 +24,6 @@
   font-size: 14px;
 }
 
-/* ==========================================================================
-   EXECUTIVE METRICS GRID ARCHITECTURE
-   ========================================================================== */
 .admin-metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -58,7 +51,6 @@
   justify-content: center;
 }
 
-/* Color Tints */
 .primary-tint { background: rgba(79, 70, 229, 0.08); color: var(--primary, #4f46e5); }
 .success-tint { background: rgba(16, 185, 129, 0.08); color: var(--success, #10b981); }
 .danger-tint { background: rgba(239, 68, 68, 0.08); color: var(--danger, #ef4444); }
@@ -87,9 +79,6 @@
 
 .danger-text { color: var(--danger, #ef4444) !important; }
 
-/* ==========================================================================
-   RECENT DATA SUMMARY WIDGET
-   ========================================================================== */
 .admin-split-layout {
   margin-top: 32px;
 }
@@ -129,7 +118,6 @@
   overflow: hidden;
 }
 
-/* HEADER */
 .asset-table th {
   background: #f8fafc;
   padding: 14px 18px;
@@ -141,7 +129,6 @@
   border-bottom: 1px solid var(--border, #e2e8f0);
 }
 
-/* BODY CELLS */
 .asset-table td {
   padding: 16px 18px;
   border-bottom: 1px solid var(--border, #e2e8f0);
@@ -150,7 +137,6 @@
   color: var(--text-main, #0f172a);
 }
 
-/* ROW HOVER (THIS IS THE “RED FEELING” YOU EXPECTED) */
 .asset-table tbody tr:hover {
   background: rgba(79, 70, 229, 0.04);
   transition: background 0.2s ease;
@@ -216,7 +202,6 @@
   text-align: right;
 }
 
-/* Micro Activity Badging */
 .admin-event-tag {
   font-family: monospace;
   font-weight: 700;
@@ -286,19 +271,16 @@
   font-weight: 600;
 }
 
-/* GOOD */
 .chip-success {
   background: rgba(16, 185, 129, 0.1);
   color: #10b981;
 }
 
-/* WARNING */
 .chip-warning {
   background: rgba(245, 158, 11, 0.1);
   color: #f59e0b;
 }
 
-/* RETIRED (THIS IS YOUR “RED”) */
 .chip-retired {
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;

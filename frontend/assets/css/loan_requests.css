@@ -3,7 +3,6 @@
   border-radius: 8px;
   overflow: hidden;
   margin-top: 16px;
-  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); */
 }
 
 .asset-table {
@@ -19,18 +18,17 @@
   text-align: left !important;
   padding: 14px 20px;
   vertical-align: middle;
-  /* border-bottom: 1px solid #f1f5f9; */
 }
 
 .manager-ledger-table tr:last-child td {
   border-bottom: none;
 }
 
-.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; padding-left: 20px;} /* Asset Name */
-.manager-ledger-table th:nth-child(2), .manager-ledger-table td:nth-child(2) { width: 20%; } /* Requested By */
-.manager-ledger-table th:nth-child(3), .manager-ledger-table td:nth-child(3) { width: 15%; } /* Date */
-.manager-ledger-table th:nth-child(4), .manager-ledger-table td:nth-child(4) { width: 15%; } /* Department */
-.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; padding-right: 20px;} /* Actions / Status Badges */
+.manager-ledger-table th:nth-child(1), .manager-ledger-table td:nth-child(1) { width: 25%; padding-left: 20px;}
+.manager-ledger-table th:nth-child(2), .manager-ledger-table td:nth-child(2) { width: 20%; }
+.manager-ledger-table th:nth-child(3), .manager-ledger-table td:nth-child(3) { width: 15%; }
+.manager-ledger-table th:nth-child(4), .manager-ledger-table td:nth-child(4) { width: 15%; }
+.manager-ledger-table th:nth-child(5), .manager-ledger-table td:nth-child(5) { width: 25%; padding-right: 20px;}
 
 .manager-ledger-table th:first-child,
 .manager-ledger-table td:first-child {

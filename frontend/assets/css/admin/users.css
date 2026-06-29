@@ -1,4 +1,3 @@
-
 .content {
   margin-top: 64px;
   margin-left: 240px;
@@ -7,7 +6,6 @@
   background-color: var(--bg-main, #f8fafc);
   transition: margin-left 0.2s ease-in-out;
 }
-
 
 .content.expanded {
   margin-left: 70px;
@@ -65,7 +63,6 @@
 .warning-text {
   color: #d97706 !important;
 }
-
 
 .portal-filter-bar {
   display: flex;
@@ -319,9 +316,6 @@
   }
 }
 
-
-/* edit */
-/* Overlay */
 #user-modal-overlay {
   position: fixed;
   top: 0;
@@ -336,12 +330,10 @@
   transition: opacity 0.25s ease;
 }
 
-/* Hidden state */
 .modal-hidden {
   display: none !important;
 }
 
-/* Modal Card */
 .portal-modal-card {
   background: var(--bg-surface, #ffffff);
   border-radius: 12px;
@@ -352,7 +344,6 @@
   animation: fadeInScale 0.2s ease;
 }
 
-/* Header */
 .modal-card-header {
   display: flex;
   justify-content: space-between;
@@ -373,7 +364,6 @@
   cursor: pointer;
 }
 
-/* Form Layout */
 #user-edit-form {
   display: flex;
   flex-direction: column;
@@ -407,7 +397,6 @@
   border-color: var(--primary, #4f46e5);
 }
 
-/* Actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -415,7 +404,6 @@
   margin-top: 10px;
 }
 
-/* Buttons */
 .form-actions button {
   padding: 10px 16px;
   border-radius: 8px;
@@ -442,7 +430,6 @@
   background: #4338ca;
 }
 
-/* Animation */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -454,8 +441,6 @@
   }
 }
 
-/* add user */
-/* Modal overlay */
 #add-user-modal-overlay {
   position: fixed;
   top: 0;
@@ -471,12 +456,10 @@
   z-index: 9999;
 }
 
-/* Hidden state (ONLY ONE VERSION) */
 .modal-hidden {
   display: none !important;
 }
 
-/* Modal card */
 .portal-modal-card {
   background: #ffffff;
   border-radius: 10px;
@@ -485,7 +468,6 @@
   padding: 20px;
 }
 
-/* Form layout */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -498,21 +480,18 @@
   border: 1px solid #ccc;
 }
 
-/* Split row */
 .form-row.split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-/* Buttons */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
-/* inactive account */
 .active-state {
   color: green;
   font-weight: bold;

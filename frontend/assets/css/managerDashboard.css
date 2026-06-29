@@ -12,7 +12,6 @@
   padding-left: 8px;
 }
 
-/* Executive Meta Header Styling */
 .executive-header {
   display: flex;
   justify-content: space-between;
@@ -54,9 +53,9 @@
   border: 1px solid var(--border, #e2e8f0);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Automatically calculates 4 equal columns */
+  grid-template-columns: repeat(4, 1fr);
   padding: 22px 0;
-  margin-bottom: 25px; /* Creates physical separation gap between top and bottom cards */
+  margin-bottom: 25px;
 }
 
 .metric-column {
@@ -130,7 +129,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Workspace Specific Tables overrides */
 .manager-ledger-table {
   width: 100%;
   border-collapse: collapse;
@@ -179,7 +177,6 @@
   font-size: 15px;
 }
 
-/* Update this container to handle responsive overflow scrolling safely */
 .panel-table-container {
   background: #ffffff;
   /* border: 1px solid #e2e8f0; */
@@ -187,15 +184,11 @@
   border: none !important;
   border-collapse: collapse;
   margin-top: 16px;
-  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); */
   outline: none !important;
-  
-  /* CRITICAL CHANGE: Enables smooth touch and pointer horizontal tracking */
   overflow-x: auto !important;
   width: 100%;
 }
 
-/* Ensure the table stays readable and doesn't squish columns */
 .asset-table {
   width: 100%;
   border-collapse: collapse;

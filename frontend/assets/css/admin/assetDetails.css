@@ -1,7 +1,3 @@
-/* ─── Asset Details Modal ──────────────────────────────────────────────────── */
-
-/* The existing #assetDetailsModal uses class="modal-more".
-   Add display:flex centering so it overlays correctly. */
 #assetDetailsModal {
     display: none;
     position: fixed;
@@ -25,7 +21,6 @@
     position: relative;
 }
 
-/* ── Hero: image + title side-by-side ── */
 .asset-details-hero {
     display: flex;
     gap: 1.25rem;
@@ -74,7 +69,6 @@
     gap: 0.5rem;
 }
 
-/* ── Detail grid ── */
 .asset-details-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -115,7 +109,6 @@
     word-break: break-word;
 }
 
-/* ── Footer actions ── */
 .asset-details-actions {
     display: flex;
     justify-content: flex-end;

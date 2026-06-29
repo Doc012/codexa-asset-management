@@ -1,6 +1,6 @@
 .content {
-    margin-left: 240px; /* Leave space for the fixed sidebar */
-    padding: 95px 30px 40px 30px; /* Offset clear of topbar */
+    margin-left: 240px;
+    padding: 95px 30px 40px 30px;
     min-height: calc(100vh - 65px);
     box-sizing: border-box;
     background-color: var(--background, #f8fafc);
@@ -34,7 +34,6 @@
     gap: 12px;
 }
 
-/* Interactive Action Buttons */
 .portal-btn {
     display: inline-flex;
     align-items: center;
@@ -135,17 +134,6 @@
     font-weight: 500;
 }
 
-/* ==========================================================================
-   DATA LEDGER TABLE (White Panel Style)
-   ========================================================================== */
-/* .portal-card-table-wrapper {
-    background: white;
-    /* border-radius: 20px; */
-    /* box-shadow: var(--shadow, 0 4px 6px -1px rgba(0, 0, 0, 0.05)); */
-    /* overflow: hidden; */
-    /* border: 1px solid rgba(0, 0, 0, 0.02); */
-/* } */ 
-
 .asset-table {
     width: 100%;
     border-collapse: collapse;
@@ -159,9 +147,9 @@
     box-shadow: var(--shadow, 0 4px 6px -1px rgba(0, 0, 0, 0.05));
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.02);
-    width: 100%; /* Force it to occupy full available workspace width */
+    width: 100%;
     margin-top: 20px;
-    overflow-x: auto; /* allow for horizontal scrolling on assets table */
+    overflow-x: auto;
 }
 
 .asset-table th {
@@ -185,7 +173,6 @@
     border-bottom: none;
 }
 
-/* Table Metric Cells Components */
 .flex-meta-cell {
     display: flex;
     align-items: center;
@@ -195,10 +182,8 @@
 .table-img-frame {
     width: 48px;
     height: 48px;
-    /* border-radius: 10px; */
     overflow: hidden;
     background-color: #f1f5f9;
-    /* border: 1px solid var(--border, #e2e8f0); */
 }
 
 .table-img-frame img {
@@ -265,7 +250,6 @@
     display: inline-block;
 }
 
-/* Action Trigger Icons */
 .row-actions-group {
     display: flex;
     gap: 6px;
@@ -300,12 +284,7 @@
     color: #ef4444;
     background-color: #fef2f2;
 }
-/* ------------------------------------------------------- */
 
-/* showing the action buttons - chnging the colors: */
-/* ==========================================================================
-   FORCE ACTION BUTTON VISIBILITY (No Overrides Allowed)
-   ========================================================================== */
 .row-actions-group {
     display: flex;
     gap: 8px;
@@ -324,36 +303,30 @@
     transition: all 0.2s ease;
 }
 
-/* Force Edit Button SVGs to be visibly dark gray by default */
 .row-action-btn.edit svg {
     stroke: #64748b !important;
     fill: none !important;
 }
 
-/* Edit Hover State */
 .row-action-btn.edit:hover {
     background-color: #f5f3ff !important;
 }
 .row-action-btn.edit:hover svg {
-    stroke: #4f46e5 !important; /* Turns bright Indigo on hover */
+    stroke: #4f46e5 !important;
 }
 
-/* Force Delete Button SVGs to be visibly muted red/gray by default */
 .row-action-btn.delete svg {
     stroke: #94a3b8 !important;
     fill: none !important;
 }
 
-/* Delete Hover State */
 .row-action-btn.delete:hover {
     background-color: #fef2f2 !important;
 }
 .row-action-btn.delete:hover svg {
-    stroke: #ef4444 !important; /* Turns bright Red on hover */
+    stroke: #ef4444 !important;
 }
 
-
-/* --------------------------------------------------------- */
 #asset-modal-overlay {
     position: fixed;
     top: 0;

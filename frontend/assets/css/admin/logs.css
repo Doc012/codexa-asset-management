@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Audit Logs – Filter Bar
-   ========================================================================== */
-
 .portal-filter-bar {
   display: flex;
   align-items: center;
@@ -81,10 +77,6 @@
   border-color: var(--primary, #4f46e5);
 }
 
-/* ==========================================================================
-   Audit Logs – Work Queue Container
-   ========================================================================== */
-
 .report-header-actions {
   display: flex;
   justify-content: space-between;
@@ -117,10 +109,6 @@
   border-radius: 99px;
 }
 
-/* ==========================================================================
-   Audit Logs – Table Overrides
-   ========================================================================== */
-
 .asset-table th {
   background: #f8fafc;
   padding: 11px 20px;
@@ -148,14 +136,12 @@
   background: #fafafa;
 }
 
-/* Log ID */
 .log-id-cell {
   font-family: monospace;
   font-size: 12px;
   color: var(--text-muted, #64748b);
 }
 
-/* Email */
 .log-email-cell {
   max-width: 180px;
   overflow: hidden;
@@ -165,7 +151,6 @@
   font-size: 13px;
 }
 
-/* Message */
 .log-message-cell {
   max-width: 240px;
   overflow: hidden;
@@ -174,16 +159,11 @@
   color: var(--text-main, #0f172a);
 }
 
-/* Timestamp */
 .log-ts-cell {
   white-space: nowrap;
   color: var(--text-secondary, #475569);
   font-size: 12.5px;
 }
-
-/* ==========================================================================
-   Action Type Badges
-   ========================================================================== */
 
 .action-badge {
   display: inline-flex;
@@ -224,10 +204,6 @@
 .badge-CANCEL    { background: #FBEAF0; color: #72243E; }
 .badge-CANCEL .action-dot    { background: #993556; }
 
-/* ==========================================================================
-   Entity Type Chips
-   ========================================================================== */
-
 .entity-chip {
   display: inline-block;
   padding: 3px 9px;
@@ -242,10 +218,6 @@
 .entity-ASSET { background: #FAEEDA; color: #633806; }
 .entity-LOAN  { background: #E6F1FB; color: #0C447C; }
 .entity-USER  { background: #EAF3DE; color: #27500A; }
-
-/* ==========================================================================
-   Empty State
-   ========================================================================== */
 
 .logs-empty-state {
   display: flex;

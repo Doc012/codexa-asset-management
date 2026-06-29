@@ -32,8 +32,6 @@ body {
     
 }
 
-
-
 .topbar {
     height:72px;
     background: var(--surface);
@@ -418,17 +416,17 @@ body {
 }
 
 table {
-    width: 100% !important; /* Forces layout grid to stretch completely to the right margins */
+    width: 100% !important;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
-    min-width: 600px; /* Prevents text columns from squishing together tightly on mobile viewports */
+    min-width: 600px;
 }
 
 th, td {
     padding: 14px 16px;
     text-align: left;
-    white-space: nowrap; /* Keeps records orderly on a single horizontal row line */
+    white-space: nowrap;
 }
 
 .assets table th,
@@ -999,19 +997,6 @@ button.cancel:hover { background: #b91c1c; }
    transition: opacity 0.5s ease;
 }
 
-
-
-
-
-
-
-/* 
- THE BELOW CODE SNIPPET I STILL NEED TO WORK ON IT
- */
-
- /* ==========================================================================
-   1. GLOBAL CONTAINERS & FLUID WORKSPACES
-   ========================================================================== */
 #mainContent {
     box-sizing: border-box;
     padding: 24px;
@@ -1020,59 +1005,49 @@ button.cancel:hover { background: #b91c1c; }
     flex-direction: column;
 }
 
-/* Ensure the wrapper element spans across the full workspace */
 .loans, #dashboardPage {
     width: 100%;
     box-sizing: border-box;
 }
 
-/* ==========================================================================
-   2. BULLETPROOF RESPONSIVE TABLES
-   ========================================================================== */
-/* The layout box containing your data grids */
 .tab-content {
     width: 100%;
-    overflow-x: auto; /* Generates a clean internal scrollbar ONLY if text spills over on tiny phones */
+    overflow-x: auto;
     background: #ffffff;
     border-radius: 8px;
     box-sizing: border-box;
     margin-top: 16px;
-    -webkit-overflow-scrolling: touch; /* Smooth scroll track targeting mobile browsers */
+    -webkit-overflow-scrolling: touch;
 }
 
 table {
-    width: 100% !important; /* Forces layout grid to stretch completely to the right margins */
+    width: 100% !important;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
-    min-width: 600px; /* Prevents text columns from squishing together tightly on mobile viewports */
+    min-width: 600px;
 }
 
 th, td {
     padding: 14px 16px;
     text-align: left;
-    white-space: nowrap; /* Keeps records orderly on a single horizontal row line */
+    white-space: nowrap;
 }
 
-/* ==========================================================================
-   3. DASHBOARD METRICS GRID (Fixes layout cutting off in image_4a743e.png)
-   ========================================================================== */
-/* Adjust this class name to match your top statistical row layout container */
 .metrics-row, .stats-container {
     display: flex;
-    flex-wrap: wrap; /* Automatically drops boxes down to next row if screen room runs thin */
+    flex-wrap: wrap;
     gap: 16px;
     width: 100%;
     margin-bottom: 24px;
 }
 
 .metric-card, .stat-box {
-    flex: 1 1 calc(25% - 16px); /* Perfect 4-column desktop arrangement splitting remaining gaps */
-    min-width: 200px; /* Keeps individual items readable */
+    flex: 1 1 calc(25% - 16px);
+    min-width: 200px;
     box-sizing: border-box;
 }
 
-/* Primary Task Area Panel */
 .primary-work-queue, .queue-container {
     width: 100%;
     box-sizing: border-box;
@@ -1097,31 +1072,24 @@ tr.row-disabled .request_loan_btn {
     color: #94a3b8 !important;
     border: 1px solid #cbd5e1 !important;
     cursor: not-allowed;
-    pointer-events: none; /* Disables hover effects/clicks completely */
+    pointer-events: none;
 }
 
-/* ==========================================================================
-   4. DEVICE SIZE MEDIA QUERIES
-   ========================================================================== */
-
-/* Tablet & Smaller Screen Optimizations */
 @media (max-width: 1024px) {
     .metric-card, .stat-box {
-        flex: 1 1 calc(50% - 16px); /* Switches elegantly over into 2 rows of twin split pairs */
+        flex: 1 1 calc(50% - 16px);
     }
 }
 
-/* Mobile Layout Viewport Restructuring */
 @media (max-width: 768px) {
     #mainContent {
-        padding: 16px; /* Shrinks dense page margins down to make space for application text */
+        padding: 16px;
     }
     
     .metric-card, .stat-box {
-        flex: 1 1 100%; /* Forces cards to take up the entire viewport width */
+        flex: 1 1 100%;
     }
     
-    /* Make button controls accessible across entire layout containers */
     .return-btn, .tab-btn {
         width: 100%; 
         text-align: center;
@@ -1129,7 +1097,7 @@ tr.row-disabled .request_loan_btn {
     
     .tab-menu {
         display: flex;
-        flex-direction: column; /* Stack tab menu options to prevent layout breaking */
+        flex-direction: column;
         gap: 8px;
     }
 }

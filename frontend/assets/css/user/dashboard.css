@@ -1,6 +1,3 @@
-/* ==========================================================================
-   Structural & Workspace Layout
-   ========================================================================== */
 main#mainContent.content {
   padding: 2rem;
   background-color: #f8fafc;
@@ -23,9 +20,6 @@ main#mainContent.content {
   transition: margin-left 0.2s ease-in-out;
 }
 
-/* ==========================================================================
-   Redesigned Welcome Toolbar Header
-   ========================================================================== */
 .portal-toolbar-header {
   margin-bottom: 10px;
 }
@@ -48,9 +42,6 @@ main#mainContent.content {
   font-size: 0.95rem;
 }
 
-/* ==========================================================================
-   Metrics Grid & Cards Architecture
-   ========================================================================== */
 .admin-metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -71,7 +62,6 @@ main#mainContent.content {
 
 .metric-card:hover {
   transform: translateY(-2px);
-  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); */
 }
 
 .metric-icon-frame {
@@ -104,9 +94,6 @@ main#mainContent.content {
   color: var(--text-main, #0f172a);
 }
 
-/* ==========================================================================
-   Theme Color Tints & Context Modifiers
-   ========================================================================== */
 .primary-tint {
   background-color: rgba(59, 130, 246, 0.1);
   color: #3b82f6;
@@ -131,9 +118,6 @@ main#mainContent.content {
   color: #ef4444 !important;
 }
 
-/* ==========================================================================
-   Table Presentation Elements
-   ========================================================================== */
 .admin-split-layout {
   width: 100%;
 }
