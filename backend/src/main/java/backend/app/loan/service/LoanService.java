@@ -208,6 +208,11 @@ public class LoanService {
     public LoanResponseDTO rejectLoan(Long loanId) {
         Loan loan = getEntity(loanId);
 
+        User user = userRepo.findById(1L).
+                orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
+
         if (loan.getStatus() != LoanStatus.PENDING){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -217,6 +222,17 @@ public class LoanService {
 
         loan.setStatus(LoanStatus.REJECTED);
         loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
+
+        AuditLog log = new AuditLog().builder()
+                .userId(user.getUserId())
+                .entityType(EntityType.LOAN)
+                .entityId(loan.getLoanId())
+                .actionType(ActionType.CANCEL)
+                .oldValue("APPROVED")
+                .newValue("Rejected loan with ID: " + loan.getLoanId())
+                .message("Rejected - " + loan.getAsset().getTitle())
+                .build();
+        auditLogService.createLog(log);
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }
