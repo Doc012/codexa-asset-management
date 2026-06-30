@@ -15,6 +15,7 @@ import backend.app.loan.model.Loan;
 import backend.app.loan.repository.LoanRepo;
 import backend.app.user.model.User;
 import backend.app.user.repository.UserRepository;
+import backend.auth.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class LoanService {
     private final AssetRepo assetRepo;
     private final AuditLogService auditLogService;
     private final LoanMapper loanMapper;
+    private final EmailService emailService;
 
     public LoanResponseDTO createLoan(LoanRequestDTO dto) {
 
@@ -148,6 +150,7 @@ public class LoanService {
                 .message("Cancelled loan - " + loan.getAsset().getTitle())
                 .build();
         auditLogService.createLog(log);
+
         return loanMapper.toDTO(loanRepo.save(loan));
     }
 
@@ -171,6 +174,13 @@ public class LoanService {
                 .message("Approved loan - " + loan.getAsset().getTitle())
                 .build();
         auditLogService.createLog(log);
+
+        User requester = userRepo.findById(loan.getUser().getUserId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                                "User not found."));
+
+        emailService.sendApprovedLoanEmail(requester.getEmail(), requester.getFirstName(), loan.getAsset().getTitle());
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }

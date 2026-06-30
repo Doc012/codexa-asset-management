@@ -81,6 +81,29 @@ public class EmailService {
         log.info("Password reset email sent to {}", toEmail);
     }
 
+    //_______// Approved Loan Request \\_______
+    @Async
+    public void sendApprovedLoanEmail(String toEmail, String firstName, String assetTitle){
+        String html = """
+            <html>
+                <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
+                    <h2>Your loan request was approved</h2>
+                    <p>Hi %s</p>
+                    <p>
+                        Your request for <strong>%s</strong> has been approved.
+                        You can collect it from the department's asset custodian.
+                    </p>
+                    <p style="color:#888;font-size:12px;">
+                        If you weren't expecting this, please contact your asset administrator.
+                    </p>
+                </body>
+            </html>
+            """.formatted(firstName, assetTitle);
+
+        sendHtmlEmail(toEmail, "Loan Request Approved", html);
+        log.info("Loan approval email sent to {}", toEmail);
+    }
+
     //_______// Internal Helpers \\_______
     private void sendHtmlEmail(String to, String subject, String htmlBody){
         try {
