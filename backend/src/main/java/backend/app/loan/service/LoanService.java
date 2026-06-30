@@ -223,6 +223,12 @@ public class LoanService {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
                 );
 
+        User requester = userRepo.findById(loan.getUser().getUserId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found."
+                ));
+
         if (loan.getStatus() != LoanStatus.PENDING){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -243,6 +249,8 @@ public class LoanService {
                 .message("Rejected - " + loan.getAsset().getTitle())
                 .build();
         auditLogService.createLog(log);
+
+        emailService.sendRejectedLoanEmail(requester.getEmail(), requester.getFirstName(), loan.getAsset().getTitle());
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }
