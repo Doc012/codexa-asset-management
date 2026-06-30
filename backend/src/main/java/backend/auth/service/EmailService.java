@@ -81,6 +81,34 @@ public class EmailService {
         log.info("Password reset email sent to {}", toEmail);
     }
 
+    //_______// User Account Activated \\_______
+    @Async
+    public void  sendAccountActivatedEmail(String toEmail, String firstName){
+        String loginUrl = "http://127.0.0.1:5500/pages/auth/login.html";
+
+        String html = """
+            <html>
+                <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
+                    <h2>Your account has been activated</h2>
+                    <p>Hi %s</p>
+                    <p>
+                        Good news, your account has been activated by an administrator.
+                        You can now log in and start using AssetIQ.
+                    </p>
+                     <a href="%s" style="display:inline-block;padding:12px 24px;background:#10B981;color:#fff;text-decoration:none;border-radius:6px;margin:16px 0;">
+                        Log In Now
+                    </a>
+                    <p style="color:#888;font-size:12px;">
+                        If you weren't expecting this, please contact your asset administrator.
+                    </p>
+                </body>
+            </html>
+            """.formatted(firstName, loginUrl);
+
+        sendHtmlEmail(toEmail, "Account Activated", html);
+        log.info("Account activation email sent to {}", toEmail);
+    }
+
     //_______// Approved Loan Request \\_______
     @Async
     public void sendApprovedLoanEmail(String toEmail, String firstName, String assetTitle){
