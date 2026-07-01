@@ -7,8 +7,10 @@
   <title>Settings Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/manager/settings.css">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
-  <link rel="stylesheet" href="../../../assets/css/user/settings.css">
 </head>
 
 <body>
@@ -86,44 +88,56 @@
     </ul>
   </aside>
 
-  <main id="mainContent" class="content">
-    <section id="settingsPage" class="page active">
-      <div class="settings-card">
+  <main id="mainContent" class="content manager-hub-content">
+    <div class="executive-header">
+      <div class="header-titles">
+        <span class="system-tag">Staff System</span>
+        <h1 class="ledger-title">Account Profiles &amp; Settings</h1>
+      </div>
+      <div class="clearance-tag">
+        Clearance Level: <span class="clearance-level">Staff Account</span>
+      </div>
+    </div>
+
+    <section id="dashboardPage" class="page active" style="padding: 0; background: transparent; box-shadow: none;">
+      <div class="settings-card" style="margin-top: 0;">
         <h2>Account Settings</h2>
-        <p class="subtitle">Manage your profile and security preferences</p>
 
         <div class="settings-tabs">
-          <button class="settings-tab-btn active" data-target="profilePanel">Profile Information</button>
-          <button class="settings-tab-btn" data-target="securityPanel">Security</button>
+          <button class="settings-tab-btn active" onclick="switchSettingsTab(event, 'profileFormPanel')">Profile
+            Details</button>
+          <button class="settings-tab-btn" onclick="switchSettingsTab(event, 'securityFormPanel')">Security</button>
         </div>
 
-        <div id="profilePanel" class="settings-panel active-panel">
-          <form id="profileForm">
+        <div id="profileFormPanel" class="settings-panel active-panel">
+          <form id="profile-form">
             <div class="settings-grid">
               <div class="settings-group">
                 <label for="firstName">First Name</label>
-                <input type="text" id="firstName"required>
+                <input type="text" id="firstName" name="firstName" required>
               </div>
               <div class="settings-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" required>
+                <input type="text" id="lastName" name="lastName" required>
               </div>
               <div class="settings-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" readonly disabled>
+                <input type="email" id="email" name="email" class="locked-field"
+                  readonly>
               </div>
               <div class="settings-group">
                 <label for="department">Department</label>
-                <input type="text" id="department" readonly disabled>
+                <input type="text" id="department" name="department" value="Operations Management" class="locked-field"
+                  readonly>
               </div>
             </div>
             <button type="submit" class="settings-save-btn">Save Profile</button>
+            <div id="form-status-message"></div>
           </form>
         </div>
 
-        <!-- Security Panel -->
-        <div id="securityPanel" class="settings-panel">
-          <form id="securityForm">
+        <div id="securityFormPanel" class="settings-panel">
+          <form onsubmit="handleSettingsSave(event, 'Password changed securely.')">
             <div class="settings-group single-column">
               <label for="sec-current">Current Password</label>
               <input type="password" id="sec-current" placeholder="••••••••••••" required>
@@ -139,26 +153,29 @@
             <button type="submit" class="settings-save-btn">Update Password</button>
           </form>
         </div>
-      </div>
 
+        <div id="updated-details" class="modal">
+          <div class="modal-content">
+            <h2>Update your details</h2>
+            <p>Are you sure you want to update your details?</p>
 
-      <div id="updated-details" class="modal">
-        <div class="modal-content">
-          <h2>Update your details</h2>
-          <p>Are you sure you want update your details?</p>
-          <div class="modal-actions">
-            <button id="confirmBtn" class="confirm">Yes, Confirm</button>
-            <button id="cancelBtn" class="cancel">Cancel</button>
+            <div class="modal-actions">
+              <div class="modal-actions">
+                <button id="confirmBtn" class="confirm">Confirm</button>
+                <button id="cancelBtn" class="cancel">Cancel</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     </section>
   </main>
 
-  <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
-  <script type="module" src="../../../assets/js/user/settings.js"></script>
-  <script type="module" src="../../../assets/js/user/script.js"></script>
-  <script type="module" src="../../../assets/js/user/users.js" type="module"></script>
+  <script type="module" src="../../../assets/js/guards/admin.guard.js"></script>
+  <script type="module" src="../../../assets/js/common/header.js"></script>
+  <script src="../../../assets/js/manager/users.js" type="module"></script>
+  <script src="../../../assets/js/config.js" type="module"></script>
+  <script src="../../../assets/js/user/script.js"></script>
+  <script src="../../../assets/js/admin/adminDetails.js" type="module"></script>
 </body>
 
 </html>
