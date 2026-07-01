@@ -27,7 +27,7 @@ public class EmailService {
     //_______// Email Verification \\_______
     @Async
     public void sendVerificationEmail(String toEmail, String firstName, String token){
-        String verifyUrl = baseUrl + "/api/v1/auth/verify-email?token=" + token;
+        String verifyUrl = baseUrl + "/pages/auth/verify-email.html?token=" + token;
 
         String html = """
                 <html>
