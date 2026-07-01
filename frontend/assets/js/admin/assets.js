@@ -124,7 +124,6 @@ function renderTable(assets) {
                     <img
                         src="${asset.photoPath || ''}"
                         alt="Asset image"
-                        onerror="this.onerror=null;this.src='https://placehold.co/60x60?text=No+Image';"
                     />
                 </div>
             </td>

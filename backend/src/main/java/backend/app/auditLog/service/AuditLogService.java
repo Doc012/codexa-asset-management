@@ -72,7 +72,7 @@ public class AuditLogService {
         List<AuditLogDTO.auditLogResponse> logsDto = logs.stream()
                 .map(log -> new AuditLogDTO.auditLogResponse(
                                 log.getLogId(),
-                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")).getEmail(),
+                                userRepository.findById(log.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found (ID=" + log.getUserId())).getEmail() + ").",
                                 entityTitle(log.getEntityType(), log.getEntityId()),
                                 log.getEntityType(),
                                 log.getActionType(),
