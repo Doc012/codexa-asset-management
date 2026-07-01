@@ -953,7 +953,8 @@ textarea.input-field {
 .modal-actions {
   margin-top: 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 12px;
 }
 
 button.confirm {

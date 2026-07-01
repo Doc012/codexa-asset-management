@@ -7,10 +7,10 @@
   <title>Asset IQ - Enterprise Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../../../assets/css/user/styles.css">
   <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
   <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
   <link rel="stylesheet" href="../../../assets/css/manager/settings.css">
+  <link rel="stylesheet" href="../../../assets/css/user/styles.css">
 </head>
 
 <body>
@@ -123,11 +123,11 @@
   <main id="mainContent" class="content manager-hub-content">
     <div class="executive-header">
       <div class="header-titles">
-        <span class="system-tag">Management System</span>
+        <span class="system-tag">Admin System</span>
         <h1 class="ledger-title">Account Profiles &amp; Settings</h1>
       </div>
       <div class="clearance-tag">
-        Clearance Level: <span class="clearance-level">Manager Account</span>
+        Clearance Level: <span class="clearance-level">Admin Account</span>
       </div>
     </div>
 
@@ -142,7 +142,7 @@
         </div>
 
         <div id="profileFormPanel" class="settings-panel active-panel">
-          <form onsubmit="handleSettingsSave(event, 'Profile updated successfully!')" id="profile-form">
+          <form id="profile-form">
             <div class="settings-grid">
               <div class="settings-group">
                 <label for="firstName">First Name</label>
@@ -184,6 +184,20 @@
             <button type="submit" class="settings-save-btn">Update Password</button>
           </form>
         </div>
+
+        <div id="updated-details" class="modal">
+          <div class="modal-content">
+            <h2>Update your details</h2>
+            <p>Are you sure you want to update your details?</p>
+
+            <div class="modal-actions">
+              <div class="modal-actions">
+                <button id="confirmBtn" class="confirm">Confirm</button>
+                <button id="cancelBtn" class="cancel">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
   </main>
 
@@ -192,6 +206,7 @@
   <script src="../../../assets/js/manager/users.js" type="module"></script>
   <script src="../../../assets/js/config.js" type="module"></script>
   <script src="../../../assets/js/user/script.js"></script>
+  <script src="../../../assets/js/admin/adminDetails.js" type="module"></script>
 </body>
 
 </html>
