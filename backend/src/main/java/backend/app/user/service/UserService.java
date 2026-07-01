@@ -12,6 +12,7 @@ import backend.app.user.enums.Status;
 import backend.app.user.model.User;
 import backend.app.user.repository.UserRepository;
 import backend.auth.dto.AuthDTO;
+import backend.auth.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ public class UserService {
     private final UserRepository userRepo;
     private final AuditLogService auditLogService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     /**
      * Getting all users of the system
@@ -373,6 +375,7 @@ public class UserService {
             user.setStatus(Status.INACTIVE);
         } else if (req.userStatus().equals(Status.ACTIVE)) {
             user.setStatus(Status.ACTIVE);
+            emailService.sendAccountActivatedEmail(user.getEmail(), user.getFirstName());
         } else if (req.userStatus().equals(Status.PENDING_VERIFICATION)){
             user.setStatus(Status.PENDING_VERIFICATION);
         } else {

@@ -1,4 +1,4 @@
-import { verifyEmail } from "../../authContext.js";
+import { verifyEmail } from "../../js/authContext.js";
 
 const params      = new URLSearchParams(window.location.search);
 const emailToken  = params.get("token");
@@ -14,21 +14,24 @@ if (!emailToken) {
   try {
     const data = await verifyEmail(emailToken);
     loadingBox.hidden = true;
-    showSuccess((data.message || "Email verified successfully.") + " You can now log in.");
+    showSuccess((data.message || "Email verified successfully.") + " Redirecting to login…");
+
+    setTimeout(() => {
+      window.location.href = "/pages/auth/login.html";
+    }, 3000);
+
   } catch (err) {
     loadingBox.hidden = true;
     showError(err.message);
   }
 }
 
-/**
- * Displays an error message to the user.
- * @param {string} msg - The error message text.
- */
-function showError(msg)   { errorBox.textContent   = msg; errorBox.hidden   = false; }
+function showError(msg) {
+  errorBox.querySelector("span").textContent = msg;
+  errorBox.hidden = false;
+}
 
-/**
- * Displays a success message to the user.
- * @param {string} msg - The success message text.
- */
-function showSuccess(msg) { successBox.textContent = msg; successBox.hidden = false; }
+function showSuccess(msg) {
+  successBox.querySelector("span").textContent = msg;
+  successBox.hidden = false;
+}

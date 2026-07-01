@@ -9,7 +9,8 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../../../assets/css/user/styles.css">
   <link rel="stylesheet" href="../../../assets/css/user/dashboard.css">
-  <link rel="stylesheet" href="../../../assets/css/user/settings.css">
+  <link rel="stylesheet" href="../../../assets/css/managerDashboard.css">
+  <link rel="stylesheet" href="../../../assets/css/manager/settings.css">
 </head>
 
 <body>
@@ -119,17 +120,25 @@
     </ul>
   </aside>
 
-  <main id="mainContent" class="content">
-    <section id="dashboardPage" class="page active">
-      <div class="settings-card">
+  <main id="mainContent" class="content manager-hub-content">
+    <div class="executive-header">
+      <div class="header-titles">
+        <span class="system-tag">Management System</span>
+        <h1 class="ledger-title">Account Profiles &amp; Settings</h1>
+      </div>
+      <div class="clearance-tag">
+        Clearance Level: <span class="clearance-level">Manager Account</span>
+      </div>
+    </div>
+
+    <section id="dashboardPage" class="page active" style="padding: 0; background: transparent; box-shadow: none;">
+      <div class="settings-card" style="margin-top: 0;">
         <h2>Account Settings</h2>
 
         <div class="settings-tabs">
           <button class="settings-tab-btn active" onclick="switchSettingsTab(event, 'profileFormPanel')">Profile
             Details</button>
           <button class="settings-tab-btn" onclick="switchSettingsTab(event, 'securityFormPanel')">Security</button>
-          <button class="settings-tab-btn"
-            onclick="switchSettingsTab(event, 'preferencesFormPanel')">Preferences</button>
         </div>
 
         <div id="profileFormPanel" class="settings-panel active-panel">
@@ -137,19 +146,19 @@
             <div class="settings-grid">
               <div class="settings-group">
                 <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" value="John" required>
+                <input type="text" id="firstName" name="firstName" value="Tumelo" required>
               </div>
               <div class="settings-group">
                 <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" value="Smith" required>
+                <input type="text" id="lastName" name="lastName" value="Modise" required>
               </div>
               <div class="settings-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" value="john.smith@company.com" required>
+                <input type="email" id="email" name="email" value="tumelo.modise@codexa.com" required>
               </div>
               <div class="settings-group">
                 <label for="department">Department</label>
-                <input type="text" id="department" name="department" value="IT Department" class="locked-field"
+                <input type="text" id="department" name="department" value="Operations Management" class="locked-field"
                   readonly>
               </div>
             </div>
@@ -175,45 +184,14 @@
             <button type="submit" class="settings-save-btn">Update Password</button>
           </form>
         </div>
-
-        <div id="preferencesFormPanel" class="settings-panel">
-          <form onsubmit="handleSettingsSave(event, 'System preferences updated.')">
-            <div class="settings-group single-column inline-check">
-              <label class="settings-checkbox">
-                <input type="checkbox" checked>
-                <span>Email me before a loan item is overdue?</span>
-              </label>
-            </div>
-            <div class="settings-group single-column inline-check">
-              <label class="settings-checkbox">
-                <input type="checkbox" checked>
-                <span>Notify me when requested assets are approved?</span>
-              </label>
-            </div>
-            <div class="settings-group single-column">
-              <label for="pref-layout">Default Inventory View</label>
-              <select id="pref-layout">
-                <option value="grid">Standard Dynamic Table</option>
-                <option value="compact">High Density List</option>
-              </select>
-            </div>
-            <button type="submit" class="settings-save-btn">Save Preferences</button>
-          </form>
-        </div>
-
-      </div>
-
-      <div id="settingsToast" class="settings-toast"></div>
     </section>
   </main>
 
   <script type="module" src="../../../assets/js/guards/admin.guard.js"></script>
   <script type="module" src="../../../assets/js/common/header.js"></script>
-  <script src="../../../assets/js/users.js" type="module"></script>
-  <script src="../../../assets/js/user/assets.js" type="module"></script>
-  <script src="../../../assets/js/auditLogs.js" type="module"></script>
-  <script src="../../../assets/js/loans.js" type="module"></script>
-  <script src="../../../assets/js/user/script.js" type="module"></script>
+  <script src="../../../assets/js/manager/users.js" type="module"></script>
+  <script src="../../../assets/js/config.js" type="module"></script>
+  <script src="../../../assets/js/user/script.js"></script>
 </body>
 
 </html>

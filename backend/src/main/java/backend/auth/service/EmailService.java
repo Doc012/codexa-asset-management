@@ -27,7 +27,7 @@ public class EmailService {
     //_______// Email Verification \\_______
     @Async
     public void sendVerificationEmail(String toEmail, String firstName, String token){
-        String verifyUrl = baseUrl + "/api/v1/auth/verify-email?token=" + token;
+        String verifyUrl = baseUrl + "/pages/auth/verify-email.html?token=" + token;
 
         String html = """
                 <html>
@@ -79,6 +79,79 @@ public class EmailService {
 
         sendHtmlEmail(toEmail, "Reset your password", html);
         log.info("Password reset email sent to {}", toEmail);
+    }
+
+    //_______// User Account Activated \\_______
+    @Async
+    public void  sendAccountActivatedEmail(String toEmail, String firstName){
+        String loginUrl = "http://127.0.0.1:5500/pages/auth/login.html";
+
+        String html = """
+            <html>
+                <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
+                    <h2>Your account has been activated</h2>
+                    <p>Hi %s</p>
+                    <p>
+                        Good news, your account has been activated by an administrator.
+                        You can now log in and start using AssetIQ.
+                    </p>
+                     <a href="%s" style="display:inline-block;padding:12px 24px;background:#10B981;color:#fff;text-decoration:none;border-radius:6px;margin:16px 0;">
+                        Log In Now
+                    </a>
+                    <p style="color:#888;font-size:12px;">
+                        If you weren't expecting this, please contact your asset administrator.
+                    </p>
+                </body>
+            </html>
+            """.formatted(firstName, loginUrl);
+
+        sendHtmlEmail(toEmail, "Account Activated", html);
+        log.info("Account activation email sent to {}", toEmail);
+    }
+
+    //_______// Approved Loan Request \\_______
+    @Async
+    public void sendApprovedLoanEmail(String toEmail, String firstName, String assetTitle){
+        String html = """
+            <html>
+                <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
+                    <h2>Your loan request was approved</h2>
+                    <p>Hi %s</p>
+                    <p>
+                        Your request for <strong>%s</strong> has been approved.
+                        You can collect it from the department's asset custodian.
+                    </p>
+                    <p style="color:#888;font-size:12px;">
+                        If you weren't expecting this, please contact your asset administrator.
+                    </p>
+                </body>
+            </html>
+            """.formatted(firstName, assetTitle);
+
+        sendHtmlEmail(toEmail, "Loan Request Approved", html);
+        log.info("Loan approval email sent to {}", toEmail);
+    }
+
+    //_______// Rejected Loan Request \\_______
+    @Async
+    public void sendRejectedLoanEmail(String toEmail, String firstName, String assetTitle){
+        String html = """
+            <html>
+                <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
+                    <h2>Your loan request was not approved</h2>
+                    <p>Hi %s</p>
+                    <p>
+                        Unfortunately, your request for <strong>%s</strong> was not approved at this time.
+                    </p>
+                    <p style="color:#888;font-size:12px;">
+                        If you have questions about this decision, please contact your asset administrator.
+                    </p>
+                </body>
+            </html>
+            """.formatted(firstName, assetTitle);
+
+        sendHtmlEmail(toEmail, "Loan Request Rejected", html);
+        log.info("Loan rejection email sent to {}", toEmail);
     }
 
     //_______// Internal Helpers \\_______
