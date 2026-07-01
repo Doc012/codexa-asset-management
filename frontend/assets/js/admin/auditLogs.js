@@ -194,7 +194,7 @@ try {
             <span class="admin-event-tag tag-delete">${log.actionType}</span>
             <span class="event-summary">${log.message}</span>
             </td>
-            <td class="text-right text-muted font-monospace">${log.timestamp}</td>                
+            <td class="text-right text-muted font-monospace">${formatTimestamp(log.timestamp)}</td>                
         
         `;
 
