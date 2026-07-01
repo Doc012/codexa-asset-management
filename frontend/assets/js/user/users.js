@@ -33,7 +33,7 @@ const userDetails = async () => {
                 if (userData.picUrl !== null) {
                     profileImage.src = userData.picUrl;
                 } else {
-                    profileInitial.textContent = `${userData.firstName[0].toUpperCase()}`;
+                    profileInitial.textContent = `${userData.firstName[0].toUpperCase()}${userData.lastName[0].toUpperCase()}`;
                 }
             }
         }

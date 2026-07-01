@@ -36,7 +36,7 @@ const userDetails = async()=> {
                 profileImage.src = managerData.picUrl;
 
             } else {
-                profileInitial.textContent = `${managerData.firstName[0].toUpperCase()}`;
+                profileInitial.textContent = `${managerData.firstName[0].toUpperCase()}${managerData.lastName[0].toUpperCase()}`;
             }
         }
 
