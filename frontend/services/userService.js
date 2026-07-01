@@ -65,7 +65,7 @@ export const createUser = (async (userData) => {
  * @returns {Promise<Object>} A promise that resolves to the modified user record response object.
  */
 export const updateAllUserDetails = (async (id, userData) => {
-    const res = await apiFetch(`/users/user/profile/${id}`, {
+    const res = await apiFetch(`/users/user/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
