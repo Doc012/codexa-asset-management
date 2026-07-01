@@ -286,6 +286,13 @@
   color: #ef4444;
 }
 
+.company-name {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #888;
+    margin-left: 6px;
+}
+
 @media (max-width: 768px) {
   .content {
     margin-left: 0 !important;

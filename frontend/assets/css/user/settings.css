@@ -104,6 +104,13 @@
     z-index: 9999;
 }
 
+.company-name {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #888;
+    margin-left: 6px;
+}
+
 
 
 @media (prefers-color-scheme: dark) {

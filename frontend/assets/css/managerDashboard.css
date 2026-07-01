@@ -338,3 +338,10 @@
 .table-img-frame {
   background: red;
 }
+
+.company-name {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #888;
+    margin-left: 6px;
+}

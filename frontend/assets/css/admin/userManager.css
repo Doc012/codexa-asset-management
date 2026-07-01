@@ -48,3 +48,10 @@
 
 .cell-tag-chip.font-red    { background: #fee2e2; color: #b91c1c; }
 .cell-tag-chip.font-orange { background: #ffedd5; color: #c2410c; }
+
+.company-name {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #888;
+    margin-left: 6px;
+}
