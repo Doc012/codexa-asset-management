@@ -36,14 +36,14 @@ public class AssetController {
         return assetService.getAssetById(id);
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseAssetDto createAsset(
-            @RequestPart("asset") @Valid RequestAssetDto newAsset,
-            @RequestPart (value = "file", required = false)MultipartFile file){
+            @RequestBody @Valid RequestAssetDto newAsset) {
+
         System.out.println("DTO: " + newAsset);
-        System.out.println("File: " + (file != null ? file.getOriginalFilename() : "null"));
-        return assetService.createAsset(newAsset, file);
+
+        return assetService.createAsset(newAsset);
     }
 
     @PutMapping("/{id}")
