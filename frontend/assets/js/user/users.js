@@ -10,7 +10,9 @@ import { getUser } from "../authContext.js";
  */
 document.addEventListener("DOMContentLoaded", async () => {
     await userDetails();
-    await updateDetails();
+    if (document.querySelector("#profileForm")) {
+        await updateDetails();
+    }
 
 });
 

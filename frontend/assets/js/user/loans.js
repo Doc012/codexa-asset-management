@@ -122,7 +122,7 @@ const loanHistory = async () => {
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>${loan.dueDate}</td>
+                <td>-</td>
                 <td>${loan.status}</td>
             `
 
