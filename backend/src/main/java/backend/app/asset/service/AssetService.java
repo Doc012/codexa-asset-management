@@ -18,16 +18,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -92,38 +86,13 @@ public class AssetService {
      * @return the details of the newly created asset
      */
     @Transactional
-    public ResponseAssetDto createAsset(RequestAssetDto assetDto, MultipartFile file){
+    public ResponseAssetDto createAsset(RequestAssetDto assetDto){
         User theUpdater = userRepo.findById(1L)
-                .orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
                 );
 
         try {
-
-            /**
-             * image upload
-             */
-            String filePath = "/uploads/default.jpg";
-
-            // file upload
-            if(file != null && !file.isEmpty()) {
-                // validate file type
-                if(!file.getContentType().startsWith("image/")) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                            "Only image files allowed");
-                }
-
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path uploadPath = Paths.get("uploads");
-                if(!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-
-                Files.copy(file.getInputStream(), uploadPath.resolve(fileName),
-                        StandardCopyOption.REPLACE_EXISTING);
-
-                filePath = "/uploads/" + fileName;
-            }
 
             Asset asset = Asset.builder()
                     .title(assetDto.title())
@@ -133,21 +102,22 @@ public class AssetService {
                     .cost(assetDto.cost())
                     .location(assetDto.location())
                     .condition(assetDto.condition())
-                    .photoPath(filePath)
+                    .photoPath(assetDto.photoPath())
                     .assetStatus(AssetStatus.AVAILABLE)
                     .build();
 
             Asset savedAsset = assetRepo.save(asset);
 
-            AuditLog log = new AuditLog().builder()
+            AuditLog log = AuditLog.builder()
                     .userId(theUpdater.getUserId())
                     .entityType(EntityType.ASSET)
-                    .entityId(asset.getAssetId())
+                    .entityId(savedAsset.getAssetId())
                     .actionType(ActionType.CREATE)
                     .oldValue("N/A")
-                    .newValue("Created Asset SN: " + asset.getSerialNumber())
-                    .message("Created Asset: " + asset.getTitle() + " - " + asset.getSerialNumber())
+                    .newValue("Created Asset SN: " + savedAsset.getSerialNumber())
+                    .message("Created Asset: " + savedAsset.getTitle() + " - " + savedAsset.getSerialNumber())
                     .build();
+
             auditLogService.createLog(log);
 
             return new ResponseAssetDto(
@@ -162,10 +132,12 @@ public class AssetService {
                     savedAsset.getPhotoPath(),
                     savedAsset.getAssetStatus()
             );
+
         } catch (Exception ex){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         }
     }
+
 
     /**
      * this method deletes an asset with the id provided by the user
