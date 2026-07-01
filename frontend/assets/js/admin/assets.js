@@ -517,8 +517,8 @@ function showSuccess(message) {
     successMessage.textContent = message;
     successMessage.style.display = "block";
     successMessage.classList.add("visible");
-    setTimeout(() => {
-        successMessage.classList.remove("visible");
-        setTimeout(() => (successMessage.style.display = "none"), 400);
-    }, 3000);
+    // setTimeout(() => {
+    //     successMessage.classList.remove("visible");
+    //     setTimeout(() => (successMessage.style.display = "none"), 400);
+    // }, 3000);
 }
