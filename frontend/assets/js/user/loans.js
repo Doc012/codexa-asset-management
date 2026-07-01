@@ -117,12 +117,13 @@ const loanHistory = async () => {
                 return;
             }
             const row = document.createElement("tr");
+            console.log(loan);
 
             row.innerHTML = `
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>-</td>
+                <td>${loan.returnDate === null ? "-":loan.returnDate}</td>
                 <td>${loan.status}</td>
             `
 

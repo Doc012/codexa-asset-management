@@ -18,5 +18,6 @@ public record LoanResponseDTO(
         LoanStatus status,
         LocalDate requestDate,
         LocalDate checkoutDate,
+        LocalDate returnDate,
         LocalDate dueDate
 ) {}
