@@ -16,6 +16,7 @@ public record LoanResponseDTO(
         String requesterEmail,
         String department,
         LoanStatus status,
+        String rejectionReason,
         LocalDate requestDate,
         LocalDate checkoutDate,
         LocalDate returnDate,

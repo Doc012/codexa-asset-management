@@ -215,7 +215,7 @@ public class LoanService {
         return loanMapper.toDTO(loanRepo.save(loan));
     }
 
-    public LoanResponseDTO rejectLoan(Long loanId) {
+    public LoanResponseDTO rejectLoan(Long loanId, String rejectionReason) {
         Loan loan = getEntity(loanId);
 
         User user = userRepo.findById(1L).
@@ -239,6 +239,8 @@ public class LoanService {
         loan.setStatus(LoanStatus.REJECTED);
         loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
 
+        loan.setRejectionReason(rejectionReason);
+
         AuditLog log = new AuditLog().builder()
                 .userId(user.getUserId())
                 .entityType(EntityType.LOAN)
@@ -250,7 +252,7 @@ public class LoanService {
                 .build();
         auditLogService.createLog(log);
 
-        emailService.sendRejectedLoanEmail(requester.getEmail(), requester.getFirstName(), loan.getAsset().getTitle());
+        emailService.sendRejectedLoanEmail(requester.getEmail(), requester.getFirstName(), loan.getAsset().getTitle(), rejectionReason);
 
         return loanMapper.toDTO(loanRepo.save(loan));
     }

@@ -3,5 +3,7 @@ package backend.app.asset.enums;
 public enum AssetStatus {
     AVAILABLE,
     LOANED,
-    RETIRED
+    RETIRED,
+    ON_REPAIR,
+    NEEDS_INSPECTION
 }

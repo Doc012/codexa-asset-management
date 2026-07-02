@@ -111,7 +111,7 @@ function renderPending(data) {
       showConfirmationModal(() => loanApproval(loan.loanId));
 
     row.querySelector(".reject_btn").onclick = () =>
-      showConfirmationModal(() => loanRejection(loan.loanId));
+      showRejectReasonModal(loan.loanId);
 
     body.appendChild(row);
   });
@@ -174,11 +174,11 @@ function renderCheckout(data) {
 
 function loanStatusClass(status) {
   const map = {
-    PENDING:   "pending",
-    APPROVED:  "approved",
-    REJECTED:  "rejected",
+    PENDING: "pending",
+    APPROVED: "approved",
+    REJECTED: "rejected",
     CANCELLED: "cancelled",
-    RETURNED:  "returned",
+    RETURNED: "returned",
   };
   return map[status] ?? "";
 }
@@ -189,12 +189,12 @@ function loanStatusClass(status) {
 function renderHistory(data) {
   const body = document.querySelector("#historical-loans");
   if (!body) return;
- 
+
   body.innerHTML = "";
- 
+
   data.forEach((loan) => {
     const row = document.createElement("tr");
- 
+
     row.innerHTML = `
       <td>${loan.title}</td>
       <td>${loan.requesterEmail}</td>
@@ -206,7 +206,7 @@ function renderHistory(data) {
         </span>
       </td>
     `;
- 
+
     body.appendChild(row);
   });
 }
@@ -228,8 +228,8 @@ const loanApproval = async (id) => {
   location.reload();
 };
 
-const loanRejection = async (id) => {
-  await rejectLoan(id);
+const loanRejection = async (id, reason) => {
+  await rejectLoan(id, reason);
   location.reload();
 };
 
@@ -256,6 +256,48 @@ function showConfirmationModal(onConfirm) {
   };
 
   document.getElementById("cancelBtn").onclick = () => {
+    modal.style.display = "none";
+  };
+}
+
+/**
+ * REJECT REASON MODAL
+ */
+function showRejectReasonModal(loanId) {
+  const modal      = document.getElementById("rejectReasonModal");
+  const textarea   = document.getElementById("rejectReasonInput");
+  const errorMsg   = document.getElementById("rejectReasonError");
+  const confirmBtn = document.getElementById("confirmRejectBtn");
+
+  textarea.value = "";
+  errorMsg.style.display = "none";
+  confirmBtn.disabled = false;
+  confirmBtn.textContent = "Confirm Reject";
+  modal.style.display = "flex";
+
+  confirmBtn.onclick = async () => {
+    const reason = textarea.value.trim();
+
+    if (!reason) {
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Rejecting...";
+
+    try {
+      await loanRejection(loanId, reason);
+      modal.style.display = "none";
+    } catch (err) {
+      errorMsg.textContent = "Failed to reject loan. Please try again.";
+      errorMsg.style.display = "block";
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Confirm Reject";
+    }
+  };
+
+  document.getElementById("cancelRejectBtn").onclick = () => {
     modal.style.display = "none";
   };
 }

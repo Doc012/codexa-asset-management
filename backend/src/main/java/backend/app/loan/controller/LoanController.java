@@ -4,6 +4,7 @@ import backend.app.loan.dto.LoanRequestDTO;
 import backend.app.loan.dto.LoanResponseDTO;
 import backend.app.loan.service.LoanService;
 import backend.app.loan.enums.LoanStatus;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +60,8 @@ public class LoanController {
     }
 
     @PutMapping("/reject/{id}")
-    public LoanResponseDTO reject(@PathVariable Long id) {
-        return loanService.rejectLoan(id);
+    public LoanResponseDTO reject(@PathVariable Long id, @RequestParam String reason) {
+        return loanService.rejectLoan(id, reason);
     }
 
     @PutMapping("/checkout/{id}")

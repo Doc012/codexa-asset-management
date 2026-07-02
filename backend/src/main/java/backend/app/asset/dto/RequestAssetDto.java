@@ -15,5 +15,6 @@ public record RequestAssetDto(
         String location,
         AssetCondition condition,
         String photoPath,
-        AssetStatus assetStatus
+        AssetStatus assetStatus,
+        String comment
 ) { }

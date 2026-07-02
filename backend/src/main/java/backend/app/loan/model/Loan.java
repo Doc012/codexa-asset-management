@@ -35,6 +35,9 @@ public class Loan {
     @Enumerated(EnumType.STRING)
     private LoanStatus status;
 
+    @Column(name = "rejection_reason")
+    private String rejectionReason;
+
     private LocalDate checkoutDate;
     private LocalDate dueDate;
     private LocalDate returnDate;

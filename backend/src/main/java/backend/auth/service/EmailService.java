@@ -134,21 +134,21 @@ public class EmailService {
 
     //_______// Rejected Loan Request \\_______
     @Async
-    public void sendRejectedLoanEmail(String toEmail, String firstName, String assetTitle){
+    public void sendRejectedLoanEmail(String toEmail, String firstName, String assetTitle, String reason){
         String html = """
             <html>
                 <body style="font-family: Arial, sans-serif; color: #333; padding: 24px;">
                     <h2>Your loan request was not approved</h2>
                     <p>Hi %s</p>
                     <p>
-                        Unfortunately, your request for <strong>%s</strong> was not approved at this time.
+                        Unfortunately, your request for <strong>%s</strong> was not approved at this time. Reason, "<strong>%s</strong>".
                     </p>
                     <p style="color:#888;font-size:12px;">
                         If you have questions about this decision, please contact your asset administrator.
                     </p>
                 </body>
             </html>
-            """.formatted(firstName, assetTitle);
+            """.formatted(firstName, assetTitle, reason);
 
         sendHtmlEmail(toEmail, "Loan Request Rejected", html);
         log.info("Loan rejection email sent to {}", toEmail);

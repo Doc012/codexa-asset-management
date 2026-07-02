@@ -48,6 +48,9 @@ public class Asset {
     @Column(name = "condition", nullable = false)
     private AssetCondition condition;
 
+    @Column(name = "comment")
+    private String comment;
+
     @Column(name = "photo_path")
     private String photoPath;
 

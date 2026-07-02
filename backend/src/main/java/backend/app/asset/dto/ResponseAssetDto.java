@@ -18,6 +18,7 @@ public record ResponseAssetDto(
         String location,
         AssetCondition condition,
         String photoPath,
-        AssetStatus assetStatus
+        AssetStatus assetStatus,
+        String comment
 ) {}
 

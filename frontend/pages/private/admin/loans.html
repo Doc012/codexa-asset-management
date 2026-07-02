@@ -20,7 +20,8 @@
   <header class="topbar">
     <div class="left-nav">
       <button id="menuBtn" class="menu-btn">☰</button>
-      <h2 class="logo">Asset<span class="logo-accent"> IQ</span><span class="company-name">_powered by Codexa</span></h2>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span><span class="company-name">_powered by Codexa</span>
+      </h2>
     </div>
 
     <div class="right-nav">
@@ -243,6 +244,25 @@
         <div class="modal-actions">
           <button id="confirmBtn" class="confirm">Confirm</button>
           <button id="cancelBtn" class="cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rejectReasonModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <p>Reject this loan request?</p>
+        <label for="rejectReasonInput" style="display:block; margin: 10px 0 6px;">
+          Reason for rejection
+        </label>
+        <textarea id="rejectReasonInput" rows="3" placeholder="e.g. Asset already reserved for another department"
+          style="width: 100%;"></textarea>
+        <p id="rejectReasonError" style="color:#c0392b; display:none; font-size: 0.85em; margin-top: 4px;">
+          Please provide a reason.
+        </p>
+
+        <div class="modal-actions">
+          <button id="confirmRejectBtn" class="confirm">Confirm Reject</button>
+          <button id="cancelRejectBtn" class="cancel">Cancel</button>
         </div>
       </div>
     </div>

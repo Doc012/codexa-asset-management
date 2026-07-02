@@ -42,6 +42,7 @@ public class LoanMapper {
                 user.getEmail(),
                 user.getDepartment(),
                 loan.getStatus(),
+                loan.getRejectionReason(),
                 loan.getRequestDate(),
                 loan.getCheckoutDate(),
                 loan.getReturnDate(),

@@ -54,7 +54,8 @@ public class AssetService {
                         asset.getLocation(),
                         asset.getCondition(),
                         asset.getPhotoPath(),
-                        asset.getAssetStatus()
+                        asset.getAssetStatus(),
+                        asset.getComment()
                 ))
                 .toList();
     }
@@ -82,7 +83,8 @@ public class AssetService {
                 asset.getLocation(),
                 asset.getCondition(),
                 asset.getPhotoPath(),
-                asset.getAssetStatus()
+                asset.getAssetStatus(),
+                asset.getComment()
         );
     }
 
@@ -140,7 +142,8 @@ public class AssetService {
                     savedAsset.getLocation(),
                     savedAsset.getCondition(),
                     savedAsset.getPhotoPath(),
-                    savedAsset.getAssetStatus()
+                    savedAsset.getAssetStatus(),
+                    savedAsset.getComment()
             );
 
         } catch (Exception ex){
@@ -384,7 +387,8 @@ public class AssetService {
                 updated.getLocation(),
                 updated.getCondition(),
                 updated.getPhotoPath(),
-                updated.getAssetStatus()
+                updated.getAssetStatus(),
+                updated.getComment()
         );
     }
 
@@ -410,7 +414,8 @@ public class AssetService {
                 serialNumberAsset.getLocation(),
                 serialNumberAsset.getCondition(),
                 serialNumberAsset.getPhotoPath(),
-                serialNumberAsset.getAssetStatus()
+                serialNumberAsset.getAssetStatus(),
+                serialNumberAsset.getComment()
         );
 
     }
@@ -432,7 +437,8 @@ public class AssetService {
                         asset.getLocation(),
                         asset.getCondition(),
                         asset.getPhotoPath(),
-                        asset.getAssetStatus()
+                        asset.getAssetStatus(),
+                        asset.getComment()
                 ))
                 .toList();
     }
@@ -449,7 +455,8 @@ public class AssetService {
                         asset.getLocation(),
                         asset.getCondition(),
                         asset.getPhotoPath(),
-                        asset.getAssetStatus()
+                        asset.getAssetStatus(),
+                        asset.getComment()
                 ))
                 .toList();
     }
@@ -462,16 +469,17 @@ public class AssetService {
     public List<ResponseAssetDto> getByLocation(String location){
         return assetRepo.findByLocation(location).stream()
                 .map(asset -> new ResponseAssetDto(
-                                asset.getAssetId(),
-                                asset.getTitle(),
-                                asset.getCategory(),
-                                asset.getSerialNumber(),
-                                asset.getAcquisitionDate(),
-                                asset.getCost(),
-                                asset.getLocation(),
-                                asset.getCondition(),
-                                asset.getPhotoPath(),
-                                asset.getAssetStatus()
+                        asset.getAssetId(),
+                        asset.getTitle(),
+                        asset.getCategory(),
+                        asset.getSerialNumber(),
+                        asset.getAcquisitionDate(),
+                        asset.getCost(),
+                        asset.getLocation(),
+                        asset.getCondition(),
+                        asset.getPhotoPath(),
+                        asset.getAssetStatus(),
+                        asset.getComment()
                         )
                 )
                 .toList();

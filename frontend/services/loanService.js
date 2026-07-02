@@ -101,10 +101,11 @@ export async function checkoutLoan(id) {
 /**
  * Transitions a loan's status state to rejected.
  * @param {string|number} id - The ID of the target loan record.
+ * @param {string} reason - The reason for rejecting the loan request.
  * @returns {Promise<Object>} A promise that resolves to the updated loan object context.
  */
-export async function rejectLoan(id) {
-    const response = await apiFetch(`/loans/reject/${id}`, {
+export async function rejectLoan(id, reason) {
+    const response = await apiFetch(`/loans/reject/${id}?reason=${encodeURIComponent(reason)}`, {
         method: 'PUT'
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
