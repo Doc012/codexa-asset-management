@@ -39,18 +39,20 @@ public class AssetController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseAssetDto createAsset(
-            @RequestBody @Valid RequestAssetDto newAsset) {
+            @RequestPart("asset") @Valid RequestAssetDto newAsset,
+            @RequestPart(value="file", required = false) MultipartFile file) {
 
         System.out.println("DTO: " + newAsset);
 
-        return assetService.createAsset(newAsset);
+        return assetService.createAsset(newAsset, file);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = {"multipart/form-data"})
     public ResponseAssetDto updateAsset(
             @PathVariable Long id,
-            @RequestBody RequestAssetDto asset){
-        return assetService.updateAsset(id, asset);
+            @RequestPart("asset") @Valid RequestAssetDto asset,
+            @RequestPart(value="file", required = false) MultipartFile file){
+        return assetService.updateAsset(id, asset, file);
     }
 
     @DeleteMapping("/{id}")

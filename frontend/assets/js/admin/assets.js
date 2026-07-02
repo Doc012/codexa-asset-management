@@ -324,7 +324,7 @@ async function handleSave() {
     if (!assetForm.reportValidity()) return;
 
     try {
-        await createAsset(buildPayload());
+        await createAsset(buildPayload(), formPhoto.files[0]);
         closeFormModal();
         showSuccess("Asset created successfully.");
         await loadAndRender();
@@ -338,10 +338,10 @@ async function handleSave() {
  */
 async function handleUpdate() {
     if (!assetForm.reportValidity()) return;
-
+    
     const id = +formAssetId.value;
     try {
-        await updateAsset(id, buildPayload());
+        await updateAsset(id, buildPayload(), formPhoto.files[0]);
         closeFormModal();
         showSuccess("Asset updated successfully.");
         await loadAndRender();

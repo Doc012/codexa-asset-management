@@ -11,13 +11,16 @@ import backend.app.auditLog.enums.ActionType;
 import backend.app.auditLog.enums.EntityType;
 import backend.app.auditLog.model.AuditLog;
 import backend.app.auditLog.service.AuditLogService;
+import backend.app.storage.StorageService;
 import backend.app.user.enums.Role;
 import backend.app.user.model.User;
 import backend.app.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -29,6 +32,10 @@ public class AssetService {
     private final AssetRepo assetRepo;
     private final UserRepository userRepo;
     private final AuditLogService auditLogService;
+    private final StorageService storageService;
+
+    @Value("${supabase.storage.assets-bucket}")
+    private String assetsBucket;
 
 
     /**
@@ -86,7 +93,10 @@ public class AssetService {
      * @return the details of the newly created asset
      */
     @Transactional
-    public ResponseAssetDto createAsset(RequestAssetDto assetDto){
+    public ResponseAssetDto createAsset(RequestAssetDto assetDto, MultipartFile file){
+
+        String photoUrl = storageService.upload(file, assetsBucket, "");
+
         User theUpdater = userRepo.findById(1L)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
@@ -102,7 +112,7 @@ public class AssetService {
                     .cost(assetDto.cost())
                     .location(assetDto.location())
                     .condition(assetDto.condition())
-                    .photoPath(assetDto.photoPath())
+                    .photoPath(photoUrl)
                     .assetStatus(AssetStatus.AVAILABLE)
                     .build();
 
@@ -164,6 +174,7 @@ public class AssetService {
                 .build();
         auditLogService.createLog(log);
 
+        storageService.delete(asset.getPhotoPath(), assetsBucket);
         assetRepo.delete(asset);
     }
 
@@ -175,7 +186,7 @@ public class AssetService {
      * @throws RuntimeException if the asset is not found
      */
     @Transactional
-    public ResponseAssetDto updateAsset(Long id, RequestAssetDto updatedAssetDto){
+    public ResponseAssetDto updateAsset(Long id, RequestAssetDto updatedAssetDto, MultipartFile file){
         Asset existingAsset = assetRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Asset not found"));
 
@@ -184,6 +195,11 @@ public class AssetService {
                         HttpStatus.NOT_FOUND,
                         "User not found"
                 ));
+
+        if (file != null && !file.isEmpty()){
+            storageService.delete(existingAsset.getPhotoPath(), assetsBucket);
+            existingAsset.setPhotoPath(storageService.upload(file, assetsBucket, ""));
+        }
 
         String oldTitle = existingAsset.getTitle();
         String oldCategory = existingAsset.getCategory().name();
@@ -202,10 +218,6 @@ public class AssetService {
         existingAsset.setCost(updatedAssetDto.cost());
         existingAsset.setLocation(updatedAssetDto.location());
         existingAsset.setCondition(updatedAssetDto.condition());
-//        existingAsset.setPhotoPath(updatedAssetDto.photoPath());
-        if (updatedAssetDto.photoPath() != null) {
-            existingAsset.setPhotoPath(updatedAssetDto.photoPath());
-        }
 
 //        existingAsset.setAssetStatus(updatedAssetDto.assetStatus());
         if (updatedAssetDto.assetStatus() != null) {

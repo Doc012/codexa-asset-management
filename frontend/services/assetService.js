@@ -47,14 +47,26 @@ export async function getAssetsByCategory(category) {
  * @param {Object} assetData - The properties and values of the new asset.
  * @returns {Promise<Object>} A promise that resolves to the newly created asset object.
  */
-export async function createAsset(assetData) {
-    const response = await apiFetch(`/assets`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(assetData)
+export async function createAsset(assetData, imageFile) {
+    const formData = new FormData();
+
+    formData.append("asset", new Blob(
+        [JSON.stringify(assetData)],
+        { type: "application/json" }
+    ));
+
+    if (imageFile) {
+        formData.append("file", imageFile);
+    }
+
+    const res = await apiFetch("/assets", {
+        method: "POST",
+        body: formData,
+        headers: {},
     });
-    
-    return await response.json();
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
 }
 
 /**
@@ -63,14 +75,26 @@ export async function createAsset(assetData) {
  * @param {Object} assetData - The updated asset data properties.
  * @returns {Promise<Object>} A promise that resolves to the updated asset object.
  */
-export async function updateAsset(id, assetData) {
-    const response = await apiFetch(`/assets/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(assetData)
+export async function updateAsset(id, assetData, imageFile) {
+    const formData = new FormData();
+
+    formData.append("asset", new Blob(
+        [JSON.stringify(assetData)],
+        { type: "application/json" }
+    ));
+
+    if (imageFile) {
+        formData.append("file", imageFile);
+    }
+
+    const res = await apiFetch(`/assets/${id}`, {
+        method: "PUT",
+        body: formData,
+        headers: {},
     });
-    
-    return await response.json();
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
 }
 
 /**
