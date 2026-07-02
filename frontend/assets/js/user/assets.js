@@ -185,7 +185,7 @@ const requestLoan = async (assetId) => {
       assetId: assetId,
     });
 
-    successMessage.textContent = "Loan was successfully requested.";
+    successMessage.textContent = "Loan was successfully requested";
     successMessage.style.display = "block";
 
     setTimeout(() => {
