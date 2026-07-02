@@ -27,8 +27,10 @@
 }
 
 .search-input-container {
-  width: 400px;
-  max-width: none;       
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  flex: 1;
 }
 
 .search-icon {
@@ -380,4 +382,16 @@
 .tab-btn.active {
   background-color: #4f46e5;
   color: white;
+}
+
+@media (max-width: 768px) {
+  .search-input-container {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .portal-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
