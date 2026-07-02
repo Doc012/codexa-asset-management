@@ -335,13 +335,35 @@
 }
 
 .portal-modal-card {
-  background: var(--bg-surface, #ffffff);
+  background: #ffffff;
   border-radius: 12px;
-  width: 100%;
-  max-width: 500px;
-  padding: 24px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  animation: fadeInScale 0.2s ease;
+  width: min(92vw, 480px);
+  max-height: 85vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+#user-edit-form,
+#add-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.modal-card-header {
+  flex-shrink: 0;
+}
+
+#user-edit-form,
+#add-user-form {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .modal-card-header {
@@ -460,14 +482,6 @@
   display: none !important;
 }
 
-.portal-modal-card {
-  background: #ffffff;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 450px;
-  padding: 20px;
-}
-
 .form-field {
   display: flex;
   flex-direction: column;
@@ -508,3 +522,25 @@
   background-color: #16a34a;
   color: white;
 }
+
+
+@media (max-width: 768px) {
+  .portal-modal-card {
+    width: 92vw;
+    max-width: none;
+    max-height: 90vh;
+    padding: 16px;
+  }
+
+  .form-row.split {
+    grid-template-columns: 1fr;
+  }
+}
+
+#user-modal-overlay,
+#add-user-modal-overlay {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+
