@@ -16,10 +16,11 @@
   <header class="topbar">
     <div class="left-nav">
       <button id="menuBtn" class="menu-btn">☰</button>
-      <h2 class="logo">Asset<span class="logo-accent"> IQ</span><span class="company-name">_powered by Codexa</span></h2>
+      <h2 class="logo">Asset<span class="logo-accent"> IQ</span><span class="company-name">_powered by Codexa</span>
+      </h2>
     </div>
     <div class="right-nav">
-     <div id="profile-container" class="profile-container">
+      <div id="profile-container" class="profile-container">
         <div id="profileInitial" class="profile-initial"></div>
         <img id="profileImage" class="profile-image">
         <input type="file" id="profileUpload" hidden>
@@ -87,115 +88,111 @@
     </ul>
   </aside>
 
-<main id="mainContent" class="content">
+  <main id="mainContent" class="content">
     <section id="dashboardPage" class="page active">
 
-        <div class="portal-toolbar-header">
-            <div class="title-meta">
-                <h1>User Dashboard</h1>
-                <p>Manage your assigned assets, active loans and upcoming returns from one place.</p>
-            </div>
+      <div class="portal-toolbar-header">
+        <div class="title-meta">
+          <h1>User Dashboard</h1>
+          <p>Manage your assigned assets, active loans and upcoming returns from one place.</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="metric-icon-frame primary-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+
+          <div class="metric-data">
+            <small>Total Assets</small>
+            <h2 id="totalAssets">0</h2>
+          </div>
         </div>
 
-        <div class="stats-grid">
+        <div class="stat-card">
+          <div class="metric-icon-frame success-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
 
-            <div class="stat-card">
-                <div class="metric-icon-frame primary-tint">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                    </svg>
-                </div>
-
-                <div class="metric-data">
-                    <small>Total Assets</small>
-                    <h2 id="totalAssets">0</h2>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="metric-icon-frame success-tint">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
-
-                <div class="metric-data">
-                    <small>My Loans</small>
-                    <h2 id="totalLoans">0</h2>
-                </div>
-            </div>
-
-            <div class="stat-card" id="due">
-                <div class="metric-icon-frame warning-tint">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                </div>
-
-                <div class="metric-data">
-                    <small>Due Soon</small>
-                    <h2 id="total_requests">0</h2>
-                </div>
-            </div>
-
-            <div class="stat-card danger">
-                <div class="metric-icon-frame danger-tint">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                </div>
-
-                <div class="metric-data">
-                    <small>Overdue</small>
-                    <h2 id="overdue" class="danger-text">0</h2>
-                </div>
-            </div>
-
+          <div class="metric-data">
+            <small>My Loans</small>
+            <h2 id="totalLoans">0</h2>
+          </div>
         </div>
 
+        <div class="stat-card" id="due">
+          <div class="metric-icon-frame warning-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
 
-        <div class="portal-card-table-wrapper">
-
-            <div class="card-inline-header">
-                <h4>Assets</h4>
-
-                <a href="assets.html" class="action-view-all-link">
-                    View All
-                </a>
-            </div>
-
-            <table class="asset-table">
-
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Condition</th>
-                        <th>Picture</th>
-                    </tr>
-                </thead>
-
-                <tbody id="user-asset-table-body">
-
-                </tbody>
-
-            </table>
+          <div class="metric-data">
+            <small>Due Soon</small>
+            <h2 id="total_requests">0</h2>
+          </div>
         </div>
+
+        <div class="stat-card danger">
+          <div class="metric-icon-frame danger-tint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+
+          <div class="metric-data">
+            <small>Overdue</small>
+            <h2 id="overdue" class="danger-text">0</h2>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="portal-card-table-wrapper">
+
+        <div class="card-inline-header">
+          <h4>Assets</h4>
+
+          <a href="assets.html" class="action-view-all-link">
+            View All
+          </a>
+        </div>
+
+        <table class="asset-table">
+
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Condition</th>
+              <th>Picture</th>
+            </tr>
+          </thead>
+
+          <tbody id="user-asset-table-body">
+
+          </tbody>
+
+        </table>
+      </div>
 
       <div id="successMessage" class="success"></div>
 
     </section>
-</main>
+  </main>
 
   <script type="module" src="../../../assets/js/guards/staff.guard.js"></script>
   <script type="module" src="../../../assets/js/common/header.js"></script>

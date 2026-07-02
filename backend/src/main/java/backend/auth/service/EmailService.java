@@ -55,7 +55,7 @@ public class EmailService {
     //_______// Password Reset \\_______
     @Async
     public void sendPasswordResetEmail(String toEmail, String firstName, String token){
-        String resetUrl = "http://127.0.0.1:5500/pages/auth/reset-password.html?token=" + token;
+        String resetUrl = baseUrl + "/pages/auth/reset-password.html?token=" + token;
 
         String html = """
                 <html>
