@@ -285,7 +285,7 @@ public class AuthService {
 
         if (passwordEncoder.matches(request.currentPassword(), user.getPassword())){
             user.setPassword(passwordEncoder.encode(request.newPassword()));
-
+            log.info("User status {}", user.getStatus());
             userRepository.save(user);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The current password you entered is incorrect");

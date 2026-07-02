@@ -244,7 +244,7 @@ public class UserService {
 //        String oldPassword = user.getPassword();
 //        String oldPicURL = user.getPicUrl();
 
-        user.setStatus(newUserDetails.status());
+//        user.setStatus(newUserDetails.status());
         user.setDepartment(newUserDetails.department());
         user.setEmail(newUserDetails.email());
         user.setFirstName(newUserDetails.firstName());
