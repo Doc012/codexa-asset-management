@@ -260,14 +260,15 @@
         </div>
 
         <div class="admin-split-layout">
-          <div class="portal-card-table-wrapper">
+          <div class="portal-card-table-wrapper admin-table-wrapper">
             <div class="card-inline-header">
               <h4>Recent Audit Logs</h4>
               <a href="./logs.html" class="action-view-all-link"
                 >View All Logs</a
               >
             </div>
-            <table class="asset-table">
+            <div class="table-scroll">
+               <table class="asset-table">
               <thead>
                 <tr>
                   <th>Operator</th>
@@ -278,6 +279,8 @@
               <tbody id="adminRecentLogsBody">
               </tbody>
             </table>
+            </div>
+           
           </div>
         </div>
       </section>
