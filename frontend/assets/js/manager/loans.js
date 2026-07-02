@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await historicalLoans();
 });
 
-const successMessage = document.getElementById("successMessage");
-
 /**
  * This for the Dashboard cards for Mangager's dashbaord.
  */
@@ -118,6 +116,7 @@ const allPendingLoans = async () => {
  */
 
 const loanApproval = async (loanId) => {
+    const successMessage = document.getElementById("successMessage");
     try {
         await approveLoan(loanId);
         setTimeout(() => {
@@ -139,6 +138,7 @@ const loanApproval = async (loanId) => {
  * Reject loan
  */
 const loanRejection = async (loanId) => {
+    const successMessage = document.getElementById("successMessage");
     try {
         await rejectLoan(loanId);
         setTimeout(() => {
@@ -204,12 +204,13 @@ const allActiveLoans = async () => {
  * @param {*} loanId loan id
  */
 const loanReturn = async (loanId) => {
+    const successMessage = document.getElementById("successMessage");
     try {
         await returnLoan(loanId);
         setTimeout(() => {
             window.location.reload();
         }, 1000);
-        successMessage.textContent = "Loan returned..";
+        successMessage.textContent = "Loan returned.";
         successMessage.style.display = "block";
 
         setTimeout(() => {
@@ -268,6 +269,7 @@ const checkingOutLoans = async () => {
  * @param {*} id  loan id
  */
 const loanCheckout = async (id) => {
+    const successMessage = document.getElementById("successMessage");
     try {
         await checkoutLoan(id);
         setTimeout(() => {
