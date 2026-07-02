@@ -93,9 +93,7 @@ deleteBtn.addEventListener("click", () => {
 }
 
 confirmBtn.addEventListener("click", () => {
-    console.log("We are here blud!")
   modal.style.display = "none";
-  successMessage.textContent = "Success.";
   successMessage.style.display = "block";
 
   setTimeout(() => {
