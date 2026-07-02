@@ -120,7 +120,12 @@ export const changePassword = async (userId, passwordRequest) => {
 
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail || err.message || "Password update failed");
+        const rawMessage = err.detail || err.message || "Password update failed";
+
+        // Strip a leading "400 BAD_REQUEST" / "SOME_CODE" style prefix if present
+        const cleanMessage = rawMessage.replace(/^\d{3}\s+[A-Z_]+\s*/, "");
+
+        throw new Error(cleanMessage);
     }
 
     return await res.json();

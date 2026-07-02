@@ -79,7 +79,6 @@ if (savedImage && profileImage && profileInitial) {
     profileImage.style.display = "block";
     profileInitial.style.display = "none";
 }
-
 const modal = document.getElementById("btnConfirmation");
 const deleteBtn = document.getElementById("request");
 const confirmBtn = document.getElementById("confirmBtn");
@@ -87,28 +86,29 @@ const cancelBtn = document.getElementById("cancelBtn");
 const successMessage = document.getElementById("successMessage");
 
 if (deleteBtn && modal) {
-deleteBtn.addEventListener("click", () => {
-  modal.style.display = "flex";
-});
+  deleteBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
+  });
 }
 
-confirmBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-  successMessage.style.display = "block";
+if (confirmBtn && modal && successMessage) {
+  confirmBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    successMessage.style.display = "block";
 
-  setTimeout(() => {
-    successMessage.style.display = "none";
-  }, 1000);
+    setTimeout(() => {
+      successMessage.style.display = "none";
+    }, 1000);
+  });
+}
 
-});
-
-
-cancelBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-  successMessage.textContent = "Cancelled.";
-  successMessage.style.display = "block";
-});
-
+if (cancelBtn && modal && successMessage) {
+  cancelBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    successMessage.textContent = "Cancelled.";
+    successMessage.style.display = "block";
+  });
+}
 /**
  * Switches the active tab view and highlights the selected tab button.
  * @param {Event} event - The click event triggering the tab change.

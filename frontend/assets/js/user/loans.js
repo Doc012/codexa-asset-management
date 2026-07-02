@@ -90,8 +90,11 @@ const allPendingLoans = async () => {
  */
 
 const loanCancellation = async (id) => {
+    const successMessage = document.getElementById("successMessage");
     try {
         await cancelLoan(id);
+        successMessage.textContent = "Request cancelled.";
+        successMessage.style.display = "block";
         setTimeout(() => {
             window.location.reload();
         }, 1000);
@@ -123,7 +126,7 @@ const loanHistory = async () => {
                 <td>${loan.title}</td>
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
-                <td>${loan.returnDate === null ? "-":loan.returnDate}</td>
+                <td>${loan.returnDate === null ? "-" : loan.returnDate}</td>
                 <td>${loan.status}</td>
             `
 

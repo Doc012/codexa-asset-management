@@ -224,23 +224,43 @@ function formatLoanStatus(status) {
  * ACTIONS
  */
 const loanApproval = async (id) => {
+  const successMessage = document.getElementById("successMessage");
   await approveLoan(id);
-  location.reload();
+  successMessage.textContent = "Loan was successfully approved.";
+  successMessage.style.display = "block";
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 };
 
 const loanRejection = async (id, reason) => {
+  const successMessage = document.getElementById("successMessage");
   await rejectLoan(id, reason);
-  location.reload();
+  successMessage.textContent = "Loan rejected.";
+  successMessage.style.display = "block";
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 };
 
 const loanReturn = async (id) => {
+  const successMessage = document.getElementById("successMessage");
   await returnLoan(id);
-  location.reload();
+  successMessage.textContent = "Asset returned.";
+  successMessage.style.display = "block";
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 };
 
 const loanCheckout = async (id) => {
+  const successMessage = document.getElementById("successMessage");
   await checkoutLoan(id);
-  location.reload();
+  successMessage.textContent = "Loan checked out.";
+  successMessage.style.display = "block";
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
 };
 
 /**
@@ -264,9 +284,9 @@ function showConfirmationModal(onConfirm) {
  * REJECT REASON MODAL
  */
 function showRejectReasonModal(loanId) {
-  const modal      = document.getElementById("rejectReasonModal");
-  const textarea   = document.getElementById("rejectReasonInput");
-  const errorMsg   = document.getElementById("rejectReasonError");
+  const modal = document.getElementById("rejectReasonModal");
+  const textarea = document.getElementById("rejectReasonInput");
+  const errorMsg = document.getElementById("rejectReasonError");
   const confirmBtn = document.getElementById("confirmRejectBtn");
 
   textarea.value = "";

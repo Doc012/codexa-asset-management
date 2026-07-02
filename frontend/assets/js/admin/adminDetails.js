@@ -2,6 +2,7 @@ import { getUserById } from "../../../services/userService.js";
 import { API_BASE_URL } from "../config.js";
 import { updateAllUserDetails } from "../../../services/userService.js";
 import { getUser } from "../authContext.js";
+import { changePassword } from "../../../services/userService.js";
 
 
 /**
@@ -11,11 +12,11 @@ import { getUser } from "../authContext.js";
 document.addEventListener("DOMContentLoaded", async () => {
     await userDetails();
     await updateDetails();
+    await updatePassword();
 
 });
 
 const userId = getUser().id;
-
 const userDetails = async () => {
     const profileImage = document.querySelector(".profile-image")
     const profileInitial = document.querySelector(".profile-initial")
@@ -79,7 +80,52 @@ const updateDetails = async () => {
     }
 };
 
-function showConfirmationModal(onConfirm) {
+/**
+ * UPDATE User password on the settings
+ */
+const updatePassword = () => {
+    const form = document.getElementById("security-form");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById("sec-current").value;
+        const newPassword = document.getElementById("sec-new").value;
+        const confirmPassword = document.getElementById("sec-confirm").value;
+
+        let validationError = null;
+
+        if (newPassword.length < 8) {
+            validationError = "New password must be at least 8 characters.";
+        } else if (newPassword !== confirmPassword) {
+            validationError = "New password and confirmation do not match.";
+        } else if (newPassword === currentPassword) {
+            validationError = "New password must be different from the current password.";
+        }
+
+        if (validationError) {
+            showValidationError(validationError);
+            return;
+        }
+
+        const passwordRequest = {
+            currentPassword,
+            newPassword
+        };
+
+        showConfirmationModal(async () => {
+            await changePassword(userId, passwordRequest);
+            form.reset();
+        }, {
+            confirmTitle: "Update your password",
+            confirmMessage: "Are you sure you want to change your password?",
+            successMessage: "Your password has been updated successfully.",
+            errorTitle: "Password Update Failed"
+        });
+    });
+};
+
+function showValidationError(errorMessage) {
     const modal = document.getElementById("updated-details");
     const title = modal.querySelector("h2");
     const message = modal.querySelector("p");
@@ -87,27 +133,63 @@ function showConfirmationModal(onConfirm) {
     const cancelBtn = document.getElementById("cancelBtn");
 
     modal.style.display = "flex";
+    title.textContent = "Password Update Failed";
+    message.textContent = errorMessage;
+    confirmBtn.style.display = "none";
+    cancelBtn.textContent = "Close";
+    cancelBtn.onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
+function showConfirmationModal(onConfirm, options = {}) {
+    const {
+        confirmTitle = "Update your details",
+        confirmMessage = "Are you sure you want to update your details?",
+        successMessage = "Your details have been updated successfully.",
+        errorTitle = "Update Failed",
+    } = options;
+
+    const modal = document.getElementById("updated-details");
+    const title = modal.querySelector("h2");
+    const message = modal.querySelector("p");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+
+    modal.style.display = "flex";
+    title.textContent = confirmTitle;
+    message.textContent = confirmMessage;
+    confirmBtn.style.display = "inline-block";
+    confirmBtn.textContent = "Confirm";
+    confirmBtn.disabled = false;
+    cancelBtn.textContent = "Cancel";
+
+    const resetModal = () => {
+        modal.style.display = "none";
+    };
 
     confirmBtn.onclick = async () => {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "Processing...";
+
         try {
             await onConfirm();
 
             title.textContent = "Success";
-            message.textContent = "Your details have been updated successfully.";
-
+            message.textContent = successMessage;
             confirmBtn.style.display = "none";
             cancelBtn.textContent = "Close";
-
-            cancelBtn.onclick = () => {
-                modal.style.display = "none";
-                title.textContent = "Update your details";
-                message.textContent = "Are you sure you want update your details?";
-                confirmBtn.style.display = "inline-block";
-                cancelBtn.textContent = "Cancel";
-            };
+            cancelBtn.onclick = resetModal;
 
         } catch (err) {
             console.error(err);
+
+            title.textContent = errorTitle;
+            message.textContent = err.message || "Something went wrong. Please try again.";
+            confirmBtn.disabled = false;
+            confirmBtn.style.display = "none";
+            cancelBtn.textContent = "Close";
+            cancelBtn.onclick = resetModal;
         }
     };
 
