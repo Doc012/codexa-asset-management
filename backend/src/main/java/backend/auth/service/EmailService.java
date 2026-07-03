@@ -84,7 +84,7 @@ public class EmailService {
     //_______// User Account Activated \\_______
     @Async
     public void  sendAccountActivatedEmail(String toEmail, String firstName){
-        String loginUrl = "http://127.0.0.1:5500/pages/auth/login.html";
+        String loginUrl = "http://127.0.0.1:5501/pages/auth/login.html";
 
         String html = """
             <html>

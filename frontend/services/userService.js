@@ -130,3 +130,25 @@ export const changePassword = async (userId, passwordRequest) => {
 
     return await res.json();
 };
+
+/**
+ * Updates only the status of a user.
+ * @param {string|number} id - The database ID of the user.
+ * @param {string} status - The new status (ACTIVE, INACTIVE, PENDING_APPROVAL, PENDING_VERIFICATION).
+ * @returns {Promise<Object>} The updated user.
+ */
+export const updateUserStatus = async (id, status) => {
+    const res = await apiFetch(
+        `/users/user-status/${id}?status=${encodeURIComponent(status)}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || err.message || "Failed to update user status.");
+    }
+
+    return await res.json();
+};

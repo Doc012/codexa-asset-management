@@ -1,5 +1,9 @@
 package backend.auth.service;
 
+import backend.app.auditLog.enums.ActionType;
+import backend.app.auditLog.enums.EntityType;
+import backend.app.auditLog.model.AuditLog;
+import backend.app.auditLog.repository.AuditLogRepo;
 import backend.app.user.dto.UserDTO;
 import backend.app.user.enums.Role;
 import backend.app.user.enums.Status;
@@ -36,6 +40,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final TokenStore tokenStore;
     private final EmailService emailService;
+    private final AuditLogRepo auditLogRepo;
 
     //_______// Registration \\_______
     @Transactional
@@ -57,7 +62,20 @@ public class AuthService {
                 .status(Status.PENDING_VERIFICATION)
                 .build();
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        AuditLog auditLog = new AuditLog().builder()
+                .entityType(EntityType.USER)
+                .entityId(savedUser.getUserId())
+                .userId(savedUser.getUserId()) // Logged-in  user ID
+                .actionType(ActionType.CREATE)
+                .oldValue("N/A")
+                .newValue("Created User ID: " + savedUser.getUserId())
+                .message("Created " + user.getFirstName() + " " + user.getLastName())
+
+                .build();
+
+        auditLogRepo.save(auditLog);
 
         String verifyToken = UUID.randomUUID().toString();
         tokenStore.saveEmailVerificationToken(verifyToken, user.getEmail());

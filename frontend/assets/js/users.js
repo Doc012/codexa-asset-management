@@ -2,6 +2,7 @@ import {
     getAllUsers,
     createUser,
     updateAllUserDetails,
+    updateUserStatus
 } from "../../../services/userService.js";
 
 // ─── State ────────────────────────────────────────────────────────────────────
@@ -264,20 +265,30 @@ async function handleUpdate(e) {
     if (!editForm.reportValidity()) return;
 
     const id = +editUserId.value;
-    const payload = {
+
+    const user = allUsers.find(u => u.userId === id);
+
+    const userPayload = {
         firstName:  editFirstName.value.trim(),
         lastName:   editLastName.value.trim(),
         email:      editEmail.value.trim(),
         department: editDepartment.value.trim(),
-        role:       editRole.value,
-        status:     editStatus.value,
+        role:       editRole.value
     };
 
+    const newStatus = editStatus.value;
+
     try {
-        await updateAllUserDetails(id, payload);
+        await updateAllUserDetails(id, userPayload);
+
+        if (user && user.status !== newStatus) {
+            await updateUserStatus(id, newStatus);
+        }
+
         closeEditModal();
         showSuccess("User updated successfully.");
         await loadAndRender();
+
     } catch (err) {
         alert(`Failed to update user: ${err.message}`);
     }

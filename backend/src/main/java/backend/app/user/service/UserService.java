@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -103,11 +104,44 @@ public class UserService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "User with id " + id + " not found!"));
 
+        String oldFirstName = user.getFirstName();
+        String oldLastName = user.getLastName();
+
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
-        user.setPicUrl(request.picUrl());
 
-        return userRepo.save(user);
+        User savedUser = userRepo.save(user);
+        if(!java.util.Objects.equals(oldFirstName, user.getFirstName())){
+            AuditLog auditLog = new AuditLog().builder()
+                    .entityType(EntityType.USER)
+                    .entityId(savedUser.getUserId())
+                    .userId(savedUser.getUserId())
+                    .actionType(ActionType.CREATE)
+                    .oldValue(oldFirstName)
+                    .newValue(savedUser.getFirstName())
+                    .message("Updated first name, from " + oldFirstName + " to: " + savedUser.getFirstName())
+
+                    .build();
+
+            auditLogService.createLog(auditLog);
+        }
+
+        if(!java.util.Objects.equals(oldLastName, user.getLastName())){
+            AuditLog auditLog = new AuditLog().builder()
+                    .entityType(EntityType.USER)
+                    .entityId(savedUser.getUserId())
+                    .userId(savedUser.getUserId())
+                    .actionType(ActionType.CREATE)
+                    .oldValue(oldFirstName)
+                    .newValue(savedUser.getFirstName())
+                    .message("Updated last name from " + oldLastName + " to: " + savedUser.getLastName())
+
+                    .build();
+
+            auditLogService.createLog(auditLog);
+        }
+
+        return savedUser;
     }
 
     /**
@@ -194,7 +228,7 @@ public class UserService {
         AuditLog auditLog = new AuditLog().builder()
                 .entityType(EntityType.USER)
                 .entityId(user.getUserId())
-                .userId(7L) // Logged-in  user ID
+                .userId(1L) // Logged-in  user ID
                 .actionType(ActionType.DELETE)
                 .oldValue("N/A")
                 .newValue("Deleted User ID: " + user.getUserId())
@@ -219,12 +253,6 @@ public class UserService {
     public User updateUser(CreateUserRequest newUserDetails, Long id){
         User user = userRepo.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-
-//        User oldUser = userRepo.findById(id)
-//                        .orElseThrow(() -> new ResponseStatusException(
-//                                HttpStatus.NOT_FOUND,
-//                                "User not found"
-//                        ));
 
         User theUpdater = userRepo.findById(1L)
                         .orElseThrow(() -> new ResponseStatusException(
@@ -274,7 +302,7 @@ public class UserService {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.USER)
                         .entityId(id)
-                        .userId(user.getUserId())
+                        .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(oldEmail)
                         .newValue(user.getEmail())
@@ -289,7 +317,7 @@ public class UserService {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.USER)
                         .entityId(id)
-                        .userId(user.getUserId())
+                        .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(oldFirstName)
                         .newValue(user.getFirstName())
@@ -304,7 +332,7 @@ public class UserService {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.USER)
                         .entityId(id)
-                        .userId(user.getUserId())
+                        .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(oldLastName)
                         .newValue(user.getFirstName())
@@ -319,7 +347,7 @@ public class UserService {
                 AuditLog log = AuditLog.builder()
                         .entityType(EntityType.USER)
                         .entityId(id)
-                        .userId(user.getUserId())
+                        .userId(theUpdater.getUserId())
                         .actionType(ActionType.UPDATE)
                         .oldValue(String.valueOf(oldStatus))
                         .newValue(String.valueOf(user.getStatus()))
@@ -350,10 +378,16 @@ public class UserService {
         user.setStatus(Status.INACTIVE);
         userRepo.save(user);
 
+        User theUpdater = userRepo.findById(1L)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User not found"
+                ));
+
         AuditLog auditLog = new AuditLog().builder()
                 .entityType(EntityType.USER)
                 .entityId(user.getUserId())
-                .userId(7L) // Logged-in  user ID
+                .userId(theUpdater.getUserId())
                 .actionType(ActionType.UPDATE)
                 .oldValue("N/A")
                 .newValue("Inactive User ID: " + user.getUserId())

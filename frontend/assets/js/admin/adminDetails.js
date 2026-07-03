@@ -1,6 +1,6 @@
 import { getUserById } from "../../../services/userService.js";
 import { API_BASE_URL } from "../config.js";
-import { updateAllUserDetails } from "../../../services/userService.js";
+import { updateUserProfile } from "../../../services/userService.js";
 import { getUser } from "../authContext.js";
 import { changePassword } from "../../../services/userService.js";
 
@@ -67,7 +67,7 @@ const updateDetails = async () => {
 
             try {
                 showConfirmationModal(async () => {
-                    await updateAllUserDetails(userId, userData);
+                    await updateUserProfile(userId, userData);
                 });
 
             } catch (error) {
