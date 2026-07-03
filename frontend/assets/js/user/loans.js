@@ -162,7 +162,18 @@ const waitingCollections = async () => {
                 <td>${loan.category}</td>
                 <td>${loan.requestDate}</td>
                 <td>${loan.status}</td>
+                <td>
+                    <button class="cancel_btn" data-id="${loan.loanId}">Cancel loan</button>
+                </td>
             `
+            const cancelBtn = row.querySelector(".cancel_btn");
+            if (cancelBtn) {
+                cancelBtn.addEventListener("click", async () => {
+                    showConfirmationModal(async () => {
+                        await loanCancellation(loan.loanId);
+                    })
+                })
+            }
 
             tableBody.appendChild(row);
         });

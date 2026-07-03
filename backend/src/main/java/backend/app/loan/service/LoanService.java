@@ -133,7 +133,7 @@ public class LoanService {
     public LoanResponseDTO cancelLoan(Long loanId){
         Loan loan = getEntity(loanId);
         loan.setStatus(LoanStatus.CANCELLED);
-//        loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
+        loan.getAsset().setAssetStatus(AssetStatus.AVAILABLE);
 
         User user = userRepo.findById(1L).
                 orElseThrow(

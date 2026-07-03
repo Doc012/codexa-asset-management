@@ -1,4 +1,5 @@
 package backend.app.user.dto;
+import backend.app.user.enums.Role;
 import backend.app.user.enums.Status;
 import lombok.*;
 
@@ -10,4 +11,5 @@ public record CreateUserRequest(
         String password,
         String picUrl,
         String department,
-        Status status) {}
+        Status status,
+        Role role) {}
